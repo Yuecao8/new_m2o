@@ -1,0 +1,22 @@
+{
+  "siteManage": "Site management",
+  "domain": "The main domain",
+  "describe": "Site Description:",
+  "siteName": "* Site name:",
+  "newSite": "New site",
+  "siteList": "Site list",
+  "siteRoute": "Site path:",
+  "domainName": "* Site domain name:",
+  "save": "Save",
+  "cancel": "Cancel",
+  "versionMsg": " The current version of the MXU system for the MXU Ultimate, supports the creation of 10 sites.",
+
+
+
+  "reBuild": "regenerate",
+  "genSuccess": "Generated successfully!",
+  "upDate": "Update completed!",
+
+  "sortTip": "Sorting is turned on",
+  "sortSuccess": "Sort success"
+}

@@ -1,0 +1,38 @@
+{
+    "link":"Link",
+    "createLink" : "Add a link",
+    "linkName" : "Name",
+    "logo" : "LOGO",
+    "href" : "Link address",
+    "allSelect" : "Select all ",
+    "delete" : "Delete",
+    "save" : "Save",
+    "sortTip" : "Open sorting",
+
+    "addLinks" : "Create / edit links",
+    "icon" : "Icon",
+    "links" : "Link",
+    "uploadIcon" : "Upload icon",
+    "logoChange" : "Click to replace icon",
+    "logoAdd" : "Click to add icon",
+    "submit":"Submit",
+    "cancel" : "Cancel",
+    "textPlaceHolder" : "Please fill in the link name",
+    "urlPlaceHolder" : "Please fill in the link address",
+
+    "fillLinkName" : "The link name can not be empty!",
+    "addLinkLogo" : "Please add a link icon!",
+    "editLinkUrl" : "Link address can not be empty / link format error!",
+    "inputTip" : "The link name can not be less than 2 characters or more than 10 characters!",
+    "operateSuccess" : "Operate successfully!",
+    
+    "deleteConfirm" : "Are you sure you want to delete the selected links?？",
+    "selectMsg" : "Please select the link you want to delete！",
+    "sortSuccess" : "Sorted successfully！",
+
+
+    "help" : "Help and support",
+    "order" : "Work order",
+    "name" : "MXU Converged Media Operation Platform",
+    "errSiteId":"Missing site ID"
+}

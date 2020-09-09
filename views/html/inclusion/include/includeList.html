@@ -1,0 +1,21 @@
+<div class="mxu_include_wrap new-wrapper">
+    <!-- / header -->
+    <div class="btn-toolbar list_bar  hoge-table-add">
+        <div class="hoge-table-title">计划收录</div>
+        <div class="btn-toolbar_right">
+            <button class="btn btn-purple" ng-click="vm.goJournal()">{{'include.includeLog' | translate}}</button>
+        </div>
+        <div class="btn-toolbar_right">
+            <button class="btn btn-purple m-r" ng-click="vm.goAdd()">{{'include.addPlan' | translate}}</button>
+        </div>
+    </div>
+    <!-- / header -->
+
+    <div class="row-col">
+        <div class="col-md-12 col-md-push-12 comment_list">
+            <!-- list -->
+            <div ui-include="'../views/mxu/inclusion/include/list.html'"></div>
+            <!-- list -->
+        </div>
+    </div>
+</div>

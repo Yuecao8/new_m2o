@@ -1,0 +1,29 @@
+<div class="modal-content box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="home.operation"></h5>
+        <i class="fa fa-remove" ng-click="vm.close()"></i>
+    </div>
+    <div class="modal-body">
+        <small translate="home.limit" style="color: #969696;"></small>
+        <ul>
+            <li class="shortcut_item" ng-repeat="item in vm.initItem track by $index">
+                <div class="icon-left">
+                    <span class="w-5" ng-style="{'background-color':'{{item.background}}'}">
+                        <i class="fa {{item.icon}}"></i>
+                    </span>
+                </div>
+                <div class="short-body">
+                    <em>{{item.name}}</em>
+                    <span>{{item.from}}</span>
+                    <span>{{item.description}}</span>
+                </div>
+                <div class="">
+                    <label class="ui-switch m-t-xs m-r">
+                        <input type="checkbox" ng-checked="item.is_open" ng-model="item.is_open" ng-click="vm.change(item.is_open,item)" ng-disabled="item.is_open== false && vm.initItem.open_num >= 10" />
+                        <i></i>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

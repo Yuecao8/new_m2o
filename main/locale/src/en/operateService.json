@@ -1,0 +1,18 @@
+{
+    "community" : "Community",
+    "communityIntroduce" : "An interactive platform for extending the social functions of the terminal",
+    "road" : "Traffic conditions",
+    "roadIntroduce" : "Used to publish local traffic information in real time",
+    "side" : "Around LBS",
+    "sideIntroduce" : "Used to publish local life service classification information",
+    "inform" : "Client version notification",
+    "informIntroduce" : "Manage the mobile client version, push version upgrade information",
+    "push" : "Cloud push",
+    "pushIntroduce" : "You can push the notification message to the mobile client here",
+    "weather" : "Cloud weather",
+    "weatherIntroduce" : "Used to manage the mobile client weather module",
+    "feedback" : "Opinion feedback",
+    "feedbackIntroduce" : "You can view and manage feedback from client users here",
+    "apply" : "Sign up",
+    "applyIntroduce" : "You can create a mobile client registration form here"
+}

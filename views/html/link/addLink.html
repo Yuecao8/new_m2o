@@ -1,0 +1,44 @@
+<form class="modal-link box-shadow-md" name="linkForm" id="linkForm">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="terminalLinks.addLinks"></h5>
+    </div>
+    <div class="modal-body">
+        <div class="m-b-md form-group">
+            <label class="lab_block">{{'terminalLinks.linkName' | translate}}</label>
+            <input type="text" ng-focus="vm.linkNameFocus=true" ng-blur="vm.linkNameFocus=false"
+                   class="content input-control input-len ng-pristine ng-untouched ng-not-empty
+                    ng-valid ng-valid-required"
+                   ng-class="{'input-focus':vm.linkNameFocus}"
+                   placeholder="{{'terminalLinks.textPlaceHolder' | translate}}"
+                   name="create_name"  ng-model="vm.add_create" required>
+        </div>
+        <div class="m-b form-group h_140">
+            <label class="lab_block lab_img" translate="terminalLinks.icon"></label>
+            <div class="tuji-fileUp pos-rlt">
+                <div class="img-item form-file" ng-if="vm.logo.src">
+                    <input name="logo_change" type="file" nv-file-select="" uploader="vm.LogoUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                    <div class="pos-abt fileUpTip change" translate="terminalLinks.logoChange"></div>
+                </div>
+                <input ng-if="!vm.logo.src" name="logo_add" type="file"  nv-file-select="" uploader="vm.LogoUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                <div class="pos-abt fileUpTip" ng-if="!vm.logo.src"><span translate="terminalLinks.logoAdd"></span></div>
+                <div class="i-s-b" style="background:url({{vm.logo.src}}) center center no-repeat"></div>
+            </div>
+
+        </div>
+        <div class="m-b link-box">
+            <label class="lab_block" translate="terminalLinks.links"></label>
+            <input type="url"
+                   ng-focus="vm.addLinkFocus=true"
+                   ng-blur="vm.addLinkFocus=false"
+                   ng-class="{'input-focus':vm.addLinkFocus}"
+                   class="content input-control input-len ng-pristine ng-untouched
+                   ng-not-empty ng-valid ng-valid-required"
+                   placeholder="{{'terminalLinks.urlPlaceHolder' | translate}}"
+                   name="create_link"  ng-model="vm.add_link" required>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save(linkForm)">{{'terminalLinks.submit' | translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'terminalLinks.cancel' | translate}}</button>
+    </div>
+</form>

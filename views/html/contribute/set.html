@@ -1,0 +1,94 @@
+<div class="contributeSet-wrap">
+    <div class="contributeSet-section">
+        <div class="p-v-md">
+            <div class="edit-head">
+                <em>报料设置</em>
+            </div>
+        </div>
+        <div class="edit-form hoge-border">
+            <div class="form-card">
+                <div class="header">基本设置</div>
+                <div class="content" my-loading="vm.setLoading">
+                    <div class="form-group">
+                        <label class="label-name">内容后置审核</label>
+                        <div class="group-content">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" ng-checked="vm.setDetail.content_audit == 1" ng-click="vm.check()">后置审核
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name">采纳分类选择</label>
+                        <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle user-screening">
+                                <span class="dropdown-label label-lf">{{vm.currentUserName}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm sidebar-drop" id="sidebar-drop">
+                               
+                                <!-- <div class="classify-sidebar"> -->
+                                        <div class="list-list pull-left" id="sidebar-list" ng-style="{width:vm.columnData.length * 142 + 'px', 
+                                            height:(vm.columnData[vm.storageList.length ].length)*38+12 + 'px'
+                                            }">
+                                            <div class="sidebar-list pull-left" style="width:142px;" ng-repeat="List in vm.columnData track by $index">
+                                                <div class="sidebar-item" ng-repeat="item in List track by $index">
+                                                        <!-- 返回上一级-->
+                                                        <span class="next-icon pull-left back" ng-if="item.is_back == 1" ng-click="vm.backLast(item,List)"> 
+                                                            <i class="typeface-cuobiezi_huanyuan"></i>
+                                                        </span>
+                                                        <span class=" item-name" ng-if="item.is_last== 0" ng-class="{'item-active' : item.isChoose}">
+                                                            <span ng-click="vm.choseUser(item)">{{item.name}}</span>
+                                                            <i class="fa fa-angle-right" ng-click="vm.handerClick(item)"></i>
+                                                        </span>
+                                                        <span class=" items-name" ng-if="item.is_alluser == 2" ng-click="vm.choseUser(item)" ng-class="{'item-active' : item.isChoose}">
+                                                            {{item.name}}
+                                                        </span>
+                                                        <span class=" items-name" ng-if="item.is_last== 1" ng-click="vm.choseUser(item)" ng-class="{'item-active' : item.isChoose,'back-lf':$index == 0}">
+                                                            {{item.name}}
+                                                        </span>
+                                                        
+                                                        <!-- <span class="next-icon pull-right" ng-if="item.is_depart == 1&&item.is_back != 1" ng-click="vm.backLast(item,List)"> 
+                                                            <i class="fa fa-angle-right"></i>
+                                                        </span> -->
+                                                    <!-- </div> -->
+        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- </div> -->
+                                <!-- end -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-card">
+                <div class="header">规则设置</div>
+                <div class="content">
+                    <div class="form-group flex-middle">
+                        <label class="label-name">报料最小间隔</label>
+                        <div class="group-content flex-middle">
+                            <input-number number='vm.setDetail.space_time'  min="0" change-num="vm.changeNum(num)"></input-number>
+                            <span class="number-tip m-l-sm">
+                                秒
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group flex-middle">
+                        <label class="label-name">最大字数限制</label>
+                        <div class="group-content flex-middle">
+                            <input-number number='vm.setDetail.max_words' min="0" change-num="vm.changeMaxNum(num)"></input-number>
+                            <span class="number-tip m-l-sm">字</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="md-form-group">
+                    <button class="btn primary-btn ng-binding" ng-click="vm.updateSet()">保存</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

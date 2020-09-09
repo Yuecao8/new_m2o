@@ -1,0 +1,37 @@
+<div class="face-wrap" ng-if="!vm.loadingFaceLabel">
+  <div class="title flex-v-center">
+    <span class="split-line"></span>
+    <span>出现时间</span>
+    <span class="tips">点击切换标签位置</span>
+  </div>
+  <div>
+    <div class="video-wrap" ng-repeat="(k, face) in vm.faceList track by k" ng-if="!face.noData || face.showTimes !== 0">
+      <div class="person-wrap">
+        <div class="flex-v-center">
+          <img ng-src="{{face.face_path}}" class="avatar">
+          <div>
+            <div class="name">{{face.name || '未知'}}</div>
+            <div>共出现{{face.showTimes}}处</div>
+          </div>
+        </div>
+        <div class="time-wrap">
+          <span class="time-item" 
+            ng-repeat="(key, item) in face.times" 
+            ng-click="vm.chooseFaceTime(item)"
+            ng-if="item.show"
+            ng-class="{'selected-time': vm.selFaceLabel.uni_id === item.uni_id && vm.selFaceLabel.start === item.start}">
+            {{vm.transformTime(item.showStart)}}
+          </span>
+        </div>
+      </div>
+      <!-- <div class="no-data" ng-if="face.noData || face.showTimes === 0">未识别出人脸</div> -->
+    </div>
+    <div class="no-data" ng-if="vm.faceList.length === 0">未识别出人脸</div>
+  </div>
+</div>
+<div class="face-wrap"  ng-if="vm.loadingFaceLabel">
+  <div class="loading-wrap">
+    <img src="/assets/images/mxu/edit-video/icon_dengdai@2x.png" class="loading-img">
+    <div class="loading-title">人脸识别中…</div>
+  </div>
+</div>

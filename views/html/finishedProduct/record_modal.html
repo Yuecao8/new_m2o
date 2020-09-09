@@ -1,0 +1,319 @@
+<div class="box-shadow-md record-box">
+    <div class="modal-header">
+        <div class='header-title record-header'>
+            <span>操作记录</span>
+            <div class="close-btn" ng-click="vm.close()">
+                <i class="typeface-form_guanbi"></i>
+            </div>
+        </div>
+        <div class="header-tab">
+            <div class="btn-contain btn-group">
+                <button class="btn btn-outline btn-blue" ng-click="vm.toggleChange('history')" ng-class="{actived:vm.currentType=='history'}">历史记录</button>
+                <button class="btn btn-outline btn-blue" ng-click="vm.toggleChange('reviewing')" ng-class="{actived:vm.currentType=='reviewing'}">审稿记录</button>
+                <button class="btn btn-outline btn-blue" ng-click="vm.toggleChange('release')" ng-class="{actived:vm.currentType=='release'}">发布记录</button>
+            </div>
+        </div>
+    </div>
+    <div class="record-body">
+        <div class="modal-body">
+            <!-- 历史记录 -->
+            <div class="history-record" ng-show="vm.currentType=='history' && vm.dynamicList.length">
+                <div class="history-version pull-left" id="history-version">
+                    <div class="left-version-content" id="left-version-content">
+                        <div class="dynamic-slip" ng-repeat="(idx,list) in vm.dynamicList track by $index" ng-init="outIndex = $index">
+                            <div class="slip-contian flex-item" >
+                                <div class="mark-box">
+                                    <span class="time-mark">{{list.time}}</span>
+                                </div>
+                                <div class="slip-type">
+                                    <!--图文应用-->
+                                    <div class="icon-box">
+                                    </div>
+                                </div>
+                                <div class="dynamic-detail">
+                                    <span class="detail-describe user">{{list.user}}</span>
+                                    <div class="detail-content" ng-repeat="nor in list.historyList track by $index">
+                                        <span class="detail-describe notClick" ng-if="nor.isClick==0">{{nor.content}}</span>
+                                        <span class="detail-describe canClick" ng-class="{'active':(vm.currentIndex == outIndex)&&nor.isActived}" ng-click="vm.getDetial(list,outIndex)" ng-if="nor.isClick==1">{{nor.content}}<i class="typeface-form_yulan"></i></span>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <span class="vertical" ng-if="vm.dynamicList.length-1!=idx">|</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-list" ng-show="vm.addShow">
+                    <img src="/assets/images/mxu/home/new/icon_loading_2x.png" alt="" width="25px">
+                </div>
+                <div class="current-version pull-left">
+                    <div class="version-header">
+                        <span>{{vm.lastTime}}保存</span>
+                    </div>
+                    <div class="version-content" my-loading="vm.historyDetailLoading">
+                        <span id="current-content"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="history-record history-no-data" ng-show="vm.currentType=='history' && !vm.dynamicList.length">
+                <div class="no-record">
+                    <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                    <p class="text">暂无历史记录</p>
+                </div>
+            </div>
+            <!-- 审核记录 -->
+            <div class="reviewing-record" ng-show="vm.currentType=='reviewing' && vm.param.item.status != 1">
+                <div class="left-box">
+                    <div class="audit-mid">
+                        <div class="mid-top audit-lif">
+                            <span class="cur-pro audit-lif">当前进度(<span ng-if="vm.editStatus==5 || (vm.editStatus==1 && vm.auditId)">{{vm.currentNewProgress}}级审核</span><span ng-if="vm.editStatus==2 || vm.editStatus==3">审核完成</span><span ng-if="vm.editStatus==4">已打回</span><span ng-if="vm.editStatus==9">待发布</span>)</span>
+                            <span class="full-pro audit-lif" ng-show="vm.editStatus == 5 || vm.editStatus == 4" ng-click="vm.showFullProcess()">完整流程</span>
+                            <div class="right-div" ng-if="vm.showRightDiv">
+                                <div class="box"></div>
+                                <div class="process-nodes audit-lif">
+                                    <div class="node-item audit-lif" ng-repeat="(ndx,node) in vm.processData.nodes">
+                                        <div class="node-main">
+                                            <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                            <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                                <span ng-if="node.range == 2">指定用户</span>
+                                                <span ng-if="node.range == 1">全体用户</span>
+                                                <span ng-if="node.range == 3">部门角色</span>
+                                                <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                                <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                            </div>
+                                            <div class="node-role flex-item">
+                                                <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                    <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                    <div class="user-img-box" ng-if="node.range==2" >
+                                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                            ng-style="{'left':idx*25+'px'}">
+                                                            <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                            <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                            <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                            <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                                <span class="arrow bottom b-white"></span>
+                                                                <div class="box-body">{{user.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                            <i class="typeface-form_zengjia fa"></i>
+                                                            <span class="overflow-num">{{node.users.length-3}}</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                        <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                        <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                            <span class="arrow bottom b-white"></span>
+                                                            <div class="box-body">{{user.role.name}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                        <i class="typeface-list_caozuo"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="role-arrow"ng-if="$index != (vm.processData.nodes.length - 1)">
+                                                    <i class="typeface-shengao_xiayige"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-div" ng-if="vm.showBottomDiv">
+                                <div class="box"></div>
+                                <div class="process-nodes">
+                                    <div class="node-item" ng-repeat="(ndx,node) in vm.processData.nodes">
+                                        <div class="node-main">
+                                            <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                            <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                                <span ng-if="node.range == 2">指定用户</span>
+                                                <span ng-if="node.range == 1">全体用户</span>
+                                                <span ng-if="node.range == 3">部门角色</span>
+                                                <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                                <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                            </div>
+                                            <div class="node-role flex-item">
+                                                <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                    <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                    <div class="user-img-box" ng-if="node.range==2" >
+                                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                            ng-style="{'left':idx*25+'px'}">
+                                                            <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                            <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                            <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                            <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                                <span class="arrow bottom b-white"></span>
+                                                                <div class="box-body">{{user.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                            <i class="typeface-form_zengjia fa"></i>
+                                                            <span class="overflow-num">{{node.users.length-3}}</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                        <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                        <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                            <span class="arrow bottom b-white"></span>
+                                                            <div class="box-body">{{user.role.name}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                        <i class="typeface-list_caozuo"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="role-arrow"ng-if="$index != (vm.processData.nodes.length - 1)">
+                                                    <i class="typeface-shengao_xiayige"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="process-nodes" ng-show="vm.param.item.audit">
+                            <div class="node-item" ng-repeat="(ndx,node) in vm.currentNodes">
+                                <div class="node-main">
+                                    <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                    <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                        <span ng-if="node.range == 2">指定用户</span>
+                                        <span ng-if="node.range == 1">全体用户</span>
+                                        <span ng-if="node.range == 3">部门角色</span>
+                                        <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                        <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                    </div>
+                                    <div class="node-role flex-item">
+                                        <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                            <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                            <div class="user-img-box" ng-if="node.range==2" >
+                                                <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                    ng-style="{'left':idx*25+'px'}">
+                                                    <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                    <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                    <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                    <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                    <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                        <span class="arrow bottom b-white"></span>
+                                                        <div class="box-body">{{user.name}}</div>
+                                                    </div>
+                                                </div>
+                                                <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                    <i class="typeface-form_zengjia fa"></i>
+                                                    <span class="overflow-num">{{node.users.length-3}}</span>
+                                                </span>
+                                            </div>
+                                            <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                    <span class="arrow bottom b-white"></span>
+                                                    <div class="box-body">{{user.role.name}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                <i class="typeface-list_caozuo"></i>
+                                            </div>
+                                        </div>
+                                        <div class="role-arrow" ng-if="node.hasNext">
+                                            <i class="typeface-shengao_xiayige"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="process-nodes" ng-show="!vm.param.item.audit">
+                            <div class="no-record-box">
+                                <div class="user-name">{{vm.param.item.audit_user_name}}</div>
+                                <img class="icon-img" ng-src="{{vm.param.item.audit_user_avatar}}" alt="">
+                            </div>
+                        </div>
+                        <div class="mid-bottom">
+                            <div class="title">稿件评论({{vm.commentList.length ? vm.commentList.length : '0'}})</div>
+                            <div class="content">
+                                <div class="no-data" ng-if="!vm.commentList.length && !vm.commentLoading">
+                                    <div>
+                                        <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                                        <p class="text">暂无评论</p>
+                                    </div>
+                                </div>
+                                <div class="item" ng-repeat="comment in vm.commentList track by $index">
+                                    <img class="image" ng-src="{{comment.user.avatar}}" ng-if="comment.user.avatar" alt="">
+                                    <span class="image no-avatar-bg{{comment.user.bgColor}}" ng-if="!comment.user.avatar">{{comment.user.avatarName}}</span>
+                                    <div class="name">
+                                        <span>{{comment.user.name}}</span>
+                                        <span class="time">{{comment.time}}</span>
+                                    </div>
+                                    <p class="comment">{{comment.content}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="audit-bottom" ng-if='vm.param.item.audit'>
+                        <input type="text" class="bottom-input" ng-model="vm.comment" placeholder="输入评论">
+                        <button class="primary-btn record-primary-btn" ng-click="vm.setComment()">确定</button>
+                    </div>
+                </div>
+                <div class="right-box">
+                    <div class="no-data" ng-if="!vm.logList.length && !vm.logLoading">暂无数据</div>
+                    <div class="log-item" ng-repeat="log in vm.logList track by $index">
+                        <p class="time">{{log.created_at}}</p>
+                        <p class="operation">{{log.name}} {{log.operationName}} 了该稿件。<span ng-if="log.operation == 2">评论：{{log.reason}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="reviewing-record reviewing-no-data" ng-show="vm.currentType=='reviewing' && vm.param.item.status == 1">
+                <div class="no-record">
+                    <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                    <p class="text">暂无审稿记录</p>
+                </div>
+            </div>
+            <!-- 发布记录 -->
+            <div class="release-record" ng-show="vm.currentType=='release'">
+                <div class="history-version pull-left" id="release-version" ng-show="vm.releaseList.length">
+                    <div class="left-version-content" id="left-version-content">
+                        <div class="dynamic-slip" ng-repeat="(idx,list) in vm.releaseList track by $index" ng-init="outIndex = $index">
+                            <div class="slip-contian flex-item" >
+                                <div class="mark-box">
+                                    <span class="time-mark">{{list.list_time_line}}</span>
+                                </div>
+                                <div class="slip-type">
+                                    <!--图文应用-->
+                                    <div class="icon-box">
+                                    </div>
+                                </div>
+                                <div class="dynamic-detail">
+                                    <span class="detail-describe user">{{list.publish_user_name}}</span>
+                                    <div class="detail-content">
+                                        <span class="detail-describe notClick">
+                                            {{list.publish_user_name}}{{list.operate_name}}<span> "</span>{{list.title}}<span>" </span>{{list.extend_text}}
+                                        </span>
+                                    </div>  
+                                </div>
+                            </div>
+                            <!-- <span class="vertical" ng-if="vm.releaseList.length-1!=idx">|</span> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="no-data" ng-show="!vm.releaseList.length">
+                    <div>
+                        <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                        <p class="text">暂无发布记录</p>
+                    </div>
+                </div>
+                <div class="add-list" ng-show="vm.addShow">
+                    <img src="/assets/images/mxu/home/new/icon_loading_2x.png" alt="" width="25px">
+                </div>
+                <!-- <div class="current-version pull-left">
+                    <div class="version-header">
+                        <span>{{vm.lastTime}}保存</span>
+                    </div>
+                    <div class="version-content" my-loading="vm.historyDetailLoading">
+                        <span id="current-content"></span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

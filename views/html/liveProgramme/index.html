@@ -1,0 +1,51 @@
+<div class="live-programme">
+    <nav class="hoge-nav">
+        <div class="hoge-table-add">
+            <div class="hoge-edit-head">
+                <div class="hoge-return-body" ng-click="vm.goStreaming()">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <em>节目单</em>
+            </div>
+        </div>
+    </nav>
+    <div class="main-body flex-item">
+        <div class="time-content-box">
+            <div class="calender-box">
+                <div id="custom-cells" class="newdatepicker-here" data-language='zh'></div>
+            </div>
+            <div class="copy-box">
+                <div class="source-time">
+                    <div class="source-time-label">
+                            选择复制来源：
+                    </div>
+                    <div id="source-cells" class="source-cells">
+                        <input type="text" id="source-cell-input" class="source-cell-input">
+                        <i class="fa typeface-TimePicker_riqi source-i"></i>
+                    </div>
+                </div>
+                <div class="paste-time">
+                        <div class="source-time-label">
+                                选择粘贴日期（已选择{{vm.dateList.length}}天）
+                        </div>
+                        <div id="source-cells" class="source-cells">
+                            <span class="paste-cell-span" ng-style="vm.heightCalc()">
+                                <input type="text" id="paste-cell-input" ng-model="vm.dateList" class="newdatepicker-here">
+                                <i class="fa typeface-TimePicker_riqi paste-i"></i> 
+                                <div class="date-list">
+                                        <span class="date-list-item" ng-repeat="item in vm.dateList">{{item.substring(8)}}</span>
+                                    </span>
+                            </span>
+                        </div>
+                        <span class="paste-tip">支持当月跨月跨年节目单复制</span>
+                        <button class="btn hoge-btn-blue" my-loading="vm.copyLoading" ng-click="vm.copyProgramme()">复制节目单</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="second-view flex-one">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

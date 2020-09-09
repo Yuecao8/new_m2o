@@ -1,0 +1,24 @@
+<div class="modal-content box-shadow-md">
+	<div class="modal-header">
+	    <h5 class="modal-title" translate="layout.repAvatar"></h5>
+		<!--<i class="fa fa-remove map-close" ng-click="vm.cancel()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+	</div>
+	<div class="modal-body">
+		<div class="main-wrap">
+			<div class="img-box" my-loading='vm.img_loading'>
+				<img src="../assets/images/mxu/avatar-100.jpg" class="circle member_img" ng-if="!vm.newInfo.img">
+				<img ng-src="{{vm.newInfo.img}}" ng-if="vm.newInfo.img" />
+			</div>
+			<div class="uploading-item">
+				<input type="file" class="avater-upload" nv-file-select="" uploader="vm.uploader" accept="image/gif,image/jpeg,image/png,image/bmp">
+				<span ng-show="!vm.newInfo.img" translate="layout.upload"></span>
+				<span ng-show="vm.newInfo.img" translate="layout.modification"></span>{{ 'layout.headPortrait'| translate}}
+			</div>
+			<div class="ErrorTip">{{vm.error_tip}}</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+	    <button class="btn primary-btn" my-loading="vm.img_loading" ng-click="vm.save()">{{ 'layout.confirm'| translate}}</button>
+		<button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{ 'layout.cancel'| translate}}</button>
+	</div>
+</div>

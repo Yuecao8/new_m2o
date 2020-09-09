@@ -1,0 +1,42 @@
+<div class="push-wrapper box-shadow-md">
+    <div class="modal-header">
+        <span class="modal-title bold">{{vm.title}}</span>
+        <span class="modal-title">历史记录</span>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="left">
+            <div class="item" ng-class="{'active': vm.currentClientId == item.client_id}" ng-repeat="item in vm.wechatList track by $index" ng-click="vm.choseClient(item)">{{item.client_name}}</div>
+        </div>
+        <div class="right">
+            <div class="top-title">
+                <div class="list-content">内容</div>
+                <div class="list-user">操作人/时间</div>
+            </div>
+            <div class="content" my-loading="vm.loading">
+                <div class="item" ng-class="{'border-top': $index > 0}" ng-repeat="vv in vm.List track by $index">
+                    <div class="list-content">
+                        <div class="left-img">
+                            <img class="img" ng-src="{{vv.avatar}}" ng-if="vv.avatar" alt="">
+                            <img class="img" ng-if="!vv.avatar" src="../assets/images/mxu/img_cover.png">
+                        </div>
+                        <div class="right-content">
+                            <div class="article-item" ng-repeat="vt in vv.contents track by $index">
+                                <span>{{$index + 1}}、</span>
+                                <span>{{vt.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-user">
+                        <div>{{vv.user.name}}</div>
+                        <div>{{vv.created_at}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="submit" class="push-btn push-submit" ng-disabled="verifyForm.$invalid" ng-click="vm.save()" translate="publish.sure_push"></button>
+        <button class="push-btn push-cancel" ng-click="vm.pushCancel()">取消</button>
+    </div> -->
+</div>

@@ -1,0 +1,9 @@
+{
+    "title" : "RTMP",
+    "tip" : " After setting the user name password, the server will check the username and password for authentication when receiving live streaming",
+    "userName" : "Username",
+    "password" : "Password",
+    "save" : "Save",
+    "closeTip" : "Close RTMP success!",
+    "saveSuccess" : "Saved successfully!"
+}

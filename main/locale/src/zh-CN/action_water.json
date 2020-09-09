@@ -1,0 +1,29 @@
+{
+    "title" : "水印设置",
+    "tip" : "可以开关文稿、图集、转码视频的水印，并可以对水印参数进行调整",
+    "contentMark" : "内容水印设置",
+    "contentMarkTip" : "开关和设置此项，会影响文稿和图集中包含的图片的水印",
+
+    "position" : "位置",
+    "topLeft" : "左上",
+    "onMiddle" : "上中",
+    "upperRight" : "右上",
+    "leftMiddle" : "左中",
+    "centered" : "居中",
+    "rightMiddle" : "右中",
+    "leftLower" : "左下",
+    "underMiddle" : "下中",
+    "rightLower" : "右下",
+
+    "custom" : "使用自定义图片",
+    "upload" : "上传图片",
+    "character" : "使用文字水印",
+    "charTip" : "*文字水印最大长度8个字符",
+    "nonuse" : "不使用",
+    "preview" : "预览",
+    "save" : "保存",
+    "videoMark" : "视频水印设置",
+    "videoMarkTip" : "开关和设置此项，会影响上传的视频的水印",
+    "saveSuccess" : "保存成功!",
+    "imgNecessary" : "请上传图片!"
+}

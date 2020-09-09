@@ -1,0 +1,8 @@
+{
+    "title" : "Live",
+    "tip" : "Here you can view and configure each live channel, and can manage the channel program",
+    "channel" : "Channel",
+    "program" : "Program list",
+    "inclusion" : "Included",
+    "single" : "Series single"
+}

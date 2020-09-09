@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="cn" ng-app="app" ng-controller="AppCtrl">
+
+<head>
+    <base href="/main/" />
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="../assets/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="Flatkit">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <script>window.Hg_Version = '{{VERSION}}';</script>
+    <script src="./scripts/mxu/common/global.js?_v={{VERSION}}"></script>
+    <script src="./scripts/mxu/common/tpls/bridge.js?_v={{VERSION}}"></script>
+    <!-- 链接上的logo -->
+    <!-- <link rel="shortcut icon" sizes="36x36" href="../assets/images/mxu/logo_32.ico"> -->
+    <link rel="shortcut icon" sizes="36x36" ng-href="{{getLinkSrc}}">
+
+    <!-- style -->
+    <!-- build:css ../assets/styles/app.vendor.{{VERSION}}.css -->
+    <!--libs-->
+    <link rel="stylesheet" href="../assets/animate.css/animate.min.css" type="text/css" />
+    <link rel="stylesheet" href="../assets/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../libs/js/swiper/swiper.min.css" type="text/css" />
+    <!-- endbuild -->
+    <!-- dragula -->
+    <link rel="stylesheet" href="../libs/angular/angular-dragula/dragula.min.css" type="text/css" />
+    <!--font-->
+    <link rel="stylesheet" href="../assets/glyphicons/glyphicons.css" type="text/css" />
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../assets/material-design-icons/material-design-icons.css" type="text/css" />
+
+    <link rel="stylesheet" href="../assets/global/dist/app.css?_v={{VERSION}}" type="text/css" />
+    <!--<link rel="stylesheet" href="../assets/global/dist/font.css" type="text/css" />-->
+    <link rel="stylesheet" href="../assets/styles/mxu/common.css?_v={{VERSION}}" type="text/css" />
+</head>
+
+<body ng-strict-di class="{{app.setting.bg}} wrapper-{{$state.current.data.mark}}" ng-class="{'container': app.setting.boxed, 'ie': isIE,'smart': isSmart}">
+    <div class="app" ui-view></div>
+    <script src="./locale/dist/locale-<%= LANG %>.js"></script>
+    <!-- build:js scripts/app.vendor.{{VERSION}}.js -->
+    <!-- jQuery -->
+    <script src="../libs/jquery/jquery/dist/jquery.js"></script>
+    <!-- Bootstrap -->
+    <script src="../libs/jquery/tether/dist/js/tether.min.js"></script>
+    <script src="../libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- Angular -->
+    <script src="../libs/angular/angular/angular.js"></script>
+    <script src="../libs/angular/angular-animate/angular-animate.js"></script>
+    <script src="../libs/angular/angular-resource/angular-resource.js"></script>
+    <script src="../libs/angular/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../libs/angular/angular-touch/angular-touch.js"></script>
+    <script src="../libs/angular/angular-translate/angular-translate.js"></script>
+    <script src="../libs/angular/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../libs/angular/ngstorage/ngStorage.js"></script>
+    <script src="../libs/angular/angular-ui-utils/ui-utils.js"></script>
+    <script src="../libs/angular/angular-css/angular-css.js"></script>
+    <script src="../libs/angular/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="../libs/angular/angular-dragula/angular-dragula.js"></script>
+
+    <!--js-->
+    <script src="./scripts/services/palette.js"></script>
+
+    <!-- swiper -->
+    <script src="../libs/js/swiper/swiper.jquery.min.js"></script>
+    <script src="../libs/js/swiper/angular-swiper.js"></script>
+    <!--ngClip-->
+    <script src="../libs/js/zeroClipboard/ZeroClipboard.js"></script>
+    <script src="../libs/js/zeroClipboard/ngClip.js"></script>
+    <!-- sortable -->
+    <script src="../libs/js/sortable/sortable.js"></script>
+    <!-- dragula -->
+
+    <!--tool-->
+    <script data-pace-options='{ "ajax": false }' src="../libs/jquery/PACE/pace.min.js"></script>
+    <script src="../libs/js/dateRangePicker/moment.min.js"></script>
+    <script src="../libs/js/please/please.min.js"></script>
+
+    <!-- endbuild -->
+    <!-- main -->
+    <script src="./scripts/bundle/public.js?_v={{VERSION}}"></script>
+    <script src="./scripts/bundle/vendor/script.js?_v={{VERSION}}"></script>
+
+    <script type="text/javascript">
+        typeof please != 'undefined' && please.init(window);
+    </script>
+</body>
+
+</html>

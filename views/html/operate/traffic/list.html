@@ -1,0 +1,154 @@
+<div class="padding pos-rlt traffic-list ">
+    <div class="mxu_traffic_wrapper">
+        <!-- header -->
+        <div class="m-b content_list_head">
+            <div class="btn-group info pull-right">
+                <button class="btn btn-purple add-word" ng-click="vm.stateGo()" translate="trafficList.addTraffic">
+
+                </button>
+            </div>
+            <div class="btn-toolbar list_bar">
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.chosedtype.name}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="item in vm.typeArr" ng-click="vm.choseType(item)">{{item.name}}</a>
+                    </div>
+                </div>
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.chosedStatus.name}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="item in vm.statusArr" ng-click="vm.choseSatus(item)">{{item.name}}</a>
+                    </div>
+                </div>
+                <div class="form-group search">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control p-x b-a rounded" ng-keypress="vm.keyPress($event)" ng-model="vm.key" placeholder=" {{ 'trafficList.search' | translate }}">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search()"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / header -->
+        <div class="ErrorTip hide" ng-class="{'show': !vm.trafficList.length}">
+            <p>{{vm.error_msg}}</p>
+        </div>
+        <div class="list_contain" ng-if="vm.trafficList.length">
+            <div class="list_header">
+                <div class="wrap">
+                    <div class="list-ctr"></div>
+                    <div class="list_body"  translate="trafficList.traContent"></div>
+                    <div class="list-weight"  translate="trafficList.traType"></div>
+                    <div class="list-status"  translate="trafficList.state"></div>
+                    <div class="list-icon"></div>
+                </div>
+            </div>
+            <div class="list_content">
+                <div class="list white" ng-model="vm.trafficList" ng-repeat="item in vm.trafficList track by $index">
+                    <div class="list_item">
+                        <div class="list-ctr">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                            </label>
+                        </div>
+                        <div class="list_body flex-one">
+                            <div class="avatar_img circle" >
+                                <img class="circle" ng-hide="item.avatar" src="../assets/images/mxu/avatar-50.jpg">
+                                <img class="circle" ng-show="item.avatar" ng-src="{{item.userPic}}" style="border: 1px solid #eee;">
+                            </div>
+                            <div class="list_info">
+                                <div class="part_one">
+                                    <span class="name">{{item.user_name}}</span>
+                                    <span class="date">{{item.created_at * 1000| date:'MM-dd HH:mm'}}</span>
+                                    <span class="useful_time">{{ 'trafficList.validTime' | translate }}：{{item.time}}</span>
+                                </div>
+                                <div class="content">
+                                    <p class="content_text">{{item.content}}</p>
+                                </div>
+                                <div class="part_two" ng-if="item.imgShow || item.videoShow || item.voiceShow">
+                                    <!--img-->
+                                    <div class="img_list" ng-if="item.imgShow">
+                                        <ul>
+                                            <li ng-repeat="pic in item.picList | limitTo: 4" ng-click="vm.Carousel(item.picList)">
+                                                <img ng-src="{{pic.picSrc}}">
+                                            </li>
+                                            <li ng-show="item.picList.length > 4" class="img_more" ng-click="vm.Carousel(item.picList)">
+                                                <span class="img_more_top" translate="trafficList.more"></span>
+                                                <span translate="trafficList.picture"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--video-->
+                                    <div class="video_box" ng-show="item.videoShow" ng-click="vm.videoPlaying(item)">
+                                        <img class="video_img" ng-src="{{item.videoImage}}">
+                                        <i class="icon-kaishi"></i>
+                                    </div>
+                                    <!--voice-->
+                                    <div ng-show="item.voiceShow">
+                                        <audio id="audio" preload="true" src="{{item.voiceSrc | trust}}"></audio>
+                                        <div class="voice_box" ng-click="vm.voicePlaying(item)">
+                                            <figure ng-class="{'playing':item.playing}">
+                                                <div>
+                                                    <i class="icon-yuyin1" aria-hidden="true"></i>
+                                                    <i class="icon-yuyin2" aria-hidden="true"></i>
+                                                    <i class="icon-yuyin3" aria-hidden="true"></i>
+                                                </div>
+                                                <span class="pull-right"></span>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--map-->
+                                <span class="part_three" ng-click="vm.showAddress(item)" ng-show="item.address">
+                                    <i class="fa fa-map-marker"></i>
+                                    <span class="location">{{item.address}}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-weight">
+                            <span class="weight" ng-class="{'accident':item.group_id=='3','construction':item.group_id=='2','congestion':item.group_id=='1','unimpeded':item.group_id=='4'}">{{item.group_title}}</span>
+                        </div>
+                        <div class="list-status">
+                            <a ng-click="vm.verify(item)" ng-class="{'pending_audit':item.status=='0','already_examine':item.status=='1','retracted':item.status=='2'}">{{item.statusName}}</a>
+                        </div>
+                        <div class="list-icon">
+                            <div class="icon">
+                                <i class="icon-bianji" ng-click="vm.edite(item)"></i>
+                                <i class="icon-shanchu1" ng-click="vm.delete(item)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--bottom-->
+            <div class="list_bottom">
+                <div class="btn-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox"  value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+                        {{ 'trafficList.allSelected' | translate }}
+                    </label>
+                </div>
+                <div class="btn-toolbar list_bar flex-one btn-box">
+                    <div class="btn-group" my-loading="vm.release_loading">
+                        <button class="btn btn-outline  del-btn"  ng-click="vm.deleteAll()"  translate="trafficList.delete"></button>
+                    </div>
+                    <div class="btn-group" my-loading="vm.lock_loading">
+                        <button class="btn btn-outline btn-comment" ng-click="vm.verifyAll()"  translate="trafficList.verify"></button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-outline btn-comment" ng-click="vm.rollback()"  translate="trafficList.repulse"></button>
+                    </div>
+                </div>
+                <page-nation  options="vm.pageOptions" turn-page="vm.changePages()"></page-nation>
+            </div>
+            <!--bottom-->
+        </div>
+    </div>
+</div>

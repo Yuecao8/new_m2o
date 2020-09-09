@@ -1,0 +1,56 @@
+<div class="model-content" ng-class="{'show': vm.showInfo}">
+  <i class="close-icon" ng-click="vm.close()"></i>
+  <ks-swiper-container
+    swiper="vm.swiper"
+    class="swiper-container"
+    observer='true'
+    pagination-clickable='true'
+    show-nav-buttons='true'
+    space-between= '0'
+    initial-slide="vm.currentIndex"
+    on-ready="vm.onReadySwiper(swiper)">
+    <ks-swiper-slide class="swiper-slide" ng-repeat="(key, item) in vm.list track by $index">
+      <div class="img-wrap" ng-class="{'show-info': vm.showInfo}">
+        <div class="rotate-wrap">
+          <!-- <img ng-src="{{item.path_info.url}}" class="img" ng-class="vm.className"> -->
+          <img ng-src="{{item.url}}" class="img" ng-class="vm.className">
+        </div>
+      </div>
+      <span class="img-info">
+          <ul>
+            <li class="image-detail">照片详情</li>
+            <li class="image-title">文件名：{{item.name}}</li>
+            <li>地点：未知</li>
+            <li>时间：{{item.created_at}}</li>
+            <li>大小：<span>{{item.width}}*{{item.height}}</span><span class="file-size">{{item.format_size}}</span></li>
+          </ul>
+        </span>
+    </ks-swiper-slide>
+  </ks-swiper-container>
+  <div class="preview-operate">
+    <a ng-href="{{vm.imgSrc}}" id="enlargeImg" target="_blank"></a>
+    <i class="enlarge-icon" ng-click="vm.enlarge()"></i>
+    <i class="rotate-icon" ng-click="vm.rotate()"></i>
+    <i class="download-icon" ng-click="vm.download()" ng-class="{'is-disabled': vm.isDisabled('public-download')}"></i>
+    <i class="delete-icon" ng-click="vm.del()" ng-class="{'is-disabled': vm.isDisabled('public-delete')}"></i>
+    <i class="info-icon" ng-class="{'info-active-icon': vm.showInfo}" ng-click="vm.showInfo = !vm.showInfo"></i>
+    <span class="retract-img" ng-click="showThumbnail = !showThumbnail">
+      <span class="slide-line"></span>
+      <span ng-if="showThumbnail">收起缩略图</span>
+      <span ng-if="!showThumbnail">展开缩略图</span>
+      <i class="triangle-down" ng-if="!showThumbnail"></i>
+      <i class="triangle-up" ng-if="showThumbnail"></i>
+    </span>
+  </div>
+  <div class="thumbnail-wrap" ng-if="showThumbnail">
+    <ul class="img-list" id="img-list">
+      <li ng-repeat="(key, item) in vm.list track by $index" 
+        class="thumbnail-li" 
+        ng-class="{'border-clazz': key === vm.selImg}"
+        ng-click="vm.checkImg(key)">
+        <!-- <img ng-src="{{item.path_info.url}}" class="thumbnail-img"> -->
+        <img ng-src="{{item.url}}" class="thumbnail-img">
+      </li>
+    </ul>
+  </div>
+</div>

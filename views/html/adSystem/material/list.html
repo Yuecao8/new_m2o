@@ -1,0 +1,213 @@
+<div class="adSystem_material_wrap b-t">
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">素材列表</div>
+        <div class="pull-right">
+            <button class="btn hoge-btn-blue material-new" ui-sref="app.adSystem.addMaterial">新增素材</button>
+        </div>
+    </div>
+    <div class="row-col">
+        <div class="col-md-12 col-md-push-12">
+            <div class="list_contain hoge-table-contain">
+                <div class="hoge-table-search">
+                    <!--时间-->
+                    <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                        <button class="btn dropdown-toggle material-time" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.list_time}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm font-12" ng-class="{'disOpen':vm.open}">
+                            <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                {{time.name}}
+                                <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                       type="text" options="vm.options"/>
+                            </a>
+                        </div>
+                    </div>
+                    <!--状态-->
+                    <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                        <button class="btn dropdown-toggle " data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.list_state}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm font-12">
+                            <a class="dropdown-item" ng-repeat="state in vm.stateArr" ng-click="vm.chooseState(state)">{{state.name}}</a>
+                        </div>
+                    </div>
+                    <!--类型-->
+                    <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                        <button class="btn dropdown-toggle " data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.list_type}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm font-12">
+                            <a class="dropdown-item" ng-repeat="type in vm.typeArr" ng-click="vm.changeType(type)">{{type.name}}</a>
+                        </div>
+                    </div>
+                    <!--搜索-->
+                    <div class="form-group hoge-input-search pull-right">
+                        <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                    </div>
+                    
+                </div>
+                <!-- <hoge-error  arr-length="vm.materialList.length" load="vm.loading"></hoge-error> -->
+                <div class="hoge-error hoge-error-hight no-data-con" ng-if="!vm.materialList.length && !vm.materialLoading">
+                    <div class="no-data-fa">
+                        <div class="error-img-gray serve-no-data"></div>
+                        <p>暂无数据</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="content-list">
+                        <div class="content-item" ng-repeat="item in vm.materialList" ng-style="{'opacity': item.id ? 1 : 0, 'pointer-events': item.id ? 'auto' : 'none'}">
+                            <div class="content-img">
+                                <img class="img" src="{{item.index_pic}}" alt="" ng-if="item.type === 'image' || item.type === 'video'">
+                                <img class="img" src="/assets/images/mxu/advertise/flash.png" alt="" ng-if="item.type === 'flash'">
+                                <img class="img" src="/assets/images/mxu/advertise/img_daimakuai@2x.png" alt="" ng-if="item.type === 'js'">
+                                <div class="type-name">{{item.typeName}}</div>
+                            </div>
+                            <div class="content-title">
+                                <span class="name" ng-click="vm.goEdit(item)">{{item.name}}</span>
+                                <span class="duration" ng-if="item.type === 'video'">时长：{{item.videoDuration}}</span>
+                            </div>
+                            <div class="content-name">
+                                <span class="name">{{item.create_user_name}}</span>
+                                <span class="interval"></span>
+                                <span class="time">{{item.showCreateTime}}</span>
+                            </div>
+                            <div class="content-bottom">
+                                <div class="bottom-status">
+                                    <span ng-class="{'color-zero' : item.status === 0, 'color-one' : item.status === 1, 'color-two': item.status === 2}">{{item.statusName}}</span>
+                                    <i class="typeface-form_tishi material-tip" ng-if="item.status === 1" ng-mouseenter="vm.tipEnter(item)" ng-mouseleave="vm.tipLeave(item)"></i>
+                                    <div class="tip-con" ng-if="item.status === 1 && item.tipEnter">
+                                        <span class="serve">已投放</span>
+                                        <div class="position">{{item.positionArrName ? item.positionArrName : '无内容'}}</div>
+                                        <div class="tip-arr"></div>
+                                    </div>
+                                </div>
+                                <div class="list-i hoge-list-i" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)">
+                                    <div class="icon-tool pull-right">
+                                        <i class="typeface-list_caozuo hoge-list_caozuo"
+                                            ng-class="{'active-bg':item.searchShow}"></i>
+                                        <div class="pull-right list-icon-opera position"
+                                            ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                            <div class="btn-group">
+                                                <button class="btn hoge-drop-icon" ng-click="vm.goEdit(item)">编辑</button>
+                                                <button class="btn hoge-drop-icon" ng-if="item.status == 0 || item.status == 2" ng-click="vm.changeState(item, 1)">审核</button>
+                                                <button class="btn hoge-drop-icon" ng-if="item.status == 0 || item.status == 1 && (!item.positionArrName)" ng-click="vm.returnMaterial(item)">打回</button>
+                                                <button class="btn hoge-drop-icon" ng-if="!item.positionArrName" ng-click="vm.goDel(item)">删除</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="content-list">
+                    <div class="content-item" ng-repeat="item in vm.materialList" ng-if="5 > $index" ng-style="{'opacity': item.id ? 1 : 0, 'pointer-events': item.id ? 'auto' : 'none'}">
+                        <div class="content-img">
+                            <img class="img" src="{{item.index_pic}}" alt="" ng-if="item.type === 'image' || item.type === 'video'">
+                            <img class="img" src="/assets/images/mxu/advertise/flash.png" alt="" ng-if="item.type === 'flash'">
+                            <img class="img" src="/assets/images/mxu/advertise/img_daimakuai@2x.png" alt="" ng-if="item.type === 'js'">
+                            <div class="type-name">{{item.typeName}}</div>
+                        </div>
+                        <div class="content-title">
+                            <span class="name" ng-click="vm.goEdit(item)">{{item.name}}</span>
+                            <span class="duration" ng-if="item.type === 'video'">{{item.videoDuration}}</span>
+                        </div>
+                        <div class="content-name">
+                            <span class="name">{{item.create_user_name}}</span>
+                            <span class="interval"></span>
+                            <span class="time">{{item.showCreateTime}}</span>
+                        </div>
+                        <div class="content-bottom">
+                            <div class="bottom-status">
+                                <span ng-class="{'color-zero' : item.status === 0, 'color-one' : item.status === 1, 'color-two': item.status === 2}">{{item.statusName}}</span>
+                                <i class="typeface-form_tishi material-tip" ng-if="item.status === 1" ng-mouseenter="vm.tipEnter(item)" ng-mouseleave="vm.tipLeave(item)"></i>
+                                <div class="tip-con" ng-if="item.status === 1 && item.tipEnter">
+                                    <span class="serve">已投放</span>
+                                    <div class="position">{{item.positionArrName ? item.positionArrName : '无内容'}}</div>
+                                    <div class="tip-arr"></div>
+                                </div>
+                            </div>
+                            <div class="list-i hoge-list-i" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)">
+                                <div class="icon-tool pull-right">
+                                    <i class="typeface-list_caozuo hoge-list_caozuo"
+                                        ng-class="{'active-bg':item.searchShow}"></i>
+                                    <div class="pull-right list-icon-opera position"
+                                        ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                        <div class="btn-group">
+                                            <button class="btn hoge-drop-icon" ng-click="vm.goEdit(item)">编辑</button>
+                                            <button class="btn hoge-drop-icon" ng-if="item.status == 0 || item.status == 2" ng-click="vm.changeState(item, 1)">审核</button>
+                                            <button class="btn hoge-drop-icon" ng-if="item.status == 0 || item.status == 1 && (!item.positionArrName)" ng-click="vm.returnMaterial(item)">打回</button>
+                                            <button class="btn hoge-drop-icon" ng-if="!item.positionArrName" ng-click="vm.goDel(item)">删除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-list">
+                    <div class="content-item" ng-repeat="item in vm.materialList" ng-if="$index > 4" ng-style="{'opacity': item.id ? 1 : 0, 'pointer-events': item.id ? 'auto' : 'none'}">
+                        <div class="content-img">
+                            <img class="img" src="{{item.index_pic}}" alt="" ng-if="item.type === 'image' || item.type === 'video'">
+                            <img class="img" src="/assets/images/mxu/advertise/flash.png" alt="" ng-if="item.type === 'flash'">
+                            <img class="img" src="/assets/images/mxu/advertise/img_daimakuai@2x.png" alt="" ng-if="item.type === 'js'">
+                            <div class="type-name">{{item.typeName}}</div>
+                        </div>
+                        <div class="content-title">
+                            <span class="name" ng-click="vm.goEdit(item)">{{item.name}}</span>
+                            <span class="duration" ng-if="item.type === 'video'">{{item.videoDuration}}</span>
+                        </div>
+                        <div class="content-name">
+                            <span class="name">{{item.create_user_name}}</span>
+                            <span class="time">{{item.showCreateTime}}</span>
+                        </div>
+                        <div class="content-bottom">
+                            <div class="bottom-status">
+                                <span ng-class="{'color-zero' : item.status === 0, 'color-one' : item.status === 1, 'color-two': item.status === 2}">{{item.statusName}}</span>
+                                <i class="typeface-form_tishi material-tip" ng-if="item.status === 1" ng-mouseenter="vm.tipEnter(item)" ng-mouseleave="vm.tipLeave(item)"></i>
+                                <div class="tip-con" ng-if="item.status === 1 && item.tipEnter">
+                                    <span class="serve">已投放</span>
+                                    <div class="position">{{item.positionArrName ? item.positionArrName : '无内容'}}</div>
+                                    <div class="tip-arr"></div>
+                                </div>
+                            </div>
+                            <div class="list-i hoge-list-i" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)">
+                                <div class="icon-tool pull-right">
+                                    <i class="typeface-list_caozuo hoge-list_caozuo"
+                                        ng-class="{'active-bg':item.searchShow}"></i>
+                                    <div class="pull-right list-icon-opera position"
+                                        ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                        <div class="btn-group">
+                                            <button class="btn hoge-drop-icon" ng-click="vm.goEdit(item)">编辑</button>
+                                            <button class="btn hoge-drop-icon" ng-if="item.status == 0 || item.status == 2" ng-click="vm.changeState(item, 1)">审核</button>
+                                            <button class="btn hoge-drop-icon" ng-if="item.status == 0 || item.status == 1 && (!item.positionArrName)" ng-click="vm.returnMaterial(item)">打回</button>
+                                            <button class="btn hoge-drop-icon" ng-if="!item.positionArrName" ng-click="vm.goDel(item)">删除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="list_bottom m-b-20 hoge-table-bottom" ng-show="vm.pageOptions.total > 1">
+                    <!--<div class="btn-group">-->
+                        <!--<label class="checkbox-inline">-->
+                            <!--<input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">{{'content.select' | translate}}-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--<div class="btn-toolbar list_bar flex-one btn-box">-->
+                        <!--<div class="btn-group">-->
+                            <!--<button class="btn del-btn" ng-click="vm.deleteAll()">{{'content.delete' | translate}}</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <page-nation options="vm.pageOptions" turn-page="vm.changePage()" style="width: 100%;"></page-nation>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

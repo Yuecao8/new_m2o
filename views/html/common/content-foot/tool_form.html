@@ -1,0 +1,195 @@
+<div class="tool_form">
+    <div class="default-show">
+        <div class="default-contain row height-45">
+            <!--translate="system_search.matchType"-->
+            <label class="label-title col-xs-2">{{ 'common.cover'| translate}}</label>
+            <div class="fill-contian col-xs-10 switch-box ">
+                <label class="cover-match m-r">
+                    <input name="cover" ng-model="vm.contentParam.cover_type"  type="radio" value="1" ng-click="vm._changeSize()">{{ 'common.singleImage'| translate}}
+                </label>
+                <label class="cover-match  m-r"  ng-if="vm.contentParam.urlType== 'article' || 'gallery'">
+                    <input name="cover" ng-model="vm.contentParam.cover_type" type="radio" value="2" ng-click="vm._changeSize()">{{ 'common.threeImage'| translate}}
+                </label>
+                <label class="cover-match  m-r" ng-if="vm.contentParam.urlType != 'gallery'">
+                    <input name="cover" ng-model="vm.contentParam.cover_type" type="radio" value="3" ng-click="vm._changeSize()">{{ 'common.bigImage'| translate}}
+                </label>
+                <label class="cover-match  m-r" ng-if="vm.contentParam.urlType== 'article' || 'link'">
+                    <input name="cover" ng-model="vm.contentParam.cover_type" type="radio" value="0" >{{ 'common.noImage'| translate}}
+                </label>
+            </div>
+        </div>
+        <div class="default-contain img-contain row new-upload-img" ng-if="vm.contentParam.cover_type != 0 ">
+            <label class="col-xs-2 label-title"></label>
+            <div class="fill-contian col-xs-10 ">
+                <!--上传优化-->
+                <div class="upload-type-default flex-item" ng-class="{'upload-big':vm.contentParam.cover_type == 3}">
+                    <div class="upload-img">
+                        <div class="add-img" ng-show="!vm.contentParam.cover_keys[0]" ng-click="vm.typeJudgment(0)">
+                            <i class="typeface-form_zengjia"></i>
+                            <span class="zengjia-font">点击添加</span>
+                        </div>
+                        <div class="img-box" ng-show="vm.contentParam.cover_keys[0]">
+                            <img src="{{vm.contentParam.cover_keys[0].cut_url}}" class="img_size">
+                        </div>
+                        <div class="img-over suspension-layer" ng-if="vm.contentParam.cover_keys[0]" ng-click="vm.typeJudgment(0,vm.contentParam.cover_keys[0])">
+                            <span class="change-tip">{{ 'common.changeImage'| translate}}</span>
+                        </div>
+                        <div class="btn-shot" ng-if="vm.contentParam.cover_keys[0]" ng-click="vm._screenShot(0,vm.contentParam.cover_keys[0])">
+                            <i class="icon-shot typeface-bianjiqi_caijian"></i>
+                        </div>
+                        <div class="cover-bg suspension-layer" ng-show="vm.newsParam.one"></div>
+                    </div>
+                    <div class="upload-img " ng-if="vm.contentParam.cover_type == 2">
+                        <div class="add-img" ng-show="!vm.contentParam.cover_keys[1]" ng-click="vm.typeJudgment(1)">
+                            <i class="typeface-form_zengjia"></i>
+                            <span class="zengjia-font">点击添加</span>
+                        </div>
+                        <div class="img-box" ng-show="vm.contentParam.cover_keys[1]">
+                            <img ng-src="{{vm.contentParam.cover_keys[1].cut_url}}" class="img_size">
+                        </div>
+                        <div class="img-over suspension-layer" ng-if="vm.contentParam.cover_keys[1]" ng-click="vm.typeJudgment(1,vm.contentParam.cover_keys[1])">
+                            <div class="change-tip">{{ 'common.changeCover'| translate}}</div>
+                        </div>
+                        <div class="btn-shot" ng-if="vm.contentParam.cover_keys[1]" ng-click="vm._screenShot(1,vm.contentParam.cover_keys[1])">
+                            <i class="icon-shot typeface-bianjiqi_caijian"></i>
+                        </div>
+                        <div class="cover-bg suspension-layer" ng-show="vm.newsParam.two"></div>
+                    </div>
+                    <div class="upload-img" ng-if="vm.contentParam.cover_type == 2">
+                        <div class="add-img" ng-show="!vm.contentParam.cover_keys[2]" ng-click="vm.typeJudgment(2)">
+                            <i class="typeface-form_zengjia"></i>
+                            <span class="zengjia-font">点击添加</span>
+                        </div>
+                        <div class="img-box" ng-show="vm.contentParam.cover_keys[2]">
+                            <img ng-src="{{vm.contentParam.cover_keys[2].cut_url}}" class="img_size">
+                        </div>
+                        <div class="img-over suspension-layer" ng-if="vm.contentParam.cover_keys[2]" ng-click="vm.typeJudgment(2,vm.contentParam.cover_keys[2])">
+                            <div class="change-tip" >{{ 'common.changeCover'| translate}}</div>
+                        </div>
+                        <div class="btn-shot" ng-if="vm.contentParam.cover_keys[2]" ng-click="vm._screenShot(2,vm.contentParam.cover_keys[2])">
+                            <i class="icon-shot typeface-bianjiqi_caijian"></i>
+                        </div>
+                        <div class="cover-bg suspension-layer" ng-show="vm.newsParam.three"></div>
+                    </div>
+                </div>
+                <!--上传优化-->
+            </div>
+            <div class="img-dropdown-contain white flex-item" ng-show="vm.dropdownShow">
+                <!--prev-page-->
+                <div class="page-icon preview-page" ng-class="{'no-page': vm.imgListPage.prev != true}" ng-click="vm.prevPage()">
+                    <i class="typeface-pagination_shangyiye"></i>
+                </div>
+                <!--prev-page-->
+
+                <div class="flex-item img-list">
+                    <div class="dropdown-default dropdown-upload" ng-show="vm.imgListPage.page == 1">
+                        <i class="upload-bg img-bg"></i>
+                        <span class="describe">本地图片</span>
+                        <input type="file" nv-file-select="" uploader="vm.newcoverloader" accept="image/gif,image/jpeg,image/png,image/jpg"/>
+                    </div>
+                    <div class="dropdown-default dropdown-webimg" ng-show="vm.imgListPage.page == 1" ng-click="vm.toWebImg()">
+                        <i class="webimg-bg img-bg"></i>
+                        <span class="describe">网络图片</span>
+                    </div>
+                    <!--pageImg-->
+                    <!--<div class="repeat-imgList flex-item">-->
+                        <div class="dropdown-default dropdown-contentimg" my-loading="vm.imgLoading"  ng-class="{'cover-img' : img.isCover == true}" ng-repeat="img in vm.pageImg">
+                            <img  class="content-img" src="{{img.url}}" ng-click="vm.setCover(img, $index)">
+                            <div class="preview-contain">
+                                <img class="" src="{{img.url}}" alt="">
+                            </div>
+                        </div>
+                    <!--</div>-->
+
+
+                </div>
+
+                <!--next-page-->
+                <div  class="page-icon next-page" ng-class="{'no-page': vm.imgListPage.next != true}" ng-click="vm.nextPage()">
+                    <i class="typeface-pagination_xiayiye"></i>
+                </div>
+                <!--next-page-->
+            </div>
+
+
+
+            <!--lalala-->
+            <!--<div class="parent">-->
+                <!--<div class="containers">-->
+                    <!--<div class="child">-->
+                        <!--<div class="dropdown-default dropdown-contentimg flex-item" ng-class="{'cover-img' : img.isCover == true}" ng-repeat="img in vm.imgList">-->
+                            <!--<img  class="content-img" src="{{img.url}}" ng-click="vm.setCover(img)">-->
+                            <!--<div class="preview-contain">-->
+                                <!--<img class="" src="{{img.url}}" alt="">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--lalala-->
+        </div>
+        <div class="default-contain row">
+            <label class="label-title col-xs-2">{{ 'common.classify'| translate}} <span class="optional">(必填)</span></label>
+            <div class="fill-contian col-xs-10 switch-box classify-father">
+                <div class="chose-btn btn" style="line-height: 24px;">选择分类</div>
+                <classify-preview classify-data="vm.radioList"
+                                  classify-name="''" box-name="'选择分类'"
+                                  classify-check="vm.contentParam.mainColumn" radio-style="'all'"
+                                  classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)"
+                                  classify-focus="false"
+                                  box-status="false"
+                ></classify-preview>
+            </div>
+        </div>
+        <div class="default-contain row height-45">
+            <label class="label-title col-xs-2">{{ 'common.comment'| translate}}</label>
+            <div class="fill-contian col-xs-10 switch-box">
+                <label class="radio-match m-r">
+                    <input name="comment" ng-model="vm.contentParam.is_close_comment" type="radio" value="0" ng-click="vm._setComment('is_close_comment',0)">{{ 'common.open'| translate}}
+                </label>
+                <label class="radio-match  m-r">
+                    <input name="comment" ng-model="vm.contentParam.is_close_comment" type="radio" value="1"  ng-click="vm._setComment('is_close_comment',1)">{{ 'common.close'| translate}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="default-hide" ng-show="vm.isFold">
+        <div class="default-contain row">
+            <label class="label-title col-xs-2">{{ 'common.featuredTitle'| translate}} <span class="optional">({{ 'common.optional'| translate}})</span></label>
+            <div class="fill-contian col-xs-10">
+                <input class="form-control form_input " ng-class="{'ng-dirty': vm.contentParam.subtitle }"  maxlength="20" name="subtitle" ng-model="vm.contentParam.subtitle" type="text">
+                <div class="question-box">
+                    <i class="fa fa-question-circle"></i>
+                    <div class="question-hover">填写精编标题后，终端内容列表中将显示精编标题。<span class="question-tip"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="default-contain row">
+            <label class="label-title col-xs-2">{{ 'common.author'| translate}} <span class="optional">({{ 'common.optional'| translate}})</span></label>
+            <div class="fill-contian col-xs-10">
+                <input class="form-control form_input" ng-class="{'ng-dirty': vm.contentParam.author }" type="text" name="author" ng-model="vm.contentParam.author">
+            </div>
+        </div>
+        <div class="default-contain row">
+            <label class="label-title col-xs-2">{{ 'common.source'| translate}} <span class="optional">({{ 'common.optional'| translate}})</span></label>
+            <div class="fill-contian col-xs-10 ">
+                <input class="form-control form_input " type="text"  ng-class="{'ng-dirty': vm.contentParam.source }" ng-model="vm.contentParam.source" name="source">
+            </div>
+        </div>
+        <div class="default-contain row" ng-if="vm.contentParam.urlType != 'link'">
+            <label class="label-title col-xs-2">{{ 'common.originalLink'| translate}}<span class="optional">({{ 'common.optional'| translate}})</span></label>
+            <div class="fill-contian col-xs-10">
+                <input class="form-control form_input " type="text"  ng-class="{'ng-dirty': vm.contentParam.source_link }" ng-model="vm.contentParam.source_link" name="ori">
+            </div>
+        </div>
+    </div>
+    <div class="fold-div">
+        <p class="" ng-click="vm._changeFold()">
+            <i class="fa" ng-class="{ 'fa-caret-square-o-down':!vm.isFold,'fa-caret-square-o-up':vm.isFold }"></i>
+            <span translate="">{{vm.isFold ? 'common.putAway' : 'common.unfolded'}}</span>{{ 'common.moreChoices'| translate}}
+        </p>
+    </div>
+
+</div>

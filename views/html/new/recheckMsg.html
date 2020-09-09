@@ -1,0 +1,89 @@
+<div class="box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">查询结果</h5>
+        <i class="fa typeface-form_guanbi map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 18px;cursor:pointer"></i>
+    </div>
+    <div class="modal-body">
+        <div class="list_contain hoge-table-contain white" my-loading="vm.paramListLoading">
+            <!-- <div class="hoge-error hoge-error-hight" ng-if="!vm.paramList.length" >
+                <div>
+                    <div class="error-img" ng-if="vm.errorMessage &&!vm.paramListLoading"></div>
+                    <p>{{vm.errorMessage}}</p>
+                </div>
+            </div> -->
+            <div class="table_header hoge-table-header">
+                <div class="b-l b-white flex-item">
+                    <div class="list-title flex-one">标题</div>
+                    <div class="list-author">创建人/创建时间</div>
+                    <!-- <div class="list-i">操作</div> -->
+                </div>
+            </div>
+            <div class="list white">
+                <div class="list-item hoge-item-border flex-item" ng-repeat="nor in vm.checkLists track by $index">
+                    <div class="list-body flex-one">
+                        <div class="list_img">
+                            <!-- <div class="list_img_type" ng-if="nor.article_type">{{nor.article_type === 'common' ? '通稿' : nor.article_type === 'weixin' ? '微信稿' : nor.article_type === 'tv' ? '电视稿' : nor.article_type === 'weibo' ? '微博稿' : ''}}</div> -->
+                            <span class="img-square" ng-if="nor.index_pic">
+                                <img ng-src="{{nor.index_pic}}?imageView/0/h/162/w/216">
+                            </span>
+                            <div class="img-square" ng-if="!nor.index_pic">
+                                <img src="../assets/images/mxu/img_cover.png">
+                            </div>
+                            <div class="publish-type">
+                                <!-- <span class="type-name" ng-if="nor.type=='article' && nor.articleName">{{item.articleName}}</span> -->
+                                <span class="type-name" ng-if="nor.type=='article'">文稿</span>
+                                <span class="type-name" ng-if="nor.type=='gallery'">图集</span>
+                                <span class="type-name" ng-if="nor.type=='video'">视频</span>
+                                <span class="type-name" ng-if="nor.type=='audio'">音频</span>
+                                <span class="type-name" ng-if="nor.type=='topic'">专题</span>
+                                <span class="type-name" ng-if="nor.type=='link'">外链</span>
+                            </div>
+                        </div>
+                        <div class="list_info">
+                            <div class="part_one">
+                                <a href class="list_title" ng-click="vm.goEdit(nor)">
+                                    <span>{{nor.title}}</span>
+                                </a>
+                            </div>
+                            <div class="part_two">
+                                <div class="progress_box">
+                                    <div class="">
+                                        <i class="typeface-form_yulan font-color"></i>
+                                        <small>{{nor.clicks}}</small>
+                                    </div>
+                                </div>
+                                <div class="progress_box" ng-if="nor.type=='gallery'">
+                                    <div class="">
+                                        <i class="typeface-list_dianzan"></i>
+                                        <small>{{nor.praises}}</small>
+                                    </div>
+                                </div>
+                                <div class="progress_box" ng-if="nor.type=='video'||nor.type=='article'">
+                                    <div class="">
+                                        <i class="typeface-list_zhuanfa"></i>
+                                        <small>{{nor.shares}}</small>
+                                    </div>
+                                </div>
+                                <div class="progress_box" ng-if="nor.type=='gallery'||nor.type=='video'||nor.type=='article'">
+                                    <div class="">
+                                        <i class="typeface-gongzuotai_pinglunshu"></i>
+                                        <small>{{nor.comments}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="list-author">
+                        <span>{{nor.create_user_name}}</span>
+                        <span>{{nor.created_at}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                <page-nation options="vm.pageOptions" turn-page="vm.getList()"></page-nation>
+            </div>
+        </div>
+         
+    </div>
+</div>

@@ -1,0 +1,170 @@
+<div class="comment-list"  ng-click="vm.hideContent()">
+    <!-- list -->
+    <div class="list_contain hoge-table-contain">
+        <div class="hoge-table-search">
+            <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                <button class="btn dropdown-toggle " data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.type}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-12">
+                    <a class="dropdown-item" ng-repeat="type in vm.listStatus" ng-click="vm.stateActive(type)">{{type.name}}</a>
+                </div>
+            </div>
+            <!-- <m2o-site-chose handler-site="vm.initSite(site_id,site_name)" clear-state-param="vm.clearStateParam()" change-site="vm.changeSite(site)"></m2o-site-chose> -->
+            <!-- <div class="btn-group dropdown m-r-15 hoge-dropdown" ng-if="rootSiteItems.id==0">
+                <button class="btn dropdown-toggle " data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.site_name}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-12">
+                    <a class="dropdown-item" ng-repeat="site in vm.m2oSiteList"  ng-click="vm.changeSite(site)">{{site.name}}</a>
+                </div>
+            </div> -->
+            <div class="pull-right">
+                <search-Box key-Word="vm.content"
+                        search-Key="vm.search(Item)"
+                        key-Press="vm.keyPress(Event)"
+                        hide-Kind="vm.hideAccessKind"
+                        is-Focus="vm.isFocus"
+                        place-Holder="vm.placeHolder"
+                >         
+                </search-Box>
+            </div>
+            <!-- <div class="form-group hoge-input-search pull-right">
+                <input type="text" placeholder="{{ 'comment.search'| translate}}" ng-keypress="vm.keyPress($event)" ng-model="vm.content">
+                <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.content)"></i>
+            </div> -->
+        </div>
+        <div class="list_header hoge-table-header" ng-show="vm.commentList.length">
+            <div class="wrap">
+                <div class="list-ctr"></div>
+                <div class="list-title" translate="comment.content"></div>
+                <div class="list-obj" translate="comment.object"></div>
+                <div class="list-classify">分类</div>
+                <div class="list-phone">会员手机号</div>
+                <div class="list-site">站点</div>
+                <div class="list-column">栏目</div>
+                <div class="list-status" translate="comment.state"></div>
+                <div class="list-other" translate="comment.time"></div>
+                <div class="list-i"></div>
+            </div>
+        </div>
+        <!-- <div class="ErrorTip hide" ng-class="{'show': !vm.commentList.length}">
+            <p>{{vm.error_msg}}</p>
+        </div> -->
+        <hoge-error hight-num="'350px'" arr-length="vm.commentList.length"></hoge-error>
+        <div class="list hoge-item-border" ng-show="true" ng-repeat="item in vm.commentList track by $index" id="{{item.id}}" >
+            <!--列表-->
+            <div class="list-item">
+                <div class="level-one">
+                    <div class="list-ctr">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                        </label>
+                    </div>
+                    <div class="list-title">
+                        <div class="list-left w-50 circle">
+                            <img ng-src="{{item.member.member_avatar}}" class="w-50 circle" ng-if="item.member && item.member.member_avatar">
+                            <span class="w-50 circle member_img" ng-if="!item.member || !item.member.member_avatar"></span>
+                        </div>
+                        <div class="list-body">
+                            <a class="username">
+                                {{item.showUserName}}
+                                <span ng-if="item.member_state == 1" >({{ 'comment.cancel' | translate}})</span>
+                                <span ng-if="item.member_state == 0" >({{ 'comment.tourist' | translate}})</span>
+                            </a>
+                            <div class="customer_card_box">
+                                <small class="block">
+                                    {{item.content}}
+                                </small>
+                                <div class="customer_card" ng-if="item.content.length > 30">
+                                    <div class="box box-body">
+                                        {{item.content}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="item.is_reply == 1" class="customer_reply">
+                                <div class="reply-num"  ng-click="vm.showContent($event,item,$index)">
+                                    <span>{{item.reply_num}}回复</span>
+                                    <i class="fa fa-sort-desc desc-icon"></i>
+                                </div>
+                                <!-- <div class="reply_content" ng-class='{active:vm.tab == $index }' ng-click="vm.showItem($event,item,$index)"> -->
+                                <div class="reply_content" ng-class='{active:vm.tab == $index }' ng-click="vm.showItem($event,item,$index)">
+                                    <!-- <span>{{item.reply_user}}&nbsp;&nbsp;&nbsp;{{item.reply_time}}&nbsp;回复:</span>
+                                    <p>{{item.reply_contents}}</p>
+                                    <i class="fa typeface-form_shanchu" ng-click="vm.deleteReply(item)"></i> -->
+                                    <div class="reply-msg-item" ng-repeat="vv in item.replies track by $index">
+                                        <img class="reply-icon" ng-src="{{vv.user.avatar ? vv.user.avatar : '/assets/images/mxu/avatar-50.jpg'}}" alt="">
+                                        <div class="reply-info-box">
+                                            <span class="reply-user">{{vv.user.username}}</span>
+                                            <span class="reply-time">{{vv.created_at}}</span>
+                                            <i class="fa typeface-form_shanchu" ng-click="vm.deleteReply(vv.id)"></i>
+                                        </div>
+                                        <div class="reply-content-box">
+                                            {{vv.content}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-obj" ng-if="item.content_title">
+                        <span ng-click="vm.getInitContent(item)" class="list-items" >{{item.content_title}}</span>
+                        <i class="typeface-form_tishi" ng-click="vm.chosePublishColumn(item)" style="margin-left:2px;cursor:pointer;color:#42A65A" ng-if="(item.type == 'article' || item.type == 'gallery' || item.type == 'audio' || item.type == 'video' || item.type == 'topic' || item.type == 'link') && item.content_title"></i>
+                    </div>
+                    <div class="list-obj" ng-if="!item.content_title">
+                        <i class="typeface-form_tishi" ng-click="vm.chosePublishColumn(item)" style="margin-left:2px;cursor:pointer;color:#42A65A" ng-if="item.type == 'article' || item.type == 'gallery' || item.type == 'audio' || item.type == 'video' || item.type == 'topic' || item.type == 'link'"></i>
+                    </div>
+                    <div class="list-classify">{{item.sort.name}}</div>
+                    <div class="list-phone">{{item.member.mobile}}</div>
+                    <div class="list-site">{{item.site.name}}</div>
+                    <div class="list-column">{{item.column.column_name}}</div>
+                    <div class="list-status" >
+                        <span ng-class="{'pending_audit':item.status==0,'already_examine':item.status==1,'retracted':item.status==2}"  ng-if="vm.permission.comment.audit | right" ng-click="vm.changeStatus(item.status,item.id)">{{item.status_name}}</span>
+                        <span ng-class="{'pending_audit':item.status==0,'already_examine':item.status==1,'retracted':item.status==2}"  class="no-under" ng-if="!(vm.permission.comment.audit | right)">{{item.status_name}}</span>
+                    </div>
+                    <div class="list-other" >
+                        <span>{{item.created_at}}</span>
+                    </div>
+                    <div class="list-comment" ng-show="(item.status == 1 || (item.status == 0 && vm.unreviewed_reply))">
+                            <div class="box-color">
+                                <span class="arrow bottom b-white"></span>
+                                 <div>回复</div>
+                            </div>
+                            <i  class="fa typeface-caozuo_huifu"  ng-click="vm.addReplayModal(item)" ></i>
+                            <!-- <i  class="fa typeface-caozuo_huifu not-allow"   ng-show="item.is_reply == 1 || item.status != 1"></i> -->
+                    </div>
+                    <div class="list-comment" ng-hide="(item.status == 1 || (item.status == 0 && vm.unreviewed_reply))"></div>
+                    <div class="list-i" >
+                        <i class="fa icon-shanchu1" ng-if="vm.permission.comment.delete | right" ng-click="vm.singleDelete(item)"></i>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--bottom-->
+        <div class="list_bottom" ng-if="vm.commentList.length">
+            <div class="btn-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">{{ 'comment.select'| translate}}
+                </label>
+            </div>
+            <div class="btn-toolbar list_bar flex-one btn-box">
+                <div class="btn-group">
+                    <button class="btn btn-outline btn-comment" ng-disabled="vm.commentList.length == 0" ng-if="vm.permission.comment.audit | right" ng-click="vm.review(2)" translate="comment.auditing"></button>
+                </div>
+                <div class="btn-group" >
+                    <button class="btn btn-outline btn-comment" ng-disabled="vm.commentList.length == 0" ng-if="vm.permission.comment.audit | right" ng-click="vm.review(1)" translate="comment.repulse"></button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn del-btn" ng-if="vm.permission.comment.delete | right" ng-disabled="vm.commentList.length == 0" ng-click="vm.moreDelete()" translate="comment.delete"></button>
+                </div>
+            </div>
+            <page-nation  options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+        </div>
+        <!--bottom-->
+
+    </div>
+    <!-- / list -->
+</div>

@@ -1,0 +1,12 @@
+{
+    "title" : "Transcoding settings",
+    "tip" : "This page is transcoding configuration settings page, the basic version only has a default transcoding configuration, if necessary, according to the actual use of the situation to adjust",
+    "default" : "Default transcoding configuration",
+    "defaultTip" : "The transcoding configuration affects the quality of the transcoding and the quality of the transcoded video",
+    "distinguish" : "Resolution",
+    "codeRate" : "Video bit rate",
+    "speed" : "Transcoding speed",
+    "speedTip" : "*The higher the transcoding rate, the lower the transcoding qualit",
+    "save" : "Save",
+    "submitSuccess" : "Submitted successfully!"
+}

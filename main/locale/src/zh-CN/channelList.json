@@ -1,0 +1,23 @@
+{
+    "boxTipUltimate" : "当前MXU系统版本为 MXU 旗舰版，最多支持15个直播频道。",
+    "boxTipProfession" : "当前MXU系统版本为 MXU 专业版，最多支持10个直播频道。其中视频不超过8个。",
+    "boxTipStandard" : "当前MXU系统版本为 MXU 标准版，支持6个直播频道，其中视频直播频道不得超过5个。",
+    "boxTipBasic" : "当前MXU系统版本为 MXU 基础版，支持3个直播频道，其中视频直播频道不得超过2个。",
+    "tv" : "电视",
+    "tvTip" : "电视频道可以直播视频信号流",
+    "isPublish" : "已发布",
+    "unPublish" : "未发布",
+    "preview" : "预览",
+    "edit" : "编辑",
+    "series" : "串联单",
+    "broadcasting" : "播控",
+    "broadcast" : "广播",
+    "broadcastTip" : "广播频道可以直播纯音频信号流",
+    "channelSort" : "频道排序",
+    "sort" : "排序",
+    "sortTip" : "拖拽频道进行排序",
+    "cancel" : "取消",
+    "save" : "保存",
+    "livePreview":"视频直播预览",
+    "saveSuccess":"排序成功"
+}

@@ -1,0 +1,9 @@
+{
+
+    "jurisdiction":"Permissions",
+    "description":"You can manage background users, roles, and roles",
+    "user":"User",
+    "role":"Role",
+    "allRole":"Roles group",
+    "roles":"All Roles"
+}

@@ -1,0 +1,280 @@
+<div class="box-shadow-md record-box">
+    <div class="modal-header">
+        <div class='header-title record-header'>
+            <span>操作记录</span>
+            <div class="close-btn" ng-click="vm.close()">
+                <i class="typeface-form_guanbi"></i>
+            </div>
+        </div>
+    </div>
+    <div class="record-body">
+        <div class="modal-body">
+            <!-- 操作记录 -->
+            <div class="history-record" ng-show="vm.operDynamicList.length">
+                <div class="history-version pull-left" id="history-version">
+                    <div class="left-version-content" id="left-version-content">
+                        <div class="dynamic-slip" ng-repeat="(idx,list) in vm.operDynamicList track by $index" ng-init="outIndex = $index">
+                            <div class="slip-contian flex-item" >
+                                <div class="mark-box">
+                                    <span class="time-mark">{{list.updated_at}}</span>
+                                </div>
+                                <div class="slip-type">
+                                    <!--图文应用-->
+                                    <div class="icon-box">
+                                    </div>
+                                </div>
+                                <div class="dynamic-detail">
+                                    <span class="detail-describe user">{{list.create_user_name}}</span>
+                                    <div class="detail-content">
+                                        <span class="detail-describe notClick">{{list.content}}</span>
+                                        <span class="view-btn" ng-click="vm.viewBefore(list)">预览</span>
+                                        <span class="reduction-btn" ng-click="vm.reductionBefore(list)">还原</span>                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="vertical" ng-if="vm.operDynamicList.length-1!=idx">|</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-list" ng-show="vm.addShow">
+                    <img src="/assets/images/mxu/home/new/icon_loading_2x.png" alt="" width="25px">
+                </div>
+                <div class="current-version pull-left">
+                    <div class="version-header">
+                        {{vm.currentShowInfo.updated_at}}&nbsp;&nbsp;{{vm.currentOperInfo.create_user_name}}&nbsp;&nbsp;{{vm.currentOperInfo.content}}
+                    </div>
+                    <div class="version-content" my-loading="vm.historyDetailLoading">
+                        <div class="api_item">
+                            <span class="api_attribute_name">接口名字：</span>
+                            <div class="input-box">
+                                <input type="text" ng-model="vm.currentShowInfo.name" disabled>
+                            </div>
+                            <!-- <span>{{vm.currentShowInfo.name}}</span> -->
+                        </div>
+                        <div class="api_item">
+                            <span class="api_attribute_name">描述：</span>
+                            <div  class="input-box">
+                                <textarea class="text-top" cols="30" rows="4" ng-model="vm.currentShowInfo.brief" disabled maxlength="128"></textarea>
+                            </div>
+                            <!-- <span>{{vm.currentShowInfo.brief}}</span> -->
+                        </div>
+                        <div class="api_item">
+                            <span class="api_attribute_name">请求方式：</span>
+                            <div class="input-box">
+                                <input type="text" ng-model="vm.currentShowInfo.request_type" disabled>
+                            </div>
+                            <!-- <span>{{vm.currentShowInfo.request_type}}</span> -->
+                        </div>
+                        <div class="api_item">
+                            <span class="api_attribute_name">路由设置：</span>
+                            <div class="input-box">
+                                <input type="text" ng-model="vm.currentShowInfo.api_url" disabled>
+                            </div>
+                            <!-- <span>{{vm.currentShowInfo.api_url}}</span> -->
+                        </div>
+                        <div class="api_item" ng-show="vm.currentShowInfo.pre_input">
+                            <input type="text" id="input-code-text" class="input-code-text" ng-show="vm.currentShowInfo.pre_input" value = "{{vm.input_code}}">
+                            <span class="api_attribute_name">输入参数前置代码：
+                                <span class="copy-btn" ng-click="vm.copyInCode(vm.currentShowInfo.pre_input)">复制</span>
+                            </span>
+                            <!-- <div class="input-box input-code">
+                                <div class="ele-code" id="ele-html">
+                                </div>
+                            </div> -->
+                            <div class="code-box">
+                                <span ng-bind-html="vm.currentShowInfo.pre_input">{{vm.currentShowInfo.pre_input}}
+                                </span>
+                            </div>
+                            <!-- <span class="code-box">{{vm.currentShowInfo.pre_input}}</span> -->
+                        </div>
+                        <div class="api_item" ng-show="vm.currentShowInfo.input_params.length">
+                            <span class="api_attribute_name">输入参数：</span>
+                            <div class="dataConditions">
+                                <div class="list_contain hoge-table-contain white" my-loading="vm.conditionalListLoading">
+                                    <div class="table_header hoge-table-header">
+                                        <div class="b-l b-white flex-item">
+                                            <div class="list-title">参数名称</div>
+                                            <div class="list-title">参数标识</div>
+                                            <div class="list-title">值类型</div>
+                                            <div class="list-title">值</div>
+                                            <div class="list-title">传递方式</div>
+                                            <!-- <div class="list-i">操作</div> -->
+                                        </div>
+                                    </div>
+                
+                                    <div class="list white">
+                                        <div class="list-item hoge-item-border flex-item"
+                                                ng-repeat=" (idx, nor) in vm.currentShowInfo.input_params track by $index">
+                                            <div class="list-title">
+                                                <input type="text"  class="input-list" ng-model="nor.name" disabled>
+                                            </div>
+                                            <div class="list-title">
+                                                <input type="text"  class="input-list" ng-model="nor.name" disabled>
+                                            </div>
+                
+                                            <div class="list-title">
+                                                <!-- <input type="text"  class="input-list" ng-model="nor.value_type == 1 ? '值类型' : '文件类型'" disabled> -->
+                                                <span class="dropdown-label">{{nor.value_type == 1 ? '值类型' : '文件类型'}}</span>
+                                            </div>
+                                            <div class="list-title">
+                                                <input type="text"  class="input-list" ng-model="nor.name" disabled>
+                                            </div>
+                                            <div class="list-title">
+                                                <span class="dropdown-label">{{nor.add_type == 1 ? '用户传参' : '系统传参'}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <span ng-repeat="inputParam in vm.currentShowInfo.input_params">
+                                <span class="param_attribute_name">参数名称：{{inputParam.name}}</span>
+                                <span class="param_attribute_name">参数标识：{{inputParam.key}}</span>
+                                <span class="param_attribute_name">值类型：{{inputParam.value_type==1 ? '值类型' :'文件类型'}}</span>
+                                <span class="param_attribute_name">值：{{inputParam.default_value}}</span>
+                                <span class="param_attribute_name">传递方式：{{inputParam.add_type==1 ? '用户传参' :'系统传参'}}</span>
+                            </span> -->
+                            <!-- <span>{{vm.currentShowInfo.input_params}}</span> -->
+                        </div>
+                        <div class="api_item">
+                            <span ng-repeat="(handlingIndex,handlingItem) in vm.currentShowInfo.process_mode">
+                                <div ng-if="handlingItem.process_type == 1 && vm.currentShowInfo.process_mode.length == 1">
+                                    <span class="param_attribute_name">处理方式：系统接口</span>
+                                    <div class="internal-box">
+                                        <div class="internal-item">
+                                            <label class="label-name">选择接口:</label>
+                                            <input type="text" ng-model="handlingItem.system_app_name" disabled>
+                                        </div>
+                                        <div class="internal-item">
+                                            <label class="label-name">节点变量:</label>
+                                            <input type="text" ng-model="handlingItem.return_key" disabled>
+                                        </div>
+                                        <div class="internal-item" ng-if="handlingItem.params">
+                                            <label class="label-name">参数:</label>
+                                            <input type="text" ng-model="handlingItem.params" disabled>
+                                        </div>
+                                    </div>
+                                    <!-- <span class="param_attribute_name">选择接口：{{handlingItem.system_app_name}}</span> -->
+                                    <!-- <span class="param_attribute_name">节点变量：{{handlingItem.return_key}}</span> -->
+                                    <!-- <span class="param_attribute_name">参数：{{handlingItem.params}}</span> -->
+                                </div>
+                                <div ng-if="handlingItem.process_type == 2">
+                                    <span class="param_attribute_name">处理方式：外部接口</span>
+                                    <div class="internal-box" ng-show="handlingItem.api_url || handlingItem.request_type || handlingItem.return_key|| handlingItem.params">
+                                        <span>接口{{handlingIndex + 1}}</span>
+                                        <div class="internal-item" ng-if="handlingItem.api_url">
+                                            <label class="label-name">选择接口:</label>
+                                            <input type="text" ng-model="handlingItem.api_url" disabled>
+                                        </div>
+                                        <div class="internal-item" ng-if="handlingItem.request_type">
+                                            <label class="label-name">请求方式:</label>
+                                            <input type="text" ng-model="handlingItem.request_type" disabled>
+                                        </div>
+                                        <div class="internal-item" ng-if="handlingItem.return_key">
+                                            <label class="label-name">节点变量:</label>
+                                            <input type="text" ng-model="handlingItem.return_key" disabled>
+                                        </div>
+                                        <div class="internal-item" ng-if="handlingItem.params">
+                                            <label class="label-name">参数:</label>
+                                            <input type="text" ng-model="handlingItem.params" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="handlingItem.process_type == 1 && vm.currentShowInfo.process_mode.length > 1">
+                                    <span class="param_attribute_name" ng-show="handlingIndex == 0">处理方式：多接口</span>
+                                    <div class="internal-box" ng-show="handlingItem.system_app_name || handlingItem.return_key || handlingItem.params">
+                                        <span>接口{{handlingIndex + 1}}</span>
+                                        <div class="internal-item">
+                                            <label class="label-name" ng-if="handlingItem.system_app_name">选择接口:</label>
+                                            <input type="text" ng-model="handlingItem.system_app_name" disabled>
+                                        </div>
+                                        <div class="internal-item" ng-if="handlingItem.return_key">
+                                            <label class="label-name">节点变量:</label>
+                                            <input type="text" ng-model="handlingItem.return_key" disabled>
+                                        </div>
+                                        <div class="internal-item" ng-if="handlingItem.params">
+                                            <label class="label-name">参数:</label>
+                                            <input type="text" ng-model="handlingItem.params" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                            <!-- <span>{{vm.currentShowInfo.process_mode}}</span> -->
+                        </div>
+                        <div class="api_item" ng-show="vm.currentShowInfo.output_maps.length">
+                            <span class="api_attribute_name">返回参数处理：</span>
+                            <div class="dataConditions">
+                                <div class="list_contain hoge-table-contain white">
+                                    <div class="table_header hoge-table-header">
+                                        <div class="b-l b-white flex-item">
+                                            <div class="output-list-title">参数名称</div>
+                                            <div class="output-list-title">输出参数</div>
+                                            <div class="output-list-title">对应参数</div>
+                                            <!-- <div class="list-title">值</div>
+                                            <div class="list-title">传递方式</div> -->
+                                            <!-- <div class="list-i">操作</div> -->
+                                        </div>
+                                    </div>
+                
+                                    <div class="list white">
+                                        <div class="list-item hoge-item-border flex-item"
+                                                ng-repeat=" (idx, nor) in vm.currentShowInfo.output_maps track by $index"
+                                        >
+                                            <div class="output-list-title">
+                                                <input type="text"  class="output-list" ng-model="nor.name" disabled>
+                                            </div>
+                                            <div class="output-list-title">
+                                                <input type="text"  class="output-list" ng-model="nor.name" disabled>
+                                            </div>
+                
+                                            <div class="output-list-title">
+                                                <input type="text"  class="output-list" ng-model="nor.name" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <span ng-repeat="outputParam in vm.currentShowInfo.output_maps">
+                                <span class="param_attribute_name">参数名称：{{outputParam.name}}</span>
+                                <span class="param_attribute_name">输出参数：{{outputParam.output_param}}</span>
+                                <span class="param_attribute_name">对应参数：{{outputParam.map_param}}</span>
+                            </span> -->
+                            <!-- <span>{{vm.currentShowInfo.output_maps}}</span> -->
+                        </div>
+                        <div class="api_item" ng-if="vm.currentShowInfo.pre_output">
+                            <input type="text" id="output-code-text" class="output-code-text" value = "{{vm.output_code}}">
+                            <span class="api_attribute_name">返回参数代码：
+                                <span class="copy-btn" ng-click="vm.copyOutCode(vm.currentShowInfo.pre_output)">复制</span>
+                            </span>
+                            <!-- <div class="input-box input-code-box">
+                                <div class="ele-code" id="ele-html-code">
+                                </div>
+                            </div> -->
+                            <div class="code-box">
+                                <span>{{vm.currentShowInfo.pre_output}}</span>
+                            </div>
+                        </div>
+                        <div class="api_item">
+                            <span class="api_attribute_name">是否开启缓存：</span>
+                            <span>{{vm.currentShowInfo.cache_open ? '开' : '关'}}</span>
+                        </div>
+                        <div class="api_item">
+                            <span class="api_attribute_name">缓存时间：</span>
+                            <span>{{vm.currentShowInfo.cache_time}}分</span>
+                        </div>
+                        <div class="api_item">
+                            <span class="api_attribute_name">是否开启验证：</span>
+                            <span>{{vm.currentShowInfo.is_verify ? '开' : '关'}}</span>
+                        </div>  
+                        <span id="current-content"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="history-record history-no-data" ng-show="!vm.operDynamicList.length">
+                <div class="no-record">
+                    <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                    <p class="text">暂无操作记录</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

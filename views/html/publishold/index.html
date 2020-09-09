@@ -1,0 +1,25 @@
+<div class="publish-wrapper">
+    <div class="main-body ">
+        <div class="contain-body flex-item mxu_side_wrapper column-set">
+            <!--左侧栏目设置-->
+            <div class="w_list menu-wrap">
+
+                <classify-sidebar classify-list = "vm.navList"
+                                  handle-next = "vm.getChilds(Item)"
+                                  go-back="vm.navBack()"
+                                  category-id ="vm.categoryId"
+                                  storage-list = "vm.storageList"
+                                  jump-classify="vm.jumpClassify(Item)"
+                                  is-jump="true"
+                ></classify-sidebar>
+                </div>
+
+            <!--发布列表-->
+            <div class="flex-one second-view" ng-if="$state.current.name !=='app.interact.voteForm'">
+                <div ui-view></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<m2o-footer ></m2o-footer>

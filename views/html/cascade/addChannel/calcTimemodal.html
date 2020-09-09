@@ -1,0 +1,29 @@
+<form class="modal-video box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">时移存储空间计算器</h5>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="label-name">流码率</label>
+            <input type="text" ng-model="vm.streams" ng-focus="vm.streamsFocus = true"
+                    ng-class="{'focus-color':vm.streamsFocus}" ng-blur="vm.streamsFocus = false" maxlength="4"
+                    ng-change="vm.limitedStreams(vm.streams)">
+            <span class="unit">KB</span>
+            <span class="limit_valide" ng-show="vm.limitValide" translate="channelForm.timeShiftValide1"></span>
+        </div>
+        <div class="form-group">
+            <label class="label-name">时移时间</label>
+            <input type="text" ng-model="vm.time" ng-focus="vm.timeFocus = true"
+                    ng-change="vm.limitedShift(vm.time)"
+                    ng-class="{'focus-color':vm.timeFocus}" ng-blur="vm.timeFocus = false" maxLength="3"
+            >
+            <span class="unit">小时</span>
+            <span class="limit_valide" ng-show="vm.limitValide1" translate="channelForm.timeShiftValide2"></span>
+        </div>
+        <div class="calc-bottom">
+            <span class="calc-bottom-tip">占用磁盘空间</span>
+            <span class="calc-num">{{vm.calcResults(vm.results)}}</span>
+        </div>
+    </div>
+</form>

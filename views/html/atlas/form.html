@@ -1,0 +1,865 @@
+<main class="main-form-wrap atlas-form-wrap">
+    <nav class="hoge-nav">
+        <div class="hoge-table-add">
+            <div class="hoge-edit-head">
+                <div class="hoge-return-body" ng-if="vm.noEdit == 'topic'" onclick="history.go(-1)">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回专题</span>
+                </div>
+                <div ng-if="!vm.hotFlag && !vm.publishFlag && !vm.commentFlag && !vm.isOriginal && !vm.reviewFlag && vm.noEdit !='topic'" class="hoge-return-body" ui-sref="app.content.menu.list({type:'gallery',per_num:vm.pageSize,page:vm.pageCount,title:vm.listSearch, hideSynergyKind: vm.hideAccessKind ? true : null, project_id: vm.listProjectId ? vm.listProjectId : null, project_title: vm.listProjectTitle ? vm.listProjectTitle : null,status:vm.moduleStatus})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.hotFlag" class="hoge-return-body" ui-sref="app.hot.menu.list({page:vm.pageCount,per_num:vm.pageSize,hideSynergyKind: vm.hideAccessKind ? true : null, project_id: vm.listProjectId ? vm.listProjectId : null, project_title: vm.listProjectTitle ? vm.listProjectTitle : null})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.publishFlag" class="hoge-return-body" ui-sref="app.publish.menu.list({page:vm.pageCount,per_num:vm.pageSize,type:vm.publishType, hideSynergyKind: vm.hideAccessKind ? true : null, column_id:vm.column_id})">
+                        <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.commentFlag" class="hoge-return-body" ui-sref="app.comment.list({title:vm.listSearch, hideSynergyKind: vm.hideAccessKind ? true : null, project_id: vm.listProjectId ? vm.listProjectId : null, project_title: vm.listProjectTitle ? vm.listProjectTitle : null})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.isOriginal" class="hoge-return-body" ng-click="vm.cancelForm()">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.reviewFlag" class="hoge-return-body" ui-sref="app.content.review.list({page:vm.pageCount,per_num:vm.pageSize,type:vm.reviewType, hideSynergyKind: vm.hideAccessKind ? true : null})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <em ng-if="!vm.hotFlag && vm.noEdit != 'topic'">{{vm.atlasId?'编辑':'新建'}}图集</em>
+                 <!-- 徐瑞start -->
+                <!-- 新建 -->
+                <div class="atlas-process-width-status" ng-show="!vm.atlasId && !vm.isOriginal">
+                    <span class="content-pendingAudit padding-r-w">待审核</span>
+                    <span class="process-span" ng-click="vm.chooseProcess()">{{vm.is_show_process ? '已选审核流程': '选择流程'}}</span>
+                    <div class="process-data-box new-process-data-box" ng-if="vm.showProcessBox">
+                        <div class="step-nav-box">
+                            <span class="nav-box nav-title">已选流程&nbsp;&nbsp;(保存后生效)</span>
+                            <span class="nav-box nav-btn-re-election" ng-click="vm.reElectionProcess()">重选</span>
+                            <span class="nav-box nav-btn-clear" ng-click="vm.clearProcess()">清空</span>
+                        </div>
+                        <div class="step-box" ng-repeat="(stepIndex,stepItem) in vm.pro_list.nodes">
+                            <span class="step-name-box">{{stepItem.rangeName}}</span>
+                            <div class="flex-item">
+                                <div class="step-img-box" ng-style="{'min-width': stepItem.range != 0 && 50+'px' ,'width': (stepItem.users.length > 0 && stepItem.users.length *30+'px') || (stepItem.role_departments.length > 0 && stepItem.role_departments.length *30+'px')}">
+                                    <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="stepItem.range==1">
+                                    <!-- <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}"> -->
+
+                                    <div class="user-one no-avatar-bg{{idx}}" ng-repeat="(idx,userItem) in stepItem.users" ng-style="{'left':idx*25+'px'}" ng-if="idx <= 2">
+                                        <span class="avatar-34 no-avatar " ng-if="!userItem.avatar"></span>
+                                        <img class="avatar-34" ng-src="{{userItem.avatar}}" alt="" ng-if="userItem.avatar">
+                                        <!-- <img class="avatar-34" ng-src="userItem.avatar" alt="" ng-if="userItem.avatar"> -->
+                                        <span>{{userItem.name}}</span>
+                                    </div>
+                                    <div class="user-range-3" ng-style="{'left':idx*25+'px'}" ng-if="stepItem.range==3" ng-repeat="(idx,userItem) in stepItem.role_departments">
+                                        <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                    </div>
+                                    <span class="overflow-user" ng-if="stepItem.users.length >= 4">
+                                        <i class="typeface-form_zengjia fa"></i>
+                                        <span class="overflow-num">{{stepItem.users.length - 3}}</span>                       
+                                    </span>
+                                </div>
+                                <div class="role-arrow" ng-if="stepIndex != (vm.processData.nodes.length - 1)">
+                                    <i class="typeface-shengao_xiayige"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- 编辑 -->
+                <div class="atlas-process-width-status" ng-show="vm.atlasId && vm.create_user_name == vm.user_name && !vm.isOriginal">
+                    <span class="process-span" ng-if="vm.editStatus==1 && !vm.auditId" ng-click="vm.chooseProcess()">{{vm.is_show_process ? '已选审核流程': '选择流程'}}</span>
+                    <div class="process-data-box" ng-if="vm.showProcessBox">
+                        <div class="step-nav-box">
+                            <span class="nav-box nav-title">已选流程&nbsp;&nbsp;(保存后生效)</span>
+                            <span class="nav-box nav-btn-re-election" ng-click="vm.reElectionProcess()">重选</span>
+                            <span class="nav-box nav-btn-clear" ng-click="vm.clearProcess()">清空</span>
+                        </div>
+                        <div class="step-box" ng-repeat="(stepIndex,stepItem) in vm.pro_list.nodes">
+                            <span class="step-name-box">{{stepItem.rangeName}}</span>
+                            <div class="flex-item">
+                                <div class="step-img-box" ng-style="{'min-width': stepItem.range != 0 && 50+'px' ,'width': (stepItem.users.length > 0 && stepItem.users.length *30+'px') || (stepItem.role_departments.length > 0 && stepItem.role_departments.length *30+'px')}">
+                                    <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="stepItem.range==1">
+                                    <!-- <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}"> -->
+
+                                    <div class="user-one no-avatar-bg{{idx}}" ng-repeat="(idx,userItem) in stepItem.users" ng-style="{'left':idx*25+'px'}" ng-if="idx <= 2">
+                                        <span class="avatar-34 no-avatar " ng-if="!userItem.avatar"></span>
+                                        <img class="avatar-34" ng-src="{{userItem.avatar}}" alt="" ng-if="userItem.avatar">
+                                        <!-- <img class="avatar-34" ng-src="userItem.avatar" alt="" ng-if="userItem.avatar"> -->
+                                        <span>{{userItem.name}}</span>
+                                    </div>
+                                    <div class="user-range-3" ng-style="{'left':idx*25+'px'}" ng-if="stepItem.range==3" ng-repeat="(idx,userItem) in stepItem.role_departments">
+                                        <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                    </div>
+                                    <span class="overflow-user" ng-if="stepItem.users.length >= 4">
+                                        <i class="typeface-form_zengjia fa"></i>
+                                        <span class="overflow-num">{{stepItem.users.length - 3}}</span>                       
+                                    </span>
+                                </div>
+                                <div class="role-arrow"ng-if="stepIndex != (vm.processData.nodes.length - 1)">
+                                    <i class="typeface-shengao_xiayige"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end-->
+                <em ng-if="vm.hotFlag || vm.noEdit == 'topic'">阅读模式</em>
+                <!-- 王亚让改的 所有从发布库进去的都直接显示已发布且不可点击 -->
+                <div class="edit-width-status" ng-if="!vm.isOriginal && vm.publishFlag">
+                    <span class="content-audited">已发布</span>
+                </div>
+                <div class="edit-width-status" ng-class="{'other-edit-width-status': vm.editStatus!=1 || vm.create_user_name != vm.user_name}" ng-if="!vm.isOriginal && !vm.publishFlag">
+                    <!-- <span class="content-pendingAudit" ng-if="vm.editStatus==1">待审核</span> -->
+                    <!-- <span class="content-audited" ng-if="vm.editStatus==2">已审核</span> -->
+                    <!--<span class="label primary m-l-sm light-green-200" ng-if="nor.status==3" translate="content.release">已发布</span>-->
+                    <!-- <span class="content-repulsed" ng-if="vm.editStatus==4">已打回</span> -->
+                    <!-- <span class="content-repulsed" ng-if="vm.editStatus==5">审核中</span> -->
+                    <!-- <span class="triangle-btn" ng-if="vm.audit.id" ng-class="{'audited-green': vm.editStatus==2}"></span> -->
+                    <span class="content-pendingAudit" ng-if="vm.editStatus==1 && !vm.auditId">待审核</span>
+                    <span class="content-audited" ng-if="vm.editStatus==2">已审核</span>
+                    <span class="content-audited" ng-if="vm.editStatus==3" translate="content.release">已发布</span>
+                    <span class="content-repulsed" ng-if="vm.editStatus==4">已打回</span>
+                    <span class="content-repulsed" ng-if="vm.editStatus==9">待发布</span>
+                    <span class="content-repulsed" ng-if="vm.editStatus==5 || (vm.editStatus==1 && vm.auditId)">审核中</span>
+                    <span class="triangle-btn status-btn" ng-style="{borderTopColor: (vm.editStatus == 2 || vm.editStatus == 3) ? '#42a65a' : '#f1453d'}" ng-class="{'audited-green': vm.editStatus==2}" ng-if="(vm.editStatus==5 || (vm.editStatus==1 && vm.auditId) || vm.editStatus==2 || vm.editStatus==3 || vm.editStatus==4 || vm.editStatus==9) && vm.auditId" ng-click="vm.toggleShowAudit()"></span>
+                    <div class="audit-contain" ng-if="vm.showAudit">
+                        <div class="audit-top">
+                            <button class="tog-btn" ng-click="vm.toggleLog(1)" ng-class="{'active': !vm.showLog}">基本信息</button>
+                            <button class="tog-btn posi" ng-click="vm.toggleLog(2)" ng-class="{'active': vm.showLog}">审稿日志</button>
+                        </div>
+                        <div class="audit-mid" ng-if="!vm.showLog">
+                            <div class="mid-top">
+                                <span class="cur-pro">当前进度(<span ng-if="vm.editStatus==5 || (vm.editStatus==1 && vm.auditId)">{{vm.currentAtlasProgress}}级审核</span><span ng-if="vm.editStatus==2 || vm.editStatus==3">审核完成</span><span ng-if="vm.editStatus==4">已打回</span><span ng-if="vm.editStatus==9">待发布</span>)</span>
+                                <span class="full-pro" ng-click="vm.showFullProcess()">完整流程</span>
+                                <div class="right-div" ng-if="vm.showRightDiv">
+                                    <div class="box"></div>
+                                    <div class="process-nodes">
+                                        <div class="node-item" ng-repeat="(ndx,node) in vm.processData.nodes">
+                                            <div class="node-main">
+                                                <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                                <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                                    <span ng-if="node.range == 2">指定用户</span>
+                                                    <span ng-if="node.range == 1">全体用户</span>
+                                                    <span ng-if="node.range == 3">部门角色</span>
+                                                    <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                                    <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                                </div>
+                                                <div class="node-role flex-item">
+                                                    <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                        <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                        <div class="user-img-box" ng-if="node.range==2" >
+                                                            <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                                ng-style="{'left':idx*25+'px'}">
+                                                                <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                                <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                                <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                                <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                                <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                                    <span class="arrow bottom b-white"></span>
+                                                                    <div class="box-body">{{user.name}}</div>
+                                                                </div>
+                                                            </div>
+                                                            <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                                <i class="typeface-form_zengjia fa"></i>
+                                                                <span class="overflow-num">{{node.users.length-3}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                            <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                                <span class="arrow bottom b-white"></span>
+                                                                <div class="box-body">{{user.role.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                            <i class="typeface-list_caozuo"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="role-arrow"ng-if="$index != (vm.processData.nodes.length - 1)">
+                                                        <i class="typeface-shengao_xiayige"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-div" ng-if="vm.showBottomDiv">
+                                    <div class="box"></div>
+                                    <div class="process-nodes">
+                                        <div class="node-item" ng-repeat="(ndx,node) in vm.processData.nodes">
+                                            <div class="node-main">
+                                                <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                                <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                                    <span ng-if="node.range == 2">指定用户</span>
+                                                    <span ng-if="node.range == 1">全体用户</span>
+                                                    <span ng-if="node.range == 3">部门角色</span>
+                                                    <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                                    <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                                </div>
+                                                <div class="node-role flex-item">
+                                                    <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                        <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                        <div class="user-img-box" ng-if="node.range==2" >
+                                                            <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                                ng-style="{'left':idx*25+'px'}">
+                                                                <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                                <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                                <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                                <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                                <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                                    <span class="arrow bottom b-white"></span>
+                                                                    <div class="box-body">{{user.name}}</div>
+                                                                </div>
+                                                            </div>
+                                                            <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                                <i class="typeface-form_zengjia fa"></i>
+                                                                <span class="overflow-num">{{node.users.length-3}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                            <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                                <span class="arrow bottom b-white"></span>
+                                                                <div class="box-body">{{user.role.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                            <i class="typeface-list_caozuo"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="role-arrow"ng-if="$index != (vm.processData.nodes.length - 1)">
+                                                        <i class="typeface-shengao_xiayige"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="process-nodes">
+                                <div class="node-item" ng-repeat="(ndx,node) in vm.currentNodes">
+                                    <div class="node-main">
+                                        <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                        <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                            <span ng-if="node.range == 2">指定用户</span>
+                                            <span ng-if="node.range == 1">全体用户</span>
+                                            <span ng-if="node.range == 3">部门角色</span>
+                                            <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                            <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                        </div>
+                                        <div class="node-role flex-item">
+                                            <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                <div class="user-img-box" ng-if="node.range==2" >
+                                                    <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                        ng-style="{'left':idx*25+'px'}">
+                                                        <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                        <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                        <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                        <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                        <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                            <span class="arrow bottom b-white"></span>
+                                                            <div class="box-body">{{user.name}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                        <i class="typeface-form_zengjia fa"></i>
+                                                        <span class="overflow-num">{{node.users.length-3}}</span>
+                                                    </span>
+                                                </div>
+                                                <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                    <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                    <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                        <span class="arrow bottom b-white"></span>
+                                                        <div class="box-body">{{user.role.name}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                    <i class="typeface-list_caozuo"></i>
+                                                </div>
+                                            </div>
+                                            <div class="role-arrow" ng-if="node.hasNext">
+                                                <i class="typeface-shengao_xiayige"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mid-bottom">
+                                <div class="title">稿件评论({{vm.commentList.length}})</div>
+                                <div class="content">
+                                    <div class="no-data" ng-if="!vm.commentList.length && !vm.commentLoading">
+                                        <div>
+                                            <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                                            <p class="text">暂无评论</p>
+                                        </div>
+                                    </div>
+                                    <div class="item" ng-repeat="comment in vm.commentList track by $index">
+                                        <img class="image" ng-src="{{comment.user.avatar}}" ng-if="comment.user.avatar" alt="">
+                                        <span class="image no-avatar-bg{{comment.user.bgColor}}" ng-if="!comment.user.avatar">{{comment.user.avatarName}}</span>
+                                        <div class="name">
+                                            <span>{{comment.user.name}}</span>
+                                            <span class="time">{{comment.time}}</span>
+                                        </div>
+                                        <p class="comment">{{comment.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="audit-bottom" ng-if="!vm.showLog">
+                            <input type="text" class="bottom-input" ng-model="vm.comment" placeholder="输入评论">
+                            <button class="primary-btn" ng-click="vm.setComment()">确定</button>
+                        </div>
+                        <div class="audit-mid" ng-if="vm.showLog">
+                            <div class="no-data" ng-if="!vm.logList.length && !vm.logLoading">暂无数据</div>
+                            <div class="log-item" ng-repeat="log in vm.logList track by $index">
+                                <p class="time">{{log.created_at}}</p>
+                                <p class="operation">{{log.name}} {{log.operationName}} 了该稿件。<span ng-if="log.operation == 2">评论：{{log.reason}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="form-content hoge-flex" ng-class="{'no-event':vm.noEdit}">
+        <aside class="left-aside default-left">
+            <div class="side_form_fixed">
+                <content-attr dropdown-show="vm.showDropdown" is-zyshow="vm.showZY" is-Original="vm.isOriginal" content-param="vm.contentParam" detail-category-name="vm.detailCategoryName" article-type="'atlas'" detail-column-name="vm.detailColumnName" detail-fenlei-name="vm.detailFenleiName" open-base="vm.openBase" cover-style="vm.coverStyle"></content-attr>
+            </div>
+        </aside>
+        <div>
+            <div class="main-form-content hoge-border" my-loading="vm.imgloading">
+                <div class="content-form-title mb20">
+                    <div class="title-box list-title">
+                        <textarea type="text" name="title" autocomplete="off"
+                                placeholder="请输入图集标题" maxlength="300" ng-model="vm.atlas.title" ng-blur="vm.relevant('blur')" ng-class="{'mengyu-font': vm.resMengyu(vm.atlas.title)}"></textarea>
+                        <div  ng-class="{'mengyu-title': vm.resMengyu(vm.atlas.title)}" ng-if="vm.resMengyu(vm.atlas.title)">
+                                    <span class="jiantou arrow bottom"></span>
+                                    <span class="hideTitle">{{vm.atlas.title}}</span>
+                        </div>
+                        <content-title-tip is-zyshow="vm.showZY" tip-title="vm.atlas.title" top="12"></content-title-tip>
+                    </div>
+                </div>
+                <div class="atlas-content">
+                    <div class="upload-btn-group">
+                        <input  class="input-upload input-disnone" type="file"
+                            id="noImgFile" nv-file-select
+                            uploader="vm.localUploader"
+                            accept="image/gif,image/jpeg,image/png,image/bmp,.webp" multiple>
+                        <input  class="input-upload input-disnone" type="file" id="hasImgFile"
+                            nv-file-select  uploader="vm.localUploader"
+                            accept="image/gif,image/jpeg,image/png,image/bmp,.webp"
+                            multiple>
+                        <input type="file" id="localFile" nv-file-select class="input-disnone"
+                            uploader="vm.localUploader"
+                        accept="image/gif,image/jpeg,image/png,image/bmp,.webp" multiple>
+                    </div>
+                    <div class="atlas-uploaded-area" ng-if="vm.showList.length">
+                        <div class="hoge-flex hoge-flex-center mb20">
+                            <div class="btn-box hoge-flex hoge-flex-one">
+                                <div class="form-inline text-left p-0 hoge-flex hoge-flex-center"  ng-hide="vm.sort_start || !vm.showList[0] ">
+                                    <div class="checkbox inlineBlock">
+                                        <label class="allCheck">
+                                            <input type="checkbox" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()" class="m-r-sm"> {{ 'atlas.allSelected'| translate}}
+                                        </label>
+                                    </div>
+                                    <button ng-if="vm.selected.length" class="btn-del btn m-l white btn-sm del-btn" ng-disabled="!vm.selected.length" ng-click="vm.delAllImg()">{{ 'atlas.delete'| translate}}</button>
+                                    <button class="tuji_sort p-r btn m-l btn-comment" ng-if="vm.id" ng-class="{'sort_trans_start': vm.selected.length, 'sort_trans': vm.selected.length}" ng-click="vm.batchDownload()">
+                                        <a>下载</a>
+                                    </button>
+                                    <button class="tuji_sort p-r btn m-l btn-comment" ng-class="{'sort_trans_start': vm.selected.length, 'sort_trans': vm.selected.length}" ng-click="vm.sort()">{{ 'atlas.sort'| translate}}</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-default cre-btn" my-loading="vm.local_loading" ng-click="vm.MaterialRef()" ng-if="vm.showCre">素材引用</button>
+                            <button class="btn btn-purple" my-loading="vm.local_loading" ng-click="vm.clickNoImg('#localFile','none')">上传图片</button>
+                        </div>
+                        <input type="text" id="copy-img-url" class="copy-text" value = "{{vm.imgUrl}}">
+                        <div class="atlas-list-wrap 1">
+                            <div class="sort-wrap" ng-show="vm.sort_start">
+                                <div class="red-50 sort_board m-b-xs">
+                                    <i class="fa typeface-login_tishi" style="margin-right:8px;"></i>
+                                    <!-- {{ 'atlas.sortTip'| translate}} -->
+                                    <span class="paixu_setting">排序功能已开启，拖动图片排序~</span>
+                                    <button class="btn btn-sm btn-cancel white pull-right" ng-click="vm.sort('cancel')">{{ 'atlas.cancel'| translate}}</button>
+                                    <button class="btn btn-sm hoge-btn-blue pull-right m-r-sm" ng-click="vm.sort('sort')">{{ 'atlas.save'| translate}}</button>
+                                </div>
+                            </div>
+                            <div my-loading="vm.imgloading">
+                                <div ui-sortable="vm.largesortableOpt" ng-model="vm.showList">
+                                    <div class="atlas-list-each" ng-style="{'z-index': 999 - $index}" ng-class="{'atlas-hover-active':!vm.sort_start}" mg-if="vm.showList.length" ng-repeat="item in vm.showList track by $index" ng-class="{'list-brief-edit' : item.briefEdit, 'hover-background': item.hoverBack}" ng-mouseenter="vm.hoverBackShow(item)" ng-mouseleave="vm.hoverBackHide(item)">
+                                        
+                                        <div class="atlas-list-each-body" style="position: relative;">
+                                            <div class="atlas-list-img-wrap">
+                                                <!-- <img class="list-img" ng-class="{'border-blue': item.checkbox, 'hover-background': item.hoverBack}" ng-src="{{item.photo_url}}" alt="" /> -->
+                                                <img id="{{item.id}}" class="list-img" ng-class="{'border-blue': item.checkbox, 'hover-background': item.hoverBack}" src="{{item.photo_url}}?imageView/0/w/140/h/110/q/75/format/png/rotate/90" alt="" />
+
+                                                <input type="checkbox" class="pos-abt tuji-check" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)" ng-if="!vm.sort_start" ng-hide="!item.checkbox"/>
+                                                <div class="fengmiantu-box" ng-show="item.is_index">
+                                                    <i class="fengmiantu typeface-tuji_fengmiantu"></i>
+                                                    <p class="title">封面图</p>
+                                                </div>
+                                               
+                                            </div>
+                                            <textarea textarea-adapt class="list-img-brief" rows="1" val="item.photo_name" ng-class="{'mengyu-font': vm.resMengyu(item.photo_name)}" ng-if="!vm.sort_start" ng-model="item.photo_name" ng-focus="vm.briefEdit($index , 'focus')" ng-blur="vm.briefEdit($index , 'blur')"></textarea>
+                                                <div  class="mengyu-title" ng-if="vm.resMengyu(item.photo_name)">
+                                                <span class="jiantou arrow bottom"></span>
+                                                <span class="hideTitle">{{item.photo_name}}</span>
+                                            </div> 
+                                           
+                                            <div class="menu-box" ng-if="!vm.sort_start" ng-click="vm.showOrHide(item)" ng-mouseleave="vm.menuHide(item)">
+                                                <i class="menu_zhankai"></i>
+                                                <div class="set-tuji-menu pull-right list-icon-opera" ng-show="item.menuIsShow">
+                                                    
+                                                    <div class="btn-group">
+                                                        <!--编辑-->
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.showEdit(item)">
+                                                            <i class="icon-tubiao typeface-form_edit"></i>
+                                                            <span>编辑</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.leftRotating(item)">
+                                                            <i class="icon-tubiao typeface-tuji_zuoxuanzhuan"></i>
+                                                            <span>左旋</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.rightRotating(item)">
+                                                            <i class="icon-tubiao typeface-tuji_youxuanzhuan
+                                                            "></i>
+                                                            <span>右旋</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.water(item)">
+                                                            <i class="icon-tubiao typeface-tuji_shuiyin
+                                                            "></i>
+                                                            <span>水印</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.cutImages(item)">
+                                                            <i class="icon-tubiao typeface-bianjiqi_caijian"></i>
+                                                            <span>剪裁</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.showFullScreen(item)">
+                                                        <!-- <button class="btn hoge-drop-icon" ng-click="vm.screenShow(item)"> -->
+                                                            <i class="icon-tubiao typeface-tuji_quanping"></i>
+                                                            <span>全屏</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.copyImgUrl(item)">
+                                                            <i class="icon-tubiao typeface-form_fuzhi"></i>
+                                                            <span>复制</span>
+                                                        </button>
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.singleDownload(item)" ng-if="vm.id">
+                                                            <i class="icon-tubiao typeface-form_xiazaidizhi"></i>
+                                                            <!-- <span>下载</span> -->
+                                                            <a class="icon-a"ng-click="vm.exportDownload()" ng-href="{{vm.exportUrl}}">下载</a>
+                                                        </button>
+                                                        <div class="btn-line"></div>
+                                                        <!--删除-->
+                                                        <button class="btn hoge-drop-icon" ng-click="vm.del(item)">
+                                                            <i class="icon-tubiao typeface-form_shanchu"></i>
+                                                            <span>删除</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-box-tuji"></div>
+                        </div>
+                    </div>
+                    <div class="atlas-upload-area" ng-if="!vm.showList.length && !vm.imgloading">
+                        <div class="atlas-upload-btn" ng-click="vm.clickNoImg('#noImgFile','none')">
+                            <div class="hoge-flex hoge-flex-center">
+                                当前图集暂无图片，
+                                <span class="atlas-upload">点击上传</span>
+                            </div>
+                        </div>
+                        <div ng-if="vm.showCre" class="line"></div>
+                        <p class="cre" ng-if="vm.showCre" ng-click="vm.MaterialRef()">素材引用</p>
+                    </div>
+
+                </div>
+                <content-save  ng-if="vm.noEdit !='topic'" save="vm.save('save')" save-audit="vm.save('saveAudit')" preview="vm.preview()" load="vm.save_loading"
+                                   clicked="vm.clicked" is-show="false" type="vm.contentParam.urlType"
+                                   id="vm.atlasId" show-type="vm.showType"  manuscript-type="vm.manuscript_type" show-zbtn="vm.showZY" gallery-length = "vm.showList.length" handle-cancel="vm.cancelForm()" is-read-only="vm.noEdit"></content-save>
+            </div>
+        </div>
+        <aside class="right-aside default-right">
+            <div class="draft-right ">
+                <div class="side_form_fixed">
+                    <workcall-front ng-if="vm.initFinished" topic-array="vm.topicAssociated" topic-id="vm.topicId"></workcall-front>
+                    <key-words match-key="vm.achieve()"
+                                key-list="vm.keyList"
+                                loading="vm.matchLoading"
+                                key= "vm.key"
+                                lin-key="vm.associate()"
+                    >
+                    </key-words>
+                    <div class="m-t">
+                        <content-relevant related-ids="vm.relatedIds" relevant-list="vm.relevantList"
+                                        content-id="vm.atlasId" content-type="'gallery'"
+                                        relevant-error="vm.relevantError"
+                                        get-relevant="vm.getRelevantList()"
+                                        is-Original="vm.isOriginal"
+                         ></content-relevant>
+                    </div>
+                    <div class="m-t" >
+                        <author-add author-ids="vm.authorIds" author-List="vm.contentParam.author_info"
+                                          content-id="vm.newsInfo.id" content-type="'article'"
+                                          author-error="vm.authorError"
+                                          get-author="vm.getAuthorList()"
+                                          is-Original="vm.isOriginal"
+                                          show-Author="vm.showAuthor"
+                        >
+                        </author-add>
+                    </div>
+                    <div class="m-t" ng-if="!vm.isOriginal && vm.is_showPrelink">
+                            <div class='preview' ng-click="vm.showPreviews()">
+                                <img ng-src="{{vm.is_showSrc ? vm.ActiveSrc :vm.PreSrc}}" ng-mouseleave='vm.is_showSrc = false' ng-mouseenter='vm.is_showSrc = true'  alt="">
+                                <p>预览链接</p>
+                            </div>
+                            <div class="preview-link" ng-show="vm.is_showPreview">
+                                 <span class="typeface-alert_wancheng2"></span>
+                                 <p>稿件已经自动保存</p>
+                                 <input id='copy-text' type="text"  ng-value="vm.preLink" >
+                                 <span id='copy-link' ng-click="vm.copyLink()" >复制链接</span>
+                            </div>
+                     </div>
+                     <!-- <div class="m-t" ng-if="vm.mengyu_switch" style="width: 60px;float:right;margin-right:80px;margin-top:-60px !important;">
+                        <div class="preview" >
+                            <label class="ui-switch">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.switchMengyu()" ng-checked="vm.is_open==1">
+                                <i></i>
+                            </label>
+                            <p style="margin-top:6px;">蒙语切换</p>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- 快速评分 -->
+                <div class="fast-score-box" ng-if="vm.fastScore&&vm.atlasId">
+                        <span ng-if="vm.atlas.can_score && !vm.atlas.base_score" ng-class="{'spanActive': !vm.atlas.base_score && vm.atlas.can_score == 1}" class="showScore" ng-mouseenter="vm.showScore(vm.atlas)" ng-mouseleave="vm.hideScore(vm.atlas)">快速<br>评分
+                                        
+                                <div class="score" ng-class="{'score-show':vm.atlas.statusShow,
+                                'score-hide':!vm.atlas.statusShow}">
+                                    <div class="score-star">
+                                        <div class="star"></div><div class="functions-hint" class="input hint"></div>
+                                        <!-- <span>1.0</span> -->
+                                    </div>
+                                    <div class="score-states">
+                                        <span class="btn-deter" ng-click="vm.setScore(vm.atlas)">确定</span>
+                                        <span class="btn-cancel" ng-click="vm.cancelScore(vm.atlas)">取消</span>
+                                    </div>
+                                </div>
+                                
+                        </span>
+                        <!-- <span ng-if="(vm.permission.all_prms == 0 && ! vm.isCan) || (nor.status==5 || nor.status==1)" class="noCan">暂无评分</span> -->
+                        <span ng-if="vm.atlas.can_score && vm.atlas.base_score" class="showScore detailScore" ng-class="{'hasSpanActive': vm.atlas.can_score == 1 && vm.atlas.base_score}" ng-mouseenter="vm.showScore(vm.atlas)" ng-mouseleave="vm.hideScore(vm.atlas)">
+                            <img width="14px" height="14px" style="margin-bottom: 3px;margin-right: 3px;" src="/assets/images/mxu/workload/score/icon_star_manxing.png">
+                            <span>{{vm.atlas.base_score}}分</span>
+                                <div class="score" ng-class="{'score-show':vm.atlas.statusShow,
+                                'score-hide':!vm.atlas.statusShow}">
+                                    <div class="score-star">
+                                        <div class="star"></div><div class="functions-hint" class="input hint"></div>
+                                        <!-- <span>1.0</span> -->
+                                    </div>
+                                    <div class="score-state" ng-if="vm.userMsg.id == vm.atlas.scores.user_id">
+                                        <div class="score-time">已评</div>
+                                        <span class="btn-modify" ng-click="vm.changeScore(vm.atlas)">修改</span>
+                                    </div>
+                                    <div class="score-stated" ng-if="vm.userMsg.id != vm.atlas.scores.user_id">
+                                        <div class="score-user">评分人：{{vm.atlas.scores.user.username}}</div>
+                                        <span class="score-time">评分时间：{{vm.atlas.scores.updated_at}}</span>
+                                    </div>
+                                    <!-- <div class="score-states">
+                                        <span class="btn-deter" ng-click="vm.setScore(item)">确定</span>
+                                        <span class="btn-cancel">取消</span>
+                                    </div> -->
+                                </div>
+                        </span>
+                </div>
+                <!-- <writing-assistant all-img="vm.showList" cover-img="vm.contentParam.cover_keys" cover-type="vm.contentParam.cover_type"></writing-assistant> -->
+            </div>
+        </aside>
+    </div>
+</main>
+<hot-footer ng-if="vm.hotFlag" hot-id="vm.id" hot-status="vm.status" this-status="vm.thisStatus" hot-title="vm.title" type="vm.type" this-type="vm.thisType" button-id="vm.ButtonId"></hot-footer>
+<div class="hogeTipModal hoge-no-edit-tip no-edit-tip-revise" ng-if="vm.noEdit">
+    <div class="hoge-modal-tip hoge-tip-orgInfo">
+        <i class="typeface-alert_jinggao fa"></i>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==2">当前稿件权限为只读</span>
+        <span class="hoge-tip-txt" ng-if="(vm.noEdit==1 && vm.hotFlag) || vm.noEdit == 'topic'">内容仅供阅读，不可编辑</span>
+
+        <!-- 8.24调整 状态文案调整，状态细分 -->
+        <!-- <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList">当前稿件的审核状态为{{vm.noEditStatus == 2?'已审核':vm.noEditStatus == 9?'待发布':'审核中'}}，编辑功能不可用</span> -->
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 2">当前稿件的审核状态为已审核，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 3">当前稿件的审核状态为已发布，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 5">当前稿件的审核状态为审核中，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 9">当前稿件的审核状态为待发布，编辑功能不可用</span>        <span class="hoge-tip-txt" ng-if="vm.noEdit==2">当前稿件权限为只读</span>
+        <!-- <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && vm.hotFlag">内容仅供阅读，不可编辑</span> -->
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && vm.hotList">目前稿件已被采纳不可编辑</span>
+    </div>
+</div>
+<!-- 全屏展示图片 -->
+<div class="screen-box" ng-if="vm.screenImg">
+    <div class="screen-mask" ng-click="vm.exitScreen()"></div>
+    <div class="screen">
+        <img src="{{vm.screenImg}}" alt="">
+    </div>
+    <div class="exit-box" ng-click="vm.exitScreen()">
+        <i class="typeface-form_guanbi"></i>
+        <span>退出全屏</span>
+    </div>
+</div>
+
+
+
+
+
+
+<!--
+<div class="atlas-detail-wrapper">
+    <div class="pd_16">
+        <div class="flex-item justify-content-center">
+            <div class="atlas-left">
+                <div class="hoge-table-add">
+                    <div class="hoge-edit-head">
+                        <div class="hoge-return-body" onclick="history.back(-1)">
+                            <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                            <span class="return-tip">返回列表</span>
+                        </div>
+                        <em>{{vm.atlasId?'编辑':'新建'}}图集</em>
+                    </div>
+                </div>
+                <div class="box atricle-box">
+                    <div class="padding content">
+                        <div class="padding content-box" my-loading="vm.imgloading">
+                            <!--input 上传 start-->
+                            <!-- <input  class="input-upload input-disnone" type="file"
+                                    id="noImgFile" nv-file-select
+                                    uploader="vm.localUploader"
+                                    accept="image/gif,image/jpeg,image/png,image/bmp,.webp" multiple> -->
+
+                            <!--<input type="file" class="input-upload input-disnone" id="replaceFile"-->
+                                   <!--nv-file-select ng-click="vm.repleace($index, item)"-->
+                                   <!--uploader="vm.replaceUploader"-->
+                                   <!--accept="image/gif,image/jpeg,image/png,image/bmp" multiple>-->
+
+                            <!--<input type="file" class="input-upload input-disnone"-->
+                                   <!--id="replaceFile1" nv-file-select-->
+                                   <!--uploader="vm.replaceUploader"-->
+                                   <!--ng-click="vm.repleace($index, item)"-->
+                                   <!--accept="image/gif,image/jpeg,image/png,image/bmp" multiple>-->
+
+                            <!-- <input  class="input-upload input-disnone" type="file" id="hasImgFile"
+                                    nv-file-select  uploader="vm.localUploader"
+                                    accept="image/gif,image/jpeg,image/png,image/bmp,.webp"
+                                    multiple> -->
+
+                            <!-- <input type="file" id="localFile" nv-file-select class="input-disnone"
+                            uploader="vm.localUploader"
+                            accept="image/gif,image/jpeg,image/png,image/bmp,.webp" multiple> -->
+
+                            <!--input 上传 end-->
+                            <!--title start-->
+                            <!-- <div class="form-title flex-item">
+                                <div class="title-wrap flex-one col-sm-11">
+                                    <input type="text" name="title"
+                                           placeholder="{{ 'atlas.titleTip'| translate}}" ng-model="vm.atlas.title" ng-blur="vm.relevant('blur')"/>
+                                </div>
+                                <content-title-tip tip-title="vm.atlas.title" top="12"></content-title-tip>
+                            </div> -->
+                            <!--title end-->
+                            <!--content start-->
+                            <!-- <div class="no-img" ng-if="!vm.showList.length && !vm.imgloading && !vm.atlasId">
+                                <div class="no-img-bg"></div>
+                                <div class="form-file no-img-upload"> -->
+                                    <!--<input  class="input-upload" type="file" id="noImgFile" nv-file-select  uploader="vm.localUploader" accept="image/gif,image/jpeg,image/png,image/bmp" multiple>-->
+                                    <!-- <button class="btn btn-purple"   my-loading="vm.local_loading" ng-click="vm.clickNoImg('#noImgFile','none')">{{ 'atlas.choseAtlas'| translate}}</button>
+                                </div>
+                            </div> -->
+                            <!-- <div id="has-img" class="has-img" ng-class="{'atlas-is-shrink':vm.showList.length > 2 && vm.showType ==1 }" ng-if="vm.showList.length || vm.atlasId" >
+                                <div class="has-img-icon">
+                                    <span ng-class="{'list-icon':!vm.listPattern ,'list-icon-active':vm.listPattern}" ng-click="vm.changeType('list')">
+                                        <i class="typeface-tuji_liebiao fa"></i>
+                                    </span>
+                                    <span ng-class="{'list-icon':vm.listPattern ,'list-icon-active':!vm.listPattern}" ng-click="vm.changeType('large')">
+                                        <i class="typeface-tuji_datu fa"></i>
+                                    </span>
+                                </div>
+                                <div class="has-img-list" ui-sortable="vm.sortableOpt" ng-model="vm.showList" ng-if="vm.listPattern">
+                                    <div class="has-img-item" ng-repeat="item in vm.showList">
+                                        <div  class="list-item-img "  style="background: url({{item.photo_url}}-small) no-repeat" ng-if="!item.error" my-loading="item.replace_loading">
+                                            <input type="file" title="{{item.photo_name}}" class="input-upload " id="replaceFile" nv-file-select  uploader="vm.replaceUploader" ng-click="vm.repleace($index, item)" accept="image/gif,image/jpeg,image/png,image/bmp,.webp" multiple>
+                                            <div class="box-color text-color pos-rlt preview-img">
+                                                <div class="pull-top arrow  left b-white">
+                                                </div>
+                                                <div class="box-body">
+                                                    <img src="{{item.photo_url}}" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-item-img default_img" ng-if="item.error" my-loading="item.replace_loading"><i class="icon-tuji1"></i>
+                                            <input type="file" title="{{item.photo_name}}" class="input-upload" id="replaceFile1" nv-file-select  uploader="vm.replaceUploader" ng-click="vm.repleace($index, item)" accept="image/gif,image/jpeg,image/png,image/bmp,.webp" multiple>
+
+                                        </div>
+                                        <textarea class="flex-one list-item-text" placeholder="{{ 'atlas.illustrate'| translate}}" ng-model="item.photo_name"></textarea>
+                                        <div class="icon-group">
+                                            <span class="icon-group-img" my-loading="vm.replace_loading">-->
+                                            <!--</span>-->
+                                            <!-- <i class="fa typeface-form_shanchu" ng-click="vm.del(item)"></i>
+                                            <i class="fa typeface-form_paixu"></i>
+                                        </div>
+                                    </div>
+                                    <div >
+                                        <div class="text-center" ng-show="vm.totalPage!=vm.curpage&&vm.showList && vm.totalPage > 1 && vm.listPattern"><button ng-click="vm.goNext()" class="btn-more">{{ 'atlas.uploadMore'| translate}}...</button></div>
+                                    </div>
+                                    <div class="form-file has-img-upload">
+                                        <input  class="input-upload" type="file" id="hasImgFile" nv-file-select  uploader="vm.localUploader" multiple>-->
+                                        <!-- <button class="btn btn-purple"   my-loading="vm.local_loading" ng-click="vm.clickNoImg('#hasImgFile','none')">{{ 'atlas.addAtlas'| translate}}</button>
+                                    </div>
+                                </div>
+                                <div class="has-img-large" ng-if="!vm.listPattern">
+                                    <div class="tuji-outbox p-b">
+                                        <div class="tuji-form-page p-t"  my-loading="vm.list_loading" >
+                                            <div class="sort_board red-50 m-b-xs"  style="" ng-show="vm.sort_start">
+                                                <i class="fa fa-exclamation-triangle"></i>
+                                                {{ 'atlas.sortTip'| translate}}
+                                                <button class="btn btn-sm white pull-right" ng-click="vm.sort('cancel')">{{ 'atlas.cancel'| translate}}</button>
+                                                <button class="btn btn-sm white pull-right m-r-sm" ng-click="vm.sort('sort')">{{ 'atlas.save'| translate}}</button>
+                                            </div>
+                                            <div class="list-group pos-rlt sort-wrap" ui-sortable="vm.largesortableOpt" ng-model="vm.showList">
+                                                <div class="list" ng-repeat="item in vm.showList track by $index" ng-hide="item.delInfo" >
+
+                                                    <div class="img-info pos-rlt" ng-class="{'js-handle':vm.sort_start}" >
+                                                        <div class="img-box" ng-class="{'default_img':item.error} " >
+                                                            <img id="{{item.gallery_id}}" data-tag="{{item.is_fm==1?true:false}}" data-size="205x120/" ng-class="{'target':item.is_fm==1}" ng-src="{{item.photo_url}}-small"  class="img-responsive img_size">
+                                                        </div>
+                                                        <div class="check-outbox">
+                                                            <input type="checkbox" class="pos-abt tuji-check" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)" ng-hide="!item.checkbox"/>
+                                                            <div class="btn-group pos-abt">
+                                                                <div class="btn-delete" ng-show="true" ng-click="vm.del(item)"><i class="icon-shanchu"></i></div>
+                                                            </div>
+                                                            <div class="img-important" ng-click="vm.carousel(item)" ></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="title-info p-a-sm pos-rlt" ng-click="vm.editItem(item)" >
+                                                        <span class="hide sorIndex">{{$index}}</span>
+                                                        <div class="text-ellipsis"  >{{item.photo_name}}</div>
+                                                        <textarea  class="form-control form-control-sm pos-abt " ng-show="item.editing" ng-blur="vm.doneEditing(item)" ng-model="item.photo_name"
+                                                                   maxlength="120"></textarea>
+                                                        <div num-count="item.photo_name" count-top="65" count-max="120"count-position="right" class="ng-hide" ng-show="item.editing"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="list"  ng-hide="vm.sort_start">
+                                                    <div class="upload-box">
+                                                        <div class="btn-group dropdown"  ng-click="vm.clickNoImg('#localFile','none')" my-loading="vm.upload_loading">
+                                                            <input type="file" id="localFile" nv-file-select  uploader="vm.localUploader" accept="image/gif,image/jpeg,image/png,image/bmp" multiple>-->
+                                                            <!-- <span class="icon-tianjia"> </span>{{ 'atlas.continueImg'| translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal" id="linkUp" data-backdrop="true" >
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header text-left">
+                                                        <h5 class="modal-title"><span>{{'atlas.linkUpload'| translate}}</span></h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="content">
+                                                            <span>{{'atlas.imgLink'| translate}}</span>
+                                                            <textarea class="text-center linkText" ng-model="vm.linkText"></textarea>
+                                                            <small>{{'atlas.imgLinkTip'| translate}}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer p-a">
+                                                        <div class="pull-right">
+                                                            <button class="btn primary-btn" data-dismiss="modal" ng-click="vm.saveLink()">{{ 'atlas.save'| translate}}</button>
+                                                            <button class="btn cancel-btn" data-dismiss="modal" ng-click="vm.cancelLink()">{{ 'atlas.cancel'| translate}}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <div class="text-center" ng-show="vm.totalPage!=vm.curpage&&vm.showList && vm.totalPage > 1"><button ng-click="vm.goNext()" class="btn-more">{{ 'atlas.uploadMore'| translate}}...</button></div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="btn-box row p-b-sm">
+                                            <div class="col-sm-4 form-inline text-left p-0"  ng-hide="vm.sort_start || !vm.showList[0] ">
+                                                <div class="checkbox inlineBlock">
+                                                    <label class="allCheck">
+                                                        <input type="checkbox" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()" class="m-r-sm"> {{ 'atlas.allSelected'| translate}}
+                                                    </label>
+                                                </div>
+                                                <button class="tuji_sort p-r btn m-l  btn-comment" ng-click="vm.sort('sort')">{{ 'atlas.sort'| translate}}</button>
+                                                <button class="btn-del btn m-l white btn-sm"  ng-class="{'del-btn':vm.selected.length }"
+                                                        ng-disabled="!vm.selected.length" ng-click="vm.delAllImg()">{{ 'atlas.delete'| translate}}</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div> -->
+                            <!--content end-->
+                            <!-- <div class="toggle-text" ng-if="vm.showList.length >2"  ng-click="vm.toShow()">
+                                <div class="contain-text">
+                                    <p>
+                                        <i ng-class="{'typeface-edit_zhankai':vm.showType==1,'typeface-edit_shouqi':vm.showType==2}"></i>
+                                        <span>{{vm.showType == 1 ? '展开' : '收起'}}</span>正文
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <span class="brief">{{ 'atlas.introAtlas'| translate}}</span>
+                                <span class="brief-tip">({{ 'atlas.optional'| translate}})</span>
+                                <textarea class="form-control brief-text" name="title" placeholder="{{ 'atlas.optionalTip'| translate}}..."
+                                          ng-model="vm.atlas.brief" maxLength="30"></textarea>
+                            </div>
+
+                        </div>
+                        <content-foot content-param="vm.contentParam"></content-foot>
+
+                    </div>
+                </div>
+                <content-save  save="vm.save()" preview="vm.preview()" load="vm.save_loading"
+                               clicked="vm.clicked" is-show="false" type="vm.contentParam.urlType"
+                               id="vm.atlasId" show-type="vm.showType" gallery-length = "vm.showList.length"></content-save>
+            </div> -->
+            <!-- <div class="side_form atlas-right">
+                <div class="side_form_fixed">
+                    <div class="box side-key">
+                        <div class="box side-key">
+                            <key-words match-key="vm.achieve()"
+                                       key-list="vm.keyList"
+                                       loading="vm.matchLoading"
+                            >
+                            </key-words>
+                        </div>
+                    </div>
+                    <div class="m-t">
+                        <content-relevant related-ids="vm.relatedIds" relevant-list="vm.relevantList"
+                                          content-id="vm.atlasId" content-type="'gallery'"
+                                          relevant-error="vm.relevantError"
+                                          get-relevant="vm.getRelevantList()"
+                        ></content-relevant>
+                    </div>
+                </div>
+            </div> -->
+        <!-- </div>
+    </div>
+    <m2o-footer is-color="true" is-show="1"></m2o-footer>
+</div> -->

@@ -1,0 +1,28 @@
+{
+    "leave" : "您编辑的页面尚未保存，确定要离开该页面吗？",
+    "chooseColumn" : "选取转发栏目",
+    "mainColumn" : "主栏目不能为空",
+    "linkMust" : "链接不能为空",
+    "titleMust" : "标题不能为空",
+    "saveSuccess" : "保存成功",
+    "updateSuccess" : "更新成功",
+    "contentLink" : "内容链接到",
+    "contentLinkTip" : "请输入内容链接到的网址",
+    "abstract" : "摘要",
+    "abstractTip" : "请在这里填写摘要",
+    "addCover" : "点击添加封面",
+    "coverALL" : "全局封面设置",
+    "coverDefault" : "将默认使用第一张图作为该图集的封面图",
+    "open" : "已开启",
+    "time" : "时间",
+    "release" : "立即发布",
+
+    "publish" : "发布",
+    "forwarding" : "转发",
+    "source" : "来源",
+    "originalLink" : "原文链接",
+    "save" : "保存",
+    "savePublish" : "保存并发布",
+
+    "pushTitle" : "请在这里输入标题"
+}

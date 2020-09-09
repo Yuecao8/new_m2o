@@ -1,0 +1,25 @@
+{
+    "documentTitle" :"M2O融合媒体综合运营平台",
+    "userName" : "用户名",
+    "password" : "密码",
+    "effect" : "保持一周",
+    "login" : "登录",
+    "reset" : "重置密码",
+    "resetTip" : "管理员已经设置此账号首次登录时必须修改密码,您必须修改当前密码,然后才能登录MXU。",
+    "originPwd" : "初始密码",
+    "newPwd" : "新密码",
+    "newPwdTip" : "新密码不能全为空格",
+    "confirm" : "确认新密码",
+    "errorTip" : "两次输入密码不一致",
+    "save" : "保存",
+    "copyright":"M2O融合媒体综合运营平台",
+    "success" : "修改成功",
+
+    "fillPwd" : "请填写新密码",
+    "tooShort" : "密码不能小于6位",
+    "tooLong" : "密码不能大于16位",
+    "pwdNoSame" : "新密码不能和初始密码一致",
+    "nameNoPwd" : "用户名和密码不可以一样",
+    "pwdlogin" : "密码登录",
+    "media" : "融合媒体运营平台"
+}

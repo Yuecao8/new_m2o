@@ -1,0 +1,22 @@
+{
+  "siteManage": "站点管理",
+  "domain": "主域名",
+  "describe": "站点描述",
+  "siteName": "站点名称",
+  "newSite": "新建站点",
+  "siteList": "站点列表",
+  "siteRoute": "站点路径",
+  "domainName": "站点域名",
+  "save": "保存",
+  "cancel": "取消",
+  "versionMsg": " 当前MXU系统版本为 MXU 旗舰版，支持创建10个站点。",
+
+
+
+  "reBuild": "重新生成",
+  "genSuccess": "生成成功!",
+  "upDate": "更新成功!",
+
+  "sortTip": "排序功能已开启",
+  "sortSuccess": "排序成功"
+}

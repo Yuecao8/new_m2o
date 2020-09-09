@@ -1,0 +1,30 @@
+{
+    "memberSet" : "Membership settings",
+    "memberIntroduce" : "Here you can modify the membership registration, membership landing, member center of the relevant configuration",
+    "phoneRegister" : "Turn on the phone to register",
+    "phoneIntroduce" : "Through the switch this, you can manage whether the site is open mobile phone registration. When you choose to open, you can directly use the phone to obtain SMS verification code registration site; when the election off, can not register through the phone members",
+    "thirdLanded" : "Third party login",
+    "thirdLandedIntroduce" : "You can manage the settings of third-party members here, please note that if you want to use third-party members to log in, you need the webmaster to apply for access to the relevant platform.",
+    "memberNav" : "Member Center Navigation",
+    "setNav" : "Set the navigation bar",
+    "navIntroduce" : "You can add modified navigation information at the top of the member center here",
+    "centerDisplay" : "Member Center to display information",
+    "centerLogo" : "Member Center LOGO",
+    "logoIntroduce" : "* Please use PNG / JPEG format picture, the proposed picture height of 63px",
+    "centerTitle" : "Member center title",
+    "copyRight" : "Copyright Information:",
+    "record" : "Case number",
+    "contact" : "Contact information",
+    "contactIntroduce" : "* Contact can be filled according to their own needs, QQ, WeChat, e-mail, etc. For example: E-mail: hogesoft@hoge.cn",
+    "save" : "Save",
+
+    "accessConfig" : "Access configuration",
+    "noConfig" : "No configuration information",
+    "cancel" : "Cancel",
+
+    "successModify" : "Modifiy successfully!",
+    "successSave" : "Saved successfully!",
+
+    "qqLogin" : "QQ login",
+    "blogLogin" : "QQ login"
+}

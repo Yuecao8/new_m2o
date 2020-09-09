@@ -1,0 +1,83 @@
+<div class="bindWord">
+    <div>
+        <div class="box-body p-v-md">
+            <div class="hoge-table-add">
+                <div class="hoge-table-title">屏蔽词列表</div>
+                <div class="pull-right">
+                    <button class="btn white margin-r" ng-disabled="vm.wordList.length == 0" ng-click="vm.empty()" translate="action_word.clear" ng-style="{marginRight: '16px'}"></button>
+                    <button class="btn white margin-r" ng-click="vm.goHandle()" translate="action_word.trigger" ng-style="{boxShadow: 'none', marginRight: '16px'}"></button>
+                    <button class="btn btn-purple font-12" ng-click="vm.goAdd()" translate="action_word.createWord"></button>
+                </div>
+            </div>
+                <!-- list -->
+            <div class="list_contain white hoge-table-contain">
+                <div class="btn-toolbar hoge-table-search m-l-0 ">
+                    <!--<div class="input-group input-group-sm pull-right">-->
+                        <!--<input type="text" class="form-control search" ng-keypress="vm.keyPress($event)" placeholder="{{ 'action_word.search'| translate}}" ng-model="vm.key" >-->
+                        <!--<span class="input-group-btn">-->
+                            <!--<button type="submit" class="btn white b-a no-shadow" ng-click="vm.search(vm.key)">-->
+                                <!--<i class="fa fa-search"></i>-->
+                            <!--</button>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                    <search-Box key-Word="vm.key"
+                        search-Key="vm.search(Item)"
+                        key-Press="vm.keyPress(Event)"
+                        hide-Kind="vm.hideAccessKind"
+                        is-Focus="vm.isFocus"
+                        place-Holder="vm.placeHolder"
+                    >         
+                    </search-Box>
+                    <!-- <div class="form-group hoge-input-search pull-right" >
+                        <input type="text" placeholder="{{ 'user.search'| translate}}" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                    </div> -->
+                </div>
+                <!-- <div class="errorTip" ng-show="!vm.wordList.length">
+                   {{vm.error_msg}}
+                </div> -->
+                <hoge-error hight-num="'350px'" arr-length="vm.wordList.length"></hoge-error>
+                <div class="list_header hoge-table-header" ng-show="vm.wordList.length">
+                    <div class="wrap">
+                        <div class="list-ctr"></div>
+                        <div class="list-title" translate="action_word.blackWord"></div>
+                        <div class="list-i"></div>
+                    </div>
+                </div>
+
+                <!--列表-->
+                <div class="list hoge-item-border" ng-repeat="item in vm.wordList track by $index" ng-show="vm.wordList.length">
+                    <div class="list-item">
+                        <div class="level-one">
+                            <div class="list-ctr">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                                </label>
+                            </div>
+                            <div class="list-title">{{item.word}}</div>
+                            <div class="list-i">
+                                <i class="fa icon-shanchu1" ng-click="vm.singleDelete(item)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--bottom-->
+              <div class="list_bottom" ng-if="vm.wordList.length">
+                  <div class="btn-group">
+                      <label class="checkbox-inline">
+                          <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">{{ 'action_word.allSelect'| translate}}
+                      </label>
+                  </div>
+                  <div class="btn-toolbar list_bar flex-one btn-box">
+                      <div class="btn-group">
+                          <button class="btn del-btn" ng-disabled="vm.wordList.length == 0" ng-click="vm.moreDelete()" translate="action_word.delete"></button>
+                      </div>
+                  </div>
+                  <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+              </div>
+                <!--bottom-->
+            </div>
+            <!-- / list -->
+        </div>
+    </div>
+</div>

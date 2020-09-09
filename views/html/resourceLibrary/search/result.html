@@ -1,0 +1,96 @@
+<div class="result-wrap">
+  <div class="header-wrap">
+    <div class="result-header flex-v-center">
+      <span class="back-btn" ng-click="vm.back()">
+        <i class="back-icon"></i>
+        <span>返回</span>
+      </span>
+      <div class="search-wrap">
+        <div class="search-input">
+          <input class="search-keyword" type="text" placeholder="请输入搜索内容" ng-model="vm.keyword">
+          <i class="search-camera"></i>
+          <input class="input-upload" type="file" nv-file-select  uploader="vm.localUploader" accept="image/*">
+        </div>
+        <span class="search-btn" ng-click="vm.search()" ng-class="{'dis-btn': vm.uploadImg}">搜索</span>
+      </div>
+    </div>
+    <div class="search-img" ng-if="vm.resultInfo.image">
+      <img ng-src="{{vm.resultInfo.image}}" alt="" class="image">
+    </div>
+    <div class="classify-wrap">
+      <ul>
+        <li class="classify-item" ng-repeat="(key, item) in vm.classify" ng-click="vm.changeClassify(key, item)">{{item.name}}</li>
+        <li class="line-tab" ng-style="{'left': vm.leftLength + 'px'}">
+          <span></span>
+        </li>
+      </ul>
+      <span class="open-btn" ng-class="{'pack-up-btn': vm.showMore}" ng-click="vm.showMore = !vm.showMore">{{vm.showMore ? '收起' : '展开'}}搜索条件</span>
+    </div>
+  </div>
+  <div class="more-classify" ng-if="vm.showMore">
+    <div class="classify-item flex-v-center">
+      <span>资源大小：</span>
+      <ul>
+        <li class="classify-sub-item" ng-repeat="item in vm.fileSize" ng-click="vm.chooseFileSize(item)"
+          ng-class="{'sel-classify': item.name === vm.selFileSize}">{{item.name}}</li>
+        <li class="classify-sub-item">
+          <span class="file-input-wrap">
+            <input type="number" class="file-input" ng-focus="vm.focusInput()" ng-model="vm.minSize" 
+             ng-keyup="vm.keyMinUp($event)">
+            <span class="file-input-unit">M</span>
+          </span>
+          <span class="file-line">~</span>
+          <span class="file-input-wrap">
+            <input type="number" class="file-input" ng-focus="vm.focusInput()" ng-model="vm.maxSize" 
+            ng-keyup="vm.keyMaxUp($event)">
+            <span class="file-input-unit">M</span>
+          </span>
+          <span class="confirm-btn" ng-class="{'dis-btn': vm.disBtn}" ng-click="vm.confirmClassify()">确定</span>
+        </li>
+      </ul>
+    </div>
+    <div class="classify-item flex-v-center timer-wrap">
+      <span class="classify-title">创建时间：</span>
+      <input id="datepicker" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+        type="text" options="vm.options"/>
+        <i class="time-icon"></i>
+    </div>
+    <div class="classify-item flex-v-center timer-wrap">
+      <span class="classify-title">更改时间：</span>
+      <input date-range-picker ng-model="vm.updateDate" class="date-picker opacity-0"
+        type="text" options="vm.updateOptions"/>
+        <i class="time-icon"></i>
+    </div>
+    <div class="clear-btn flex-v-center" ng-click="vm.clearClassify()">
+      <i class="clear-icon"></i>
+      <span>清除条件</span>
+    </div>
+  </div>
+  <div class="result-content" my-loading="vm.loading">
+    <div class="result-total">为您找到相关结果约{{vm.resultInfo.total}}个，用时{{vm.resultInfo.spendTime}}</div>
+    <div class="sort-wrap">
+      <span class="sort-item" ng-repeat="(key, item) in vm.sortList" 
+      ng-class="{'sel': item.sort, 'current-sort': vm.selOrder === item.type}" ng-click="vm.sortFun(item, key)">{{item.name}}</span>
+    </div>
+    <ul class="result-list">
+      <li class="result-item" ng-repeat="item in vm.resultList">
+        <img ng-src="{{item._source.url}}" class="result-img" ng-if="item._source.url && item._source.type === 'image'">
+        <video ng-src="{{item._source.url}}" class="result-img" ng-if="item._source.url && item._source.type === 'video'"></video>
+        <div class="result-info">
+          <span class="result-name">{{item._source.filename}}</span>
+          <div>
+            <span class="file-size">大小：{{item._source.fileinfo.size_show || 0}}</span>
+            <span class="file-classify" ng-if="item._source.type === 'video'">类别：视频</span>
+            <span class="file-classify" ng-if="item._source.type === 'image'">类别：图片</span>
+            <span class="file-classify" ng-if="item._source.type === 'audio'">类别：音频</span>
+            <span class="file-classify" ng-if="item._source.type === 'document'">类别：文档</span>
+            <span class="create-time">创建时间：{{item._source.fileinfo.ctime}}</span>
+            <span class="update-time">更改时间：{{item._source.fileinfo.mtime}}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <hoge-error class="error-hight" hight-num="'600px'" arr-length="vm.resultList.length" ng-if="!vm.loading"></hoge-error>
+  </div>
+  <page-nation ng-cloak class="sub-page" options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+</div>

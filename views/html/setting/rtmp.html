@@ -1,0 +1,56 @@
+<div class="rtmpSet">
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">推流鉴权</div>
+    </div>
+    <div class="white">
+        <div class="p-v-md rtmp-body">
+            <div class="control-header">
+                <!--<em translate="system_rtmp.title"></em>-->
+                <div class="box-tip collapse in">
+                    <i class="material-icons font-16">&#xe88f;</i>
+                    {{ 'system_rtmp.tip'| translate}}
+                </div>
+            </div>
+            <div class="control-phone m-b rtmp_set">
+                <div class="control-phone-d">
+                    <h3 translate="system_rtmp.title"></h3>
+                </div>
+                <div class="control-phone-r">
+                    <label class="ui-switch">
+                        <span class="switch-open">开</span>
+                        <span class="switch-close">关</span>
+                        <input type="checkbox" ng-checked="vm.is_open" ng-click="vm.rtmpSet()">
+                        <i></i>
+                    </label>
+                </div>
+            </div>
+            <div class="control-phone" ng-if="vm.open_form">
+                <form role="form" name="rtmpForm" id="rtmpForm">
+                    <div class="form-group">
+                        <label class="form-control-label" ng-class="{'active': vm.rtmp.name}">{{ 'system_rtmp.userName'| translate}}:</label>
+                        <div class="input_box">
+                            <input ng-model="vm.rtmp.username"
+                               type="text" ng-blur="vm.rtmp.name = false"
+                               ng-focus="vm.rtmp.name = true"
+                               ng-change="vm.test(vm.rtmp.username,'name')"
+                               required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" ng-class="{'active': vm.rtmp.word}">{{ 'system_rtmp.password'| translate}}:</label>
+                        <div class="input_box">
+                            <input type="{{vm.type ? 'text' : 'password'}}"
+                                   ng-model="vm.rtmp.password" type="password"
+                                   ng-blur="vm.rtmp.word = false"
+                                   ng-focus="vm.rtmp.word = true"
+                                   ng-change="vm.test(vm.rtmp.password,'password')"
+                                   required>
+                            <i class="fa" ng-class="{true:'icon-liulan',false:'icon-chakanmima'}[vm.type]" ng-click="vm.type = !vm.type"></i>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn primary-btn m-b" ng-disabled="rtmpForm.$invalid || vm.rtmp.password.length<8" ng-click="vm.save()" translate="system_rtmp.save"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

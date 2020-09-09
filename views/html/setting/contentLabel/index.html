@@ -1,0 +1,101 @@
+<div class="contentTag">
+        <div class="table_title flex-item">
+            <div class="page-title">内容标签管理</div>
+            <button class="btn btn-purple" ng-click="vm.addTag()">新增标签</button>
+        </div>
+        
+        <div class="box hoge-border" my-loading="vm.loading">
+            <!-- 筛选 -->
+            <div class="btn-toolbar list_bar hoge-table-search">
+                    <!-- 类型下拉 -->
+                    <div class="btn-group dropdown hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.currentStatus.name}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="status in vm.statusArr" ng-click="vm.chooseStatus(status)">{{status.name}}</a>
+                        </div>
+                    </div>
+                    <div class="form-group hoge-input-search pull-left">
+                        <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                    </div>
+                </div>
+                <!-- 筛选 -->
+            <hoge-error hight-num="'277px'" arr-length="vm.dataList.length" load="vm.loading"></hoge-error>
+            <div class="box-body p-v-md" ng-if="vm.dataList.length">
+                <div class="contentTag-title hoge-table-header">
+                    <div class="flex-item align-center header-box">
+                        <div class="list-ctr">
+                            <i class="fa typeface-form_paixu"  ng-click="vm.sort()"></i>
+                        </div>
+                        <div class="list-name flex-one">标签</div> 
+                        <div class="list-status">状态</div>                   
+                        <div class="hoge-list-i"></div>
+                    
+                    </div>
+                    <div class="sort-board red-50" ng-show="vm.isSort">
+                        <i class="fa typeface-login_tishi"></i>排序功能已开启
+                        <button class="btn btn-sm white pull-right btn-cancel" ng-click="vm.cancelSort()">取消</button>
+                        <button class="btn btn-sm hoge-btn-blue pull-right m-r" ng-click="vm.outSort()">保存</button>
+                    </div>
+                    
+                </div>
+                <div class="contentTag-list" ng-model="vm.dataList" ui-sortable="vm.sortableOpt">                
+                    <div class="item-list" ng-repeat="(index,item) in vm.dataList track by $index">
+                        <div class="wrap flex-item align-center">
+                            <div class="list-ctr" title="{{item.id}}">
+                                <input type="checkbox" ng-show="!vm.isSort" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                                <i class="fa fa-bars" ng-show="vm.isSort"></i>
+                            </div>
+                            <div class="list-name flex-one" >{{item.name}}</div>  
+                            <div class="list-status"  ng-class="{'open-sta':item.status==1,'close-sta':item.status!=1}">
+                                {{item.status == 1? '启用' : '停用'}}
+                            </div>                    
+                            <div class="hoge-list-i">
+                                <div class="icon-tool" ng-show="!vm.isSort" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)">
+                                    <i class="typeface-list_caozuo hoge-list_caozuo"
+                                        ng-class="{'active-bg':item.searchShow}" ></i>
+                                    <div class="pull-right list-icon-opera"
+                                            ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                        <div class="btn-group">
+                                            <button class="btn hoge-drop-icon" ng-click="vm.goEdit(item)">编辑</button>
+                                            <button class="btn hoge-drop-icon">
+                                                <span ng-if="item.status!=1" ng-click="vm.goUse(item)">启用</span>
+                                                <span ng-if="item.status==1" ng-click="vm.goUse(item)">停用</span>
+                                            </button>
+                                            <button class="btn hoge-drop-icon" ng-click="vm.goDel(item)">删除</button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footerCl" ng-if="vm.dataList.length>0">
+                <div class="list_bottom hoge-list-bottom border-bottom-radius" ng-show="vm.dataList">
+                    <div class="btn-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">全选
+                        </label>
+                    </div>
+                    <div class="btn-toolbar list_bar flex-one btn-box">
+                        <div class="btn-group">
+                            <button class="btn del-btn" ng-click="vm.moreDelete()">删除</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-comment" ng-click="vm.goUseAll(1)">启动</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-comment" ng-click="vm.goUseAll(0)">停用</button>
+                        </div>
+                    </div>
+                    <page-nation  options="vm.pageOptions" turn-page="vm.turnPage()"></page-nation>
+                </div>
+            </div>
+        </div>
+    </div>

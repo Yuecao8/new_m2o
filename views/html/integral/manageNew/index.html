@@ -1,0 +1,204 @@
+<div class="integral_manage_wrap new-wrapper b-t">
+    <!-- / header -->
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">积分管理</div>
+    </div>
+    <!-- / header -->
+
+    <div class="row-col"  my-loading="vm.listLoading">
+        <div class="col-md-12 col-md-push-12 comment_list">
+            <!-- list -->
+            <div class="comment-list">
+                <!-- list -->
+                <div class="list_contain m-b-20 hoge-table-contain">
+                    <div class="btn-toolbar list_bar hoge-table-search">
+                        <!--时间下拉-->
+                        <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                                <span class="dropdown-label">{{vm.time}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                                <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                    {{time.name}}
+                                    <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                        type="text" options="vm.options"/>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- 会员分组下拉 -->
+                        <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="dropdown-label">{{vm.articleType}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm">
+                                <a class="dropdown-item" ng-repeat="type in vm.typeArr" ng-click="vm.chooseType(type)">{{type.group_name}}</a>
+                            </div>
+                        </div>
+                        <!-- 全部单位下拉 -->
+                        <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="dropdown-label">{{vm.allUnit}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm">
+                                <a class="dropdown-item" ng-repeat="type in vm.UnitArr" ng-click="vm.chooseUnit(type)">{{type.unit_name}}</a>
+                            </div>
+                        </div>
+                        <!-- 积分类型下拉 -->
+                        <!-- <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle user-screening">
+                                <span class="dropdown-label label-lf" title="{{vm.integralType}}">{{vm.integralType}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm sidebar-drop" id="sidebar-drop">
+                                <div style="height: 350px;overflow-y: auto;">
+                                    <div class="kind-drop" ng-repeat="type in vm.KindArr">
+                                        <label class="checkbox-inline">
+                                            <input class="kindMarge" type="checkbox" ng-click="vm.toggle(type)" ng-checked="vm.itemCheck(type)">
+                                        </label>
+                                        <span class="kind-dropdown dropdown-item">{{type.rule_name}}</span>
+                                    </div>
+                                </div>
+                                <div class="btnDiv">
+                                    <button class="btn btn-sm btn-success" ng-click="vm.typeSelect()">确定</button>
+                                    <button class="btn btn-sm btn-default" ng-click="vm.typeCancel()">取消</button>
+                                </div>
+                            </div>
+                        </div> -->
+                        <search-Box key-Word="vm.key"
+                            search-Key="vm.search(Item)"
+                            key-Press="vm.keyPress(Event)"
+                            hide-Kind="vm.hideAccessKind"
+                            is-Focus="vm.isFocus"
+                            place-Holder="vm.placeHolder"
+                        >         
+                        </search-Box>
+                        <!-- <div class="form-group pull-right">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control p-x b-a rounded font-13" ng-keypress="vm.keyPress($event)" ng-model="vm.key" placeholder=" {{ 'manage.manName' | translate }}" style="min-height: 32px;">
+                                <span class="input-group-btn">
+                                     <button type="submit" class="btn white b-a rounded no-shadow"
+                                             ng-click="vm.search(vm.key)"><i class="fa fa-search"></i>
+                                     </button>
+                                 </span>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="ErrorTip" ng-if="!vm.manageList.length && !vm.listLoading">
+                        <p>{{vm.errorMessage}}</p>
+                    </div>
+                    <div ng-show="vm.manageList.length">
+                        <div class="list_header hoge-table-header">
+                            <div class="wrap">
+                                <div class="list-ctr"></div>
+                                <div class="list-name">会员名称</div>
+                                <div class="list-kind">
+                                    会员分组
+                                </div>
+                                <div class="list-kind">
+                                    所属单位
+                                </div>
+                                <div class="list-goldAll" ng-click="vm.doSort('exp_points')">
+                                    当前经验
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{none:vm.sort_key=='exp_points'&&  vm.sort_type=='sort_desc',top:vm.sort_key=='exp_points'&& vm.sort_type=='sort_asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{bottom:vm.sort_key=='exp_points'&&  vm.sort_type=='sort_desc',none:vm.sort_key=='exp_points'&& vm.sort_type=='sort_asc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-gold" ng-click="vm.doSort('sub_credits')">
+                                    消耗积分
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{none:vm.sort_key=='sub_credits'&& vm.sort_type=='sort_desc',top:vm.sort_key=='sub_credits'&& vm.sort_type=='sort_asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{bottom:vm.sort_key=='sub_credits'&& vm.sort_type=='sort_desc',none:vm.sort_key=='sub_credits'&& vm.sort_type=='sort_asc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-point" ng-click="vm.doSort('add_credits')">
+                                    获取积分
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{none:vm.sort_key=='add_credits'&&  vm.sort_type=='sort_desc',top:vm.sort_key=='add_credits'&& vm.sort_type=='sort_asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{bottom:vm.sort_key=='add_credits'&&  vm.sort_type=='sort_desc',none:vm.sort_key=='add_credits'&& vm.sort_type=='sort_asc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-pointAll" ng-click="vm.doSort('credits')">
+                                    当前积分
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{none:vm.sort_key=='credits'&&  vm.sort_type=='sort_desc',top:vm.sort_key == 'credits' && vm.sort_type =='sort_asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{bottom:vm.sort_key=='credits'&&  vm.sort_type=='sort_desc',none:vm.sort_key =='credits'&& vm.sort_type == 'sort_asc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-i">操作</div>
+                               
+                            </div>
+                        </div>
+                        <!-- <div class="ErrorTip hide" ng-class="{'show': !vm.manageList.length}">
+                            <p>{{vm.errorMessage}}</p>
+                        </div> -->
+                        <div class="list hoge-item-border" ng-repeat="item in vm.manageList">
+                            <!--列表-->
+                            <div class="list-item">
+                                <div class="level-one">
+                                    <div class="list-ctr">
+                                    </div>
+                                    <div class="list-name">
+                                        {{item.nick_name || item.member_name || '暂无用户名'}} 
+                                    </div>
+                                    <div class="list-kind">
+                                        <span>{{item.group_name}}</span>
+                                    </div>
+                                    <div class="list-kind">
+                                        <span>{{item.unit_name}}</span>
+                                    </div>
+                                    <div class="list-goldAll">
+                                        <span>{{item.exp_points}}</span>
+                                    </div>
+                                    <div class="list-gold">
+                                        <span>{{item.sub_credits}}</span>
+                                    </div>
+                                    <div class="list-point">
+                                        <span>{{item.add_credits}}</span>
+                                    </div>
+                                    <div class="list-pointAll">
+                                        <span>{{item.credits}}</span>
+                                    </div>
+                                    <div class="list-i">
+                                        <!-- <div class="icon-tool pull-right">
+                                            <i class="typeface-list_caozuo hoge-list_caozuo"
+                                               ng-class="{'active-bg':item.searchShow}"></i>
+                                            <div class="pull-right list-icon-opera"
+                                                 ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                                <div class="btn-group">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <span class="edit-icon" ng-click="vm.goType(item)">详情</span>
+                                        <span class="edit-icon" ng-click="vm.adjust(item,'{{vm.DOC.exp}}')">经验调整</span>
+                                        <span class="edit-icon" ng-click="vm.adjust(item,'{{vm.DOC.point}}')">积分调整</span>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </div>
+                        <!--bottom-->
+                        <!-- <div class="list_bottom m-b-20" ng-show="vm.pageOptions.total > vm.pageOptions.pageSize"> -->
+                        <div class="list_bottom m-b-20">
+                            <div class="btn-group">
+                                <a class="export-publish" ng-click="vm.downloadList()" ng-href="{{vm.exportUrl}}">导出</a>
+                            </div> 
+                            <page-nation options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                        </div>
+                    </div>
+                    
+
+                    <!--bottom-->
+
+                </div>
+                <!-- / list -->
+            </div>
+            <!-- list -->
+        </div>
+    </div>
+    <div ui-include="'../views/mxu/common/footer.html'"></div>
+</div>

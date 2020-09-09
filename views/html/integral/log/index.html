@@ -1,0 +1,109 @@
+<div class="mxu_log_wrap new-wrapper">
+    <!-- / header -->
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">积分日志</div>
+        <span class="goback" ng-if="vm.platform" ng-click="vm.newTimeGoback()">返回</span>
+    </div>
+    <!-- / header -->
+
+    <div class="row-col">
+        <div class="col-md-12 col-md-push-12 comment_list">
+            <!-- list -->
+            <div class="comment-list">
+                <!-- <div class="ErrorTip hide" ng-class="{'show': !vm.logList.length}">
+                    <p>{{vm.errorMessage}}</p>
+                </div> -->
+                <!-- list -->
+                <div class="list_contain m-b-20 hoge-table-contain">
+                    <div class="btn-toolbar list_bar hoge-table-search">
+                        <!--时间下拉-->
+                        <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                                <span class="dropdown-label">{{vm.time}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                                <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                    {{time.name}}
+                                    <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                        type="text" options="vm.options"/>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- 积分类型下拉 -->
+                        <!-- <div class="btn-group dropdown hoge-dropdown">
+                            <button class="btn btn-sm dropdown-toggle user-screening">
+                                <span class="dropdown-label label-lf" title="{{vm.integralType}}">{{vm.integralType}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm sidebar-drop" id="sidebar-drop">
+                                <div class="kind-drop" ng-repeat="type in vm.KindArr">
+                                    <label class="checkbox-inline">
+                                        <input class="kindMarge" type="checkbox" ng-click="vm.toggle(type)" ng-checked="vm.itemCheck(type)">
+                                    </label>
+                                    <span class="kind-dropdown dropdown-item">{{type.rule_name}}</span>
+                                </div>
+                            </div>
+                        </div> -->
+                       
+                    </div>
+                    <div class="ErrorTip" ng-if="!vm.logList.length && !vm.logLoading">
+                        <p>{{vm.errorMessage}}</p>
+                    </div>
+                    <div class="list_header hoge-table-header" ng-if="vm.logList.length">
+                        <div class="wrap">
+                            <div class="list-ctr"></div>
+                            <div class="list-name" translate="log.memName"></div>
+                            <div class="list-gold" translate="log.expChan"></div>
+                            <div class="list-point" translate="log.pointChan"></div>
+                            <div class="list-reason" translate="log.changeRe"></div>
+                            <div class="list-remark" translate="log.remark"></div>
+                            <div class="list-user" >{{ 'log.time' | translate }}</div>
+                        </div>
+                    </div>
+
+                    <div class="list white hoge-item-border" ng-show="vm.logList.length" ng-repeat="item in vm.logList" my-loading="vm.logLoading">
+                        <!--列表-->
+                        <div class="list-item">
+                            <div class="list-ctr">
+                            </div>
+                            <div class="list-name" style="align-self: center;">
+                                {{item.member_name}}
+                            </div>
+                            <div class="list-gold">
+                                <span ng-click="" ng-if="item.exp_points >= 0">+{{item.exp_points}}</span>
+                                <span ng-click="" ng-if="item.exp_points < 0">-{{item.exp_points}}</span>
+                            </div>
+                            <div class="list-point" >
+                                <span ng-if="item.credits >= 0">+{{item.credits}}</span>
+                                <span ng-if="item.credits < 0">{{item.credits}}</span>
+                            </div>
+                            <div class="list-reason" >
+                                <span>{{item.log_title}}</span>
+                            </div>
+                            <div class="list-remark" >
+                                <span>{{item.log_detail}}</span>
+                            </div>
+                            <div class="list-user" >
+                                <!--<span>{{item.create_person}}</span>-->
+                                <span>{{item.created_at}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="list_bottom m-b-20" ng-show="vm.pageOptions.total > 0">
+                        <div class="btn-group">
+                            <a class="export-publish" ng-click="vm.downloadList()" ng-href="{{vm.exportUrl}}">导出</a>
+                        </div> 
+                        <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                    </div>
+                    <!--bottom-->
+                </div>
+                <!-- / list -->
+                
+            </div>
+            <!-- list -->
+        </div>
+    </div>
+    <div ui-include="'../views/mxu/common/footer.html'"></div>
+</div>

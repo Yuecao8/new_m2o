@@ -1,0 +1,44 @@
+<div class="modal-tuji box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">流状态</h5>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="content-box">
+            <!-- <div class="content-top">
+                <div class="form-group hoge-input-search pull-right">
+                    <input type="text" placeholder="输入会员ID、手机号等关键词" ng-keypress="vm.keyPress($event)" ng-model="vm.key" class="ng-pristine ng-valid ng-empty ng-touched">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                </div>
+            </div> -->
+            <div class="content-mid">
+                <div class="table_header hoge-table-header">
+                    <div class="wrap">
+                        <div class="list-body">流标识</div>
+                        <div class="list-publish">流地址</div>
+                        <div class="list-status">流状态</div>
+                        <div class="list-weight">视频码流</div>
+                        <div class="list-weight">音频码流</div>
+                        <div class="list-other">直播流类型</div>
+                    </div>
+                </div>
+                <hoge-error hight-num="'277px'" arr-length="vm.stateList.length" load="vm.loading"></hoge-error>
+                <div class="content-list" ng-show="vm.stateList.length">
+                    <ul>
+                        <li class="lists" ng-repeat="item in vm.stateList track by $index">
+                            <div class="list-body text-over">{{item.stream_name}}</div>
+                            <div class="list-publish text-over">{{item.stream_url}}</div>
+                            <div class="list-status text-over" ng-class="{'list-red' : !item.status}">{{item.status ? '正常' : '异常'}}</div>
+                            <div class="list-weight text-over">{{item.video_bitrate}}</div>
+                            <div class="list-weight text-over">{{item.audio_bitrate}}</div>
+                            <div class="list-other">{{item.is_push ? '推送' : '拉取'}}</div>
+                        </li>
+                        <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                            <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

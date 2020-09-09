@@ -1,0 +1,114 @@
+
+<div class="video-detail-wrapper">
+    <div class="pd-16">
+        <div class="flex-item  justify-content-center">
+            <div class="video-left">
+                <div class="hoge-table-add">
+                    <div class="hoge-edit-head">
+                        <div class="hoge-return-body" onclick="history.back(-1)">
+                            <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                            <span class="return-tip">返回列表</span>
+                        </div>
+                        <em> 编辑视频</em>
+                    </div>
+                </div>
+                <div class="box atricle-box">
+                    <div class="padding content">
+                        <div class="padding content-box">
+                            <div class="form-title flex-item">
+                                <div class="title-wrap flex-one col-sm-11">
+                                    <input type="text" name="title"  placeholder="请输入标题(5-45个字)" ng-model="vm.videoDetail.title"/>
+                                </div>
+                                <content-title-tip tip-title="vm.videoDetail.title" top="12"></content-title-tip>
+                            </div>
+                            <div class="padding form-content flex-item">
+                                <div class="img-box">
+                                    <img ng-if="!vm.videoDetail.index_pic" src="/assets/images/mxu/mxu.png" alt="">
+                                    <img class="index_pic" ng-if="vm.videoDetail.index_pic" src="{{vm.videoDetail.index_pic}}" alt="">
+                                    <div class="img-cover" ng-click="vm.videoPlay(vm.videoDetail)" ng-if="vm.status == 2">
+                                        <i class="material-icons icon">&#xe039;</i>
+                                    </div>
+                                </div>
+                                <div class="video-box flex-one">
+                                    <div class="name">{{vm.videoDetail.origin_filename}}</div>
+                                    <div  ng-if="vm.status != 2">
+                                        <div class="progress progress-sm" ng-if="vm.status != 0">
+                                            <div class="progress-bar info" ng-style="{width:vm.percent+'%'}" ng-if="vm.status == 1">{{vm.percent+'%'}}</div>
+                                            <div class="progress-bar info" style="width: 100%;background: #ccc;" ng-if="vm.status == -1"></div>
+                                        </div>
+                                        <div class="progress progress-striped active" ng-if="vm.status == 0">
+                                            <div class="progress-bar info" style="width: 100%;background-color: #99adff;"></div>
+                                        </div>
+                                        <div class="video-info">
+                                            <span class="m-r" ng-if="vm.status == 1">状态: 转码中</span>
+                                            <span class="m-r" ng-if="vm.status == 0">状态: 等待转码</span>
+                                            <span class="m-r" ng-if="vm.status == -1">状态: 转码失败</span>
+                                            <span ng-if="vm.status == 1">预计剩余时间: {{vm.leftTime}}</span>
+                                            <span class="pull-right download">
+                                                <a ng-href="{{vm.videoDetail.origin_url}}" download="{{vm.videoDetail.title}}">下载源视频</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="video-info" ng-if="vm.status == 2">
+                                        <ul>
+                                            <li>
+                                                <span class="m-r">视频时长: {{vm.videoDetail.duration_format}}秒</span>
+                                                <span>视频文件大小: {{vm.videoDetail.size_format}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="m-r">视频分辨率: {{vm.videoDetail.media_info.video_resolution}}</span>
+                                                <span>宽高比: {{vm.videoDetail.media_info.video_aspect_ratio}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="m-r">视频编码: {{vm.videoDetail.media_info.video_format}}</span>
+                                            </li>
+                                        </ul>
+                                        <div class="information m-t">
+                                            <span class="download m-r">
+                                                <a href="{{vm.videoDetail.url}}" download="{{vm.videoDetail.title}}">下载视频</a>
+                                            </span>
+                                            <!--<span class="m-r">提取字幕</span>-->
+                                            <span class="m-r">
+                                                <a href="{{vm.videoDetail.origin_url}}" download="{{vm.videoDetail.title}}">下载源视频</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <div class="name">视频简介 <span class="sub">( 选填 )</span></div>
+                                <textarea class="form-control brief-text"  placeholder="请输入简介内容..."
+                                          ng-model="vm.videoDetail.brief" maxLength="30"></textarea>
+                            </div>
+                        </div>
+                        <content-foot content-param="vm.contentParam"></content-foot>
+                    </div>
+                </div>
+                <content-save  save="vm.save()" preview="vm.preview()"
+                               load="vm.save_loading" clicked="vm.clicked"
+                               is-show="false" type="vm.contentParam.urlType" id="vm.videoId"></content-save>
+            </div>
+            <div class="video-right">
+                <div class="side_form_fixed">
+                    <div class="side-key">
+                        <key-words match-key="vm.achieve()"
+                                   key-list="vm.keyList"
+                                   loading="vm.matchLoading"
+                                   key= "vm.key"
+                                   lin-key="vm.associate()"
+                        >
+                        </key-words>
+                    </div>
+                    <div class="m-t">
+                        <content-relevant related-ids="vm.relatedIds" relevant-list="vm.relevantList"
+                                          content-id="vm.videoDetail.id" content-type="'video'"
+                                          relevant-error="vm.relevantError"
+                                          get-relevant="vm.getRelevantList()"
+                        ></content-relevant>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <m2o-footer is-color="true" is-show="1"></m2o-footer>
+    </div>
+</div>

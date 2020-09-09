@@ -1,0 +1,24 @@
+<div class="modal-split box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title" translate="editList.download"></h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="m-b">
+            <p><span translate="editList.choseDown"></span></p>
+            <p style="margin-left: 25px;"><span>{{vm.originUrl}}</span>&nbsp;&nbsp;<span>(&nbsp;{{vm.infoItem.target_size}} )</span></p>
+
+        </div>
+        <div class="m-b">
+            <p><span translate="editList.reName"></span></p>
+            <input type="text" class="form-control" style="font-size:0.9rem;" placeholder="{{ 'editList.placeHolder'| translate}}"
+                   name="rename_file" ng-disabled="vm.disable"
+                   ng-model="vm.rename" required>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn primary-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.save()" translate="editList.sure"></button>
+        <button class="btn btn-outline cancel-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.close()" translate="editList.cancel"></button>
+    </div>
+</div>

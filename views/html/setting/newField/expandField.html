@@ -1,0 +1,61 @@
+<div class="mxu_side_wrapper mxu_content_wrapper">
+        <div class="menu-wrap">
+            <div class="sidebar-header">
+                <span class="all-list" ng-click="vm.allState()">全部</span>
+                <i class="fa typeface-menu_mianbaoxie all-icon"></i>
+            </div>
+            <div class="aside-list" ng-repeat="moduleItem in vm.modulesListArr track by $index" ng-click="vm.choseClass(moduleItem)" >
+                <div class="aside-item">
+                    <span title="{{moduleItem.name}}" class="item_name" ng-class="{blueColor:vm.currentModule == moduleItem.name}">
+                        <span class="item_name_span">{{moduleItem.name}}</span>
+                    </span>
+                </div>     
+            </div>
+        </div>
+        <div class="manage-list-box">
+            <div class="manage-header-box">
+                <span class="title-font-d">扩展字段</span>
+                <button class="creat-btn" ng-click="vm.goCreat()">新建字段</button>
+            </div>
+            <div class="manage-content-box">
+                <div class="box-body p-v-md">
+                    <div class="expand-title hoge-table-header">        
+                        <div class="min-w-288 flex-one" >字段名称</div> 
+                        <div class="min-w-200">类型</div>                   
+                        <div class="min-w-200">标识</div>
+                        <div class="min-w-200">操作类型</div>
+                        <div class="min-w-200">开关</div>
+                        <div class="min-w-200">操作</div>      
+                    </div>
+                    <div class="expand-list" ng-show="vm.extendFieldListArr.length" my-loading="vm.field_loading">                
+                        <div class="item-list" ng-repeat="(index,item) in vm.extendFieldListArr track by $index">
+                            <div class="wrap">    
+                                    <div class="min-w-288 flex-one" >{{item.display}}</div> 
+                                    <div class="min-w-200">{{item.module_name}}</div>                   
+                                    <div class="min-w-200">{{item.name}}</div>
+                                    <div class="min-w-200">{{item.type_name}}</div>
+                                    <div class="min-w-200 switch-style">
+                                        <label class="ui-switch">
+                                            <span class="switch-open">开</span>
+                                            <span class="switch-close">关</span>
+                                            <input type="checkbox" ng-model="item.status" ng-click="vm.toggleStatus(item)">
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                    <div class="min-w-200">
+                                        <i class="fa typeface-form_edit" ng-click="vm.goEdit(item)"></i>
+                                        <i class="fa typeface-form_shanchu" ng-click="vm.goDelete(item)"></i>
+                                    </div>
+                            </div>
+                        </div>
+                    <!-- <hoge-error class="error-hight" hight-num="'483px'" arr-length="vm.extendFieldListArr.length" load="vm.field_loading"></hoge-error>
+                    <page-nation class="sub-page" options="vm.pageOptions" turn-page="vm.changePage()"></page-nation> -->
+                    </div>
+                    
+                </div>
+                <hoge-error class="error-hight" hight-num="'520px'" arr-length="vm.extendFieldListArr.length" load="vm.field_loading"></hoge-error>
+                <page-nation class="sub-page" options="vm.pageOptions" ng-show="vm.extendFieldListArr.length > 0" turn-page="vm.changePage()"></page-nation>
+            </div>
+        </div>
+    </div>
+    <m2o-footer></m2o-footer>

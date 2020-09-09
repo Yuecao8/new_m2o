@@ -1,0 +1,57 @@
+<div class="materialNew">
+    <div class="p-v-md">
+        <div class="hoge-edit-head">
+            <div class="hoge-return-body" onclick="history.back(-1)">
+                <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                <span class="return-tip">返回列表</span>
+            </div>
+            <em>{{vm.title}}</em>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-body" my-loading="vm.edit_loading">
+            <div class="form-card">
+                <div class="form-group">
+                    <label class="label-name">素材名称:</label>
+                    <input type="text" ng-model="vm.name" ng-focus="vm.titleFocus = true"
+                           ng-class="{'focus-color':vm.titleFocus}" ng-blur="vm.titleFocus = false">
+                </div>
+                <div class="form-group">
+                    <label class="label-name">素材类型:</label>
+                    <label class="radio-inline m-r" ng-repeat="type in vm.typeList" ng-click="vm.choose(type)">
+                        <input type="radio" class="material-input" ng-model="vm.materialType" value="{{type.value}}">{{type.name}}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="label-name material-show">素材:</label>
+                    <span class="upload-box" ng-show="vm.materialType != 'js'">
+                        <!-- <span ng-click="vm.uploadFile()">上传素材</span> -->
+                        <div ng-if="!vm.info" class="upload-content" my-loading="vm.upload_loading" ng-click="vm.uploadFile()">
+                            <div class="upload-icon"></div>
+                            <p class="top">点击这里上传素材</p>
+                            <p class="bottom">支持{{vm.materialType === 'image' ? 'png/jpg格式，不超过10M' : vm.materialType === 'video' ? 'wmv，avi，rm，rmvb，3gp，mp4，mkv，flv，ts等主流格式，不超过2G' : '.swf格式，不超过100M'}}</p>
+                        </div>
+                        <div class="show-box" ng-if="vm.material && (vm.info || vm.detail.type == vm.materialType)">
+                            <img ng-src="{{vm.material}}" alt="" ng-if="vm.materialType === 'image' || vm.materialType === 'video'" ng-click="vm.preResource()">
+                            <img src="/assets/images/mxu/advertise/flash.png" alt="" ng-if="vm.materialType === 'flash'" ng-click="vm.preResource()">
+                            <img src="/assets/images/mxu/advertise/img_daimakuai@2x.png" alt="" ng-if="vm.materialType === 'js'" ng-click="vm.preResource()">
+                            <span class="change" ng-if="vm.info" ng-click="vm.uploadFile()">更换素材</span>
+                            <div class="play-icon" ng-if="vm.materialType === 'video'" ng-click="vm.preResource()"></div>
+                        </div>
+                    </span>
+                    <span ng-if="(vm.info || vm.detail.type == vm.materialType) && vm.materialType === 'flash'">{{vm.flashName}}</span>
+                    <span class="change" ng-if="(vm.info || vm.detail.type == vm.materialType) && vm.materialType === 'flash'" ng-click="vm.uploadFile()">更换素材</span>
+                    <div class="ele-code" id="ele-js" ng-show="vm.materialType == 'js'">
+                        <!-- 代码编辑 -->
+                    </div>
+                </div>
+                <input class="input-upload" style="display:none" type="file" id="hasImgFile" ng-class="{'show-upload': vm.material}"
+                                nv-file-select  uploader="vm.localUploader" accept="{{vm.typeAccept}}" multiple>
+                <div class="md-form-group">
+                    <button type="submit" class="btn primary-btn m-r" ng-disabled="vm.saveLoading" ng-click="vm.save()">保存</button>
+                    <button class="btn cancel-btn" ng-click="vm.cancel()" >取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

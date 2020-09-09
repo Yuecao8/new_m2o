@@ -1,0 +1,99 @@
+<div class="setManageList-wrap" my-loading="vm.loading">
+    <div>
+        <!-- header -->
+        <div class="content_list_head clearfix hoge-table-add" style="overflow:unset">
+            <!--新增文稿-->
+            <div class="pull-left hoge-table-title">套系列表</div>
+            <div class="btn-group dropdown m-r-15 hoge-dropdown site-dropdown" ng-if="rootSiteItems.id==0">
+                <button class="btn dropdown-toggle " data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.site_name}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-12" style="max-height:210px;overflow: auto">
+                    <a class="dropdown-item" ng-if="site.type=='m2o'" ng-repeat="site in vm.siteList" ng-click="vm.changeSite(site)">{{site.name}}</a>
+                </div>
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-purple" ng-click="vm.goEdit()" my-loading="vm.upload_loading">上传套系
+                    <input type="file" id="columnFile" nv-file-select uploader="vm.localUploader"  accept="application/zip"
+                           style="cursor :pointer;" multiple>
+                </button>
+            </div>
+        </div>
+        <!-- / header -->
+        <!-- list -->
+        <div class="list_contain hoge-table-contain white" my-loading="vm.dataLoading">
+            <div class="list_bar hoge-table-search">
+                <!--搜索-->
+                <div class="form-group hoge-input-search pull-right">
+                    <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.title">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.title)"></i>
+                </div>
+            </div>
+            <div class="hoge-error hoge-error-hight" ng-if="!vm.dataList.length">
+                <div>
+                    <div class="error-img" ng-if="vm.errorMessage && !vm.dataLoading"></div>
+                    <p ng-if="vm.errorMessage&&!vm.dataLoading">{{vm.errorMessage}}</p>
+                </div>
+            </div>
+            <div class="table_header hoge-table-header" ng-show="vm.dataList.length">
+                <div class="b-l b-white flex-item">
+                    <div class="list-title flex-one">套系名称</div>
+                    <div class="list-num">模板数量</div>
+                    <div class="list-status">状态</div>
+                    <div class="list-author">作者</div>
+                    <div class="list-time">最后更新时间</div>
+                    <div class="list-i"></div>
+                </div>
+            </div>
+
+            <div class="list white " ng-show="vm.dataList.length">
+                <div class="list-item hoge-item-border flex-item"
+                     ng-repeat="nor in vm.dataList track by $index">
+                    <div class="is-use-triangle" ng-if="nor.status == 1"></div>
+                    <div class="list-title flex-one">{{nor.title}}</div>
+                    <div class="list-num">
+                        <span>{{nor.template_count}}</span>
+                    </div>
+
+                    <div class="list-status">
+                        <span ng-if="nor.status == 1" class="is-use">使用中</span>
+                        <span ng-if="nor.status != 1">未使用</span>
+                    </div>
+                    <div class="list-author">
+                        <span>{{nor.author}}</span>
+                    </div>
+                    <div class="list-time">
+                        <span>{{nor.updated_at}}</span>
+                    </div>
+
+                    <div class="hoge-list-i" style="margin-left: 105px;" ng-mouseenter="vm.showOpera(nor)" ng-mouseleave="vm.hideOpera(nor)">
+                        <div class="icon-tool pull-right">
+                            <i class="fa typeface-list_caozuo hoge-list_caozuo"
+                               ng-class="{'active-bg':nor.searchShow}"
+                            ></i>
+                            <div class="pull-right list-icon-opera" ng-class="{'hideDelete':nor.status==1,'opera-show':nor.searchShow,'opera-hide':!nor.searchShow}">
+                                <div class="btn-group">
+                                    <button class="btn hoge-drop-icon" ng-click="vm.goDetail(nor)">详情</button>
+                                    <button class="btn hoge-drop-icon" ng-click="vm.goCopy(nor)">复制</button>
+                                    <button class="btn hoge-drop-icon" ng-click="vm.pre(nor)">预览</button>
+                                    <button class="btn hoge-drop-icon" ng-click="vm.download(nor)">下载</button>
+                                    <button class="btn hoge-drop-icon" ng-class="{'disabled':nor.status==1}" ng-click="vm.del(nor)" ng-if="nor.status!=1">删除</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!--bottom-->
+            <div class="list_bottom hoge-table-bottom" ng-show="vm.pageOptions.total > vm.pageOptions.pageSize">
+                <page-nation options="vm.pageOptions" turn-page="vm.getData()"></page-nation>
+            </div>
+        </div>
+        <!-- / list -->
+
+    </div>
+</div>

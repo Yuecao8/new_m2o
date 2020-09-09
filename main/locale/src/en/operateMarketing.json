@@ -1,0 +1,16 @@
+{
+    "adSystem" : "Advertising system",
+    "adIntroduce" : "Used to manage ad serving for each terminal",
+    "drawModule" : "Lottery module",
+    "drawIntroduce" : "Create a new sweepstakes for mobile phone",
+    "register" : "Invite to register",
+    "registerIntroduce" : "View  statistics for invitations and configure invitation rules ",
+    "bulk" : "Group buy",
+    "bulkIntroduce" : "Provide online commodity sales function to buy goods in terminal ",
+    "integral" : "Integration",
+    "integralIntroduce" : "Manage the site, APP integral task and registered member points",
+    "mall" : "Integral mall",
+    "mallIntroduce" : "The user manages the client integral to redeem the goods",
+    "payment" : "Payment platform",
+    "paymentIntroduce" : "Access to Alipay, WeChat payment and third-party payment platform"
+}

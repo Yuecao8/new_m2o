@@ -1,0 +1,102 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h3 class="modal-title" style="margin-left:6px;">新增作品</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body flex-item">
+        <!-- <div class="nav_classify pos-rlt">
+            <div class="classify-list">
+                <nav class="navside m-b">
+                    <div class="nav-border b-primary" flex>
+                        <class-tree class="classify-tree"
+                                    no-add = "true"
+                                    no-edit ="true"
+                                    no-del ="true"
+                                    tree-data="vm.navList"
+                                    sort-id="vm.storage"
+                                    get-child="vm.getChilds(item)"
+                                    select-class="vm.selectClass(param)"
+                                    tree-level="10"
+                                    is-show-item="-1"
+                        ></class-tree>
+                    </div>
+                </nav>
+            </div>
+        </div> -->
+
+        <!-- 列表 -->
+        <div class="box">
+                <!-- list -->
+            <div class="list_contain hoge-table-contain white">
+                <!-- 筛选 -->
+                <div class="hoge-table-search library-search-box" ng-show="!vm.picIds" ng-class="{'none-border':vm.showInput}">
+                    <div class="form-group hoge-input-search" >
+                        <input type="text" placeholder="搜索..." ng-keypress="vm.keyPress($event)" ng-model="vm.searchKey">
+                    </div>
+                    <div class="search-text" ng-click="vm.search()" ng-disabled="vm.showInput">搜索</div>
+                </div>
+                <!-- <div class="hoge-table-search">
+                    <div class="form-group hoge-input-search pull-right" style="margin-right:0">
+                        <input type="text" placeholder="稿件名称" ng-keypress="vm.keyPress($event)" ng-model="vm.title">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                    </div>
+                </div> -->
+    
+                <!-- 列表 -->
+                <hoge-error hight-num="'277px'" arr-length="vm.dataList.length" load="vm.loading"></hoge-error>
+                <!-- 列表头部 -->
+                <div class="table_header hoge-table-header" ng-show="vm.dataList.length">
+                    <div class="wrap flex-item list-head-box">
+                        <div class="list-ctr"></div>
+                        <div class="list-title flex-one">作品</div>
+                        
+                        <div class="list-author">内容分类</div>
+                    </div>
+                </div>
+                <!-- 列表主体 -->
+                <div class="list white border-bottom-radius" ng-model="vm.dataList" my-loading="vm.loading"> 
+                    <div class="list-item hoge-item-border flex-item"
+                        ng-repeat="(idxs,nor) in vm.dataList track by $index"
+                        ng-class="{'border-blue':vm.itemCheck(nor)}">
+                        <div class="list-ctr">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" value="option1" ng-checked="vm.itemCheck(nor)" ng-click="vm.toggle(nor)">
+                            </label>
+                        </div>
+    
+                        <div class="list-title flex-one flex-item"> 
+                            <div class="img-box">
+                                <img ng-src="{{nor.index_pic}}" alt="" ng-if="nor.index_pic">
+                                <img src="../assets/images/mxu/img_cover.png" ng-if="!nor.index_pic">
+                            </div>
+                            <div class="list-title-right flex-one">
+                                <span class="item-title">{{nor.title}}</span>
+                                <div class="item-title-info flex-item">
+                                    <i class="fa typeface-talking_tupian"></i>
+                                    <span class="num">{{nor.photo_count}}</span>
+                                    <span class="author">作者：{{nor.create_user_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-author">{{nor.category_name}}</div>
+                    </div>
+                </div>
+                    <!--bottom-->
+                <div class="list_bottom hoge-table-bottom border-bottom-radius" ng-show="vm.dataList.length">
+                    <div class="btn-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+                            <span class="all-checked">{{'content.select' | translate}}</span>
+                        </label>
+                    </div>
+                    <button type="button" class="btn primary-btn add-btns" ng-click="vm.save()">确认添加</button>
+                    <!-- <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 0"></page-nation> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading" ng-disabled="verifyForm.$invalid">确定</button>
+    </div> -->
+</div>

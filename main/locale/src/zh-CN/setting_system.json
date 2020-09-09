@@ -1,0 +1,12 @@
+{
+    "message" : "短信服务器",
+    "mesDescribe" : "用于发送会员验证码",
+    "emailServer" : "邮件服务器",
+    "emailDescribe" : "系统通过邮件服务器向用户发送各类邮件通知",
+    "fullText" : "全文检索",
+    "textDescribe" : "用于为系统所有内容建立关键字索引，配置用户搜索热词",
+    "rtmp" : "推流鉴权",
+    "rtmpDescribe" : "可以对直播推流进行鉴权",
+    "https" : "HTTPS支持",
+    "httpsDescribe" : "可以对系统基本信息和功能进行管理配置"
+}

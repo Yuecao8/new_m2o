@@ -1,0 +1,187 @@
+<div class="navbar" ng-if="!vm.hideNavigation">
+    <!--<a data-toggle="modal" data-target="#aside" class="navbar-item pull-left hidden-lg-up"></a>-->
+
+    <div class="logo" ng-class="{'mLogoMenu':vm.mxuLogo,'fLogoMenu':vm.fusionLogo}">
+        <span class="menu-logo" ng-show="!vm.is_open_customer" ng-class="{'mux-logo':vm.mxuLogo,'fusion-logo':vm.fusionLogo}" ng-click="vm.toHome()"></span>
+        <!-- <img class="menu-logo" ng-show="vm.is_open_customer" ng-click="vm.toHome()"></span> -->
+        <img class="customer-logo" ng-show="vm.is_open_customer" ng-src="../assets/images/mxu/{{vm.imgSign}}_white.png" alt="" ng-click="vm.toHome()">
+        <!--<span class="title-txt-left" ui-sref="app.home.index">-->
+            <!--新媒体运营平台-->
+            <!--<i class="fa fa-caret-down"></i>-->
+        <!--</span>-->
+
+        <div class="btn-group dropdown title-txt-left ">
+            <button class="btn white btn-sm" ng-show="vm.currentMenuChild.length == 0">
+                <span class="dropdown-label" ng-click="vm.toPage(vm.currentMenu)">{{vm.currentMenu.name}}</span>
+            </button>
+            <button id="father-distance" class="btn white btn-sm" ng-show="vm.currentMenuChild.length > 0" ng-class="{'dropdown-toggle': vm.cloud_closed,'padding-0':vm.currentMenu.name.length>4}">
+                <span class="dropdown-label color-white" ng-click="vm.toPage(vm.currentMenu)">{{vm.currentMenu.name}}</span>
+                <span class="caret"></span>
+                <!-- <div ng-style="{ width: vm.sonDistance }" class="dropdown-menu text-left text-sm" ng-if="vm.currentMenuChild.length > 0"> -->
+                <div class="dropdown-menu text-left text-sm" ng-if="vm.currentMenuChild.length > 0 && vm.cloud_closed">
+                    <a class="dropdown-item" ng-click="vm.toPage(child)" ng-repeat="child in vm.currentMenuChild">{{child.name}}</a>
+                </div>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="head-nav" >
+
+        <ul class="nav-list row"  ng-if="!vm.onChangeMenu">
+            <li ng-repeat="menu in vm.menuDefault">
+                <a ng-click="vm.goState(menu)" >
+                    {{menu.name}}
+                </a>
+            </li>
+        </ul>
+        <!---->
+        <ul class="menu-list" ng-show="vm.onChangeMenu" style="height: 100%" dragula="'menu'" dragula-model="vm.menuList" id="drop-box">
+            <li class="menu-drop" ng-repeat="menu in vm.menuList" data-index={{menu.id}}>
+                <div class="drag-menu-item" >
+                    <span class="menu-name">{{menu.name}}</span>
+                    <span class="del-icon fa-stack" ng-click="vm.delMenu(menu,$index)">
+                        <i class="fa fa-circle fa-stack-1x"></i>
+                        <i class="fa fa-minus fa-stack-1x"></i>
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- navbar right -->
+    <ul class="nav navbar-nav">
+        <li class="nav-item nav-li avater-hover-item">
+            <div class="btn-group dropdown avatar-dropdown" >
+                <div class="avatar-box">
+                    <span class="avatar w-32">
+                        <img ng-src="{{vm.userInfo.img}}" ng-if="vm.userInfo.img">
+                        <img src="../assets/images/mxu/avatar-32.jpg" ng-if="!vm.userInfo.img">
+                    </span>
+                        <span class="hidden-md-down nav-text m-r-sm text-left" my-loading="vm.signOut_loading">
+                        <span class="_500 text-muted text-user" style="margin-bottom: 4px; margin-top:-4px;">{{vm.userInfo.username}}</span>
+                        <small class="text-muted text-user">{{vm.userInfo.roles[0].name}}</small>
+                    </span>
+                </div>
+                <div ui-include="'../views/mxu/common/dropdown.user.html'"></div>
+            </div>
+        </li>
+        <li class="divider-line nav-li"></li>
+
+        <!--站内消息-->
+        <li class="station-news pull-right">
+            <div class="icon-tool" data-toggle="dropdown" aria-expanded="false" ng-click="vm.showMessage()">
+                <i class="fa typeface-bar_xiaoxitixing"></i>
+                <span class="circle-red" ng-class="{'more-num': vm.isReadNum > 99}" ng-if="vm.hasShow">{{vm.isReadNum > 99 ? '99+' : vm.isReadNum}}</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-scale pull-right">
+                <div class="scoller">
+                    <div class="dropdown-item drop-item" ng-repeat="list in vm.stationNewsList" ng-if="vm.stationNewsList.length">
+                        <div class="item-list">
+                            <span class="">{{list.message}} </span>
+                            <span class="slip-link slip-title" ng-click="vm.toJump(list)" ng-if="list.redirect">
+                                <a href="">
+                                    {{list.title}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-item no-data" ng-if="!vm.stationNewsList.length&&!vm.stationLoading">
+                    暂无新消息
+                </div>
+                <div class="drop-bottom">
+                    <i class="typeface-dongtai_xitongyingyong fa" ng-click="vm.goSet()"></i>
+                    <span class="more" ng-click="vm.goMore()">查看全部消息</span>
+                </div>
+
+            </div>
+        </li>
+        <li class="divider-line nav-li"></li>
+
+
+        <li class="site-client nav-li">
+            <!-- <div class="btn-group dropdown dropdown-contain" ng-mouseenter="vm.searchShow=false">
+                <div class="search-site-box" ng-show="vm.showSearchSite">
+                    <input class="search-key" id='search-box' type="text"  placeholder="本地站点" ng-model="vm.searchKey"  ng-change="vm.keyChange()" ng-blur="vm.hideSea()">
+                </div>
+                 <button class="site-btn  dropdown-toggle" data-toggle="dropdown" ng-click="vm.showSet()">
+                    <span class="dropdown-label" >{{rootSiteItems?rootSiteItems.name:'本地站点'}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm w-limit">
+                   <a class="dropdown-item" ng-click="vm.choseSite({id:0,name:'本地站点',type:'allM2o'})">本地站点</a>
+                   <a class="dropdown-item" ng-if="siteItem.type !='m2o'" ng-repeat="siteItem in rootSiteList" ng-click="vm.choseSite(siteItem)">{{siteItem.name}}</a>
+                </div>
+             </div> -->
+
+             <div class="site-box">
+                <div class="sea-box" ng-mouseenter="vm.searchShow=false" ng-click="vm.showListF()">
+                    <span class="current-site-text" ng-show="vm.userInfo.all_columns == 1 || vm.permissionSign">{{rootSiteItems?rootSiteItems.name:'本地站点'}}</span>
+                    <span class="current-site-text" ng-show="vm.userInfo.all_columns != 1 && !vm.permissionSign">{{rootSiteItems?rootSiteItems.name:vm.showNavItem.name}}</span>
+                    <i class="fa fa-caret-down order-desc"></i>
+                </div>
+                <div class="search-site-box" ng-show="vm.showSearchSite">
+                    <input class="search-key" id='search-box' type="text" ng-show="vm.userInfo.all_columns == 1 || vm.permissionSign"  placeholder="本地站点" ng-model="vm.searchKey" autofocus  ng-change="vm.keyChange()" ng-blur="vm.hideSea()">
+                    <input class="search-key" type="text" ng-show="vm.userInfo.all_columns != 1 && !vm.permissionSign"  placeholder="{{vm.showNavItem.name}}" ng-model="vm.searchKey" autofocus  ng-change="vm.keyChange()" ng-blur="vm.hideSea()">
+                </div>
+                <div class="site-list-box" ng-show="vm.showList">
+                    <div class="local-site" ng-show="!vm.searchKey  && (vm.userInfo.all_columns == 1 || vm.permissionSign)">
+                        <a class="local-site-a" ng-show="vm.userInfo.site_id == 0" ng-mousedown="vm.choseSite({id:0,name:'本地站点',type:'allM2o'})">本地站点</a>
+                        <a class="local-site-a" ng-show="vm.userInfo.site_id != 0" ng-mousedown="vm.choseSite({id:vm.userSiteDetail.id,name:vm.userSiteDetail.name,type:'noAllM2o'})">本地站点</a>
+                    </div>
+                    
+                    <div class="all-site-num" ng-show="!vm.currentLevel && !vm.searchKey">
+                        <span>全部站点</span>
+                        <span>{{vm.allLevelList[0].length}}</span>
+                    </div>
+                    <div class="black-box" ng-show="vm.currentLevel" ng-click="vm.blackPre()">
+                        <i class="fa typeface-menu_fanhuishangji"></i>
+                        <span>返回上级</span>
+                    </div>
+                    <div class="all-level-box">
+                        <div class="level-box" ng-repeat="siteLevelItem in vm.allLevelList track by $index">
+                            <a class="other-site" ng-repeat="siteItem in siteLevelItem track by $index">
+                                <span class="site-name" id="site-name-id" title="{{siteItem.name}}" ng-mousedown="vm.choseSite(siteItem)">{{siteItem.name}}</span>
+                                <i class="fa fa-angle-right" ng-show="!siteItem.is_last && !vm.vm.searchKey" ng-click="vm.goSonSite(siteItem)"></i>
+                            </a>
+                        </div>
+                    </div> 
+                </div>
+             </div>
+
+        </li>
+        <li class="divider-line nav-li"></li>
+        <li class="nav-icon nav-li" ng-class="{'active-bg':vm.searchShow}" ng-mouseenter="vm.showSearch()" ng-mouseleave="vm.hideSearch()">
+            <i class="fa fa-th-large"></i>
+            <div class="search-box" ng-class="{'search-show':vm.searchShow,'search-hide':!vm.searchShow}">
+                <!---->
+                <div class="operate-line flex-item">
+                    <div class="search input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="搜索" ng-model="vm.searchName">
+                    </div>
+                    <div class="quick-into" ng-click="vm.quickSetting()">
+                        <i class="typeface-dongtai_xitongyingyong"></i>顶部快捷设置
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="menu-col"  ng-style="{ width: vm.colWidth }" ng-repeat="menuCol in vm.menuColList">
+                        <ul ng-repeat="menus in menuCol">
+                            <li ng-if="menus.name" class="head">{{menus.name}}</li>
+                            <li ng-if="menus.childs[0]" ng-repeat="menuChild in menus.childs | addClasses:vm.searchName">
+                                <a  ng-click="vm.goState(menuChild)" ng-class="{'searched-child': menuChild.classed }">{{menuChild.name}}</a>
+                            </li>
+                            <li class="divider-menu" ng-if="!menus.name"></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </li>
+
+    </ul>
+</div>
+<div ui-include="'../views/mxu/common/quick_setting.html'"></div>

@@ -1,0 +1,38 @@
+<form class="modal-adjust box-shadow-md adjustStyle form-validation" name="adjustForm" id="adjustForm">
+    <div class="modal-header">
+        <h5 class="modal-title" ng-if="vm.type==1" translate="manage.memAdjExp"></h5>
+        <h5 class="modal-title" ng-if="vm.type==2" translate="manage.memAdjPoint"></h5>
+    </div>
+    <div class="modal-body">
+        <div class="body">
+            <div class="title">
+                <span class="title_list" > {{ 'manage.nowHave' | translate }}{{vm.changeType}}</span>
+                <span class="title_list" translate="manage.adjust"></span>
+                <span class="title_list"> {{ 'manage.afterAdj' | translate }}{{vm.changeType}}</span>
+            </div>
+            <div class="data">
+                <input class="int_len readonly"ng-model="vm.old" readonly>
+                <input type="number" name="" id="" class="int_len"  ng-model="vm.change" ng-change="vm.changeN()">
+                <input class="int_len readonly text_color" ng-model="vm.new" readonly>
+            </div>
+        </div>
+        <div class=" m-t-1 tip">
+
+            <span class="fa_tip">{{ 'manage.nAdd' | translate }}{{vm.changeType}}，{{ 'manage.addTip' | translate }}，{{ 'manage.nDeduct' | translate }}{{vm.changeType}}，{{ 'manage.deduTip' | translate }}，{{ 'manage.exa' | translate }}{{vm.changeType}}{{ 'manage.tenExa' | translate }}</span>
+            <span class="icon_tip"><i class="fa fa-exclamation-circle"></i></span>
+
+        </div>
+        <div class="m-b p-t m-l-2 ">
+            <label class="label-title" >{{ 'manage.remark' | translate }}:</label>
+            <div num-count="vm.remark" count-top="-16" count-max="30" count-right="-55" class="num pull-right" count-position="right" ></div>
+            <textarea class="remark form-control" ng-model="vm.remark"
+                      maxlength="30" required></textarea>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.adjustLoading">{{ 'manage.save' | translate }}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{ 'manage.cancel' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,64 @@
+<div class="editing">
+  <div class="page-title" style="padding-top: 0">文件列表</div>
+  <div class="editing-target hoge-border" style="margin-top: 16px">
+    <div class="target-header">
+      <span class="total-duration">{{::'encoding.targetDur' | translate }}：<em>{{vm.totalDuration}}</em></span>
+      <div class="operate">
+        <button class="btn btn-outline btn-comment" ng-click="vm.emptyVideos()" ng-disabled="!vm.tmpVideos.length" translate="encoding.empty"></button>
+        <button class="btn btn-outline btn-comment preview" ng-click="vm.previewVideo()" ng-disabled="!vm.tmpVideos.length" translate="encoding.preview"></button>
+        <button class="btn primary-btn" ng-click="vm.popSaveBox()" ng-disabled="!vm.tmpVideos.length" translate="encoding.save"></button>
+      </div>
+    </div>
+    <div class="target-nav">
+      <div class="top-film"></div>
+      <ul id="drop-box" class="drop-box clearfix" dragula="'video'" dragula-model="vm.tmpVideos">
+        <li class="editing-drop-item" ng-repeat="tmp in vm.tmpVideos track by tmp.uid" data-index={{$index}}>
+          <editing-item video-info="tmp" can-play="true" del-icon="true" index="$index" duration="{{vm.getDuration(tmp)}}"
+              on-delete="vm.deleteVideo($event)" on-play="vm.playVideo($event)">
+          </editing-item>
+        </li>
+      </ul>
+      <div class="drop-tip" translate="encoding.dropTip" ng-class="{empty: !vm.tmpVideos.length}"></div>
+      <div class="bottom-film"></div>
+    </div>
+  </div>
+  <div class="editing-video hoge-border">
+    <div class="video-header">
+      <div class="btn-group hoge-dropdown" uib-dropdown>
+        <button class="btn btn-sm" uib-dropdown-toggle>
+          <span class="dropdown-label">{{vm.currentDate.label}}</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu text-left text-sm" uib-dropdown-menu>
+          <li class="dropdown-item" ng-repeat="date in vm.dateSearch" ng-click="vm.chooseDate(date)">
+            <a>{{date.label}}</a>
+          </li>
+        </ul>
+      </div>
+      <div ng-if="!vm.currentDate.id" class="date-picker">
+        <input type="text" readonly class="form-control p-x b-a" date-range-picker ng-model="vm.rangeDate" options="vm.rangeOptions"/>
+      </div>
+      
+      <div class="form-group hoge-input-search pull-right" >
+          <input type="text" placeholder="{{ 'encoding.search'| translate}}" ng-keypress="$event.keyCode === 13 && vm.search()" ng-model="vm.title">
+          <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+      </div>
+    </div>
+    <div my-loading="vm.videoLoading ">
+      <ul class="ul video-list row" id="video-list" dragula="'video'" dragula-model="vm.allVideos">
+        <li class="editing-drag-item li col-xs-6 col-sm-4 col-md-4 col-lg-2" ng-repeat="info in vm.allVideos track by info.id" data-index={{$index}}>
+          <editing-item video-info="info" brief="true" duration="{{info.duration_format}}"></editing-item>
+          <!--duration="{{info.durations}}"-->
+        </li>
+      </ul>
+    </div>
+    <p class="no-data ErrorTip" ng-if="!vm.allVideos.length && !vm.videoLoading">
+      <hoge-error hight-num="'300px'" arr-length="vm.allVideos.length" load="vm.videoLoading"></hoge-error>
+    </p>
+    <div class="video-paging list_bottom" ng-show="vm.allVideos.length">
+      <page-nation options="vm.pageOptions" turn-page="vm.changePages()"></page-nation>
+    </div>
+  </div>
+</div>
+
+<m2o-footer ></m2o-footer>

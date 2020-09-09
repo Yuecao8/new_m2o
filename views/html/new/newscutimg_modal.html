@@ -1,0 +1,101 @@
+<div class="shot-modal box-shadow-md">
+    <div class="modal-header">
+        <!--translate="tuji.preview"-->
+        <h5 class="modal-title" >图片编辑</h5>
+        <i class="fa fa-remove close-icon" ng-click="vm.close()" style=""></i>
+    </div>
+    <div class="modal-body" id="whereTo">
+        <div class="row">
+            <div class="img-contain col-sm-8">
+                <img src="{{vm.showUrl}}" id="imageEdit" class="origin-img">
+            </div>
+            <div class="col-sm-4 clearfix">
+                <!--<div class="img-preview"></div>-->
+                <div class="proportion-box switch-box">
+                    <div class="undo-box flex-item">
+                        <button class="btn btn-default" ng-click="vm.goLeft()" ng-disabled="!vm.canLeft"><i class="fa fa-caret-left"></i>撤销</button>
+                        <button class="btn btn-default" ng-click="vm.goRight()" ng-disabled="!vm.canRight"><i class="fa fa-caret-right"></i>重做</button>
+                    </div>
+                    <div class="operate-column">
+                        <uib-accordion close-others="true">
+                            <uib-accordion-group is-open="vm.clip">
+                                <uib-accordion-heading>
+                                    <div ng-click="vm.clipClick(vm.clip)">
+                                        裁剪<i class="pull-right glyphicon fa" ng-class="{'typeface-edit_zhankai': !vm.clip, ' typeface-edit_shouqi':vm.clip}"></i>
+                                    </div>
+                                </uib-accordion-heading>
+                                <div class="repeat-list" ng-repeat="clip in vm.clippingList">
+                                    <label class="proportion-match">
+                                        <input name="proportion" ng-checked="vm.clipType == clip.id " type="radio" value="{{clip.id}}" ng-click="vm.choseClip(clip)">
+                                        <span>{{clip.name}}</span>
+                                        <div ng-if="clip.id == 0" style="display: inline-block;margin-left: 5px;">
+                                            <input class="customize-num form-control" ng-model="vm.customNum.width" type="number" min="1" max="100" >
+                                            :
+                                            <input class="customize-num form-control" ng-model="vm.customNum.height" type="number" min="1" max="100">
+                                            <div class="question-box">
+                                                <i class="fa fa-question-circle"></i>
+                                                <div class="question-hover">
+                                                    说明：您可以在此手工输入裁切比例，裁切框将根据输入比例临时调整裁切长宽比。
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="clip-application">
+                                    <button class="btn primary-btn" ng-click="vm.applicationDate('clip')">应用</button>
+                                </div>
+
+                            </uib-accordion-group>
+                            <uib-accordion-group is-open="flip">
+                                <uib-accordion-heading>
+                                    <div ng-click="vm.flipClick(flip)">
+                                        翻转<i class="pull-right glyphicon fa" ng-class="{'typeface-edit_zhankai': !flip, ' typeface-edit_shouqi': flip}"></i>
+                                    </div>
+                                </uib-accordion-heading>
+                                <div class="repeat-list" ng-repeat="flip in vm.flipList">
+                                    <label class="proportion-match" ng-click="vm.choseFlip(flip)">
+                                        <span>{{flip.name}}</span>
+                                    </label>
+                                </div>
+                            </uib-accordion-group>
+                            <uib-accordion-group is-open="size">
+                                <uib-accordion-heading>
+                                    <div ng-click="vm.sizeClick(size)">
+                                        尺寸<i class="pull-right glyphicon fa" ng-class="{'typeface-edit_zhankai': !size, ' typeface-edit_shouqi': size}"></i>
+                                    </div>
+                                </uib-accordion-heading>
+                                <div class="">
+                                  <label class="proportion-match">
+                                      <span>宽度</span>
+                                      <input class="ratio-num form-control" type="number" type="number" min="1" ng-change="vm.changeValue('width')" ng-model="vm.ratioNum.width">
+                                  </label>
+                                </div>
+                                <div class="">
+                                  <label class="proportion-match">
+                                      <span>高度</span>
+                                      <input class="ratio-num form-control" type="number" type="number" min="1" ng-change="vm.changeValue('height')" ng-model="vm.ratioNum.height">
+                                  </label>
+                                </div>
+                                <label class="proportion-match">
+                                    <input name="proportion" ng-model="vm.ratio" type="checkbox">
+                                    <span>等比</span>
+                                </label>
+                            </uib-accordion-group>
+                        </uib-accordion>
+                    </div>
+
+
+                   <div></div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{ 'common.confirm'| translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'common.cancel'| translate}}</button>
+    </div>
+</div>

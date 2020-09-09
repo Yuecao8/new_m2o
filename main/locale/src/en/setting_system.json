@@ -1,0 +1,12 @@
+{
+    "message" : "SMS Server",
+    "mesDescribe" : "Used to send a member verification code",
+    "emailServer" : "Mail Server",
+    "emailDescribe" : "The system sends an email notification via the mail server",
+    "fullText" : "Global Search",
+    "textDescribe" : "Create a keyword index for content and configure the search hotkey",
+    "rtmp" : "RTMP",
+    "rtmpDescribe" : "You can authenticate live streaming",
+    "https" : "HTTPS Support",
+    "httpsDescribe" : "The basic information and functions of the system can be configured"
+}

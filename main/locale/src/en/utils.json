@@ -1,0 +1,9 @@
+{
+    "alert" : "Alert",
+    "sure" : "Confirm",
+    "cancel" : "Cancel",
+    "day" : "days",
+    "hour" : "hours",
+    "special" : "Cannot contain special characters",
+    "blank" : "Not all Spaces"
+}

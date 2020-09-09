@@ -1,0 +1,52 @@
+<div class="upload-video-wrapper box-shadow-md trans_class">
+        <div class="modal-header">
+            <h3 class="modal-title">重新转码</h3>
+            <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+        </div>
+        <div class="modal-body">
+            <!-- 服务器 -->
+            <div class="choose-contain">
+                <div class="radio-box">
+                    <input name="choose" ng-model="vm.isBefore" value="1" type="radio">原始配置
+                </div>
+                <div class="radio-box">
+                    <input name="choose" ng-model="vm.isBefore" value="2" type="radio">重新配置
+                </div>
+            </div>
+            <div class="setting-config" ng-show="vm.isBefore == '2'">
+                <div class="content-box">
+                    <label class="setting">服务器：</label>
+                    <div class="switch">
+                        <label class="checkbox-inline" ng-repeat='item in vm.serverList'>
+                            <input ng-model="vm.serverId" value="{{item.id}}" type="radio">{{item.name}}
+                        </label>
+                    </div>
+                </div>
+                <!-- 转码配置 -->
+                <div class="content-box" ng-if="!vm.isReplace">
+                    <label class="setting">转码配置：</label>
+                    <div class="switch">
+                        <label class="checkbox-inline" ng-repeat='item in vm.transcodeSet'>
+                            <input ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)" type="checkbox">{{item.name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn primary-btn" ng-click="vm.save()">确定</button>
+            <button class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        </div>
+        <div class="animation-loading">
+            <div class="upload-progress flex-item hoge-flex-center hoge-flex-justify-center" ng-if="vm.onprocess">
+                    <div>
+                        <span>上传中，请稍等…</span>
+                        <div class="progress">
+                            <div class="progress-bar primary" ng-style="{width:vm.videoList[0].progress+'%'}"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+        </div>
+    </div>

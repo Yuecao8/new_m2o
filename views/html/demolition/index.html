@@ -1,0 +1,182 @@
+
+<div class="demolition-wrapper">
+    <div class="hoge-table-add">
+      <div class="hoge-table-title">拆条</div>
+    </div>
+    <div class="fast-editing-content border-top-radius hoge-flex">
+        <!-- 左侧 -->
+        <video-lists ng-if="vm.mediaType === 'video'" style="width: 292px;" ng-style="{display:vm.showVideoList ? 'none' : 'inline-block'}"></video-lists>
+        <audio-lists ng-if="vm.mediaType === 'audio'" style="width: 292px;" ng-style="{display:vm.showVideoList ? 'none' : 'inline-block'}"></audio-lists>
+        <!-- 中间 -->
+        <div class="middle-main" ng-style="{width:vm.showVideoList ? '100%' : '720px'}" >
+            <div class="video-spread">
+                <span class="icomoon" ng-class="vm.showVideoList ? 'typeface-video_right' : 'typeface-video_left'" ng-click="vm.showVideolistFn()"></span>
+            </div>
+            <div class="no-video-data" ng-show="!vm.videoInfo.id">
+                 单击左侧视频列表进行拆条操作
+            </div>
+            <div class="video-content" ng-show="vm.videoInfo.id" my-loading="vm.info_loading">
+                <div id="video-box"
+                    my-video="vm.videoInfo" video-duration="vm.duration" 
+                    selcet-num = "vm.selcetNum"
+                    img-url="vm.imgSrc" img-key="vm.index_pic" 
+                    binary_data="vm.binaryImg" video_slider="true" split-selected="vm.splitSelected"
+                    bind-duration="vm.bindDuration">
+                    <video id="video"
+                    crossOrigin="*"  width="100%" height="100%" ng-attr-poster="{{ vm.mediaType === 'audio' ? '/assets/images/mxu/audio/bg-audio@2x.png' : '' }}"></video>
+                    <p class="timeLength">时长：{{vm.videoInfo.duration_format}}秒</p>
+                </div>
+                <div class="binding-tip" ng-show="vm.bindDuration">
+                    <span>当前处于绑定状态</span>
+                </div>
+            </div>
+
+            <div class="split-point-list">
+               
+                <div class="img-contain" ng-show="vm.splitImgList[0]">
+                    <div class="top-time">
+                        <i class="time-line"></i>
+                        <i></i>
+                        <span class="split-time split-time-line">{{vm.point_length}}</span>
+                        
+                        <i class="time-line"></i>
+                    </div>
+                    <div class="img-list hoge-flex">
+                        <img src="{{img.img}}" alt="" ng-style="{'width': vm.showVideoList ? '70px' : '72px'}" ng-repeat="img in vm.splitImgList">
+                    </div>
+                    <div class="left-cover default-cover"></div>
+                    <span class="left-arrows"></span>
+                    <div class="right-cover default-cover"></div>
+                    <div class="bottom-time">
+                        <span class="split-time left-split-time">{{vm.startSplit[0]}}:{{vm.startSplit[1]}}:{{vm.startSplit[2]}}:{{vm.startSplit[3]}}</span>
+                        <span class="split-time right-split-time">{{vm.endSplit[0]}}:{{vm.endSplit[1]}}:{{vm.endSplit[2]}}:{{vm.endSplit[3]}}</span>
+                    </div>
+                </div>
+                <div class="tip-contain">
+                    <span>快捷键帮助</span>
+                    <i class="typeface-form_tishi" ng-mouseenter="vm.tipEnter()" ng-mouseleave="vm.tipLeave()"></i>
+                    <div class="tip-content" ng-show="vm.tipShow">
+                        <div>暂停/播放：空格</div>
+                        <div>当前时间点设置为入点（需暂停）：↑</div>
+                        <div>当前时间点设置为出点（需暂停）：↓</div>
+                        <div>切换逐帧/逐秒步进：Tab</div>
+                        <div>播放前进/后退：← →</div>
+                        <div>当前画面截为封面图：Ctrl+Shift+A</div>
+                        <div>新增分段拆条：Enter</div>
+                        <div>设定固定时长：Shift+B</div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="split_point">
+                <div class="division m-b">
+                    <span translate="splitEdit.splData"></span>
+                    <small class="text-muted">
+                        {{ 'splitEdit.outPoint' | translate }} /
+                        {{ 'splitEdit.inPoint' | translate }}/
+                        {{ 'splitEdit.selectTime' | translate }}</small>
+                </div>
+                <div class="point_box flex">
+                    <div class="point_start point_img_box">
+                        <img ng-if="vm.start_pic" ng-src="{{vm.start_pic}}"/>
+                        <div></div>
+                        <span>{{vm.startSplit[0]}}:{{vm.startSplit[1]}}:{{vm.startSplit[2]}}:{{vm.startSplit[3]}}</span>
+                    </div>
+                    <div class="point_length" ng-class="{'active':vm.point_length}">
+                        <span class="s-l"><i class="fa icon-shalou"></i></span>
+                        <span class="point_tip"  translate="splitEdit.selectTime"></span>
+                        <span class="t-s">{{vm.point_length}}</span>
+                    </div>
+                    <div class="point_end point_img_box">
+                        <img ng-if="vm.end_pic" ng-src="{{vm.end_pic}}"/>
+                        <div></div>
+                        <span>{{vm.endSplit[0]}}:{{vm.endSplit[1]}}:{{vm.endSplit[2]}}:{{vm.endSplit[3]}}</span>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- 右侧 -->
+        <div class="video-info">
+            <save-content video-info="vm.videoInfo" bind-duration="vm.bindDuration" split-selected="vm.splitSelected" detail-data="vm.detailData" video-duration="vm.videoInfo.duration" screen-shot-url="vm.imgSrc" screen-shot-key="vm.index_pic" start-time="vm.duration.start_time" end-time="vm.duration.end_time" handle-select-num="vm.handleSelectNum()" start-pic = "vm.start_pic" end-pic = "vm.end_pic"></save-content>
+        </div>
+    </div>
+
+
+    <!-- 底部 -->
+    <div class="split-bottom border-bottom-radius">
+        <div class="has-split flex-item hoge-flex-justify-between">
+            <span>已拆条(<span>{{vm.hasSplitCount}}</span>)</span>
+            <div>
+                <button class="inverse-btn btn primary-btn" ng-click="vm.allSelect()">全选</button>
+                <button class="inverse-btn btn primary-btn" ng-click="vm.multiDownload()" ng-disabled="">批量下载</button>
+            </div>
+        </div>
+        <div class="no-split" ng-if="!vm.splitList[0]"  my-loading="vm.splitLoading">
+            <div>
+                <div class="error-img"></div>
+                <p>暂无内容</p>
+            </div>
+        </div>
+
+        <div class="split-list row" my-loading="vm.splitLoading">
+                <!-- <div class="no-split" ng-show="!vm.splitList[0]"  my-loading="vm.splitLoading">
+                        <div>
+                            <div class="error-img"></div>
+                            <p>暂无内容</p>
+                        </div>
+                    </div> -->
+            <div class="split-item col-xs-6 col-sm-3 col-md-3 col-lg-3" ng-repeat="item in vm.splitList">
+                <div class="img-contain">
+                    <input type="checkbox" class="img-contain-checkbox" ng-value="item.id" ng-checked="vm.splitSelectedHandle.indexOf(item.id) !== -1" ng-click="vm.multiSelect(item.id)">
+                    <div class="data-play" style="height: 157px;">
+                        <div class="data-error-tip" ng-if="item.videoError">
+                            {{ item.transcode_status === 2 ? '文件加载错误' : '转码中...'}}
+                        </div>
+                    <!-- ng-class="{'common-index':!vm.videoShow,'under-index':vm.videoShow,}"> -->
+                        <video id="play-video-{{item.id}}-{{item.moment}}" 
+                            class="video-js vjs-big-play-centered video-js vjs-default-skin can-event" 
+                            controls   preload="auto"  style="width:100%;height: 100%;" ng-attr-poster="{{ vm.mediaType === 'audio' ? '/assets/images/mxu/audio/bg-audio@2x.png' : item.index_pic }}"
+                            data-setup='{}'>
+                        </video>
+                    </div>
+                    <span class="span-time">{{item.duration}}</span>
+                    <div class="operate-box" ng-mouseenter="vm.showOperate(item)" ng-mouseleave="vm.hideOperate(item)">
+                        <div class="dorp-icon" >
+                            <i class="fa fa-angle-down"></i>
+                            <div class="set-menu pull-right" ng-show="item.showOperate">
+                                <div class="btn-group">
+                                    <!--编辑-->
+                                    <button class="btn hoge-drop-icon" ng-click="vm.getDown(item)">
+                                        <i class="icon-tubiao typeface-form_xiazaidizhi"></i>
+                                        <span>下载</span>
+                                    </button>
+                                    <button class="btn hoge-drop-icon" ng-click="vm.reOpen(item)">
+                                        <i class="icon-tubiao typeface-icon_shuaxin"></i>
+                                        <span>重拆</span>
+                                    </button>
+                                    <button class="btn hoge-drop-icon" ng-click="vm.delItem(item)">
+                                        <i class="icon-tubiao typeface-form_shanchu"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    
+                </div>
+               
+                <div class="split-title">
+                    {{item.title}}
+                </div>
+            </div>
+           
+        </div>
+        <div class="list_bottom" ng-if="vm.pageOptions.total > 8">
+            <!-- bottom -->
+            <page-nation options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+        </div>
+    </div>
+    <!-- 底部 -->
+</div>

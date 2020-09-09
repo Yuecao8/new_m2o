@@ -1,0 +1,71 @@
+<div class="flow-state">
+        <div class="title-box">
+            <div>应用列表</div>
+            <button class="btn primary-btn create-application-btn" ng-click="vm.addState()">创建应用</button>
+        </div>
+        <div class="content-box">
+            <div class="content-top">
+                <search-Box key-Word="vm.key"
+                        search-Key="vm.search(Item)"
+                        key-Press="vm.keyPress(Event)"
+                        hide-Kind="vm.hideAccessKind"
+                        is-Focus="vm.isFocus"
+                        place-Holder="vm.placeHolder"
+                >         
+                </search-Box>
+                <!-- <div class="form-group hoge-input-search pull-right">
+                    <input type="text" placeholder="搜索..." ng-keypress="vm.keyPress($event)" ng-model="vm.key" class="ng-pristine ng-valid ng-empty ng-touched">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                </div> -->
+            </div>
+            <hoge-error hight-num="'277px'" arr-length="vm.stateList.length" load="vm.loading"></hoge-error>
+            <div class="content-mid">
+                <div class="table_header hoge-table-header" ng-show="vm.stateList.length">
+                    <div class="wrap">
+                        <div class="list-body">应用名称</div>
+                        <div class="list-weight">审核状态</div>
+                        <div class="list-status">更新时间</div>
+                        <!-- <div class="list-publish">更新人</div> -->
+                        <div class="list-other">操作</div>
+                    </div>
+                </div>
+                <div class="content-list" ng-show="vm.stateList.length">
+                    <ul>
+                        <li class="lists" ng-repeat="nor in vm.stateList track by $index" ng-class="{'border-blue':vm.itemCheck(nor)}">
+                            <div class="list-body">
+                                <div class="title">{{nor.name}}</div>
+                            </div>
+                            <div class="list-weight" ng-class="{'text-red': nor.status == 3}">{{nor.status == 1 ? '待审核' : nor.status == 2 ? '已审核': '已打回'}}</div>
+                            <div class="list-status text-over">{{nor.created_at}}</div>
+                            <!-- <div class="list-publish">{{nor.editor}}</div> -->
+                            <div class="list-other hoge-list-i" ng-mouseenter="vm.showOpera(nor)" ng-mouseleave="vm.hideOpera(nor)">
+                                <i class="typeface-list_caozuo hoge-list_caozuo" ng-class="{'active-bg':nor.searchShow}"></i>
+                                <div class="pull-right list-icon-opera" ng-class="{'opera-show':nor.searchShow,'opera-hide':!nor.searchShow}">
+                                    <div class="btn-group">
+                                        <button class="btn hoge-drop-icon" ng-click="vm.goEdit(nor)">编辑</button>
+                                        <button class="btn hoge-drop-icon" ng-click="vm.audit(nor)" ng-show="nor.status == 3 || nor.status == 1">审核</button>
+                                        <button class="btn hoge-drop-icon" ng-click="vm.handleBack(nor)" ng-show="nor.status == 2">打回</button>
+                                        <button class="btn hoge-drop-icon import-btn" ng-click="vm.goImport(nor)">
+                                            导入             
+                                        </button>
+                                        <button class="btn hoge-drop-icon">
+                                            <a ng-href="{{nor.download_url}}" download="111">导出</a>
+                                        </button>
+                                        <button class="btn hoge-drop-icon" ng-click="vm.goGenerate(nor)">一键生成</button>
+                                        <button class="btn hoge-drop-icon" ng-click="vm.delList(nor)">删除</button>
+                                    </div>
+                                </div>
+                                <!-- <input class="import" style="opacity: 0" id="{{'xr-json' + $index}}" type="file" uploader="vm.localUploader" accept="application/json"> -->
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <input class="import" style="opacity: 0" id="xr-json" type="file" nv-file-select uploader="vm.localUploader" accept="application/json">
+            <div class="content-foot" ng-show="vm.stateList.length">
+                <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                    <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+                </div>
+            </div>
+        </div>
+    </div>

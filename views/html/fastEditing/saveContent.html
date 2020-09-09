@@ -1,0 +1,76 @@
+<div class="save-content">
+    <div class="content-box flex-item">
+        <label for="indexPic" class="label-name">封面图</label>
+        <input  id="indexPic" style="display: none;" type="file" nv-file-select="" uploader="vm.uploader"  accept="image/gif,image/jpeg,image/png,image/bmp"/>
+        <div class="upload-box-content" my-loading="vm.img_loading">
+            <div class="upload-box" ng-click="vm.uploadIndexPic()" ng-class="{'has-img-cover':vm.index_pic || vm.showImg}">
+                <i class="fa typeface-form_zengjia"></i>
+                <span>点击上传</span>
+            </div>
+            <div class="upload-cover" ng-click="vm.uploadIndexPic()" ng-class="{'upload-cover-show':vm.index_pic || vm.showImg}">
+                <span>点击替换封面</span>
+            </div>
+            <img class="img-cover" ng-if="vm.index_pic" ng-src="{{vm.index_pic}}"></div>
+        </div>
+        
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name">标题</label>
+        <input type="text" class="content-box-input" maxlength=30 ng-model="vm.saveData.title" ng-blur="vm.getKey()">
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name m-t-label">描述</label>
+        <textarea type="text" class="content-box-textarea" rows="3" maxlength=500 ng-model="vm.saveData.brief">
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name">分类</label>
+        <div class="column-box">
+            <div class="label-title m-t-column" ng-if="!vm.category.length">选择分类</div>
+            <div class="classify-father">
+                <classify-preview classify-data="vm.radioList"
+                                    classify-name="''" box-name="'选择分类'"
+                                    classify-check="vm.category" radio-style="'all'"
+                                    classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)"
+                                    classify-focus="false"
+                                    box-status="false"
+                                    choose-function="vm.chooseColumns(Item)"
+                ></classify-preview>
+            </div>
+        </div>
+        <i class="fa fa-caret-down column-box-down"></i>
+        
+    </div>
+    <div class="content-box  key-word-content clearfix">
+        <label for="" class="label-name">关键词</label>   
+        <div class="keywords-box side-keyword">
+            <div class="keyword-body" scroll-limited>
+                <div class="key-list-body is-choose cur-pointer"
+                ng-repeat="(idx,item) in vm.keyList track by idx">
+                    <span>{{item}}</span>
+                    <i class="keywords-icon-del typeface-alert_cuowu" ng-click="vm.del(idx)">
+                    </i>
+                </div>
+                <div class="key-list-body cur-pointer add-key-icon" ng-class="{'add-active': vm.add}" ng-click="vm.getFocus()">
+                    <span class="add-icon" ng-if="!vm.add" >
+                        <i class="fa typeface-form_zengjia cur-pointer"></i>
+                    </span>
+                    <input id="input-keyword-add" maxlength="10"  class="input-keyword-add" type="text" ng-model="vm.key" ng-if="vm.add"
+                    ng-blur="vm.createKey(1)" 
+                    ng-keyup="vm.createKey($event)" ng-style="{'width':vm.width+ 'px','maxWidth':'120px','minWidth':'60px'}"
+                    >
+                </div> 
+            </div>
+            <div id="hidden-span" class="hidden-span">{{vm.key}}</div>  
+        </div> 
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name">转码</label>
+        <div class="transCode-box">
+            <span class="set-transCode-span" ng-click="vm.chooseSet()">选择转码配置</span>
+        </div>
+    </div>
+    <div class="save-body">
+        <button class="btn primary-btn" ng-click="vm.saveVideos()" ng-disabled="vm.isSave">保存</button>
+        <button class="btn cancel-btn" ng-click="vm.cancelData()">取消</button>
+    </div>
+</div>

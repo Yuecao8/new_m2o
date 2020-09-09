@@ -1,0 +1,15 @@
+<div class="modal-pre box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">预览</h5>
+        <i class="fa fa-remove map-close" ng-click="vm.cancel()" style="position: absolute;right: 15px;top: 15px;"></i>
+    </div>
+    <div class="modal-body">
+        <!-- <img src="{{vm.material.index_pic}}" alt=""> -->
+        <img src="{{vm.material.index_pic}}" alt="" ng-if="vm.material.type === 'image' || vm.material.type === 'video'">
+        <img src="/assets/images/mxu/advertise/flash.png" alt="" ng-if="vm.material.type === 'flash'">
+        <img src="/assets/images/mxu/advertise/img_daimakuai@2x.png" alt="" ng-if="vm.material.type === 'js'">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.cancel()">确定</button>
+    </div>
+</div>

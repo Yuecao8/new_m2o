@@ -1,0 +1,14 @@
+{
+    "live" : "Graphic broadcast",
+    "liveIntroduce" : "A quick broadcast of the news event in graphic form",
+    "workload" : "Workload",
+    "workloadIntroduce" : "You can view the workload of background managers",
+    "broadcast" : "Live interaction",
+    "broadcastIntroduce" : "In the live interface to interact with each other who use mobile terminal ",
+    "card" : "Customize client home page",
+    "cardIntroduce" : "Used to configure the mobile home page layout and components",
+    "list" : "Trim",
+    "listIntroduce" : "Used to split a video into lots of smaller pieces of video",
+    "encoding" : "Fast edit",
+    "encodingIntroduce" : "Used to combine multiple video clips into one video"
+}

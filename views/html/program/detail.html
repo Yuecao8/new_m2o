@@ -1,0 +1,149 @@
+<div class="programDetail-wrapper wrapper">
+	<div class="top-bar hoge-border">
+		<div class="pull-left programInfo">
+			<span>{{vm.channel.channel_info.name}}</span>
+			<input ng-model="vm.channel.date" class=" m-l-sm"  data-autoclose="1" data-icon-left="fa fa-chevron-left" data-icon-right="fa fa-chevron-right"  data-date-format="yyyy-MM-dd"   placement="bottom-left" name="time" lang="zh-cn" data-time-type="number" bs-datepicker="" ng-change="vm.change(vm.channel.date)">
+			<span translate="programDetail.programList"></span>
+		</div>
+		<div class="pull-right goProject">
+			<span  class="top-tip"><i class="fa fa-exclamation-circle m-r-sm"></i>{{'programDetail.programmeTip' | translate}} &nbsp;</span>
+			<button ng-click="vm.gostate()" class="btn btn-comment">{{'programDetail.programPlan' | translate}}</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="box no-shadow p-20 p-b-0 m-b-80 hoge-border">
+				<div class="programBox">
+					<div class="">
+					    <div class="box-header row">
+					    	<div class="col-sm-6">
+								<h2 translate="programDetail.am"></h2>
+							</div>
+							<div class="col-sm-6">
+								<button class="btn btn-purple pull-right" ng-click="vm.goEdit(vm.channel)">{{'programDetail.addProgram' | translate}}</button>
+							</div>
+					    </div> 
+					    <div  class="list-wrap  b-t">
+					      <div class="list-item  list-title row">
+						        <div class="col-sm-1"></div>
+						        <div class="col-sm-3 p-0" translate="programDetail.startTime"></div>
+						        <div class="col-sm-6" translate="programDetail.program"></div>
+						        <div class="col-sm-2"></div>
+					      </div>
+					      <div>
+							  <hoge-error hight-num="'300px'" arr-length="vm.channel.program.am.length" load="vm.loadding"></hoge-error>
+
+							  <!-- ngRepeat: row in rowCollectionBasic -->
+					      	<div  class="row list white" ng-repeat="item in vm.channel.program.am"  ng-hide="item.hide">
+						        <div class="col-sm-1 list-check">
+						        	<input type="checkbox" ng-click="vm.checked(item)"   ng-checked="item.isChecked" />
+						        </div>
+						        <div class="col-sm-3 rlt-9">
+						        	<span class="star_time">{{::item.start}}</span>
+						        	<div class="end_time"><i class="icon-guaiwai"></i>{{::item.end}}</div>
+						        </div>
+						        <div class="col-sm-6  ">
+						        	<div class="flex-one info-box">
+						        		<div class="list_img"  >
+				                            <img ng-src="{{item.index_pic}}">
+				                            <div ng-show="!item.index_pic" class="img-program">
+				                            	<span class="icon-tuji1" ></span>
+				                            </div>
+				                        </div>
+						        		<div class="program-info ">
+						        			<div class="program-title">
+						        				{{::item.theme}}<span class="program-time m-l-sm" >{{item.h}}'{{item.m}}"</span>
+						        			</div>
+						        			<div class="program-content">
+						        				{{::item.describes}}
+						        			</div>
+						        		</div>
+						        	</div>
+						        </div>
+						    	<div class="col-sm-2 list-icon">
+						    		<a ng-click="vm.goEdit(vm.channel,item)"><i class="icon-bianji"></i> </a>
+						    		<a ng-click="vm.goDel(item)"><i class="icon-shanchu1 "></i> </a>
+						    	</div>
+						    </div>
+					      </div>
+					    </div>
+					  	<div class="box-footer">
+					  		<label class="m-r">
+				        		<input type="checkbox"   ng-click="vm.checked('am')" ng-checked="vm.amChecked" ng-disabled="!vm.channel.program.am.length"> {{'programDetail.allSelect' | translate}}
+				        	</label>
+				        	<button class="btn del-btn m-r" ng-click="vm.goDel('all')" ng-disabled="!vm.channel.program.am.length && !vm.loadding">{{'programDetail.delete' | translate}}</button>
+					  	</div>
+					  </div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="box no-shadow p-20 p-b-0 m-b-80 hoge-border">
+				<div class="programBox">
+					<div class="">
+					    <div class="box-header row">
+					    	<div class="col-sm-6">
+								<h2 translate="programDetail.pm"></h2>
+							</div>
+							<div class="col-sm-6">
+								<button class="btn btn-purple pull-right" ng-click="vm.goEdit(vm.channel)">{{'programDetail.addProgram' | translate}}</button>
+							</div>
+					    </div> 
+					    <div  class="list-wrap  b-t">
+					      <div class="list-item  list-title row">
+						        <div class="col-sm-1"></div>
+						        <div class="col-sm-3 p-0" translate="programDetail.startTime"></div>
+						        <div class="col-sm-6" translate="programDetail.program"></div>
+						        <div class="col-sm-2"></div>
+					      </div>
+					      <div>
+							  <hoge-error hight-num="'300px'" arr-length="vm.channel.program.pm.length" load="vm.loadding"></hoge-error>
+					      <!-- ngRepeat: row in rowCollectionBasic -->
+					      	<div  class="row list white" ng-repeat="item in  vm.channel.program.pm"  ng-hide="item.hide">
+						        <div class="col-sm-1 list-check">
+						        	<input type="checkbox" ng-click="vm.checked(item)"   ng-checked="item.isChecked" />
+						        </div>
+						        <div class="col-sm-3 rlt-9">
+						        	<span class="star_time">{{::item.start}}</span>
+						        	<div class="end_time"><i class="icon-guaiwai"></i>{{::item.end}}</div>
+						        </div>
+						        <div class="col-sm-6">
+						        	<div class="flex-one info-box">
+						        		<div class="list_img" >
+				                            <img ng-src="{{item.index_pic}}">
+				                            <div ng-show="!item.index_pic" class="img-program">
+				                            	<span class="icon-tuji1" ></span>
+				                            </div>
+				                            
+				                        </div>
+						        		<div class="program-info ">
+						        			<div class="program-title">
+						        				{{::item.theme}}<span class="program-time m-l-sm" >{{item.h}}'{{item.m}}"</span>
+						        			</div>
+						        			<div class="program-content">
+						        				{{::item.describes}}
+						        			</div>
+						        		</div>
+						        	</div>
+						        </div>
+						    	<div class="col-sm-2 list-icon">
+						    		<a ng-click="vm.goEdit(vm.channel,item)" class="m-r"><i class="icon-bianji"></i> </a>
+						    		<a ng-click="vm.goDel(item)"><i class="icon-shanchu1 "></i> </a>
+						    	</div>
+						    </div>
+					      </div>
+					    </div>
+					  	<div class="box-footer">
+					  		<label class="m-r">
+				        		<input type="checkbox" ng-click="vm.checked('pm')"   ng-checked="vm.pmChecked" ng-disabled="!vm.channel.program.pm.length"> {{'programDetail.allSelect' | translate}}
+				        	</label>
+				        	<button class="btn del-btn m-r" ng-click="vm.goDel('all')" ng-disabled="!vm.channel.program.pm.length && !vm.loadding">{{'programDetail.delete' | translate}}</button>
+					  	</div>
+					  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<m2o-footer ></m2o-footer>

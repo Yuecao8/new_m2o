@@ -1,0 +1,34 @@
+<div class="siteList-wrapper">
+    <div class="siteList-title">
+        站点管理
+        <m2o-site-chose handler-site="vm.initSite(site_id,site_name)" clear-state-param="vm.clearStateParam()" change-site="vm.changeSite(site)"></m2o-site-chose>
+    </div>
+    <div class="white">
+        <form role="form" name="form">
+            <div class="form-body" my-loading="vm.getInfo_loading">
+                <div class="form_box">
+                    <div class="form-group">
+                        <label translate="site_siteList.siteRoute"></label>
+                        <input style="background-color:#dbe1e9" type="text" ng-model="vm.site.project_path" maxlength="10" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="prefix-sign">*</span>{{'site_siteList.domainName' | translate}}</label>
+                        <input style="background-color:#dbe1e9" type="text" placeholder="hoge.com" disabled="disabled" ng-model="vm.site.domain" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="prefix-sign">*</span>{{'site_siteList.siteName' | translate}}</label>
+                        <input placeholder="请输入" type="text" ng-model="vm.site.name" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-top" translate="site_siteList.describe"></label>
+                        <textarea placeholder="请输入备注" style="min-height: 55px;" type="text" ng-model="vm.site.description" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="foot-box">
+                <button type="submit" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{'site_siteList.save'| translate}}</button>
+            </div>
+        </form>
+    </div>
+
+</div>

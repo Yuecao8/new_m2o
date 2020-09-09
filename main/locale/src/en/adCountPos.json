@@ -1,0 +1,12 @@
+{
+    "latelyThree" : "Past 30 days",
+    "latelySeven" : "Past 7 days",
+    "customize" : "Custom time period",
+    "latelyN" : "Past 90 days",
+    "allClient" : "All terminal",
+    "sort":"Default sort",
+    "name" : "Name",
+    "client":"The terminal",
+    "pv":"Daily PV",
+    "click":"Daily hits"
+}

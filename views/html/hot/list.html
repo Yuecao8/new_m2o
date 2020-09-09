@@ -1,0 +1,302 @@
+<div class="hot-list hot-list-wrapper" style="padding: 16px 16px 80px;">
+  <div class="list-box">
+    <div class="hoge-table-add" style="overflow:visible">
+      <div class="hoge-table-title">上头条列表</div>
+    </div>
+    <div class="list-container">
+      <div class="flex-item main-hot hoge-radius hoge-border">
+        <div class="list_contain white hoge-flex-one" my-loading="vm.publishLoading" load-signs="'publishLoading'">
+          <!-- 搜素项 -->
+          <div class="btn-toolbar list_bar filter-box m-l-0 m-b-0 hoge-table-search">
+            <div class="btn-group dropdown m-l-0 hoge-dropdown">
+              <button class="btn dropdown-toggle " data-toggle="dropdown">
+                <span class="dropdown-label">{{vm.statusName}}</span>
+                <span class="caret"></span>
+              </button>
+              <div class="dropdown-menu text-left text-sm font-12">
+                <a class="dropdown-item" ng-repeat="item in vm.statusList" ng-click="vm.choseStatus(item)">{{item.name}}</a>
+              </div>
+            </div>
+            <div class="btn-group dropdown m-r-15 hoge-dropdown">
+              <button class="btn dropdown-toggle " data-toggle="dropdown">
+                <span class="dropdown-label">{{vm.typeName}}</span>
+                <span class="caret"></span>
+              </button>
+              <div class="dropdown-menu text-left text-sm font-12">
+                <a class="dropdown-item" ng-repeat="type in vm.typeArr" ng-click="vm.choseType(type)">{{type.name}}</a>
+              </div>
+            </div>
+            <!--  -->
+            <div class="btn-group dropdown m-r-15 hoge-dropdown">
+              <button class="btn dropdown-toggle " data-toggle="dropdown">
+                <span class="dropdown-label">{{vm.currentSiteName}}</span>
+                <span class="caret"></span>
+              </button>
+              <div class="dropdown-menu text-left text-sm font-12">
+                <a class="dropdown-item" ng-repeat="siteItem in vm.chooseSiteList" ng-click="vm.choseSiteItem(siteItem)">{{siteItem.name}}</a>
+              </div>
+            </div>
+            <search-Box   key-Word="vm.reommendListparams.title"
+                          search-Key="vm.search(Item)"
+                          key-Press="vm.keyPress(Event)"
+                          hide-Kind="vm.hideAccessKind"
+                          is-Focus="vm.isFocus"
+                          place-Holder="vm.placeHolder"
+                          clear-Float="true"
+            >         
+            </search-Box>
+            <!-- <div class="form-group hoge-input-search">
+              <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.reommendListparams.title"
+                placeholder="搜索">
+              <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+            </div> -->
+            <!--时间下拉-->
+            <div class="btn-group dropdown hoge-dropdown">
+                <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.time}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                    <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                        {{time.name}}
+                        <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                            type="text" options="vm.options"/>
+                    </a>
+                </div>
+            </div>
+            <div class="screen-results">
+              <span class="total-num">共筛选出{{vm.pageOptions.total}}条</span>
+              <i class="subtitle-i typeface-form_tishi"></i>
+              <div class="results-info" ng-show="vm.pageOptions.total">
+                <div class="info-box"><span class="num-info font-gray">待审核</span>{{vm.statisticalResults.pending}}条</div>
+                <div class="info-box"><span class="num-info font-green">已采纳</span>{{vm.statisticalResults.adopted}}条</div>
+                <div class="info-box"><span class="num-info font-red">已下架</span>{{vm.statisticalResults.back}}条</div>
+                <div class="info-box m-bottom"><span class="num-info font-red">已打回</span>{{vm.statisticalResults.off}}条</div>
+                <span class="question-tip"></span>
+              </div>
+            </div>
+          </div>
+          <hoge-error hight-num="'788px'" arr-length="vm.dataList.length" load="vm.publishLoading"></hoge-error>
+          <div class="table-header hoge-table-header" ng-show="vm.dataList.length">
+            <div class="wrap">
+              <div class="list-ctr"></div>
+              <div class="list-title flex-two">基本信息</div>
+              <div class="list-title flex-one">栏目</div>
+              <div class="list-title flex-one">状态</div>
+            </div>
+          </div>
+          <div class="list white" ng-model="vm.dataList" ng-show="vm.dataList.length">
+            <div class="list-item hoge-item-border flex-one" ng-mouseenter="" ng-click="vm.choseItem(item, $event)"
+              ng-class="{'border-blue':vm.itemCheck(item)}" ng-repeat="item in vm.dataList track by $index">
+              <div class="list-ctr">
+                <label class="checkbox-inline">
+                  <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.itemChecks(item)">
+                </label>
+              </div>
+              <div class="list-body list-title flex-two">
+                <!--示意图-->
+                <div class="list-img">
+                  <span class="img-square" ng-if="item.index_pic">
+                    <img ng-src="{{item.index_pic}}">
+                  </span>
+                  <div class="img-square" ng-if="!item.index_pic">
+                    <img src="../assets/images/mxu/img_cover.png">
+                  </div>
+                  <div class="publish-type">
+                    <span class="type-name" ng-if="item.type=='article'">文稿</span>
+                    <span class="type-name" ng-if="item.type=='gallery'">图集</span>
+                    <span class="type-name" ng-if="item.type=='video'">视频</span>
+                    <span class="type-name" ng-if="item.type=='audio'">音频</span>
+                    <span class="type-name" ng-if="item.type=='topic'">专题</span>
+                    <span class="type-name" ng-if="item.type=='link'">外链</span>
+                  </div>
+                </div>
+                <div class="list-info">
+                  <div class="part-one" ng-click="vm.detail(item)">
+                    <a class="part-one-title hideTitle">
+                      <span>
+                        {{item.title}}
+                      </span>
+                    </a>
+                    <!-- <div class="all-title" ng-if="item.title.length>20">
+                                                    <span class="jiantou arrow bottom"></span>
+                                                    {{item.title}}
+                                                </div> -->
+                  </div>
+                  <div class="part-two">
+                    <div class="list-data">
+                      <span class="data-icon">
+                        <img style="width: 20px;height: 20px;border-radius: 50%;" ng-if="item.subscribe.indexpic"
+                          ng-src="{{item.subscribe.indexpic}}">
+                        <span ng-if="item.subscribe.indexpic">·</span>
+                        <span ng-if="item.subscribe.name" title="{{item.subscribe.name}}">{{item.subscribe.name}}·</span>
+                        <span ng-if="item.create_user.name">{{item.create_user.name}}·</span>
+                        <span ng-if="item.create_time_text">{{item.create_time_text}}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-one overFlowHiden column-color">
+                <span title="{{item.column_name}}">{{item.column_name}}</span>
+              </div>
+              <div class="flex-one group-wrap back fontSize12" ng-if="item.status==3 &&item.repulse_reason">
+                <div class="btn-group dropdown hoge-dropdown member-dropdown">
+                  <a class="btn btn-sm dropdown-toggle" style="border: none;    padding-left: 0!important;color: #f1453d"
+                    data-toggle="dropdown">
+                    <span class="dropdown-label downSpan fontSize12">{{item.status_text}}</span>
+                  </a>
+                  <div class="dropdown-menu text-left text-sm lif-refuse">
+                    <span class="lif-item">1{{item.repulse_reason}}</span>
+                    <span class="tip-caret"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-one fontSize12" style="color: #f1453d" ng-if="item.status==3&&!item.repulse_reason">{{item.status_text}}</div>
+              <div class="flex-one fontSize12" style="color: #949DA4;" ng-if="item.status==1">{{item.status_text}}</div>
+              <div class="flex-one fontSize12" ng-if="item.status==2" style="color: #42a65a">{{item.status_text}}</div>
+              <div class="flex-one fontSize12" ng-if="item.status==4" style="color: #f1453d">{{item.status_text}}</div>
+              <div class="hoge-list-i ButtonInline" ng-mouseenter="vm.showOpera(item,$event)" ng-mouseleave="vm.hideOpera(item,$event)">
+                <div class="icon-tool pull-right">
+                  <i class="typeface-list_caozuo hoge-list_caozuo" ng-class="{'active-bg':item.searchShow}"></i>
+                  <div class="pull-right list-icon-opera"
+                    ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                    <div class="btn-group">
+                      <button class="btn hoge-drop-icon" ng-click="vm.detail(item)">
+                        <span>查看</span>
+                      </button>
+                      <button class="btn hoge-drop-icon" ng-if="item.status==1 || item.status==3 || item.status==4"
+                        ng-click="vm.setStatus(item, 1)">
+                        <span>采纳</span>
+                      </button>
+                      <button class="btn hoge-drop-icon" ng-if="item.status==1" ng-click="vm.setBack(item)">
+                        <span>打回</span>
+                      </button>
+                      <button class="btn hoge-drop-icon" ng-if="item.status==2" ng-click="vm.setStatus(item, 2)">
+                        <span>下架</span>
+                      </button>
+                      <button class="btn hoge-drop-icon" ng-click="vm.deleteItem(item)">
+                        <span>删除</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="list_bottom hoge-table-bottom border-bottom-radius" ng-show="vm.dataList.length" style="height: 52px;">
+            <div class="btn-group" style="position: relative;top: -20px;">
+              <label class="checkbox-inline">
+                <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.checkAll()">
+                <span class="all-checked">全选</span>
+              </label>
+            </div>
+            <div class="btn-toolbar list_bar flex-one btn-box" style="display: inline-block;">
+              <div class="btn-group">
+                <button class="btn btn-comment" ng-if="vm.reommendListparams.status==1 || vm.reommendListparams.status==3 || vm.reommendListparams.status==4 || !vm.reommendListparams.status"
+                  ng-click="vm.operation(1)">采纳</button>
+                <button class="btn del-btn" ng-if="vm.reommendListparams.status==2 || !vm.reommendListparams.status"
+                  ng-click="vm.operation(2)">下架</button>
+                <button class="btn del-btn" ng-if="vm.reommendListparams.status==1 || !vm.reommendListparams.status"
+                  ng-click="vm.backOperation()">打回</button>
+              </div>
+            </div>
+            <page-nation options="vm.pageOptions" turn-page="vm.pageChange()" ng-show="vm.pageOptions.total > 10"></page-nation>
+          </div>
+        </div>
+      </div>
+      <div class="flex-item sub-hot hoge-radius hoge-border" style="min-height: 800px" ng-style="{height: vm.bodyHeight}">
+        <div class="list_contain white" my-loading="vm.publishLoading" load-signs="'publishLoading'">
+          <!-- 拖动排序 -->
+          <div class="table-header hoge-table-header" style="background-color: #fff;">
+            <div class="wrap" style="margin: 17px 0;">
+              <div class="list-title flex-one">
+                <span class="hotTitle">上头条</span><span class="hotSmallTitle">在线实时展示</span></div>
+              <div>
+                <i class="fa typeface-form_paixu" ng-click="vm.sort()"></i>
+              </div>
+            </div>
+            <div class="sort-board red-50 sortDiv" ng-show="vm.isSort">
+              拖动可排序
+              <button class="btn btn-sm white pull-right btn-cancel sotrBtn" ng-click="vm.cancelSort()">取消</button>
+              <button class="btn btn-sm hoge-btn-blue pull-right m-r sotrBtn" ng-click="vm.outSort()">保存</button>
+            </div>
+            <div class="white" ng-if="vm.moreShow">
+              <div style="overflow:hidden;position: relative;height:26px;top:-10px;">
+                <ul class="nav" ng-style="vm.styleNavUl" ng-mousedown="vm.startMove($event)" id="navUl">
+                  <li ng-class="{'active': i.checked == true, 'navLi': true, 'navFont': true,'navLichange':true,}" ng-repeat="i in vm.TabNav track by $index"
+                  data-ng-init="load($index)" title="{{i.name}}"><a href="#" class="navA" ng-click="vm.checkNav($index)">{{i.name}}</a></li>
+                  <!--<li class="navLi navFont inlineBlock" ng-if="vm.moreLi" ng-click="vm.openmoreNav()"><a href="">更多</a></li>-->
+                </ul>
+              </div>
+            </div>
+            <!-- <div class="white moreDiv" ng-if="!vm.moreShow">
+              <ul class="nav" style="height: 100%">
+                <li ng-class="{'active': i.checked == true, 'navLi': true, 'navFont': true}" ng-repeat="i in vm.navList track by $index"
+                  ng-click="vm.CheckNavList($index)" title="{{i.name}}"><a class="navA" href="#">{{i.name}}</a></li>
+                <li class="navLi navFont closemoreNav moreListyle" ng-click="vm.closemoreNav()"><a href="">收起更多</a><span
+                    class="glyphicon glyphicon-chevron-up"></span></li>
+              </ul>
+            </div>-->
+          </div>
+          <div class="dataList clearBoth" ng-if="vm.publishedList.length">
+            <div class="list white" ng-model="vm.publishedList" ui-sortable="vm.sortableOpt">
+              <div class="list-item hoge-item-border" style="padding-right: 0" ng-repeat="item in vm.publishedList track by $index"
+                ng-class="{'is-top': item.is_top==1}">
+                <div class="list-title flex-one">
+                  <!--示意图-->
+                  <div class="list-img">
+                    <span class="img-square" ng-if="item.index_pic">
+                      <img ng-src="{{item.index_pic}}">
+                    </span>
+                    <div class="img-square" ng-if="!item.index_pic">
+                      <img src="../assets/images/mxu/img_cover.png">
+                    </div>
+                    <!-- <div class="publish-type">
+                                                    <span class="type-name" ng-if="item.type=='article'">文稿</span>
+                                                    <span class="type-name" ng-if="item.type=='gallery'">图集</span>
+                                                    <span class="type-name" ng-if="item.type=='video'">视频</span>
+                                                    <span class="type-name" ng-if="item.type=='audio'">音频</span>
+                                                    <span class="type-name" ng-if="item.type=='topic'">专题</span>
+                                                    <span class="type-name" ng-if="item.type=='link'">外链</span>
+                                                </div> -->
+                  </div>
+                  <div class="list-info right_listInfo">
+                    <div class="part-one">
+                      <div class="part-one-title rightHideTitle">
+                        <a class="list-name rightTitle">
+                          {{item.title}}
+                        </a>
+                      </div>
+                      <div class="all-title" style="left: 5px;" ng-if="item.title.length>16">
+                        <!-- <span class="jiantou arrow bottom"></span> -->
+                        {{item.title}}
+                      </div>
+                    </div>
+                    <div class="part-two">
+                      <div class="list-data" style="margin-top:4px">
+                        <span class="data-icon rightTime">
+                          <span>{{item.publish_time_text}}</span>
+                        </span>
+                        <span class="data-icon">
+                          <i class="typeface-gongzuotai_pinglunshu pinglunshu_line"></i>
+                          <span class="statistic-data">{{item.comment_num}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="add-list" ng-if="vm.addShow">
+              <img src="../../../assets/images/mxu/home/new/icon_loading_2x.png" class="animate-img" alt="" ng-if="vm.loadMsg=='正在加载'">
+              <span ng-click="vm.loadMore()">{{vm.loadMsg}}</span>
+            </div>
+          </div>
+          <!-- 暂无数据 -->
+          <hoge-error arr-length="vm.publishedList.length" load="vm.publishLoading"></hoge-error>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

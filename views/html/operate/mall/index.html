@@ -1,0 +1,14 @@
+<div class="app-body-inner mxu_mall_wrap">
+    <div class="iframe_load_box" ng-show="vm.loading">
+        <img src="../../../../assets/images/mxu/iframe_loading.gif">
+    </div>
+    <div class="btn-toolbar" ng-show="!vm.loading">
+        <div class="special-entry pull-right">
+            <button class="btn btn-purple" ng-click="vm.goShift()">
+                添加奖品
+            </button>
+        </div>
+    </div>
+    <iframe id="formwin" name="formwin" ng-show="!vm.loading" frameborder="0"
+             scrolling="true" third-iframe="" width="100%" height="100%"></iframe>
+</div>

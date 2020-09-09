@@ -1,0 +1,80 @@
+<div class="virtual-page">
+        <div class="p-v-md">
+            <div class="hoge-edit-head">
+                <span class="page-title">虚拟点击量设置</span>
+            </div>
+        </div>
+        <div class="info-setting-box" style="box-shadow: none;border-radius: 4px;">
+            <div class="box-body hoge-border">
+                <form role="form" name="form">
+                    <!--基本信息-->
+                    <div class="form-card">
+                        <div class="header">规则设置</div>
+                        <div class="content">
+                        <div class="form-group">
+                                <label class="label-name">点击量基数
+                                    <div class="question-box">
+                                        <i class="subtitle-i typeface-form_tishi"></i>
+                                        <div class="question-hover">
+                                                点击数基数只对当前时间以后发布的的稿件生效
+                                            <span class="question-tip"></span>
+                                        </div>
+                                    </div>
+                                ：
+                                </label>
+                                <div class="setting-num-box">
+                                    <div class="multiple-box">
+                                        <span class="s-label-name">点击量基数：</span>
+                                        <input type="text" class="location" ng-model="vm.baseStartNum" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.minStartIntervalFocus = true"
+                                        ng-class="{'focus-color':vm.minStartIntervalFocus}" ng-blur="vm.minStartIntervalFocus = false">
+                                        <span class="connector" style="display: inline-block;margin: 0 10px;">-</span>
+                                        <input type="text" class="location" ng-model="vm.baseEndNum" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.maxEndIntervalFocus = true"
+                                        ng-class="{'focus-color':vm.maxEndIntervalFocus}" ng-blur="vm.maxEndIntervalFocus = false">
+                                        <!-- <input type="text" class="location" ng-model="vm.baseNum" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.baseFocus = true"
+                                        ng-class="{'focus-color':vm.baseFocus}" ng-blur="vm.baseFocus = false"> -->
+                                        <!-- <span class="frequency">/ 次</span> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="label-name">随机增长
+                                    <div class="question-box">
+                                        <i class="subtitle-i typeface-form_tishi"></i>
+                                        <div class="question-hover">
+                                                可设置会员每次点击后固定倍数增长量及随机增长区间，
+                                                参考公式：<b>单次点击*固定倍数+随机增长区间=单次随机增长量</b>
+                                            <span class="question-tip"></span>
+                                        </div>
+                                    </div>
+                                ：
+                                </label>
+                                <div class="setting-num-box">
+                                    <div class="multiple-box">
+                                        <span class="s-label-name">固定倍数：</span>
+                                        <input type="text" class="location" ng-model="vm.multipleNum" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.multipleFocus = true"
+                                        ng-class="{'focus-color':vm.multipleFocus}" ng-blur="vm.multipleFocus = false">
+                                        <span class="frequency">/ 次</span>
+                                    </div>
+                                    <div class="interval-box">
+                                        <span class="s-label-name">随机增长区间：</span>
+                                        <input type="text" class="location" ng-model="vm.minInterval" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.minIntervalFocus = true"
+                                        ng-class="{'focus-color':vm.minIntervalFocus}" ng-blur="vm.minIntervalFocus = false">
+                                        <span class="connector">-</span>
+                                        <input type="text" class="location" ng-model="vm.maxInterval" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.maxIntervalFocus = true"
+                                        ng-class="{'focus-color':vm.maxIntervalFocus}" ng-blur="vm.maxIntervalFocus = false">
+                                        <span class="frequency">/ 次</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="md-form-group">
+                        <button type="submit" class="btn primary-btn right-primary" my-loading="vm.loading" ng-click="vm.settingSave()">保存</button>
+                        <button class="btn cancel-btn right-cancel" ng-click="vm.settingCancel()" >取消</button>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+    </div>

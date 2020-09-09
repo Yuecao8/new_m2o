@@ -1,0 +1,53 @@
+<div class="push-tip-wrapper box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title">提示</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="content-switch">
+            <span class='toggleBtn' ng-class="{'active':vm.notShow}" ng-click="vm.notShowEvent()">无法发送({{vm.notpush_number}})</span>
+            <span class='toggleBtn' ng-class="{'active':vm.isShow}" ng-click="vm.pushShowEvent()">可发送({{vm.push_number}})</span>
+            
+        </div>
+        <div class="content-box">
+            <div ng-if="vm.notShow">
+                <span class='tip'>已打回、待审核、审核中稿件不可进行发布</span>
+                <div class='tip-box'>
+                    <p class="item-tip" ng-repeat="item in vm.notPushList" ng-if="item.article_type == 'common'"><span><i class="left-icon typeface-list_tonggao"></i> 通稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.notPushList" ng-if="item.article_type == 'tv'"><span><i class="left-icon typeface-list_dianshigao"></i> 电视稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.notPushList" ng-if="item.article_type == 'weibo'"><span><i class="left-icon typeface-list_weibogao"></i> 微博稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.notPushList" ng-if="item.article_type == 'weixin'"><span><i class="left-icon typeface-list_weixingao"></i> 微信稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.notPushList" ng-if="vm.param.type!='article'">《{{item.title}}》
+                        <span class="label-count" ng-if="vm.param.type=='gallery'">{{item.photo_count}}P</span>
+                        <span class="label-count" ng-if="vm.param.type=='video' || vm.param.type=='audio'">{{item.duration_format}}</span>
+                    </p>
+                </div>
+                
+            </div>
+            <div ng-if="vm.isShow">
+                <span class='tip'>以下稿件能够正常发布，如果稿件以前已发布至所选栏目，不会进行重复发布</span>
+                <div class='tip-box'>
+                    <p class="item-tip" ng-repeat="item in vm.canPushList" ng-if="item.article_type == 'common'"><span><i class="left-icon typeface-list_tonggao"></i> 通稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.canPushList" ng-if="item.article_type == 'tv'"><span><i class="left-icon typeface-list_dianshigao"></i> 电视稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.canPushList" ng-if="item.article_type == 'weibo'"><span><i class="left-icon typeface-list_weibogao"></i> 微博稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.canPushList" ng-if="item.article_type == 'weixin'"><span><i class="left-icon typeface-list_weixingao"></i> 微信稿</span>《{{item.title}}》</p>
+                    <p class="item-tip" ng-repeat="item in vm.canPushList" ng-if="vm.param.type!='article'">《{{item.title}}》
+                        <span class="label-count" ng-if="vm.param.type=='gallery'">{{item.photo_count}}P</span>
+                        <span class="label-count" ng-if="vm.param.type=='video' || vm.param.type=='audio'">{{item.duration_format}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn primary-btn" ng-click="vm.save()">确定</button>
+        <button class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+    <div class="animation-loading" ng-if="vm.animationLoading">
+            <div style="margin: 0 auto;">
+                <spin></spin>
+                <span class="text">正在推送，请稍等...</span>
+            </div>
+        </div>
+</div>

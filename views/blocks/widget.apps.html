@@ -1,0 +1,39 @@
+
+<div class="row no-gutter text-{{app.setting.theme.primary}}-hover">
+  <div class="col-xs-4 b-r b-b">
+    <a class="p-a block text-center" ui-sref="app.content.news">
+      <i class="material-icons md-24 text-muted m-v-sm icon-wengao2"></i>
+      <span class="block">{{vm.DOC.addArticle}}</span>
+    </a>
+  </div>
+  <div class="col-xs-4 b-r b-b">
+    <a class="p-a block text-center" ui-sref="app.content.tuji">
+      <i class="material-icons md-24 text-muted m-v-sm icon-tuji2"></i>
+      <span class="block">{{vm.DOC.addPhotos}}</span>
+    </a>
+  </div>
+  <div class="col-xs-4 b-b">
+    <a class="p-a block text-center" ui-sref="app.content.videoUpload({type: 'video'})">
+      <i class="material-icons md-24 text-muted m-v-sm icon-shiping2"></i>
+      <span class="block">{{vm.DOC.addVideo}}</span>
+    </a>
+  </div>
+  <div class="col-xs-4 b-r">
+    <a class="p-a block text-center" ui-sref="app.content.outlink">
+      <i class="material-icons md-24 text-muted m-v-sm icon-wailian2"></i>
+      <span class="block">{{vm.DOC.addLink}}</span>
+    </a>
+  </div>
+  <div class="col-xs-4 b-r">
+    <a class="p-a block text-center" ui-sref="app.terminal.wechat">
+      <i class="material-icons md-24 text-muted m-v-sm icon-weixin2"></i>
+      <span class="block">{{vm.DOC.wechat}}</span>
+    </a>
+  </div>
+  <div class="col-xs-4">
+    <a class="p-a block text-center" ui-sref="app.terminal.weibo">
+      <i class="material-icons md-24 text-muted m-v-sm icon-weibo2"></i>
+      <span class="block">{{vm.DOC.weibo}}</span>
+    </a>
+  </div>
+</div>

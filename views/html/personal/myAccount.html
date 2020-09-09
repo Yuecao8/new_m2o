@@ -1,0 +1,191 @@
+<div class="my-account-wrap">
+        <header class="hoge-table-add">
+            <div class="hoge-table-title">
+                <!-- <span class="title-font-l"> 个人中心</span>
+                <span class="title-font-l m-connector">></span> -->
+                <span class="title-font-d">我的融合号</span>
+            </div>
+        </header>
+        <div class="edit-form">
+            <div class="box-body hoge-border" my-loading="vm.rhh_loading">
+                <form role="form" name="form">
+                    <!--基本信息-->
+                    <div class="form-card">
+                        <div class="header">基本信息</div>
+                        <div class="pic-box">
+                                <span class="edit-icon" ng-click="vm.editPic()"></span>
+                                <span class="edit-text" ng-click="vm.editPic()">编辑头像</span>
+                                <img class="pic-img" ng-click="vm.editPic()" src="{{vm.headPortrait.src}}" alt="">
+                                <input type="file" class="pic-up" id="pic-up" nv-file-select="" uploader="vm.picUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                            </div>
+                        <div class="content">
+                                
+                            <div class="form-group">
+                                <label class="label-name"><span class="must-option">*</span>派发单位：</label>
+                                <input type="text" maxlength="20" ng-model="vm.myAccountInfo.unit" ng-focus="vm.unitFocus = true"
+                                        ng-class="{'focus-color':vm.unitFocus}" ng-blur="vm.unitFocus = false">
+                                <!-- <div class="count" style="position: absolute;top:14px;right:9px;">
+                                    <div num-count="vm.myAccountInfo.unit" count-top="0" count-right="0" count-max="20" count-position="right"></div>
+                                </div> -->
+                                
+                            </div>
+                            <div class="form-group">
+                                <label class="label-name label-position">内容简介：</label>
+                                <textarea maxlength="500" name=""  ng-model="vm.myAccountInfo.intro" ng-focus="vm.introFocus = true"
+                                ng-class="{'focus-color':vm.introFocus}" ng-blur="vm.introFocus = false"></textarea>
+                                <div class="count text-a" style="position: absolute;top:14px;right:9px;">
+                                    <div num-count="vm.myAccountInfo.intro" count-top="0" count-right="-18" count-max="500" count-position="right"></div>
+                                </div>
+                                <!-- <input type="text" ng-model="vm.roleInfo.username" ng-focus="vm.titleFocus = true" -->
+                                        <!-- ng-class="{'focus-color':vm.titleFocus}" ng-blur="vm.titleFocus = false"> -->
+                            </div>
+                            <div class="form-group">
+                                <label class="label-name"><span class="must-option">*</span>选择分类：</label>
+                                <div class="btn-group dropdown hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" disabled style="padding-right: 24px !important;" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.currentRegion}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':true}">
+                                        <a class="dropdown-item" ng-repeat="region in vm.regionList track by $index" ng-click="vm.chooseRegion(region)">
+                                            {{region.name}}
+                                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                                    type="text" options="vm.options"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                    <div class="btn-group dropdown hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" disabled style="padding-right: 24px !important;" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.currentClass}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':true}">
+                                        <a class="dropdown-item" ng-repeat="classItem in vm.classList track by $index" ng-click="vm.chooseClass(classItem)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                            {{classItem.name}}
+                                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                                    type="text" options="vm.options"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="label-name"><span class="must-option">*</span>地理坐标：</label>
+                                <div class="btn-group dropdown hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.currentProvince}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm max-h" ng-class="{'disOpen':true}">
+                                        <a class="dropdown-item" ng-repeat="provinceItem in vm.provinceList track by $index" ng-click="vm.chooseProvince(provinceItem)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                            {{provinceItem.name}}
+                                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                                    type="text" options="vm.options"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="btn-group dropdown hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.currentCity}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm max-h" ng-class="{'disOpen':true}">
+                                        <a class="dropdown-item" ng-repeat="cityItem in vm.cityList track by $index" ng-click="vm.chooseCity(cityItem)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                            {{cityItem.name}}
+                                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                                    type="text" options="vm.options"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="btn-group dropdown hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.currentArea}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm max-h" ng-class="{'disOpen':true}">
+                                        <a class="dropdown-item" ng-repeat="areaItem in vm.areaList track by $index" ng-click="vm.chooseArea(areaItem)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                            {{areaItem.name}}
+                                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                                    type="text" options="vm.options"/>
+                                        </a>
+                                    </div>
+                                </div>           
+                            </div> 
+                            <div class="form-group">
+                                <label class="label-name">默认坐标：</label>
+                                <div class="location-box">
+                                    <input type="text" class="location longitude-input" ng-model="vm.myAccountInfo.longitude" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" ng-focus="vm.longitudeFocus = true"
+                                    ng-class="{'focus-color':vm.longitudeFocus}" ng-blur="vm.longitudeFocus = false">
+                                    <span class="longitude-text">经度</span>
+                                    <input type="text" class="location latitude-input" ng-model="vm.myAccountInfo.latitude" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" ng-focus="vm.latitudeFocus = true"
+                                    ng-class="{'focus-color':vm.latitudeFocus}" ng-blur="vm.latitudeFocus = false">
+                                    <span class="latitude-text">维度</span>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="label-name"><span class="must-option">*</span>有效时间：</label>
+                                <div class="time-box">
+                                    <input class="date-input" placeholder="有效时间" class="form-control"
+                                            ng-model="vm.myAccountInfo.date"
+                                            data-date-format="yyyy-MM-dd"
+                                            data-date-type="number"
+                                            data-autoclose="1"
+                                            data-icon-left="fa fa-chevron-left"
+                                            data-icon-right="fa fa-chevron-right"
+                                            name="date" autocomplete='off'
+                                            data-min-date="today"
+                                            disabled
+                                            bs-datepicker>
+                                    <i class="icon-biaodan"></i>
+                                </div>
+                            </div> 
+                            <div class="form-group img-box">
+                                <label class="label-name label-position">图片上传：</label>
+                                <div class="proveImg-box">
+                                    <!-- <div class="up-box">
+                                        <i class="typeface-form_zengjia" ng-if="!vm.headPortrait.src"></i>
+                                        <p class="up-text" ng-if="!vm.headPortrait.src">上传头像</p>
+                                        <img src="{{vm.headPortrait.src}}" alt="">
+                                        <input type="file" class="up-pic" nv-file-select="" uploader="vm.LogoUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                                    </div> -->
+                                    <div class="up-box m-l-50" >
+                                        <i class="typeface-form_zengjia" ng-if="!vm.bgImg.src"></i>
+                                        <p class="up-text"ng-if="!vm.bgImg.src">上传背景图片</p>
+                                        <img src="{{vm.bgImg.src}}" alt="">
+                                        <input type="file" class="up-pic" nv-file-select="" uploader="vm.BgUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp">
+                                        <span class="bg-tip">请上传JPG／JPEG格式图片</span>
+                                    </div>
+
+                                </div>
+                                
+                            </div> 
+                        </div>
+                    </div>
+                    <!--系统设置-->
+                    <div class="form-card">
+                        <div class="header">系统设置</div>
+                        <div class="content">
+                            <div class="form-group">
+                                <label class="label-name">设置初始订阅量：</label>
+                                <input type="text" ng-model="vm.myAccountInfo.subscribeNum" onkeyup="value=value.replace(/\D/g,'')" maxlength="4" ng-focus="vm.subscribeNumFocus = true"
+                                ng-class="{'focus-color':vm.subscribeNumFocus}" placeholder="请输入订阅数量" ng-blur="vm.subscribeNumFocus = false" ng-keyup="vm.rangSubNum(vm.myAccountInfo.subscribeNum)"><br><span class="tips-msg">可设置0-10000范围内的任意整数</span>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="label-name">编辑人数限制：</label>
+                                <input type="text" ng-model="vm.myAccountInfo.limitNum" onkeyup="value=value.replace(/\D/g,'')" ng-focus="vm.limitNumFocus = true"
+                                ng-class="{'focus-color':vm.limitNumFocus}" placeholder="200" ng-blur="vm.limitNumFocus = false" ng-keyup="vm.rangLimitNum(vm.myAccountInfo.limitNum)"><br><span class="tips-msg">可设置0-200范围内的任意整数，默认200个</span>
+                            </div>  -->
+                            
+                        </div>
+                    </div>
+    
+                    <div class="md-form-group">
+                        <button type="submit" class="btn primary-btn right-primary" my-loading="vm.loading" ng-click="vm.myAccountSave()">{{ 'user.save'| translate}}</button>
+                        <!-- <button class="btn cancel-btn right-cancel" ng-click="vm.myAccountCancel()" >取消</button> -->
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    <m2o-footer></m2o-footer>

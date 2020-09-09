@@ -1,0 +1,444 @@
+<div class="create-api-box" ng-class="{'fade': vm.createShow, 'in': !vm.createShow}">
+    <!-- <div class="application-list">
+        <div class="list" ng-click="vm.backList()">应用列表 ></div>
+        <div class="list" ng-click="vm.backEdit()">编辑应用 ></div>
+        <div class="edit">创建API</div>
+    </div> -->
+    <div class="edit-form hoge-border">
+        <span class="close-icon" ng-click="vm.close()"><i class="fa typeface-alert_cuowu2"></i></span>
+        <!-- 基本信息 -->
+        <div class="form-card">
+            <div class="header">基本信息</div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">接口名称:</label>
+                    <div class="input-box">
+                        <input type="text" ng-model="vm.detailInfo.name" ng-focus="vm.nameFocus = true"
+                            ng-class="{'focus-color':vm.nameFocus}" ng-blur="vm.nameFocus = false"
+                            placeholder="请输入名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">描述:</label>
+                    <div  class="input-box">
+                        <textarea class="text-top" cols="30" rows="4" ng-model="vm.detailInfo.brief" ng-focus="vm.briefFocus = true"
+                            ng-class="{'focus-color':vm.briefFocus}" ng-blur="vm.briefFocus = false"
+                            placeholder="请输入描述" maxlength="128"></textarea>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label class="label-name">所属功能:</label>
+                    <div class="btn-group dropdown select-drop hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.selectedCategory.name}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="item in vm.categoryList" ng-click="vm.categorySelect(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="dropdown-box">
+                    <label class="label-name">请求方式:</label>
+                    <div class="btn-group dropdown select-drop hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.detailInfo.type}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="item in vm.typeList" ng-click="vm.typeSelects(item)">{{item.name}}</a>
+                        </div>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">路由设置:</label>
+                    <div class="input-box">
+                        <input type="text" ng-model="vm.detailInfo.route" ng-focus="vm.routeFocus = true"
+                            ng-class="{'focus-color':vm.routeFocus}" ng-blur="vm.routeFocus = false"
+                            placeholder="请输入">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">输入参数前置代码:</label>
+                    <div class="input-box input-code">
+                        <div class="ele-code" id="ele-html">
+                            <!-- 代码编辑 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 输入参数 -->
+        <div class="form-card">
+            <div class="header">输入参数</div>
+            <div class="dataConditions">
+                <div class="list_contain hoge-table-contain white" my-loading="vm.conditionalListLoading">
+                    <div class="table_header hoge-table-header">
+                        <div class="b-l b-white flex-item">
+                            <div class="list-title flex-one">参数名称</div>
+                            <div class="list-input  flex-one">参数标识</div>
+                            <div class="list-receive">值类型</div>
+                            <div class="list-defaults  flex-one">值</div>
+                            <div class="list-type">传递方式</div>
+                            <div class="list-i">操作</div>
+                        </div>
+                    </div>
+
+                    <div class="list white">
+                        <div class="list-item hoge-item-border flex-item"
+                                ng-repeat=" (idx, nor) in vm.conditionalList track by $index"
+                        >
+                            <div class="list-title flex-one">
+                                <input type="text"  class="input-list" ng-model="nor.name" ng-focus="nor.focusTitle = true"
+                                        ng-class="{'focus-color':nor.focusTitle}" ng-blur="nor.focusTitle = false"
+                                        ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                            <div class="list-input flex-one">
+                                <div class="list-title flex-one">
+                                    <input  type="text"  class="input-list" ng-model="nor.key" ng-focus="nor.focusInput = true"
+                                        ng-class="{'focus-color':nor.focusInput}" ng-blur="nor.focusInput = false"
+                                        ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                                </div>
+                            </div>
+
+                            <div class="list-type list-receive">
+                                <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="dropdown-label">{{nor.value_type == 1 ? '值类型' : '文件类型'}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm drop-down-list">
+                                    <a class="dropdown-item" ng-repeat="item in vm.way"
+                                        ng-class="{'active-color':vm.conditionalList[idx].add_status == item.value}"
+                                        ng-click="vm.waySelect(item, idx)">{{item.name}}</a>
+                                </div>
+                            </div>
+                            <div class="list-defaults  flex-one">
+                                <div class="list-title flex-one">
+                                    <input type="text"  class="input-list" ng-model="nor.default_value" ng-focus="nor.focusDefaults = true"
+                                        ng-class="{'focus-color':nor.focusDefaults}" ng-blur="nor.focusDefaults = false">
+                                </div>
+                            </div>
+                            <div class="list-type">
+                                <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="dropdown-label">{{nor.add_type == 1 ? '用户传参' : '系统传参'}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm drop-down-list">
+                                    <a class="dropdown-item"  ng-class="{'active-color':vm.conditionalList[idx].type == item.id}"
+                                        ng-repeat="item in vm.type" ng-click="vm.typeSelect(item,idx)">{{item.name}}</a>
+                                </div>
+                            </div>
+                            <div class="list-i">
+                                <span ng-click="vm.delConditional(nor)">
+                                    <span>删除</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form" ng-click="vm.addLine()">
+                        <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                        <span class="add-tex">添加参数</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 内部处理 -->
+        <div class="form-card">
+            <div class="header">内部处理</div>
+            <div class="content">
+                <div class="content-box">
+                    <label class="label-name">处理方式:</label>
+                    <div class="input-box internal">
+                        <div class="btn-box">
+                            <div class="interface-btn first" ng-class="{'active': vm.popInterface == 1}" ng-click="vm.popInterface = 1">系统接口</div>
+                            <div class="interface-btn no-border" ng-class="{'active': vm.popInterface == 2}" ng-click="vm.popInterface = 2">外部接口</div>
+                            <div class="interface-btn no-border last" ng-class="{'active': vm.popInterface == 3}" ng-click="vm.popInterface = 3">多接口</div>
+                        </div>
+                        <div class="system-interface" ng-if="vm.popInterface == 1">
+                            <div class="system-interface-box dropdown-menu-box dropdown-system-box">
+                                <label class="label-name">选择接口:</label>
+                                <div class="btn-group dropdown select-drop hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" ng-click="vm.dropdownShow = true">
+                                        <span class="dropdown-label">{{vm.systemInterfaceName}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm block-dropdown" ng-show="vm.dropdownShow">
+                                        <a class="dropdown-item" ng-repeat="item in vm.systemInterface" ng-click="vm.systemSelectIds(item)">{{item.name}}</a>
+                                    </div>
+                                    <div class="dropdown-menu text-left text-sm left-dropdown-menu block-dropdown m-l-10"
+                                        my-loading="vm.systemApiShows"
+                                        ng-show="vm.systemApiShow">
+                                        <a class="dropdown-item" ng-repeat="item in vm.systemApi" ng-click="vm.systemSelect(item)">{{item.name}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="system-interface-box no-paddingsystem-interface">
+                                <label class="label-name">节点变量:</label>
+                                <div class="input-box">
+                                    <input type="text" ng-model="vm.systemCode" ng-focus="vm.CodeFoc = true"
+                                        ng-class="{'focus-color':vm.CodeFoc}" ng-blur="vm.CodeFoc = false">
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="system-interface-box no-paddingsystem-interface">
+                                <label class="label-name">参数:</label>
+                                <div class="input-box">
+                                    <input type="text" ng-model="item.systemParameter" ng-focus="vm.parameterFocus = true"
+                                        ng-class="{'focus-color':vm.parameterFocus}" ng-blur="vm.parameterFocus = false"
+                                        placeholder="param1=value1&param2=value2&...">
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                        <div class="external-interface" ng-if="vm.popInterface == 2">
+                            <div class="system-interface-box">
+                                <label class="label-name">接口地址:</label>
+                                <div class="input-box">
+                                    <input type="text" ng-model="vm.selectedCategory.url" ng-focus="vm.names = true"
+                                        ng-class="{'focus-color':vm.names}" ng-blur="vm.names = false">
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="system-interface-box">
+                                <label class="label-name">请求方式:</label>
+                                <div class="btn-group dropdown select-drop hoge-dropdown">
+                                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.selectedCategory.type}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm">
+                                        <a class="dropdown-item" ng-repeat="item in vm.typeList" ng-click="vm.selectWays(item)">{{item.name}}</a>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="system-interface-box">
+                                <label class="label-name">参数:</label>
+                                <div class="input-box">
+                                    <input type="text" ng-model="vm.selectedCategory.param" ng-focus="vm.Focus = true"
+                                        ng-class="{'focus-color':vm.Focus}" ng-blur="vm.Focus = false"
+                                        placeholder="param1=value1&param2=value2&...">
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="system-interface-box">
+                                <label class="label-name">节点变量:</label>
+                                <div class="input-box">
+                                    <input type="text" ng-model="vm.selectedCategory.node" ng-focus="vm.nodeFoc = true"
+                                        ng-class="{'focus-color':vm.nodeFoc}" ng-blur="vm.nodeFoc = false">
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                        <div class="more-interface" ng-if="vm.popInterface == 3">
+                            <div class="system-box" ng-repeat="item in vm.systemList track by $index">
+                                <div class="title">
+                                    <span>接口{{$index + 1}}:系统接口</span>
+                                    <i class="icon typeface-form_shanchu delete-system" ng-click="vm.deleteSystem(item)"></i>
+                                </div>
+                                <div class="system-interface-box dropdown-menu-box dropdown-click">
+                                    <label class="label-name">选择接口:</label>
+                                    <div class="btn-group dropdown select-drop hoge-dropdown">
+                                        <button class="btn btn-sm dropdown-toggle" ng-click="item.dropdownShow = true; vm.statusIndex = $index">
+                                            <span class="dropdown-label">{{item.selectName}}</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu text-left text-sm block-dropdown" ng-show="item.dropdownShow">
+                                            <a class="dropdown-item" ng-repeat="nor in vm.systemInterface" ng-click="vm.systemSelectId(item, nor)">{{nor.name}}</a>
+                                        </div>
+                                        <div class="dropdown-menu text-left text-sm left-dropdown-menu block-dropdown"
+                                            my-loading="vm.systemApiShows"
+                                            ng-show="item.systemApiShow">
+                                            <a class="dropdown-item" ng-repeat="nor in vm.systemApi" ng-click="vm.systemApiName(item, nor)">{{nor.name}}</a>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div class="system-interface-box">
+                                    <label class="label-name">参数:</label>
+                                    <div class="input-box">
+                                        <input type="text" ng-model="item.parameter" ng-focus="item.nameFocus = true"
+                                            ng-class="{'focus-color':item.nameFocus}" ng-blur="item.nameFocus = false"
+                                            placeholder="param1=value1&param2=value2&...">
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div class="system-interface-box">
+                                    <label class="label-name">节点变量:</label>
+                                    <div class="input-box">
+                                        <input type="text" ng-model="item.node" ng-focus="item.NameFoc = true"
+                                            ng-class="{'focus-color':item.NameFoc}" ng-blur="item.NameFoc = false">
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                            <div class="system-box external-box" ng-repeat="item in vm.externalList track by $index">
+                                <div class="title">
+                                    <span>接口{{vm.systemList.length + $index + 1}}:外部接口</span>
+                                    <i class="icon typeface-form_shanchu delete-system" ng-click="vm.deleteExternal(item)"></i>
+                                </div>
+                                <div class="system-interface-box">
+                                    <label class="label-name">接口地址:</label>
+                                    <div class="input-box">
+                                        <input type="text" ng-model="item.url" ng-focus="item.nameFocs = true"
+                                            ng-class="{'focus-color':item.nameFocs}" ng-blur="item.nameFocs = false"
+                                            placeholder="请输入名称">
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div class="system-interface-box">
+                                    <label class="label-name">请求方式:</label>
+                                    <div class="btn-group dropdown select-drop hoge-dropdown">
+                                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <span class="dropdown-label">{{item.selectWay}}</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu text-left text-sm">
+                                            <a class="dropdown-item" ng-repeat="nor in vm.typeList" ng-click="vm.selectTypes(item, nor)">{{nor.name}}</a>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div class="system-interface-box">
+                                    <label class="label-name">参数:</label>
+                                    <div class="input-box">
+                                        <input type="text" ng-model="item.parameter" ng-focus="item.nameFocus = true"
+                                            ng-class="{'focus-color':item.nameFocus}" ng-blur="item.nameFocus = false"
+                                            placeholder="param1=value1&param2=value2&...">
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                                <div class="system-interface-box">
+                                    <label class="label-name">节点变量:</label>
+                                    <div class="input-box">
+                                        <input type="text" ng-model="item.node" ng-focus="item.nameFoc = true"
+                                            ng-class="{'focus-color':item.nameFoc}" ng-blur="item.nameFoc = false">
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                            <div class="add-form first-from" ng-click="vm.addSystemLine()">
+                                <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                                <span class="add-tex">添加系统接口</span>
+                            </div>
+                            <div class="add-form" ng-click="vm.addExternalLine()">
+                                <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                                <span class="add-tex">添加外部接口</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+        <!-- 返回参数处理 -->
+        <div class="form-card">
+            <div class="header">返回参数处理</div>
+            <div class="dataConditions backData">
+                <div class="list_contain hoge-table-contain white" my-loading="vm.backConditionalListLoading">
+                    <div class="table_header hoge-table-header">
+                        <div class="b-l b-white flex-item">
+                            <div class="list-title flex-one">参数名称</div>
+                            <div class="list-input  flex-one">输出参数</div>
+                            <div class="list-defaults  flex-one">对应参数</div>
+                            <div class="list-i">操作</div>
+                        </div>
+                    </div>
+                    <div class="list white">
+                        <div class="list-item hoge-item-border flex-item"
+                                ng-repeat=" (idx, nor) in vm.backConditionalList track by $index">
+                            <div class="list-title flex-one">
+                                <input type="text"  class="input-list" ng-model="nor.name" ng-focus="nor.focusTitles = true"
+                                        ng-class="{'focus-color':nor.focusTitles}" ng-blur="nor.focusTitles = false">
+                            </div>
+                            <div class="list-input flex-one">
+                                <div class="list-title flex-one">
+                                    <input  type="text"  class="input-list" ng-model="nor.output_param" ng-focus="nor.focusInputs = true"
+                                        ng-class="{'focus-color':nor.focusInputs}" ng-blur="nor.focusInputs = false">
+                                </div>
+                            </div>
+                            <div class="list-defaults  flex-one">
+                                <div class="list-title flex-one">
+                                    <input type="text"  class="input-list" ng-model="nor.map_param" ng-focus="nor.focusDefault = true"
+                                        ng-class="{'focus-color':nor.focusDefault}" ng-blur="nor.focusDefault = false">
+                                </div>
+                            </div>
+                            <div class="list-i">
+                                <span ng-click="vm.deleteConditional(nor)">
+                                    <span>删除</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form" ng-click="vm.addLines()">
+                        <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                        <span class="add-tex">添加参数</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 返回值处理 -->
+        <div class="form-card">
+            <div class="header">返回值处理</div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">返回参数代码:</label>
+                    <div class="input-box input-code-box">
+                        <div class="ele-code" id="ele-html-code">
+                            <!-- 代码编辑 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- 缓存处理 -->
+         <!-- <div class="form-card" ng-show="vm.is_creat == 1"> -->
+        <div class="form-card">
+            <div class="header">缓存处理</div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">是否开启缓存:</label>
+                    <div class="cache-box">
+                        <label class="m-r">
+                            <input type="radio" name="cache" ng-model="vm.cacheInfo.cache_open" ng-click="vm.getValue(vm.cacheInfo.cache_open)" value="1">是
+                        </label>
+                        <label>
+                            <input type="radio" name="cache" ng-model="vm.cacheInfo.cache_open" ng-click="vm.getValue(vm.cacheInfo.cache_open)" value="0">否
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">缓存时间:</label>
+                    <div class="input-box input-code-box">
+                        <input type="text" class="cache-time" ng-focus="vm.cacheTimeFocus = true"
+                        ng-class="{'focus-color':vm.cacheTimeFocus}" ng-blur="vm.cacheTimeFocus = false"
+                        placeholder="" onkeyup="this.value=this.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'')" onkeyup="this.value=this.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'')" ng-model="vm.cacheInfo.cache_time" ng-disabled="vm.cacheDisable"><span>分</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-card">
+            <div class="header">鉴权</div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">是否开启验证:</label>
+                    <div class="cache-box">
+                        <label class="m-r">
+                            <input type="radio" name="verify" ng-model="vm.is_verify" value="1">是
+                        </label>
+                        <label>
+                            <input type="radio" name="verify" ng-model="vm.is_verify" value="0">否
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-box" ng-class="{'fade':! vm.createShow, 'in': vm.createShow}">
+    <button type="button" class="btn primary-btn input-btn" ng-click="vm.popSave()">保存</button>
+    <button type="button" class="btn cancel-btn input-btn" ng-click="vm.close()">取消</button>
+</div>

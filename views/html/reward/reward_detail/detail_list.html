@@ -1,0 +1,184 @@
+<div class="content-padding pos-rlt" my-loading="vm.loading">
+  <div>
+    <div class="content_list_head clearfix hoge-table-add">
+      <div class="pull-left hoge-table-title">打赏明细</div>
+      <div class="pull-right">
+        <button class="btn hoge-btn-blue" ng-if="vm.currentSiteData.id > 0 && vm.isFusion == 1" ng-click="vm.withdrawDeposit()">提现</button>
+      </div>
+    </div>
+    <div class="reward_header">
+      <div class="rewardAll">
+        <div class="left">
+          <div class="img-money"></div>
+          <span class="num" ng-bind="vm.totalCount"></span>
+          <span class="word">打赏总收益</span>
+        </div>
+      </div>
+      <div class="reward_day">
+        <div class="today">
+          <span class="num" ng-bind="vm.todayCount"></span>
+          <span class="word">今日</span>
+        </div>
+        <div class="yestoday">
+          <span class="num" ng-bind="vm.yesterdayCount"></span>
+          <span class="word">昨日</span>
+          <i>单位：{{vm.moneyName}}个数</i>
+        </div>
+      </div>
+    </div>
+    <div class="list_contain hoge-table-contain white">
+      <div class="btn-toolbar list_bar hoge-table-search reward-cb">
+        <a download="download" ng-click="vm.export()" href="{{vm.url}}"><button class="export_form">导出表格</button></a>
+        <!--时间下拉-->
+        <div class="btn-group dropdown hoge-dropdown">
+          <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+            <span class="dropdown-label">{{vm.list_time}}</span>
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+            <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)"
+              ng-class="{out: vm.timeArr.length - 1 === $index}">
+              {{time.name}}
+              <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate"
+                class="date-picker opacity-0" type="text" options="vm.options" />
+            </a>
+          </div>
+        </div>
+        <!--状态下拉-->
+        <div class="btn-group dropdown hoge-dropdown">
+          <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+            <span class="dropdown-label">{{vm.typeName}}</span>
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu text-left text-sm">
+            <a class="dropdown-item" ng-repeat="type in vm.typeArr track by $index" ng-click="vm.chooseType(type)"
+              ng-class="{out: vm.typeArr.length - 1 === $index}">
+              {{type.name}}
+            </a>
+          </div>
+        </div>
+        <!--融合号选择-->
+        <div class="btn-group dropdown hoge-dropdown" ng-if="vm.currentSiteData.id == 0 && vm.isFusion == 1">
+          <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="dropdown-label">{{vm.ronghe}}</span>
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu text-left text-sm">
+            <a class="dropdown-item" ng-repeat="ronghe in vm.rongheArr" ng-click="vm.chooseRonghe(ronghe)">{{ronghe.name}}</a>
+          </div>
+        </div>
+        <!--搜索-->
+        <div class="form-group hoge-input-search pull-left">
+          <input type="text" placeholder="{{'content.search' | translate }}" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+          <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+        </div>
+      </div>
+      <!-- <div class="ErrorTip" ng-show="!vm.NormalList.length && !vm.loading">
+                <p translate="content.noData"></p>
+            </div> -->
+      <hoge-error hight-num="'500px'" arr-length="vm.rewardList.length" load="vm.loading"></hoge-error>
+      <table ng-show="vm.rewardList.length">
+        <thead>
+          <th class="reward_user">用户</th>
+          <th class="reward_diamond">打赏{{vm.moneyName}}(个)
+            <div class="icon_sort" ng-click="vm.doSort()">
+              <i class="fa fa-sort-asc" ng-class="{none: vm.sort_type=='1',top:vm.sort_type=='0'}"></i>
+              <i class="fa fa-sort-desc" ng-class="{bottom: vm.sort_type=='1',none: vm.sort_type=='0'}"></i>
+            </div>
+          </th>
+          <th class="reward_type">打赏分类</th>
+          <th class="reward_date">打赏日期</th>
+          <th class="belong_ronghe" ng-if="vm.currentSiteData.id == 0 && vm.isFusion == 1">所属融合号</th>
+          <th class="reward_object">打赏对象</th>
+        </thead>
+        <tbody ng-show="vm.rewardList.length">
+          <tr ng-repeat="nor in vm.rewardList track by $index">
+            <td class="reward_user">
+              <img ng-if="nor.avatar" ng-src="{{nor.avatar}}">
+              <img ng-if="!nor.avatar" src="../assets/images/mxu/img_cover.png">
+              <span>{{nor.user_name}}</span>
+            </td>
+            <td class="reward_diamond">
+              {{nor.goods_value}}
+            </td>
+            <td class="reward_type">
+              {{nor.content_type_text}}
+            </td>
+            <td class="reward_date">
+              {{nor.created_at}}
+            </td>
+            <td class="belong_ronghe" ng-if="vm.currentSiteData.id == 0 && vm.isFusion == 1">
+              {{nor.site.name}}
+            </td>
+            <td class="reward_object">
+              <a>
+                <span>{{nor.content_title}}</span>
+                <!-- <span>按时发大水大师傅大师傅大师傅鼎折覆餗地方撒旦法十大歌手分公司代发货对方过后的风光大嫁点击点击</span> -->
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="table_header hoge-table-header" ng-show="vm.NormalList.length">
+                <div class="wrap">
+                    <div class="list-ctr"></div>
+                    <div class="list-body" style="flex:0.8">用户</div>
+                    <div class="list-weight">打赏钻石(个)
+                        <div class="icon_sort">
+                            <i class="fa fa-sort-asc" ng-class="{none:vm.sort_key=='exp_points'&&  vm.sort_type=='sort_desc',top:vm.sort_key=='exp_points'&& vm.sort_type=='sort_asc'}"></i>
+                            <i class="fa fa-sort-desc" ng-class="{bottom:vm.sort_key=='exp_points'&&  vm.sort_type=='sort_desc',none:vm.sort_key=='exp_points'&& vm.sort_type=='sort_asc'}"></i>
+                        </div>
+                    </div>
+                    <div class="list-status">打赏分类</div>
+                    <div class="list-publish">打赏日期</div>
+                    <div class="list-other">所属融合号</div>
+                    <div class="list-object">打赏对象</div>
+                </div>
+            </div>
+
+            <div class="list white border-bottom-radius" ng-model="vm.NormalList" ng-show="vm.NormalList.length">
+                <div>
+                    <div class="list-item hoge-item-border" ng-repeat="nor in vm.NormalList track by $index" ng-mouseenter="" ng-class="{'border-blue':vm.itemCheck(nor)}">
+                        <div class="list-body" style="flex:0.88">
+                            <div class="list_img">
+                                <span class="img-square" ng-if="nor.index_pic">
+                                    <img ng-src="{{nor.index_pic}}">
+                                </span>
+                                <div class="img-square" ng-if="!nor.index_pic">
+                                    <img src="../assets/images/mxu/img_cover.png">
+                                </div>
+                            </div>
+                            <div class="list_info">
+                                <div class="part_one">
+                                    <span class="list_title">{{nor.title}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-weight">{{nor.category_name}}</div>
+
+                        <div class="list-status status-target">
+                            <div class="width-status">
+                                <span class="content-pendingAudit">文稿</span>
+                            </div>
+                        </div>
+                        <div class="list-other">
+                            <span>2018-02-12 12:56</span>
+                        </div>
+                        <div class="list-cover">
+                            融合号
+                        </div>
+                        <div class="list-object">
+                            我是刘德华刘德华刘德华刘德华刘德华
+                        </div>
+                    </div>
+                </div> -->
+      <div class="list_bottom hoge-table-bottom border-bottom-radius" ng-show="vm.pageOptions.total > 10">
+        <div class="btn-toolbar list_bar flex-one btn-box">
+
+        </div>
+        <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

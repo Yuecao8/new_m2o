@@ -1,0 +1,55 @@
+<div class="modal-content box-shadow-md " xmlns="http://www.w3.org/1999/html">
+    <div class="modal-header">
+        <h3 class="modal-title" translate="terminalSiteSet.siteSet"></h3>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <form role="form" name="form" >
+        <div class="modal-body" my-loading="vm.getInfo_loading">
+            <div class="form_box">
+                <div class="form-group">
+                    <label ng-class="{'active': vm.site.fix}" translate="terminalSiteSet.domainPrefix"></label>
+                    <input type="text" class="form-control form-height" ng-model="vm.site.prefix"  ng-blur="vm.site.fix = false"
+                           ng-focus="vm.site.fix = true" maxlength="50" ng-disabled="vm.hasPrefix" required>
+                    <span translate="terminalSiteSet.prefixIntroduce"></span>
+                </div>
+                <div class="form-group">
+                    <label ng-class="{'active': vm.site.url}" translate="terminalSiteSet.domainName"></label>
+                    <input type="text" class="form-control form-height" ng-model="vm.site.domain"  ng-blur="vm.site.url = false"
+                           ng-focus="vm.site.url = true" maxlength="50" ng-disabled="vm.hasDomain" required>
+                    <span translate="terminalSiteSet.domainIntroduce"></span>
+                </div>
+                <div class="form-group">
+                    <label ng-class="{'active': vm.site.name}">{{'terminalSiteSet.siteName' | translate}}（title)</label>
+                    <input  type="text" class="form-control form-height" ng-model="vm.site.title" ng-blur="vm.site.name = false" ng-focus="vm.site.name = true" maxlength="10" required>
+                    <span translate="terminalSiteSet.siteIntroduce"></span>
+                </div>
+                <div class="form-group">
+                    <label translate="terminalSiteSet.siteLogo"></label>
+                    <div class="form-control siteLoge">
+                        <div class="form-file">
+                            <input type="file" id="file" nv-file-select uploader="vm.uploader" accept="image/gif,image/jpeg,image/png,image/bmp"/>
+                            <div class="icon-jia"  ng-if="!vm.site.logo_src" data-name="{{vm.site.logo_src}}">+</div>
+                            <!--<div class="img-box" style="background: url({{vm.site.src}}) center center no-repeat ;width: 140px; height: 100px"></div>-->
+                            <img class="img-box" ng-src="{{vm.site.logo_src}}" />
+                        </div>
+                        <span translate="terminalSiteSet.logoIntroduce"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label ng-class="{'active': vm.site.keyword}" translate="terminalSiteSet.keyWord"></label>
+                    <input type="text" class="form-control form-height" ng-model="vm.site.keywords" ng-blur="vm.site.keyword = false" ng-focus="vm.site.keyword = true" >
+                    <span translate="terminalSiteSet.wordIntroduce"></span>
+                </div>
+                <div class="form-group">
+                    <label ng-class="{'active': vm.site.contenter}" translate="terminalSiteSet.describe"></label>
+                    <input type="text" class="form-control form-height" ng-model="vm.site.brief" ng-blur="vm.site.contenter = false" ng-focus="vm.site.contenter = true">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn primary-btn " ng-disabled="form.$invalid" ng-click="vm.save()" my-loading="vm.save_loading"> {{'terminalSiteSet.save'| translate}}</button>
+            <button  class="btn btn-outline cancel-btn "  ng-click="vm.close()"> {{'terminalSiteSet.cancel'| translate}}</button>
+        </div>
+    </form>
+</div>

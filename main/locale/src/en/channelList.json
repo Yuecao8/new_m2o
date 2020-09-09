@@ -1,0 +1,23 @@
+{
+    "boxTipUltimate" : "The current MXU system version is MXU Ultimate and supports up to 15 live channels",
+    "boxTipProfession" : "The current MXU system version is MXU Professional Edition, supporting up to 10 live channels. Which does not exceed 8 videos.",
+    "boxTipStandard" : "The current MXU system version is MXU Standard Edition and supports 6 live channels, with no more than 5 live channels.",
+    "boxTipBasic" : "The current MXU system version is MXU Basic Edition, supports 3 live channels, including video broadcast channels can not exceed 2.",
+    "tv" : "TV",
+    "tvTip" : "TV channels can broadcast video streams",
+    "isPublish" : "Published",
+    "unPublish" : "Unpublished",
+    "preview" : "preview",
+    "edit" : "Edit",
+    "series" : "Series",
+    "broadcasting" : "Broadcasting",
+    "broadcast" : "Broadcast",
+    "broadcastTip" : "The broadcast channel can broadcast pure audio signal streams",
+    "channelSort" : "Channel sort",
+    "sort" : "Sort",
+    "sortTip" : "Drag the channel to sort",
+    "cancel" : "Cancel",
+    "save" : "Save",
+    "livePreview":"Video live preview",
+    "saveSuccess":"Sorted successfully"
+}

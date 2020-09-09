@@ -1,0 +1,86 @@
+<div class="mxu_service_wrap new-wrapper">
+  <div class="service_box">
+
+    <% if (edition === 'ult') { %>
+    <div class="service_item">
+      <a ui-sref="app.m2o.community">
+        <i class="icon-shequ"></i>
+        <div class="sys_info">
+          <em translate="operateService.community"></em>
+          <span translate="operateService.communityIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <% } %>
+
+    <% if (edition === 'pro' || edition === 'ult') { %>
+    <div class="service_item">
+      <a ui-sref="app.operate.traffic">
+        <i class="icon-lukuang"></i>
+        <div class="sys_info">
+          <em translate="operateService.road"></em>
+          <span translate="operateService.roadIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <% } %>
+
+    <% if (edition === 'ult') { %>
+    <div class="service_item">
+      <a ui-sref="app.m2o.lbs">
+        <i class="icon-lbs"></i>
+        <div class="sys_info">
+          <em translate="operateService.side"></em>
+          <span translate="operateService.sideIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <% } %>
+
+    <div class="service_item">
+      <a ui-sref="app.m2o.version">
+        <i class="icon-banben"></i>
+        <div class="sys_info">
+          <em translate="operateService.inform"></em>
+          <span translate="operateService.informIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <div class="service_item">
+      <a ui-sref="app.m2o.propel">
+        <i class="icon-tuisong"></i>
+        <div class="sys_info">
+          <em translate="operateService.push"></em>
+          <span translate="operateService.pushIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <div class="service_item">
+      <a ui-sref="app.m2o.weather">
+        <i class="icon-tianqi"></i>
+        <div class="sys_info">
+          <em translate="operateService.weather"></em>
+          <span translate="operateService.weatherIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <div class="service_item">
+      <a ui-sref="app.m2o.feedback">
+        <i class="icon-fankui"></i>
+        <div class="sys_info">
+          <em translate="operateService.feedback"></em>
+          <span translate="operateService.feedbackIntroduce"></span>
+        </div>
+      </a>
+    </div>
+    <div class="service_item">
+      <a ui-sref="app.m2o.enroll">
+        <i class="icon-baoming"></i>
+        <div class="sys_info">
+          <em translate="operateService.apply"></em>
+          <span translate="operateService.applyIntroduce"></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

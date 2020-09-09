@@ -1,0 +1,34 @@
+<form class="modal-channel box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="channelList.channelSort"></h5>
+    </div>
+    <div class="modal-body">
+        <div class="list-contain" ng-show="vm.list.length">
+            <div class="table_header">
+                <div class="sort_board red-50">
+                    <i class="fa typeface-login_tishi"></i>
+                    {{'channelList.sortTip' | translate}}
+                    <button class="btn btn-sm white pull-right" ng-click="vm.cancelSort()">取消</button>
+                    <button class="btn btn-sm hoge-btn-blue pull-right m-r" ng-click="vm.outSort()">保存</button>
+                </div>
+            </div>
+
+            <div class="list white" ui-sortable="vm.sortableOpt" ng-model="vm.list" ng-show="vm.list.length"
+                 style="border-bottom: 1px solid #eee">
+
+                <div class="list-item "
+                     ng-repeat="item in vm.list track by $index"
+                     ng-mouseenter="" >
+                    <div class="list-ctr">
+                        <i class="fa fa-bars ng-scope"></i>
+                    </div>
+                    <div class="list-body">
+                        <span class="name_contain">{{item.name}}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

@@ -1,0 +1,330 @@
+<div class="editDate-wrap">
+    <div class="editDate-section" ng-class="{'disabled-item':vm.dataDetail.is_custom == 0 && vm.id}">
+        <div class="p-v-md">
+            <div class="hoge-edit-head">
+                <div class="hoge-return-body" ui-sref="app.dataSource.menu.list">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <em>数据源{{vm.opearteName}}</em>
+            </div>
+        </div>
+        <div class="edit-form hoge-border"  my-loading="vm.editLoading">
+            <div class="form-card" ng-show="!vm.editLoading">
+                <div class="header">基本信息</div>
+                <div class="content">
+                    <div class="form-group">
+                        <label class="label-name">数据源名称</label>
+                        <input type="text" ng-model="vm.dataDetail.name" ng-focus="vm.nameFocus = true"
+                               ng-class="{'focus-color':vm.nameFocus}" ng-disabled="vm.dataDetail.is_custom ==0" ng-blur="vm.nameFocus = false"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name">描述</label>
+                        <textarea class="text-top" cols="30" rows="4" ng-model="vm.dataDetail.brief" ng-focus="vm.briefFocus = true"
+                                    ng-class="{'focus-color':vm.briefFocus}" ng-blur="vm.briefFocus = false"
+                                    placeholder="请输入描述" maxlength="128"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                        ></textarea>
+                        <div class="count">
+                            <div num-count="vm.dataDetail.brief"  count-top="-17" count-max="128" count-position="right"></div>
+                        </div>
+                    </div>
+                    <div class="form-group toggle-inline-btn">
+                        <label class="label-name">类型</label>
+                        <button class="btn btn-outline btn-comment data-btn" ng-class="{'active': vm.inline}" ng-click="vm.toggleBtn(1)">内部数据源</button><button class="btn btn-outline btn-comment data-btn data-btn-right" ng-class="{'active': !vm.inline}" ng-click="vm.toggleBtn()">外部数据源</button>
+                    </div>
+                    <div class="sec-container" ng-show="vm.inline">
+                        <div class="form-group">
+                            <label class="label-name">所属模块</label>
+                            <div class="btn-group dropdown select-drop hoge-dropdown">
+                                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" ng-disabled="vm.dataDetail.is_custom ==0">
+                                    <span class="dropdown-label">{{vm.dataDetail.moduleName}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm drop-down-list">
+                                    <a class="dropdown-item" ng-class="{'active-color':vm.dataDetail.module == item.module}" ng-repeat="item in vm.module" ng-click="vm.moduleSelect(item)">{{item.name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">所属类</label>
+                            <div class="inline-block">
+                                <input type="text" ng-model="vm.dataDetail.contract" ng-focus="vm.classFocus = true"
+                                    ng-class="{'focus-color':vm.classFocus}" ng-blur="vm.classFocus = false"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">所属方法</label>
+                            <div class="inline-block">
+                                <input type="text" ng-model="vm.dataDetail.function" ng-focus="vm.methodFocus = true"
+                                    ng-class="{'focus-color':vm.methodFocus}" ng-blur="vm.methodFocus = false"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sec-container" ng-show="!vm.inline">
+                        <div class="form-group">
+                            <label class="label-name">接口域名</label>
+                            <div class="inline-block">
+                                <input type="text" ng-model="vm.dataDetail.host" ng-focus="vm.hostFocus = true"
+                                    ng-class="{'focus-color':vm.hostFocus}" ng-blur="vm.hostFocus = false"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">接口路径</label>
+                            <div class="inline-block">
+                                <input type="text" ng-model="vm.dataDetail.path" ng-focus="vm.pathFocus = true"
+                                    ng-class="{'focus-color':vm.pathFocus}" ng-blur="vm.pathFocus = false"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">请求方式</label>
+                            <div class="btn-group dropdown select-drop hoge-dropdown">
+                                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" ng-disabled="vm.dataDetail.is_custom ==0">
+                                    <span class="dropdown-label">{{vm.dataDetail.requestMethodName}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm drop-down-list">
+                                    <a class="dropdown-item" ng-class="{'active-color':vm.dataDetail.request_method == item.request_method}" ng-repeat="item in vm.requestMethod" ng-click="vm.requestMethodSelect(item)">{{item.name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">接收类型</label>
+                            <div class="btn-group dropdown select-drop hoge-dropdown">
+                                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" ng-disabled="vm.dataDetail.is_custom ==0">
+                                    <span class="dropdown-label">{{vm.dataDetail.returnTypeName}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm drop-down-list">
+                                    <a class="dropdown-item" ng-class="{'active-color':vm.dataDetail.return_type == item.return_type}" ng-repeat="item in vm.returnType" ng-click="vm.returnTypeSelect(item)">{{item.name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">数据节点</label>
+                            <div class="inline-block">
+                                <input type="text" ng-model="vm.dataDetail.return_node" ng-focus="vm.classFocus = true"
+                                    ng-class="{'focus-color':vm.classFocus}" ng-blur="vm.classFocus = false"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">数据数量节点</label>
+                            <div class="inline-block">
+                                <input type="text" ng-model="vm.dataDetail.return_total_node" ng-focus="vm.totalFocus = true"
+                                    ng-class="{'focus-color':vm.totalFocus}" ng-blur="vm.totalFocus = false"
+                                    ng-disabled="vm.dataDetail.is_custom ==0"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-card" ng-show="!vm.editLoading">
+                <div class="header">数据条件参数</div>
+                <div class="dataConditions">
+                    <div class="list_contain hoge-table-contain white" my-loading="vm.conditionalListLoading">
+                        <div class="hoge-error hoge-error-hight" ng-if="!vm.conditionalList.length" >
+                            <div>
+                                <div class="error-img" ng-if="vm.errorMessage &&!vm.conditionalListLoading"></div>
+                                <p>{{vm.errorMessage}}</p>
+                            </div>
+                        </div>
+                        <div class="table_header hoge-table-header" ng-show="vm.conditionalList.length">
+                            <div class="b-l b-white flex-item">
+                                <div class="list-title flex-one">参数名称</div>
+                                <div class="list-input">输入参数</div>
+                                <div class="list-receive">接收参数</div>
+                                <div class="list-defaults">默认值</div>
+                                <div class="list-type">类型</div>
+                                <div class="list-drop">下拉数据</div>
+                                <div class="list-way">添加方式</div>
+                                <div class="list-i"></div>
+                            </div>
+                        </div>
+
+                        <div class="list white" ng-show="vm.conditionalList.length">
+                            <div class="list-item hoge-item-border flex-item"
+                                 ng-repeat=" (idx,nor) in vm.conditionalList track by $index"
+                            >
+                                <div class="list-title flex-one">
+                                    <input type="text"  class="input-list" ng-model="nor.name" ng-focus="nor.focusTitle = true"
+                                           ng-class="{'focus-color':nor.focusTitle}" ng-blur="nor.focusTitle = false"
+                                           ng-disabled="vm.dataDetail.is_custom ==0"
+                                    >
+                                </div>
+
+                                <div class="list-input">
+                                    <input  type="text"  class="input-list" ng-model="nor.input_param" ng-focus="nor.focusInput = true"
+                                           ng-class="{'focus-color':nor.focusInput}" ng-blur="nor.focusInput = false"
+                                            ng-disabled="vm.dataDetail.is_custom ==0"
+                                    >
+                                </div>
+
+                                <div class="list-receive">
+                                    <input type="text"  class="input-list" ng-model="nor.param" ng-focus="nor.focusOutput = true"
+                                           ng-class="{'focus-color':nor.focusOutput}" ng-blur="nor.focusOutput = false"
+                                           ng-disabled="vm.dataDetail.is_custom ==0"
+                                    >
+                                </div>
+                                <div class="list-defaults">
+                                    <input type="text"  class="input-list" ng-model="nor.value" ng-focus="nor.focusDefaults = true"
+                                           ng-class="{'focus-color':nor.focusDefaults}" ng-blur="nor.focusDefaults = false"
+                                           ng-disabled="vm.dataDetail.is_custom ==0"
+                                    >
+                                </div>
+                                <div class="list-type">
+                                    <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown" ng-disabled="vm.dataDetail.is_custom ==0">
+                                        <span class="dropdown-label">{{nor.typeName}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm drop-down-list">
+                                        <a class="dropdown-item"  ng-class="{'active-color':vm.conditionalList[idx].type == item.id}"
+                                           ng-repeat="item in vm.type" ng-click="vm.typeSelect(item,idx)">{{item.name}}</a>
+                                    </div>
+                                </div>
+                                <div class="list-drop">
+                                    <div ng-if="nor.type == 'select'" class="list-drop-content">
+                                        <div class="toggle-drop">
+                                            <span class="toggle-drop-txt">{{nor.selectTxt}}</span>
+                                            <span class="list-drop-span" ng-if="nor.isShow"> <span ng-click="vm.toggleShow(nor)">收起</span>
+                                                 <div ng-show="nor.isShow" class="list-drop-box"
+                                                      ng-class="{'w_338':vm.dataDetail.is_custom ==1||!vm.id,'w_no_del': vm.dataDetail.is_custom ==0}">
+                                                <div class="box-color text-color pos-rlt">
+                                                    <span class="arrow bottom b-white"></span>
+                                                    <div class="box-body">
+                                                        <div class="box-body-content">
+                                                           <span class="select-span"  ng-repeat="(key,vv) in nor.select_arrs track by $index">
+                                                                <input  type="text"  class="select-input-list" ng-model="vv.name" ng-focus="vv.focusDrop = true"
+                                                                        ng-disabled="vm.dataDetail.is_custom ==0"
+                                                                        ng-class="{'focus-color':vv.focusDrop,'focus-index':vv.focusDrop}" placeholder="请输入name" ng-blur="vv.focusDrop = false">
+                                                                <input type="text"  class="select-input-list" ng-model="vv.value" ng-focus="vv.focusDropValue = true"
+                                                                       ng-disabled="vm.dataDetail.is_custom ==0"
+                                                                       ng-class="{'focus-color':vv.focusDropValue,'focus-index':vv.focusDropValue}"  placeholder="请输入value" ng-blur="vv.focusDropValue = false">
+                                                               <button class="hoge-common-btn btn" ng-click="vm.deleteSelect(nor, key)" ng-if="vm.dataDetail.is_custom ==1||!vm.id">删除</button>
+                                                           </span>
+                                                            <div class="add-form-select" ng-click="vm.addSelected(nor)" ng-if="vm.dataDetail.is_custom ==1||!vm.id">
+                                                                <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                                                                <span class="add-tex" >添加数据</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="box-body-bottom" ng-if="vm.dataDetail.is_custom ==1||!vm.id">
+                                                            <button class="btn btn-purple" ng-click="vm.saveSelect(nor)">保存</button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </span>
+                                            <span ng-click="vm.toggleShow(nor)" class="list-drop-span" ng-if="!nor.isShow">展开</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="list-way">
+                                    <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown" ng-disabled="vm.dataDetail.is_custom ==0">
+                                        <span class="dropdown-label">{{nor.wayName}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm drop-down-list">
+                                        <a class="dropdown-item" ng-repeat="item in vm.way"
+                                           ng-class="{'active-color':vm.conditionalList[idx].add_status == item.id}"
+                                           ng-click="vm.waySelect(item,idx)">{{item.name}}</a>
+                                    </div>
+                                </div>
+
+                                <div class="list-i">
+                                    <span ng-click="vm.delConditional(nor)" ng-if="vm.dataDetail.is_custom ==1||!vm.id">
+                                        <i class="fa typeface-form_shanchu"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                            <span class="arrow bottom b-white"></span>
+                                            <div class="box-body">删除</div>
+                                        </div>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form" ng-click="vm.addLine()" ng-if="vm.dataDetail.is_custom ==1||!vm.id">
+                        <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                        <span class="add-tex">添加参数</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-card" ng-show="!vm.editLoading">
+                <div class="header">设置数据返回参数</div>
+                <div class="returnConditions">
+                    <div class="list_contain hoge-table-contain white" my-loading="vm.conditionalListLoading">
+                        <div class="hoge-error hoge-error-hight" ng-if="!vm.returnList.length" >
+                            <div>
+                                <div class="error-img" ng-if="vm.errorMessage &&!vm.returnListLoading"></div>
+                                <p ng-if="vm.errorMessage &&!vm.returnListLoading">{{vm.errorMessage}}</p>
+                            </div>
+                        </div>
+                        <div class="table_header hoge-table-header" ng-show="vm.returnList.length">
+                            <div class="b-l b-white flex-item">
+                                <div class="list-title flex-one">参数名称</div>
+                                <div class="list-output">输出参数</div>
+                                <div class="list-correspond">对应参数</div>
+                                <div class="list-i"></div>
+                            </div>
+                        </div>
+
+                        <div class="list white" ng-show="vm.returnList.length">
+                            <div class="list-item hoge-item-border flex-item"
+                                 ng-repeat=" (idx,nor) in vm.returnList track by $index"
+                            >
+                                <div class="list-title flex-one">
+                                    <input type="text"  class="input-list" ng-model="nor.title" ng-focus="nor.focusTitle = true"
+                                           ng-disabled="vm.dataDetail.is_custom ==0"
+                                           ng-class="{'focus-color':nor.focusTitle}" ng-blur="nor.focusTitle = false">
+                                </div>
+
+                                <div class="list-outPut">
+                                    <input type="text"  class="input-list" ng-model="nor.output_param" ng-focus="nor.focusOutPut = true"
+                                           ng-disabled="vm.dataDetail.is_custom ==0"
+                                           ng-class="{'focus-color':nor.focusOutPut}" ng-blur="nor.focusOutPut = false">
+                                </div>
+
+                                <div class="list-correspond">
+                                    <input type="text"  class="input-list" ng-model="nor.param" ng-focus="nor.focusCorrespond = true"
+                                           ng-disabled="vm.dataDetail.is_custom ==0"
+                                           ng-class="{'focus-color':nor.focusCorrespond}" ng-blur="nor.focusCorrespond = false">
+                                </div>
+                                <div class="list-i">
+                                    <span ng-click="vm.delReturn(nor)" ng-if="vm.dataDetail.is_custom ==1||!vm.id">
+                                        <i class="fa typeface-form_shanchu"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                            <span class="arrow bottom b-white"></span>
+                                            <div class="box-body">删除</div>
+                                        </div>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-form" ng-click="vm.addReturnLine()" ng-if="vm.dataDetail.is_custom ==1||!vm.id">
+                        <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                        <span class="add-tex">添加参数</span>
+                    </div>
+                </div>
+            </div>
+            <div class="md-form-group" ng-show="!vm.editLoading">
+                <button class="btn primary-btn ng-binding" ng-click="vm.saveDate()" ng-if="vm.id && vm.dataDetail.is_custom ==1">更新</button>
+                <button class="btn primary-btn ng-binding" ng-click="vm.saveDate()" ng-if="!vm.id">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

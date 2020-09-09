@@ -1,0 +1,86 @@
+<div class="programme-list" my-loading="vm.loading">
+    <div class="mask-box" ng-show="vm.mask_show" ng-click="vm.closeMask()"></div>
+    <header class="flex-item hoge-flex-center" ng-if="!vm.loading">
+        <div class="header-info">
+            <span class="info-channel">{{vm.channelName}}</span>
+            <span class="info-time">{{vm.showDate}}</span>
+            <span class="info-date">{{vm.showWeek}}</span>
+        </div>
+        <div class="header-opera">
+            <span class="opera-clear" my-loading="vm.clearLoading" ng-click="vm.clearProgramme()">清空</span>
+            <span class="opera-upload" ng-click="vm.uploadProgramme()">上传节目单</span>
+        </div>
+        
+    </header>
+    <div id="program_menu" ng-if="!vm.loading">
+        <div class="program-am">
+            <span class="time-area">上午</span>
+            <div class="program-li" ng-repeat="(index,nor) in vm.programList_am" ng-style="{'top': nor.top + 'px'}" ng-class="{'z-index-show':nor.show}" ng-click="vm.setProgram(nor,index)">
+                <span class="program-start" ng-click="vm.norShow(nor)">{{nor.time}}</span>
+                <span ng-class="{'show-class':nor.show}" class="program-con"><em></em></span>
+                <div class="theme-arrow" ng-if="nor.show">
+                    <input class="theme" type="text" value="{{nor.name}}" ng-disabled="false" ng-model="nor.name" ng-keydown="vm.setkeyDown($event)" maxlength="50">
+                </div>
+                <span class="theme-label" ng-click="vm.norShow(nor)" ng-if="!nor.show">{{nor.name}}</span>
+                <div class="checka-nchor-img-content" ng-if="!nor.show" ng-repeat="(idx,item) in nor.sub_index_pic track by idx"
+                ng-mouseenter="vm.programList_am[index].broad.sub[idx].del_show = true"  ng-mouseleave="vm.programList_am[index].broad.sub[idx].del_show = false"  style="display: inline-block;position: relative;">
+                    <img ng-if="item != ''" class="checka-nchor-img"  src="{{item}}" alt="">  
+                    <img ng-if="item == ''" class="checka-nchor-img"  src="../../../assets/images/mxu/avatar-50.jpg" alt="">  
+                    <i  ng-if='vm.programList_am[index].broad.sub[idx].del_show' class="fa fa-remove map-close" style="cursor: pointer;position: absolute;right: 8px;top: -4px;" ng-click='vm.delAmAnchor(nor,idx,index)'></i>
+                </div>
+                <div class="program-delete"  ng-click="vm.delList(nor)" ng-if="nor.show">删除</div>
+                <div class="program-delete"  ng-click="vm.setAnchor(nor)" ng-if="nor.show && nor.id && vm.showAnchor">设置节目主播</div>
+            </div>
+            <ul class="slider-box">
+                <li class="slider-list" ng-repeat="x in vm.am_list">
+                    <span>{{x}}:00</span>
+                    <span></span>
+                </li>
+            </ul>
+            <div id="slider_am" ng-mouseover="vm.mouseoverLive($event)" ng-mousemove="vm.mousemoveLive($event)" ng-mouseleave="vm.mouseoutLive($event)" ng-click="vm.selectTime()">
+                <div class="time-move" ng-style="{'top': vm.top + 'px'}" ng-show="vm.show">
+                    <span>{{vm.time}}</span>
+                    <span class="border-quan">
+                        <em></em>
+                    </span>
+                </div>
+                <div class="slider_shadow"></div>
+            </div>
+        </div>
+        <div class="program-pm">
+            <span class="time-area">下午</span>
+            <div class="program-li" ng-repeat="(index,nor) in vm.programList_pm" ng-style="{'top': nor.top + 'px'}" ng-class="{'z-index-show':nor.show}" ng-click="vm.setProgramPm(nor,index)">
+                <span class="program-start" ng-click="vm.norShow(nor)">{{nor.time}}</span>
+                <span ng-class="{'show-class':nor.show}" class="program-con"><em></em></span>
+                <div class="theme-arrow" ng-if="nor.show">
+                    <input class="theme" type="text" value="{{nor.name}}" ng-disabled="false" ng-model="nor.name" ng-keydown="vm.setkeyDownPm($event)" maxlength="50">
+                </div>
+                <span class="theme-label" ng-click="vm.norShow(nor)" ng-if="!nor.show">{{nor.name}}</span>
+                <div class="checka-nchor-img-content" ng-if="!nor.show" ng-repeat="(idx,item) in nor.sub_index_pic track by idx"
+                ng-mouseenter="vm.programList_pm[index].broad.sub[idx].del_show = true"  ng-mouseleave="vm.programList_pm[index].broad.sub[idx].del_show = false"  style="display: inline-block;position: relative;">
+                    <img ng-if="item != ''" class="checka-nchor-img"  src="{{item}}" alt="">  
+                    <img ng-if="item == ''" class="checka-nchor-img"  src="../../../assets/images/mxu/avatar-50.jpg" alt="">  
+                    <i  ng-if='vm.programList_pm[index].broad.sub[idx].del_show'  class="fa fa-remove map-close" style="cursor: pointer;position: absolute;right: 8px;top: -4px;" ng-click='vm.delPmAnchor(nor,idx,index)'></i>
+                </div>
+                <div class="program-delete"  ng-click="vm.delListPm(nor)" ng-if="nor.show">删除</div>
+                <div class="program-delete"  ng-click="vm.setAnchor(nor)" ng-if="nor.show && nor.id && vm.showAnchor">设置节目主播</div>
+            </div>
+            <ul class="slider-box">
+                <li class="slider-list" ng-repeat="x in vm.pm_list">
+                    <span>{{x}}:00</span>
+                    <span></span>
+                </li>
+            </ul>
+            <div id="slider_pm" ng-mouseover="vm.mouseoverLivePm($event)" ng-mousemove="vm.mousemoveLivePm($event)" ng-mouseleave="vm.mouseoutLivePm($event)" ng-click="vm.selectTimePm()">
+                <div class="time-move" ng-style="{'top': vm.topPm + 'px'}" ng-show="vm.showPm">
+                    <span>{{vm.timePm}}</span>
+                    <span class="border-quan">
+                        <em></em>
+                    </span>
+                </div>
+                <div class="slider_shadow"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

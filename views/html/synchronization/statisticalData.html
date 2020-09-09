@@ -1,0 +1,146 @@
+
+<div class="workload-wrap">
+        <div class="hoge-table-add">
+            <div class="hoge-table-title">同步统计</div>
+        </div>
+        <main class="workload-main">
+             <!-- 筛选 -->
+            <div class="time-chose hoge-border">
+                <div class="btn-contain btn-group">
+                    <div class="btn-group dropdown btn-margin hoge-dropdown" ng-if="!vm.isColumn">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.flat_name}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="type1 in vm.flatformList" ng-click="vm.choseFlatform(type1)">{{type1.flat_name}}</a>
+                        </div>
+                    </div>
+                    <div class="btn-group dropdown btn-margin hoge-dropdown" ng-if="!vm.isColumn">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.typeBar}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="type1 in vm.typeArrBar" ng-click="vm.choseTypeBar(type1)">{{type1.name}}</a>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-blue" ng-click="vm.getWeek()" ng-class="{actived:vm.timeType=='w'}">本周</button>
+                    <button class="btn btn-outline btn-blue" ng-click="vm.getMonth()" ng-class="{actived:vm.timeType=='m'}">本月</button>
+                    <button class="btn btn-outline btn-blue" ng-click="vm.getYear()" ng-class="{actived:vm.timeType=='y'}">本年</button>
+                    <button class="btn btn-outline btn-blue btn-custom" ng-click="vm.getCustom()" ng-show="vm.timeType!='d'">自定义时间</button>
+                    <div class="daterange" ng-show="vm.timeType=='d'">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                        <input date-range-picker  ng-model="vm.rangeDate" class="date-picker" type="text" options="vm.option"/>
+                    </div>
+                </div>
+            </div>
+            <!-- 图表 -->
+            <div class="hoge-flex default-height">
+                <div class="hoge-flex-one white hoge-border content-statistic" style="padding:10px 32px;">
+                   
+                    <div class="hoge-flex hoge-flex-center">
+                        <div class="workload-content hoge-flex-one">
+                            <!-- <div class="content-contain">
+                                <p>{{vm.content_create}}</p>
+                                <span>内容产出量</span>
+                            </div>
+                            <div class="content-contain">
+                                <p>{{vm.content_publish}}</p>
+                                <span>内容发布量</span>
+                            </div> -->
+                            <!-- <div class="content-left"> -->
+                                <span style="font-size: 16px;color: #788091;margin-bottom: 4px;">内容同步总量</span>
+                                <p style="font-size: 28px;color: #333;">{{vm.pieTotal || 0}}</p>
+                            <!-- </div> -->
+                        </div>
+                        
+                        <div class="content-pie" style="flex:1">
+                            <div class="inline">
+                                <!-- <div ui-jp="easyPieChart" class="easyPieChart" ui-refresh="vm.isChartRefresh" data-redraw="true" data-percent="{{vm.percent}}"
+                                    ui-options="{{vm.chartPiePass}}">
+                                    <div>
+                                        <span class="percent-percent">{{vm.percent}}</span>
+                                        <span class="percent-word">稿件通过率</span>
+                                    </div>
+                                </div> -->
+                                <div class="chart-box"  ui-jp="chart" ui-refresh="vm.isChartRefresh" ui-options="{{vm.optionsPie}}" style="width: 230px;height: 200px;"> </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                </div>
+                <div class="hoge-flex-two white hoge-border chart-contain">
+                   
+                    <div class="btn-group dropdown hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.typeLine}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="type in vm.typeArrLine" ng-click="vm.choseTypeLine(type)">{{type.name}}</a>
+                        </div>
+                    </div>
+                    <div class="chart-boxer">
+                        <div class="chart-style">
+                            <div class="chart-box"  id="linechart1" ui-jp="chart" ui-refresh="vm.isRefresh" ui-options="{{vm.optionsLine}}" >
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+    
+            <!-- 底部 -->
+            <div class="toggle">
+                <span class="personal" style="margin-left: 0;">同步详情</span>
+            </div>
+            <div class="workload-details white">
+                <!-- <div class="export">
+                    <a class="list-export">导出</a>
+                </div> -->
+                <!-- list -->
+                <div class="list_contain hoge-table-contain" style="border: none">
+                <!-- ng-show="vm.statisticalList.length>0" -->
+                    <div class="table_header hoge-table-header" ng-show="vm.statisticalList.length>0">
+                        <div class="wrap b-l b-white">
+                            <div class="list-body flex-one">内容</div>
+                            <div class="list-platform flex-one">同步平台</div>
+                            <div class="list-type">类型</div>
+                            <div class="list-time flex-one">同步时间</div>
+                        </div>
+                    </div>
+                    <div class="ErrorTip" ng-show="!vm.statisticalList.length && !vm.loadingList">
+                        <p>{{vm.errorList}}</p>
+                    </div>
+                    <div class="list white"  ng-show="vm.statisticalList.length>0">
+                        <div class="list-item hoge-item-border" ng-repeat="item in vm.statisticalList track by $index">
+                            <div class="list-body flex-one m-r-sm">
+                                <span  style="cursor:pointer">{{item.news_title}}</span>
+                            </div>
+        
+                            <div class="list-platform flex-one">
+                                <span>{{item.flat_name}}</span>
+                            </div>
+        
+                            <div class="list-type" >
+                                <span>{{item.type}}</span>
+                            </div>
+        
+                            <div class="list-time flex-one">
+                                <span>{{item.updated_at | date:'MM-dd HH:mm' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_bottom hoge-table-bottom" ng-show="vm.statisticalList.length>0" style="text-align:right;">
+                        <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                    </div>
+                </div>
+                <!-- / list -->
+            </div>
+        </main>
+    
+        <m2o-footer ></m2o-footer>
+    </div>
+    
+    

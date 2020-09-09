@@ -1,0 +1,13 @@
+{
+    "search" : "搜索...",
+    "addAdv" : "新增广告",
+    "wait" : "等待投放",
+    "tiao" : "条",
+    "edit" : "编辑",
+    "delete" : "删除",
+    "soldOut" : "下架",
+    "throwIn" : "投放中",
+    "soldOuted" : "已下架",
+    "confirmDel" : "您确定删除选中数据?",
+    "confirmData" : "您确定下架选中数据?"
+}

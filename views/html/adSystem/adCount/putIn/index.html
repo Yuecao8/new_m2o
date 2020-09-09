@@ -1,0 +1,57 @@
+<div class="mxu_adCount_wrap">
+    <div class="m-b heard">
+        <div class="btn-toolbar list_bar">
+            <div class="btn-group dropdown pull-left hoge-dropdown">
+                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.type}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-12">
+                    <a class="dropdown-item" ng-click="vm.stateActive()">{{"adCount.allStatus"|translate}}</a>
+                    <a class="dropdown-item" ng-repeat="type in vm.status" ng-click="vm.stateActive(type)">{{type.name}}</a>
+                </div>
+            </div>
+            <div class="form-group pull-left m-r-15 search">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control p-x b-a rounded font-13" ng-keypress="vm.keyPress($event)" placeholder="{{ 'advPos.search' | translate }}" ng-model="vm.key" style="min-height: 32px;">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search(vm.key)"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ErrorTip hide" ng-class="{'show': !vm.ad_putIn.length}">
+        <p>{{vm.error_msg}}</p>
+    </div>
+    <div class="list_body" ng-class="{'hide': !vm.ad_putIn.length}">
+        <div class="putIn-list" >
+            <div class="row list-head">
+                <div class="col-md-3">{{"adCount.name"|translate}}</div>
+                <div class="col-md-2 text-center">{{"adCount.contains"|translate}}</div>
+                <div class="col-md-2 text-center">{{"adCount.state"|translate}}</div>
+                <div class="col-md-2 text-center">{{"adCount.view"|translate}}</div>
+                <div class="col-md-2 text-center">{{"adCount.click"|translate}}</div>
+                <div class="col-md-1 text-center"></div>
+            </div>
+            <div class="row list-item" ng-repeat="item in vm.ad_putIn">
+                <div class="col-md-3">{{item.title}}</div>
+                <div class="col-md-2 text-center">
+                    <span class="num-material">{{item.material_num}}</span>
+                </div>
+                <div class="col-md-2 text-center">
+                    <span class="state-adv state-putIn" ng-if="item.status == 1">{{"adCount.throwIn"|translate}}</span>
+                    <span class="state-adv state-wait" ng-if="item.status == 0">{{"adCount.wait"|translate}}</span>
+                    <span class="state-adv state-off" ng-if="item.status == 2">{{"adCount.soldOuted"|translate}}</span>
+                </div>
+                <div class="col-md-2 text-center">{{item.views}}</div>
+                <div class="col-md-2 text-center">{{item.clicks}}</div>
+                <div class="col-md-1 text-info text-center" ng-if="item.material_num == 0"></div>
+                <div class="col-md-1 text-info text-center item-detail" ng-if="item.material_num != 0" ng-click="$state.go('app.operate.adSystem.putInDetail',{id: item.id})">{{"adCount.analysis"|translate}}</div>
+            </div>
+        </div>
+        <div class="list_bottom">
+            <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+        </div>
+    </div>
+</div>

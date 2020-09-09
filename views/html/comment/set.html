@@ -1,0 +1,67 @@
+<div class="commentSet-wrap">
+    <div class="commentSet-section">
+        <div class="p-v-md">
+            <div class="edit-head">
+                <em>评论设置</em>
+            </div>
+        </div>
+        <div class="edit-form hoge-border">
+            <div class="form-card">
+                <div class="header">评论功能</div>
+                <div class="content" my-loading="vm.setLoading">
+                    <div class="form-group" ng-repeat="item in vm.setDetail">
+                        <label class="label-name">
+                            {{item.name}}
+                            <i class="fa fa-question-circle">
+                                <div class="msg">{{item.tip}}</div>
+                            </i>
+                        </label>
+                        <div class="group-content">
+                            <label class="radio-inline">
+                                <input ng-model="item.status" type="radio" value="1">启用
+                            </label>
+                            <label class="radio-inline">
+                                <input ng-model="item.status" type="radio" value="0">不启用
+                            </label>
+                        </div>
+                        <div class="more hide" ng-class="{'show': item.status == 1}">
+                            <label class="checkbox-inline right">
+                                <input type="checkbox" ng-checked="item.is_reply == 1" ng-click="vm.reply(item)">评论回复
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" ng-checked="item.comment_audit == 1" ng-click="vm.check(item)">评论/回复后置审核
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-card">
+                <div class="header">规则设置</div>
+                <div class="content">
+                    <div class="form-group flex-middle">
+                        <label class="label-name">评论最小间隔</label>
+                        <div class="group-content flex-middle">
+                            <input-number number='vm.rule.space_time'  min="0" change-num="vm.changeNum(num)"></input-number>
+                            <span class="number-tip m-l-sm">
+                                秒
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group flex-middle">
+                        <label class="label-name">最大字数限制</label>
+                        <div class="group-content flex-middle">
+                            <input-number number='vm.rule.max_words' min="0" change-num="vm.changeMaxNum(num)"></input-number>
+                            <span class="number-tip m-l-sm">字</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="md-form-group">
+                    <button class="btn primary-btn ng-binding" ng-click="vm.save()">保存</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

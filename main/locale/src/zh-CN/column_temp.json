@@ -1,0 +1,30 @@
+{
+    "columnTemplate":"栏目模板",
+    "columnTip":"支持特定栏目单独设置模板，不设置则使用默认模板",
+    "globalTemp":"全局模板",
+    "globalTip":"页面默认的模板样式",
+    "page":"页面",
+    "temp":"模板",
+    "type":"类型",
+    "operate":"操作",
+    "defaultTemp":"默认模板",
+    "customTemp":"自定义模板",
+    "customColTemp":"自定义栏目模板",
+    "customColTip":"自定义部分栏目模板",
+    "bindColTemp":"绑定栏目模板",
+    "column":"栏目",
+    "reset":"恢复默认",
+    "addCustomize":"添加自定义模板",
+    "tempList":"模板列表",
+    "selected":"已选栏目",
+    "selectedTemp":"已选模板",
+    "confirmReset":"是否删除{{columnName}}和{{temp}}的绑定关系？",
+    "confirmTip":"确定后，该栏目页面样式将变为成全局模板中的栏目列表样式，该栏目也不会出现在自定义栏目模板列表内。",
+    "successRemove":"解除绑定成功",
+    "errChose":"请选择栏目和模板",
+    "successBind":"绑定成功",
+    "site":"站点",
+    "allSite":"全部站点"
+
+
+}

@@ -1,0 +1,128 @@
+<div class="association-body">
+    <div class="p-v-md">
+        <div class="hoge-edit-head">
+            <div class="hoge-return-body" ui-sref="app.setManage.menu.list">
+                <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                <span class="return-tip">返回列表</span>
+            </div>
+            <em>套系详情</em>
+        </div>
+    </div>
+    <div class="association-list-body">
+        <div class="set-information">
+            <div class="list-title header-before">套系信息</div>
+            <div class="set-information-list">
+                <div>
+                    <span class="inform-title">所属终端：</span>
+                    <span class="inform-name">{{vm.theme.client_name}}</span>
+                </div>
+                <div>
+                    <span class="inform-title">套系名称：</span>
+                    <span class="inform-name">{{vm.theme.title}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="associated-body clearfix">
+            <div class="list-title header-before">
+                <span>模板列表</span>
+                <div class="pull-right">
+                    <button class="btn btn-purple m-r-4" ng-click="vm.newTemp()" my-loading="vm.new_loading">新建模板
+                    </button>
+                    <button class="btn btn-purple" ng-click="vm.goUpload()" my-loading="vm.upload_loading">上传模板
+                    </button>
+                </div>
+            </div>
+            <div class="associated-list">
+                <div class="associated-list-column">
+                    <div class="hoge-table-header column-header">模板类型</div>
+                    <div class="associated-list-list">
+                        <div class="hoge_nav_classify pos-rlt">
+                            <nav class="navside m-b">
+                                <div class="nav-border b-primary" flex>
+                                    <class-tree class="classify-tree" tree-data= "vm.columnClass"
+                                                no-add="true"
+                                                no-edit="true"
+                                                no-del="true"
+                                                get-child="vm.getChilds(item)"
+                                                tree-level="4"
+                                                sort-id="vm.storageSort"
+                                                select-class="vm.selectClass(param)"
+                                                is-show-all="true"
+                                    ></class-tree>
+                                </div>
+                            </nav>
+                        </div>
+
+                        <!--栏目-->
+                    </div>
+                </div>
+            </div>
+            <div class="customize-list">
+                <div class="associated-list-column">
+                    <div class="hoge-table-header column-header">模板列表</div>
+                    <div class="column-list"></div>
+                </div>
+                <div class="customize-list-list" my-loading="vm.tempListLoading">
+                    <div class="hoge-error hoge-error-hight" ng-if="vm.errorMessage&& !vm.tempList.length">
+                        <div>
+                            <div class="error-img"></div>
+                            <p>{{vm.errorMessage}}</p>
+                        </div>
+
+                    </div>
+                    <div class="customize-list-item flex-item hoge-item-border" ng-repeat="item in vm.tempList" ng-if="vm.tempList.length">
+                        <div class="item-title flex-one">
+                            <div class="item-column">
+                                {{item.title}}
+                            </div>
+                            <div class="item-title-title">更新时间：{{item.updated_at}}</div>
+                        </div>
+                        <div class="customize-opera">
+                            <span ng-click="vm.toPrev(item)">
+                                <i class="fa typeface-form_yulan"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">预览</div>
+                                 </div>
+                            </span>
+                            <span  ng-click="vm.goEdit(item)" class="code-edit">
+                                <i class="fa typeface-form_daimabianji"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">代码编辑</div>
+                                 </div>
+                            </span>
+                            <span ng-click="vm.goVisualEdit(item)" class="eye-edit">
+                                <i class="fa typeface-form_keshihuabianji eye-edit-i"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">可视化编辑</div>
+                                 </div>
+                            </span>
+                            <span ng-click="vm.goCopy(item)" class="copy-edit">
+                                <i class="fa typeface-form_fuzhi copy-edit-i"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">复制</div>
+                                 </div>
+                            </span>
+                            <span ng-click="vm.del(item)" class="del-edit">
+                                <i class="fa  typeface-form_shanchu" class="del-edit-i"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">删除</div>
+                                 </div>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="customize-list-bottom hoge-table-bottom" ng-if="vm.pageOptions.total > vm.pageOptions.pageSize">
+                    <page-nation options="vm.pageOptions" turn-page="vm.getAllTemplate()"></page-nation>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

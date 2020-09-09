@@ -1,0 +1,40 @@
+<div class="point-wrap">
+	<div class="modal-content box-shadow-md">
+		<div class="modal-header">
+		    <h5 class="modal-title">{{ 'lauchPoint.dropPoint'| translate}}</h5>
+			<!--<i class="fa fa-remove map-close" ng-click="vm.cancel()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+		</div>
+		<div class="modal-body">
+			<!--<div class="errorWrap" ng-if="!vm.pointList || !vm.pointList[0]">{{vm.errorMessage}}</div>-->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="point-content">
+						<div class="point-item" ng-repeat="item in vm.pointList">
+							<div class="title"><span class="b-l b-l-5x b-l-info"></span>{{item.client_name}}</div>
+							<div class="item-wrap">
+								<label ng-repeat="point in item.point">
+									<div ng-click="vm.addStyle(item,point,point.css_style[0])">{{point.point_title}}</div>
+									<div class="point_shop" ng-if="point.css_style" data="{{style.css_style}}">
+										<div class="list_item" ng-repeat="sty in point.css_style" ng-click="vm.addStyle(item,point,sty)">
+											{{sty.css_name_content}}</div>
+									</div>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 row_right">
+					<div class="point_style" ng-repeat="css in vm.style_list">
+						<div ng-if="css.css_name_content">{{css.client_name}}-{{css.point_title}}-{{css.css_name_content}}</div>
+						<div ng-if="!css.css_name_content">{{css.client_name}}-{{css.point_title}}</div>
+						<i class="fa fa-remove" ng-click="vm.removeStyle(css)"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <button class="btn primary-btn" ng-click="vm.save()">{{ 'lauchPoint.affirm'| translate}}</button>
+			<button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{ 'lauchPoint.cancel'| translate}}</button>
+		</div>
+	</div>
+</div>

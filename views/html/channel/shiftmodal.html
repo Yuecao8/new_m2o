@@ -1,0 +1,25 @@
+<form class="box-shadow-md" name="reviseForm" id="shiftForm">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="channelForm.calculator"></h5>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="m-t m-b">
+            <label class="label-title" translate="channelForm.flowRate"></label>
+            <input type="text" class="content input-control input-len" ng-keyup="vm.limitedStreams(vm.streams)" ng-pattern=" /^(0|[1-9]\d*)$/"  ng-model="vm.streams" required maxlength="4" ng-class="{'ng-dirty' : vm.streams }">
+            <span class="limit_valide" ng-show="vm.limitValide" translate="channelForm.timeShiftValide1"></span>
+        </div>
+        <div class="m-t m-b">
+            <label class="label-title" translate="channelForm.timeShiftTime"></label>
+            <input type="text" class="content input-control input-len" ng-keyup="vm.limitedShift(vm.time_shift)" ng-pattern=" /^(0|[1-9]\d*)$/"  ng-model="vm.time_shift" required maxlength="3" ng-class="{'ng-dirty' : vm.time_shift }">
+            <span class="limit_valide" ng-show="vm.limitValide1" translate="channelForm.timeShiftValide2"></span>
+        </div>
+        <div class="m-t m-b">
+            <label class="label-title v-t" translate="channelForm.room"></label>
+            <div class="room">
+                <div type="text" class="div_len" ng-bind-html=" vm.kb | calculator ">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

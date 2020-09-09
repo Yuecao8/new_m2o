@@ -1,0 +1,159 @@
+<div class="mxu_system_setting_wrap search-wrapper">
+    <!-- list -->
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">检索设置</div>
+    </div>
+    <div class="white search-body-wrapper hoge-border">
+        <div class="box-body">
+            <div class="search-select">
+                <div class="contain-box">
+                    <div class="contain-chose">
+                        <span class="icon-box">
+                            <i class="fa icon-new-quanwenjiansuo"></i>
+                        </span>
+                        <h4 translate="system_search.searchStatus"></h4>
+                        <span class="search-status" ng-class="{'search-status-t':vm.searchStatus.mark}">{{vm.searchStatus.name}}</span>
+                    </div>
+                </div>
+                <div class="contain-box">
+                    <div class="contain-chose">
+                        <span class="icon-box">
+                            <i class="fa icon-new-pipeifangshi"></i>
+                        </span>
+                        <h4 translate="system_search.matchType"></h4>
+                        <div class="switch-box">
+                            <label class="radio-match">
+                                <input name="locked" ng-model="vm.search_mode" type="radio" value="0" ng-click="vm.setMode(0)">
+                                {{ 'system_search.matchTitle'| translate}}
+                            </label>
+                            <label class="radio-match pull-right m-r">
+                                <input name="locked" ng-model="vm.search_mode" type="radio" value="1"  ng-click="vm.setMode(1)">
+                               {{ 'system_search.matchText'| translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <p>{{ 'system_search.matchDescription'| translate}}</p>
+                </div>
+                <div class="contain-box last-box">
+                    <div class="contain-chose">
+                        <span class="icon-box">
+                            <i class="fa icon-new-zidongreci"></i>
+                        </span>
+                        <h4 translate="system_search.automaticHot"></h4>
+                        <div class="switch-box hotword">
+                            <label class="ui-switch">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-checked="vm.auto" ng-click="vm.setAuto()">
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                    <p>{{ 'system_search.hotDescription'| translate}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-box">
+            <div class="list-header">
+                <div class="list-title" translate="system_search.wordList">
+                </div>
+                <button class="btn btn-purple add-word" ng-click="vm.addNew()" translate="system_search.createWord">
+                </button>
+            </div>
+            <div class="ErrorTip" ng-show=" !vm.wordList.length && !vm.loadingList">
+                <p>{{vm.errorList}}</p>
+            </div>
+            <div class="list_contain hoge-table-contain" ng-show="vm.wordList.length">
+                <div class="table_header hoge-table-header">
+                    <div class="wrap">
+                        <div class="list-ctr">
+                            <i class="fa typeface-form_paixu"  ng-click="vm.sort()"></i>
+                        </div>
+                        <div class="list-body flex-one" translate="system_search.word"></div>
+                        <div class="list-scount" translate="system_search.searchFrequency"></div>
+                        <div class="list-number" translate="system_search.matchNumber"></div>
+                        <div class="list-status" translate="system_search.status"></div>
+                        <div class="list-other" >{{ 'system_search.createUser'| translate}}/{{ 'system_search.createTime'| translate}}</div>
+                        <div class="list-i" ></div>
+                    </div>
+                    <div class="sort_board red-50" ng-show="vm.isSort">
+                        <i class="fa typeface-login_tishi"></i>
+                        <span class="paixu_setting">拖拽排序</span>
+                        <button class="btn btn-sm white pull-right " ng-click="vm.cancelSort()" translate="system_search.cancel"></button>
+                        <button class="btn btn-sm hoge-btn-blue pull-right m-r" ng-click="vm.outSort()" translate="system_search.save"></button>
+
+                    </div>
+                </div>
+                <div class="list white" ui-sortable="vm.sortableOpt" ng-model="vm.wordList"  >
+                    <div class="list-item hoge-item-border"
+                         ng-repeat="item in vm.wordList track by $index"
+                         ng-mouseenter="">
+                        <div class="list-ctr">
+                            <label class="checkbox-inline" ng-if="!vm.isSort">
+                                <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                            </label>
+                            <i class="fa fa-bars" ng-if="vm.isSort"></i>
+                        </div>
+
+                        <div class="list-body flex-one">
+                            <span class="name_contain">{{item.name}}</span>
+                        </div>
+
+                        <div class="list-scount">
+                            <span>{{item.rate}}</span>
+                            <!--<span  class="scount_label"></span>-->
+                        </div>
+
+                        <div class="list-number" >
+                            <span>{{item.match}}</span>
+                        </div>
+
+                        <div class="list-status" >
+                            <span class="state_grey" ng-if="item.status==0" ng-click="vm.changeStatus(item)" translate="system_search.pendingReview"></span>
+                            <span class="state_green" ng-if="item.status==1" ng-click="vm.changeStatus(item)" translate="system_search.audited"></span>
+                            <span class="state_red" ng-if="item.status==2" ng-click="vm.changeStatus(item)" translate="system_search.hasHitBack"></span>
+                        </div>
+
+                        <div class="list-other" >
+                            <span>{{item.create_user_name}}</span>
+                            <span>{{item.created_at.substr(5,11)}}</span>
+                        </div>
+
+                        <div class="list-i" >
+                            <div class="icon-tool pull-right" ng-click="vm.wordDel(item);" ng-show="!vm.isSort">
+                                <i class="fa icon-shanchu1 " data-toggle="dropdown" aria-expanded="false"></i>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--bottom-->
+                <div class="list_bottom hoge-table-bottom">
+                    <div class="btn-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">{{ 'system_search.allSelect'| translate}}
+                        </label>
+                    </div>
+                    <div class="btn-toolbar list_bar flex-one btn-box">
+                        <div class="btn-group">
+                            <button class="btn  del-btn" ng-click="vm.deleteAll()">{{ 'system_search.delete'| translate}}</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline btn-comment" ng-disabled="vm.contributeList.length == 0" ng-click="vm.review(1)">{{ 'system_search.audit'| translate}}</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline btn-comment" ng-disabled="vm.contributeList.length == 0" ng-click="vm.review(2)">{{ 'system_search.hitBack'| translate}}</button>
+                        </div>
+                    </div>
+                    <page-nation  options="vm.pageOptions" turn-page="vm.pageChange()" ng-show="vm.pageOptions.total > 10"></page-nation>
+                </div>
+            </div>
+        </div>
+        <!-- / list -->
+    </div>
+
+
+</div>

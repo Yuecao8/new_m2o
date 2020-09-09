@@ -1,0 +1,30 @@
+<div class="contributeSet-wrap">
+    <div class="contributeSet-section">
+        <div class="p-v-md">
+            <div class="edit-head">
+                <em>上头条</em>
+            </div>
+        </div>
+        <div class="edit-form hoge-border">
+            <div class="form-card">
+                <div class="header">基本设置</div>
+                <div class="content" my-loading="vm.setLoading">
+                    <div class="form-group">
+                        <label class="label-name">审核是否开启</label>
+                        <div class="group-content">
+                            <label class="radio-inline">
+                                <input ng-model="vm.config.is_need_audit" type="radio" value="1">是
+                            </label>
+                            <label class="radio-inline">
+                                <input ng-model="vm.config.is_need_audit" type="radio" value="0">否
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form-group">
+                    <button class="btn primary-btn ng-binding" ng-click="vm.updateSet()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<% if (edition === 'pro' || edition === 'ult') { %>
+<div class="footer_form">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="md-form-group float-label">
+                <div class="form-group m-b form-time">
+                    <label class="m-b-0 time" translate="vote.startTime"></label>
+                    <div class="form-control">
+                        <div class="row">
+                            <div class="col-md-6" style="padding: 0;width: 78px;">
+                                <input  style="font-size: 13px;border-bottom : none;" ng-model="vm.start_time" data-icon-left="fa fa-chevron-left" data-icon-right="fa fa-chevron-right"  data-date-format="yyyy-MM-dd"
+                                        data-date-type="number" data-autoclose="1" lang="zh-cn"  placement="bottom-left" name="date" bs-datepicker/>
+                            </div>
+                            <div class="col-md-6" style="padding: 0;width: 78px;margin-left: 10px;">
+                                <input  style="font-size: 13px;border-bottom : none;" ng-model="vm.start_time" data-icon-left="fa fa-chevron-left" data-icon-right="fa fa-chevron-right" data-time-format="HH:mm"
+                                        data-time-type="number" data-autoclose="1" lang="zh-cn" placement="bottom-right" name="time" bs-timepicker/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="md-form-group float-label">
+                <div class="form-group m-b form-time">
+                    <label class="m-b-0 time" translate="vote.endTime"></label>
+                    <div class="form-control">
+                        <div class="row">
+                            <div class="col-md-6" style="padding: 0;width: 78px;">
+                                <input  style="font-size: 13px;border-bottom : none;" ng-model="vm.end_time" data-icon-left="fa fa-chevron-left" data-icon-right="fa fa-chevron-right"  data-date-format="yyyy-MM-dd"
+                                        data-date-type="number" data-autoclose="1" lang="zh-cn"  placement="bottom-left" name="date" bs-datepicker/>
+                            </div>
+                            <div class="col-md-6" style="padding: 0;width: 78px;margin-left: 10px;">
+                                <input  style="font-size: 13px;border-bottom : none;" ng-model="vm.end_time" data-icon-left="fa fa-chevron-left" data-icon-right="fa fa-chevron-right" data-time-format="HH:mm"
+                                        data-time-type="number" data-autoclose="1" lang="zh-cn" placement="bottom-right" name="time" bs-timepicker/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 p-t-sm p-b-sm">
+            <button class="btn primary-btn m-r " my-loading="vm.save_loading" ng-click="vm.save()">{{ 'vote.save'| translate}}
+                }}</button>
+        </div>
+    </div>
+</div>
+<% } %>

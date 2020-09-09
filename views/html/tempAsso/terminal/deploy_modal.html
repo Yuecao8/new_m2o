@@ -1,0 +1,69 @@
+<div class="modal-content-publish box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">{{vm.param.type=='content'?"生成详情":"生成栏目"}}</h5>
+    </div>
+    <div class="modal-body" style="display: flex;">
+        <!--左边栏-->
+        <div class="column-wrap" style="flex: 1;">
+            <!--nav-->
+            <div class="type-nav">
+                <!-- <div class="btn-contain btn-group">
+                    <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_audio == 0}" ng-click="vm.dataDetail.is_audio = 0">部分栏目</button>
+                    <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_audio == 1}" ng-click="vm.dataDetail.is_audio = 1">全部栏目</button>
+                </div> -->
+                <span class="type-nave-span" ng-class="{'active-span':!vm.all}" ng-click="vm.all=0">部分栏目</span>
+                <span class="type-nave-span" ng-class="{'active-span':vm.all}" ng-click="vm.all=1">全部栏目</span>
+            </div>
+            <!--column-->
+            <div class="column_content" my-loading="vm.column_loading" ng-if="!vm.all">
+                <div class="ErrorTip" ng-show="!vm.columnData[0].length">
+                    <p translate="content.noData"></p>
+                </div>
+                <ks-swiper-container  ng-if="vm.columnData[0].length"
+                                      swiper="vm.swiper"
+                                      class="swiper-container"
+                                      observer='true'
+                                      slides-per-view="4"
+                                      pagination-clickable='true'
+                                      space-between= '0'
+                                      override-parameters="{'grabCursor':'true','observeParents':'true','observer':'true',}">
+                    <ks-swiper-slide class="swiper-slide list_box" ng-repeat="column in vm.columnData track by $index" >
+                        <div class="list" ng-model="column">
+                            <div class="list_item" ng-click="vm.goNext(item,$parent.$index+1)" ng-repeat="item in column" ng-class="{'active':item.active}">
+                                <input type="checkbox" data="{{item.id}}" ng-class="{'input_checked': item.isCheck}" ng-checked="item.isCheck = vm.itemCheck(item)" ng-click="vm.addCheck(item)">
+                                <div class="column_title">{{item.name}}</div>
+                                <div class="pull-right next_icon">
+                                    <i class="icon-jinru" ng-show="item.is_last == 0"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ks-swiper-slide>
+                </ks-swiper-container>
+            </div>
+        </div>
+        <!--右边栏-->
+        <div class="right_site">
+            <div class="title-more">
+                <div class="more">
+                    <div class="has_publish" ng-if="!vm.all">已选{{vm.checkLength}}个栏目</div>
+                    <div class="has_publish" ng-if="vm.all">已选全部栏目</div>
+                    <div class="site_box" ng-repeat="list in vm.checkList" ng-if="!vm.all">
+                        <div>
+                            <ul>
+                                <li class="item" ng-if="list.column.length" ng-repeat="item in list.column">
+                                    {{item.name}}
+                                    <i class="icon-guanbi" ng-click="vm.deleteCheck(item.column_id,list)"></i>
+                                </li>
+                                <li ng-if="!list.column.length" style="color: #969696;" translate="content.unselected"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{vm.DOC.save}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{vm.DOC.cancel}}</button>
+    </div>
+</div>

@@ -1,0 +1,187 @@
+<div class="addAdv-wrapper wrapper">
+    <form class="content-wrap padding" name="addAdv">
+        <div class="md-form-group">
+            <label class="font-16" ng-class="{'active': vm.advName}" translate="addAdvertise.advName"></label>
+            <input type="text" maxlength="15"
+                   ng-blur="vm.advName = false"
+                   ng-focus="vm.advName = true"
+                   ng-model="vm.advertise.title"
+                   class="md-input form-control"
+                   ng-class="{'ng-dirty' : vm.advertise.title }"/>
+            <div num-count="vm.advertise.title" count-top="68" count-max="15" count-position="right" class="m-b"></div>
+        </div>
+        <div class="md-form-group">
+            <label class="font-16" translate="addAdvertise.launchTime"></label>
+            <div class="row time_box">
+                <div class="col-md-6">
+                    <div class="md-form-group float-label">
+                        <div class="form-group form-time">
+                            <div class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6 date">
+                                        <input placeholder="{{ 'addAdvertise.startDate' | translate }}" class="form-control"
+                                               ng-model="vm.advertise.start_time"
+                                               data-date-format="yyyy-MM-dd"
+                                               data-icon-left="fa fa-chevron-left"
+                                               data-icon-right="fa fa-chevron-right"
+                                               name="date" autocomplete='off'
+                                               data-max-date="{{vm.advertise.end_time}}"
+                                               bs-datepicker>
+                                    </div>
+                                    <div class="col-md-6 time">
+                                        <input placeholder="{{ 'addAdvertise.startTime' | translate }}" class="form-control"
+                                               ng-model="vm.advertise.start_time"
+                                               data-icon-left="fa fa-chevron-left"
+                                               data-icon-right="fa fa-chevron-right"
+                                               data-time-format="HH:mm"
+                                               data-time-type="number"
+                                               data-autoclose="1" lang="zh-cn"
+                                               placement="bottom-right" name="time"
+                                               autocomplete='off'
+                                               bs-timepicker />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="md-form-group float-label">
+                        <div class="form-group form-time">
+                            <div class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6 date">
+                                        <input placeholder="{{ 'addAdvertise.endDate' | translate }}" type="text" class="form-control"
+                                               ng-model="vm.advertise.end_time"
+                                               data-date-format="yyyy-MM-dd"
+                                               data-icon-left="fa fa-chevron-left"
+                                               data-icon-right="fa fa-chevron-right"
+                                               name="date" autocomplete='off'
+                                               data-min-date="{{vm.advertise.start_time}}"
+                                               bs-datepicker>
+                                    </div>
+                                    <div class="col-md-6 time">
+                                        <input placeholder="{{ 'addAdvertise.endTime' | translate }}" class="form-control"
+                                               ng-model="vm.advertise.end_time"
+                                               data-icon-left="fa fa-chevron-left"
+                                               data-icon-right="fa fa-chevron-right"
+                                               data-time-format="HH:mm"
+                                               data-time-type="number"
+                                               data-autoclose="1" lang="zh-cn"
+                                               placement="bottom-right" name="time"
+                                               autocomplete='off'
+                                               bs-timepicker />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="md-form-group">
+            <div class="home-cont-title">
+                <span class="b-l-5x"></span>
+                <p class="title" translate="addAdvertise.material"></p>
+                <span class="num">
+                    {{ 'addAdvertise.present' | translate }}
+                    {{ 'addAdvertise.total' | translate }}{{vm.advertise.material_num}}
+                    {{ 'addAdvertise.ge' | translate }}
+                    {{ 'addAdvertise.material' | translate }},
+                    {{ 'addAdvertise.among' | translate }}
+                    {{ 'addAdvertise.img' | translate }}{{vm.img_num}}
+                    {{ 'addAdvertise.ge' | translate }},
+                    {{ 'addAdvertise.video' | translate }}{{vm.video_num}}
+                    {{ 'addAdvertise.ge' | translate }},
+                    {{ 'addAdvertise.flash' | translate }}{{vm.flash_num}}
+                    {{ 'addAdvertise.ge' | translate }},
+                    js{{ 'addAdvertise.code' | translate }}{{vm.js_num}}
+                    {{ 'addAdvertise.ge' | translate }}
+                </span>
+            </div>
+            <div class="list_contain list_body m-b">
+                <div class="table_header header" ng-if="vm.material_list.length > 0">
+                    <div class="row">
+                        <div class="col-md-1" translate="addAdvertise.adName"></div>
+                        <div class="col-md-3" translate="addAdvertise.place"></div>
+                        <div class="col-md-3" translate="addAdvertise.material"></div>
+                        <div class="col-md-3" translate="addAdvertise.interlinkage"></div>
+                        <div class="col-md-1" translate="addAdvertise.priority"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <div class="list" ng-if="vm.material_list.length > 0">
+                    <div class="row list-item" ng-repeat="item in vm.material_list">
+                        <div class="col-md-1"> {{ 'addAdvertise.material' | translate }}{{$index + 1}}</div>
+                        <div class="col-md-3">
+                            <div>{{item.distribution}}</div>
+                        </div>
+                        <div class="col-md-3 materiel">
+                            <div>
+                                <div class="pull-left m-r">
+                                <span class="w-40">
+                                    <img ng-src="{{item.material_info.url}}" ng-if="item.material_info.material_type=='image'" class="w-full h-full">
+                                    <img src="../../../../../assets/images/mxu/advertise/video.png" ng-if="item.material_info.material_type=='video'" class="w-full h-full">
+                                    <img src="../../../../../assets/images/mxu/advertise/js.png" ng-if="item.material_type=='js'"  class="w-full h-full">
+                                    <img src="../../../../../assets/images/mxu/advertise/flash.png" ng-if="item.material_info.material_type=='flash'" class="w-full h-full">
+                                </span>
+                                </div>
+                                <div class="clear">
+                                    <a href="" class="_500 text-ellipsis" ng-if="item.material_type!='js'" style="text-align: left">{{item.material_info.filename}}</a>
+                                    <small class="text-muted pull-left" ng-if="item.material_type!='js'">{{item.material_info.filesize}}</small>
+                                    <a href="" class="_500 text-ellipsis" ng-if="item.material_type=='js'" style="text-align: left">JS{{ 'addAdvertise.code' | translate }}</a>
+                                    <small class="text-muted pull-left" ng-if="item.material_type=='js'">{{item.material_info.length}}{{ 'addAdvertise.character' | translate }}</small>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="adv_link">{{item.adv_link}}</div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="label priority" ng-class="{'normal':item.priority==0,'high':item.priority==3,'middle':item.priority==2,'low':item.priority==1}">
+                                {{item.priority_name}}
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="text-align: center">
+                            <div class="icon-tool">
+                                <i class="fa icon-bianji" ng-click="vm.addMateriel(item)"></i>
+                                <i class="fa icon-shanchu1" ng-click="vm.deleteMateriel(item)"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table_header" ng-class="{'add_box' : vm.material_list.length > 0 }">
+                    <div class="row">
+                        <div class="pull-left" ng-click="vm.addMateriel()" style="cursor: pointer;">
+                            <i class="fa fa-plus-circle"></i>
+                            {{ 'addAdvertise.addMat' | translate }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="md-form-group">
+            <div class="home-cont-title ">
+                <span class="b-l-5x other"></span>
+                <p class="title" translate="addAdvertise.other"></p>
+                <span class="num" translate="addAdvertise.empt"></span>
+            </div>
+            <div class="list_contain" style="margin-top: 10px;">
+                <textarea type="text" maxlength="200"
+                          ng-blur="vm.advDes = false"
+                          ng-focus="vm.advDes = true"
+                          ng-model="vm.advertise.brief"
+                          class="md-input form-control"
+                          ng-class="{'ng-dirty' : vm.advertise.brief }">
+                </textarea>
+                <div num-count="vm.advertise.brief" count-top="140" count-max="200" count-position="right" class="m-b"></div>
+            </div>
+        </div>
+        <div class="md-form-group">
+            <button class="btn primary-btn m-r" ng-click="vm.save()" my-loading="vm.saveLoading"> {{ 'addAdvertise.subAdv' | translate }}</button>
+            <button class="btn cancel-btn" ng-click="vm.goList()"> {{ 'addAdvertise.cancel' | translate }}</button>
+        </div>
+    </form>
+</div>
+<m2o-footer></m2o-footer>

@@ -1,0 +1,998 @@
+<div class="content-padding pos-rlt" my-loading="vm.loading">
+    <div>
+        <!-- header -->
+        <div class="content_list_head clearfix hoge-table-add" ng-if="!vm.hideAccessKind">
+            <!--新增文稿-->
+            <div class="pull-left hoge-table-title">{{vm.new.title}}</div>
+            <div class="pull-right" ng-if="vm.new.name && (vm.permission[vm.stateType].create | right)" style="display: flex;">
+                <button class="btn hoge-btn-blue" ng-if="vm.nm_showShare && vm.stateType === 'article' && !vm.onlyArticle" ng-click="vm.goShare()" style="margin-right: 10px;height: 30px;">共享稿件库</button>
+                <div class="create-button onlyArticle" ng-if="vm.stateType === 'article' && !vm.onlyArticle">
+                    <div class="button-container">
+                        <i class="left-icon typeface-list_tonggao" ng-if="!vm.btnToggleXT"></i>
+                        <i class="left-icon typeface-list_dianshigao" ng-if="vm.btnToggleXT"></i>
+                        <div class="button-left" ng-click="vm.stateGoArticle(vm.showBtnArticle.type)">新增{{vm.showBtnArticle.name}}</div>
+                     </div>
+                </div>
+                <div class="create-button" ng-if="vm.stateType === 'article' && vm.onlyArticle">
+                        <div class="button-container">
+                            <i class="left-icon typeface-list_tonggao" ng-if="!vm.btnToggleXT"></i>
+                            <i class="left-icon typeface-list_dianshigao" ng-if="vm.btnToggleXT"></i>
+                            <div class="button-left" ng-click="vm.stateGoArticle(vm.showBtnArticle.type)">新增{{vm.showBtnArticle.name}}</div>
+                            <div class="button-right content-rbtn">
+                                <div class="middle-line"></div>
+                                <div class="bottom-arr"></div>
+                            </div>
+                        </div>
+                        <div class="create-drop" ng-if="vm.dropShow">
+                            <div class="drop-item" ng-repeat="article in vm.articleArr" ng-click="vm.stateGoArticle(article.type)">
+                                <i class="left-icon typeface-list_weixingao" ng-if="article.type === 'weixin'"></i>
+                                <i class="left-icon lifei typeface-list_tonggao" ng-if="article.type === 'common'"></i>
+                                <i class="left-icon typeface-list_dianshigao" ng-if="article.type === 'tv'"></i>
+                                <i class="left-icon typeface-list_weibogao" ng-if="article.type === 'weibo'"></i>
+                                <i class="left-icon typeface-list_guangbogao" ng-if="article.type === 'broadcast'"></i>
+                                <span class="right-content">新增{{article.name}}</span>
+                            </div>
+                        </div>
+                    </div> 
+                <!-- <button class="btn hoge-btn-blue" ng-click="vm.batchUploadVideo()" style="margin-right: 10px;">批量上传</button> -->
+                <button class="btn hoge-btn-blue" ng-if="vm.stateType == 'video' || vm.stateType == 'audio'" ng-click="vm.batchUploadVideo()" style="margin-right: 10px;">批量上传</button>
+                <button class="btn hoge-btn-blue" ng-if="vm.stateType !== 'article'" ng-click="vm.stateGo(vm.new.url)">{{vm.new.name}}</button>
+            </div>
+            <!-- URL抓取 -->
+            <!-- <div class="pull-right search-boxer" ng-if="vm.stateType == 'article' && (vm.permission[vm.stateType].create | right)">
+                <div class="search-article" ng-show="vm.searchShow">
+                    <i class="icon icon-tuwen"></i>
+                    <input type="text" class="search-url" placeholder="请输入需要抓取网站的URL" ng-keypress="vm.searchPress($event)" ng-model="vm.articleUrl">
+                    <div class="result-article">
+                        <div class="article-content hoge-flex">
+                            <div class="img-content">
+                                <img ng-src="http://pocket.dev.hoge.cn/201807129feca0821c0dd1e2909d92e3445e449a_origin.jpg?imageView/0/h/162/w/216" alt="">
+                            </div>
+                            <div class="hoge-flex-one content-data">
+                                <p>
+                                        你好这是一条测试数据你好这是一条测试数据你好这是一条测试数据你好这是一条测试数据
+                                </p>
+                                <span>
+                                        据美国《纽约时报》的报道，多年的科学研究已经证明，母乳喂养对婴幼儿的成长发育最有好处也最健康。而世界卫生组织的官方资料也显示“母乳喂养有益于母亲的健康和福祉，这也有助于延长生孩子的间隔、降低患卵巢癌和乳腺癌的风险，增加家庭和国家资源。它不仅是安全的喂养方式，同
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="generate-btn">
+                            <span class="">
+                                生成文稿
+                                <i class="typeface-shengao_zhankai"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button ng-show="!vm.searchShow" class="btn hoge-white-btn url-btn" ng-click="vm.showUrl()">URL抓取</button>
+            </div> -->
+        </div>
+        <!-- / header -->
+        <!-- list -->
+        <div class="hoge-flex">
+        <div ng-style="{width:vm.stateType === 'youliao' ? '68%' : '100%'}" class="list_contain hoge-table-contain white">
+            <div class="btn-toolbar list_bar hoge-table-search hoge-flex">
+                <div class="pull-left flex-one">
+                    <!-- <div class="my-group" ng-if="vm.showMy"> -->
+                    <div class="my-group">
+                        <button class="btn btn-outline btn-comment data-btn" ng-class="{'active': !vm.isMy}" ng-click="vm.toggleBtn()">所有稿件</button><button class="btn btn-outline btn-comment data-btn data-btn-right" ng-class="{'active': vm.isMy}" ng-click="vm.toggleBtn(1)">我的稿件</button>
+                    </div>
+                    <!-- <button class="btn btn-outline btn-comment data-btn" ng-class="{'active': !vm.isMy}" ng-click="vm.toggleBtn()">所有稿件</button><button class="btn btn-outline btn-comment data-btn data-btn-right" ng-class="{'active': vm.isMy}" ng-click="vm.toggleBtn(1)">我的稿件</button> -->
+    
+                    <!-- 分类下拉 -->
+                    <!-- 协同定制 -->
+                    <div class="btn-group dropdown hoge-dropdown" ng-if="vm.hideAccessKind" style="position: relative;">
+                        <button class="btn btn-sm dropdown-toggle user-screening-xt" data-toggle="dropdown">
+                            <span class="dropdown-label label-xt">{{vm.currentUserName}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="mengyu-title">
+                            <span class="hideTitle">{{vm.currentUserName}}</span>
+                        </div>
+                        <div class="dropdown-menu text-left text-sm sidebar-drop-xt" id="sidebar-drop-xt">
+    
+                            <!-- <div class="classify-sidebar"> -->
+                                    <div class="list-list pull-left" id="sidebar-list-xt" ng-style="{width:vm.columnData.length * 142 + 'px',
+                                        height:(vm.columnData[vm.storageList.length ].length)*38+12 + 'px'
+                                        }">
+                                        <div class="sidebar-list pull-left" style="width:142px;" ng-repeat="List in vm.columnData track by $index">
+                                            <div class="sidebar-item" ng-repeat="item in List track by $index">
+                                                <!-- <div class="sidebar-body"> -->
+                                                    <span class="next-icon pull-left back-xt" ng-if="item.is_back == 1" ng-click="vm.backLast(item,List)">
+                                                        <i class="typeface-cuobiezi_huanyuan"></i>
+                                                        {{item.name}}
+                                                    </span>
+                                                    <!-- <span class=" item-name-xt" ng-if="item.is_back == 1" ng-class="{'item-active' : item.isChoose}">
+                                                        {{item.name}}
+                                                    </span> -->
+                                                    <span class=" item-name-xt" ng-if="item.is_back != 1" ng-class="{'item-active' : item.isChoose}" ng-click="vm.getChildsXt(item)">
+                                                        {{item.name}}
+                                                    </span>
+                                                    <i class="fa fa-angle-right" ng-click="vm.handerClick(item,List,$parent.$index+1)" ng-if="item.is_last != 1"></i>
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- </div> -->
+                            <!-- end -->
+                        </div>
+                    </div>
+                    <!-- 类型下拉 -->
+                    <div class="btn-group dropdown hoge-dropdown" ng-if="vm.stateType === 'article' || vm.stateType === 'youliao'">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.articleType}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="type in vm.typeArr" ng-click="vm.chooseType(type)">{{type.name}}</a>
+                        </div>
+                    </div>
+                    <!--状态下拉-->
+                    <div class="btn-group dropdown hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.status}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm" ng-if="vm.stateType !== 'youliao'">
+                            <a class="dropdown-item" ng-repeat="state in vm.statusArr" ng-if="state.status !== -1" ng-click="vm.chooseStatus(state)">{{state.name}}</a>
+                            <a class="dropdown-item" ng-repeat="state in vm.statusArr" ng-if="(state.status == -1 && vm.stateType== 'video') || (state.status == -1 && vm.stateType== 'audio')" ng-click="vm.chooseStatus(state)">{{state.name}}</a>
+                        </div>
+                        <div class="dropdown-menu text-left text-sm" ng-if="vm.stateType === 'youliao'">
+                            <a class="dropdown-item" ng-repeat="state in vm.flowStateArr" ng-click="vm.chooseStatus(state)">{{state.name}}</a>
+                            
+                        </div>
+                    </div>
+                    <!--时间下拉-->
+                    <div class="btn-group dropdown hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.time}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                            <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                {{time.name}}
+                                <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                       type="text" options="vm.options"/>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 来源下拉 -->
+                    <div class="btn-group dropdown hoge-dropdown" ng-if="(vm.stateType === 'article' || vm.stateType === 'gallery' || vm.stateType === 'video' || vm.stateType === 'audio') && vm.sourceTypeArr.length">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.sourceTypeName}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="source in vm.sourceTypeArr" ng-click="vm.chooseSource(source)">{{source.name}}</a>
+                        </div>
+                    </div>
+                    <!-- 稿件类型下拉 -->
+                    <div class="btn-group dropdown hoge-dropdown" ng-if="(vm.stateType === 'article' || vm.stateType === 'gallery' || vm.stateType === 'video' || vm.stateType === 'audio') && vm.contentTypeArr.length">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.contentTypeName}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="content in vm.contentTypeArr" ng-click="vm.chooseContent(content)">{{content.name}}</a>
+                        </div>
+                    </div>
+                    <!-- 发布端下拉 -->
+                    <div class="btn-group dropdown hoge-dropdown gs-dropdown" ng-if="vm.gsPublish">
+                        <button class="btn btn-sm dropdown-toggle gs-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label gs-label">{{vm.gsColumnName}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm gs-publish"><!-- 外层小窗口 -->
+                            <div id="gs-list">
+                                <div ng-repeat="item in vm.columnList track by $index" ng-init="outIndex = $index"><!-- 内层循环出来的几个一排的div -->
+                                    <div><!-- 每个div中再循环出选择条目 -->
+                                        <div>
+                                            <a class="dropdown-item gs-item" ng-click="vm.chooseAll()" ng-if="outIndex == 0">
+                                                全部
+                                            </a>
+                                            <a class="dropdown-item gs-item" ng-click="vm.choosePre($event)" ng-if="outIndex != 0">
+                                                返回
+                                            </a>
+                                        </div>
+                                        <div class="gs-item-con" ng-repeat="v in item.data track by $index">
+                                            <a class="dropdown-item gs-item" ng-click="vm.chooseColumn(v, $index)">
+                                                {{v.name}}
+                                            </a>
+                                            <i class="fa fa-angle-right gs-right-arrow" data-stopPropagation=”true” ng-if="!v.is_last" ng-click="vm.getChilds(v.id, outIndex, $event)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--搜索-->
+                    <!-- 协同定制 -->
+                    <!-- 和搜索合并到一起了，后端做的处理 -->
+                    <!-- <div class="form-group hoge-input-search black-input-search" ng-class="{'pull-right':!vm.hideAccessKind,'pull-left':vm.hideAccessKind}">
+                        <input type="text" placeholder="创建者" ng-keypress="vm.keyPress($event)" ng-model="vm.create_user_name">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                    </div> -->
+                    <!-- 标签选择 -->
+                    <div class="label-box" ng-if="vm.stateType != 'youliao'">
+                        <div class="checkRole dropdown-toggle" ng-click="vm.roleFocus = true;" ng-blur="vm.roleFocus = false;"
+                                ng-class="{'focus-color':vm.roleFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                <span ng-if="!vm.labelsIds.length" class="placeholder-span">选择标签</span>
+                                <span class="check-item" ng-repeat="modules in vm.labelListArr  track by $index" ng-show="modules.check">
+                                {{modules.name}}
+                                <i class="fa icon-guanbi" ng-click="vm.delCheck(modules)" style="cursor: pointer"></i>
+                            </span>
+                        </div>
+                        <div class="role-list dropdown-menu">
+                            <div class="item" ng-if="vm.labelListArr.length" ng-repeat="modules in vm.labelListArr  track by $index" ng-click="vm.chooseLabel(modules)">
+                                <label class="">{{modules.name}}</label>
+                                <span class="fa fa-check" ng-show="modules.check"></span>
+                            </div>
+                            <div ng-if="!vm.labelListArr.length" class="no-drop-label">暂无</div>
+                        </div>
+                    </div>
+                    <!-- 标签 end -->
+
+                </div>
+                <search-Box key-Word="vm.key"
+                            search-Key="vm.search(Item)"
+                            key-Press="vm.keyPress(Event)"
+                            hide-Kind="vm.hideAccessKind"
+                            is-Focus="vm.isFocus"
+                            place-Holder="vm.placeHolder"
+                >         
+                </search-Box>
+                <!-- <div class="form-group hoge-input-search black-input-search" ng-class="{'pull-right':!vm.hideAccessKind,'pull-left':vm.hideAccessKind}">
+                    <input type="text" placeholder="{{'content.search' | translate }}" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                </div> -->
+                <!-- 全文搜索 -->
+                <div class="advancedSearch" ng-if="vm.stateType == 'article'">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="full_title"  ng-click="vm.FullTitleCheck()" ng-checked="vm.full_text_search == '1'">
+                    </label>
+                    <div class="drop_text"> 
+                        <span class="dropdown-label">全文搜索</span>
+                    </div>
+                </div>
+                <!-- 高级搜索 -->
+                <div class="advanced-search" id="advanced-search" ng-click="vm.showAdvanced()" 
+                ng-if="(vm.stateType === 'article' || vm.stateType === 'gallery' || vm.stateType === 'video' || vm.stateType === 'audio' || vm.stateType === 'audio' || vm.stateType == 'topic'|| vm.stateType == 'link')">
+
+                    <span class="advanced-search-title">高级搜索</span>
+                    <div class="advance-wrapper" >
+                        <div ng-if="vm.advancedFocus" class="advance-box">
+                            <div class="advance-box-form">
+                                <div class="form-group">
+                                    <label class="label-name">标题：</label>
+                                    <input class="input-common" type="text" ng-model="vm.advancedKeyWord" ng-focus="vm.unitFocus = true" ng-class="{'focus-color':vm.unitFocus}" ng-blur="vm.unitFocus = false">
+                                </div>
+                                <div class="form-group list-role-user-drop list-role-drop">
+                                    <label class="label-name">栏目：</label>
+                                    <button class="btn white btn-sm dropdown-toggle" style="position: relative;" data-toggle="dropdown" ng-click="vm.advancePublishColumnShow=!vm.advancePublishColumnShow">
+                                        <span class="dropdown-label" ng-if="vm.searchPublishColumnItem[0].name">{{vm.searchPublishColumnItem[0].name}}</span>
+                                        <span class="dropdown-label" ng-if="!vm.searchPublishColumnItem[0].name" style="color:#d8e2f0;">选择栏目</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="column-top-box" ng-if="vm.advancePublishColumnShow">
+                                        <classify-preview classify-data="vm.radioPublishList"
+                                        show-chose-all="true" all-name="'全部栏目'"
+                                        classify-name="''" box-name="'选择栏目'"
+                                        classify-check="vm.searchPublishColumnItem" radio-style="'all'"
+                                        classify-type="'radio'" classify-next="vm.getPublishColumn(Id,Level+1)"
+                                        classify-focus="false"
+                                        box-status="true"
+                                        ></classify-preview>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-name">作者：</label>
+                                    <input class="input-common" type="text" ng-model="vm.advancedUserName" ng-focus="vm.createNameFocus = true" ng-class="{'focus-color':vm.createNameFocus}" ng-blur="vm.createNameFocus = false">
+                                </div>
+                                <div class="form-group drop-advanced">
+                                    <label class="label-name">状态：</label>
+                                    <div class="btn-group dropdown hoge-dropdown" style="margin-top:0;margin-right:0;">
+                                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" style="width:200px;">
+                                            <span class="dropdown-label">{{vm.currentAdvancedStatus.name}}</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu text-left text-sm">
+                                            <a class="dropdown-item" ng-repeat="state in vm.statusArr" ng-if="state.status !== -1" ng-click="vm.chooseAdvancedStatus(state)">{{state.name}}</a>
+                                            <a class="dropdown-item" ng-repeat="state in vm.statusArr" ng-if="(state.status == -1 && vm.stateType== 'video') || (state.status == -1 && vm.stateType== 'audio')" ng-click="vm.chooseAdvancedStatus(state)">{{state.name}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group list-role-user-drop list-role-drop">
+                                    <label class="label-name">分类：</label>
+                                    <button class="btn white btn-sm dropdown-toggle" style="position: relative;" data-toggle="dropdown" ng-click="vm.advanceColumnShow=!vm.advanceColumnShow">
+                                        <span class="dropdown-label" ng-if="vm.searchColumnItem[0].name">{{vm.searchColumnItem[0].name}}</span>
+                                        <span class="dropdown-label" ng-if="!vm.searchColumnItem[0].name" style="color:#d8e2f0;">选择分类</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="column-top-box" ng-if="vm.advanceColumnShow">
+                                        <classify-preview classify-data="vm.radioList"
+                                        show-chose-all="true" all-name="'全部分类'"
+                                        classify-name="''" box-name="'选择分类'"
+                                        classify-check="vm.searchColumnItem" radio-style="'all'"
+                                        classify-type="'radio'" classify-next="vm.getColumnData(Id,Level+1,Type)"
+                                        classify-focus="false"
+                                        box-status="true"
+                                        choose-function="vm.chooseColumns(Item, index)"
+                                        ></classify-preview>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group drop-advanced" ng-if="vm.stateType === 'article'">
+                                    <label class="label-name">分类：</label>
+                                    <div class="btn-group dropdown hoge-dropdown" style="margin-top:0;margin-right:0;">
+                                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" style="width:200px;">
+                                            <span class="dropdown-label">{{vm.currentAdvancedType.name}}</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu text-left text-sm">
+                                            <a class="dropdown-item" ng-repeat="state in vm.typeArr" ng-click="vm.chooseAdvancedType(state)">{{state.name}}</a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!--时间下拉-->
+                                <div class="form-group drop-advanced">
+                                    <label class="label-name">时间：</label>
+                                    <div class="btn-group dropdown hoge-dropdown" style="margin-top:0;margin-right:0;">
+                                        <button class="btn btn-sm dropdown-toggle"  data-toggle="dropdown" style="width:200px;">
+                                            <span class="dropdown-label">{{vm.currentAdvancedTime}}</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.openAdvance}">
+                                            <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseAdvancedTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                                {{time.name}}
+                                                <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeAdvancedDate" class="date-picker opacity-0"
+                                                    type="text" options="vm.advancedOptions"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="advanced-bottom">
+                                <button class="btn btn-comment" ng-click="vm.resetAdvance()">重置</button>
+                                <button class="btn hoge-btn-blue" style="margin-left: 16px;width: 60px;" ng-click="vm.searchAdvance()">搜索</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 协同定制 -->
+                <div class="pull-right" ng-if="(vm.new.name && (vm.permission[vm.stateType].create | right))&&vm.hideAccessKind && !vm.forbidCreate">
+                    <div class="create-button custom-xt" ng-if="vm.stateType === 'article'">
+                        <div class="button-container">
+                            <!-- <i class="left-icon typeface-list_tonggao"></i> -->
+                            <i class="left-icon typeface-list_tonggao" ng-if="!vm.btnToggleXT"></i>
+                            <i class="left-icon typeface-list_dianshigao" ng-if="vm.btnToggleXT"></i>
+                            <div class="button-left" ng-click="vm.stateGoArticle(vm.showBtnArticle.type)">新增{{vm.showBtnArticle.name}}</div>
+                            <div class="button-right content-rbtn">
+                                <div class="middle-line"></div>
+                                <div class="bottom-arr"></div>
+                            </div>
+                        </div>
+                        <div class="create-drop" ng-if="vm.dropShow">
+                            <div class="drop-item" ng-repeat="article in vm.articleArr" ng-click="vm.stateGoArticle(article.type)">
+                                <i class="left-icon typeface-list_weixingao" ng-if="article.type === 'weixin'"></i>
+                                <i class="left-icon lifei typeface-list_tonggao" ng-if="article.type === 'common' || article.type === 'mengyu' || article.type === 'zangyu'"></i>
+                                <i class="left-icon typeface-list_dianshigao" ng-if="article.type === 'tv'"></i>
+                                <i class="left-icon typeface-list_weibogao" ng-if="article.type === 'weibo'"></i>
+                                <i class="left-icon typeface-list_guangbogao" ng-if="article.type === 'broadcast'"></i>
+                                <span class="right-content">新增{{article.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn hoge-btn-blue" ng-if="vm.stateType !== 'article'" ng-click="vm.stateGo(vm.new.url)">{{vm.new.name}}</button>
+                </div>
+            </div>
+            <!-- <div class="ErrorTip" ng-show="!vm.NormalList.length && !vm.loading">
+                <p translate="content.noData"></p>
+            </div> -->
+            <hoge-error hight-num="'277px'" arr-length="vm.NormalList.length" load="vm.loading"></hoge-error>
+            <div class="table_header hoge-table-header" ng-show="vm.NormalList.length">
+                <div class="wrap">
+                    <div class="list-ctr"></div>
+                    <div class="list-body flex-one" translate="content.title"></div>
+                    <!--<div class="list-status" ng-if="vm.stateType=='article'">转码状态</div>-->
+                    <!-- <div class="list-weight" translate="content.classify"></div> -->
+                    <div class="list-weight" ng-style="
+                    {minWidth:(vm.showSource || vm.synchronize_show)?'90px':'160px'}" ng-if="vm.showSource">稿件来源</div>
+                    <div class="list-weight" ng-style="{minWidth:(vm.showSource || vm.synchronize_show || ((vm.stateType == 'article') && (vm.permission[vm.stateType].report | right) && vm.show_report))?'90px':'160px'}">{{vm.cateName}}</div>
+                    <div class="list-status" translate="content.state"></div>
+                    <div class="list-label" ng-if="vm.stateType != 'video' && vm.stateType != 'youliao'">
+                        标签
+                    </div>
+                    <div class="list-analysis" ng-if="vm.stateType == 'video'&&vm.isAnalyzeAI">AI分析</div>
+                    <div class="list-publish" ng-if="vm.stateType !== 'youliao'">{{vm.columnName}}</div>
+                    <!-- 码流 -->
+                    <div ng-if="vm.stateType == 'video'" style="width:60px;margin-left:8px;" class="list-weights">码流</div>
+                    <!-- <div class="list-publish" ng-if="vm.stateType !== 'youliao'" translate="content.publishedTo"></div> -->
+                    <div style="width:60px;margin-left:5px;" class="list-weights" ng-if="vm.open_weight">权重</div>
+                    <!-- 同步 -->
+                    <div class="list-synchronize"  ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery' 
+                    || vm.stateType == 'video'||vm.stateType == 'link'||vm.stateType=='audio')&& vm.synchronize_show">内容同步</div>
+                    <div class="list-status" ng-if="(vm.stateType == 'article') && (vm.permission[vm.stateType].report | right) && vm.show_report">上报状态</div>
+                    <div class="list-other" ng-style="{minWidth:vm.showSource?'120px':'140px'}" translate="content.create"></div>
+                    <div class="list-i" ng-if="vm.stateType !== 'youliao'"></div>
+                </div>
+            </div>
+
+            <div class="list white border-bottom-radius" ng-model="vm.NormalList" ng-show="vm.NormalList.length">
+                <div>
+                    <div class="list-item hoge-item-border"
+                         ng-repeat="(idxs,nor) in vm.NormalList track by $index"
+                         ng-mouseenter=""
+                         ng-class="{'border-blue':vm.itemCheck(nor)}">
+                        <div class="list-ctr">
+                            <label class="checkbox-inline" ng-if="(!vm.isSort)">
+                                <input type="checkbox" value="option1" ng-disabled="!nor.can_operate" ng-checked="vm.itemCheck(nor)" ng-click="vm.toggle(nor)">
+                            </label>
+                            <i class="fa fa-bars" ng-if="vm.isSort"></i>
+                        </div>
+
+                        <div class="list-body flex-one">
+                            <div class="list_img">
+                                <!-- <div class="list_img_type" ng-if="nor.article_type">{{nor.article_type === 'common' ? '通稿' : nor.article_type === 'weixin' ? '微信稿' : nor.article_type === 'tv' ? '电视稿' : nor.article_type === 'weibo' ? '微博稿' : ''}}</div> -->
+                                <span class="img-square" ng-if="nor.index_pic">
+                                    <img ng-src="{{nor.index_pic}}">
+                                </span>
+                                <div class="img-square" ng-if="!nor.index_pic">
+                                    <img src="../assets/images/mxu/img_cover.png">
+                                </div>
+                            </div>
+                            <div class="list_info">
+                                <div class="part_one">
+                                    <i ng-if="nor.is_headline==1&&vm.is_fusion==1"  style="color:red;position: relative;font-size: 16px;" class="typeface-tag_list_shangtoutiao" ><span style="position: absolute;left: 0;color: #fff;font-size:12px;display: inline-block;height: 100%;top: 1.3px;">上头条</span></i>
+                                    <a href class="list_title"  ng-click="vm.CommonService._goEdit(nor)" ng-mouseenter="vm.showTitle(nor.title,$index)">
+                                        <span ng-class="{'content-title':vm.is_open == 1&&nor.mengyu, 'mengyu-font': nor.mengyu}">{{nor.title}}</span>
+                                    </a>
+                                    <div  ng-if="nor.title.length>20 || nor.subtitle || nor.mengyu" ng-class="{'all-title':vm.is_open == 0 || !nor.mengyu,'mengyu-title': nor.mengyu,'subtitle-style': nor.subtitle}" >
+                                        <span class="jiantou arrow bottom"></span>
+                                        <span class="hideTitle">{{nor.title}}</span>
+                                        <br>
+                                        <span ng-if="nor.subtitle">精选标题：{{nor.subtitle}}</span>
+                                    </div>
+                                    <span class="label-count" ng-show="vm.stateType=='gallery'">{{nor.photo_count}}</span>
+                                    <span class="label-count" ng-show="(vm.stateType=='video' || vm.stateType=='audio') && nor.source_type!='url'">{{nor.duration_format}}</span>
+                                </div>
+
+                                <div class="part_two">
+                                    <i class="left-icon typeface-list_tonggao" ng-if="nor.article_type === 'common'"></i>
+                                    <i class="left-icon typeface-list_weixingao" ng-if="nor.article_type === 'weixin'"></i>
+                                    <i class="left-icon typeface-list_dianshigao" ng-if="nor.article_type === 'tv' || nor.article_type === 'broadcast'"></i>
+                                    <i class="left-icon typeface-list_weibogao" ng-if="nor.article_type === 'weibo'"></i>
+                                    <span class="list_img_type" ng-if="nor.article_type || nor.infoType">{{nor.article_type === 'common' ? '通稿' : nor.article_type === 'weixin' ? '微信稿' : nor.article_type === 'broadcast' ? '广播稿' : nor.article_type === 'tv' ? '电视稿' : nor.article_type === 'weibo' ? '微博稿' : nor.infoType === 'article' ? '文稿' : nor.infoType === 'picset' ? '图集' :  nor.infoType === 'video' ? '视频' : nor.infoType === 'svideo' ? '短视频' : ''}}</span>
+                                    <span class="list_img_type" ng-if="vm.stateType == 'topic'">ID {{nor.id}}·</span>
+                                    <div class="progress_box" ng-if="(vm.stateType =='video' || vm.stateType =='audio') && nor.transcode_status == 1">
+                                        <div class="contentCircleChart" style="width: 16px;height: 16px;">
+                                            <div class="circle-progress" ng-class="{'progress-ratio':vm.ratio>1}">
+                                                <div class="circleChart" id="circle_{{nor.circleNum}}"></div>
+                                                <small>{{vm.DOC.transcoding}}... {{nor.percent}}%</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress_box" ng-if="(vm.stateType =='video' || vm.stateType =='audio') && nor.transcode_status == 0">
+                                        <div class="progress">
+                                            <i class="typeface-list_dengdaizhuanma font-color"></i>
+                                            <small translate="content.waitTranscoding"></small>
+                                        </div>
+                                    </div>
+                                    <div class="progress_box" ng-if="(vm.stateType =='video' || vm.stateType =='audio') && nor.transcode_status == -1">
+                                        <div class="progress">
+                                            <i class="false_color">!</i>
+                                            <small class="false_color" translate="content.transcodeFail"></small>
+                                        </div>
+                                    </div>
+                                    <span class="list_img_type" ng-if="vm.stateType =='article' || ((vm.stateType =='video' || vm.stateType =='audio') && nor.transcode_status != 2)">·</span>
+                                    <span class="list_img_type" ng-if="vm.stateType == 'topic'" ng-style="{'margin':'0px'}">{{nor.style_name}}</span>
+                                    <span class="list_img_type" ng-if="vm.stateType != 'topic'">{{nor.style_name}}</span>
+                                    <!-- <span class="list_img_type">{{nor.style_name}}</span> -->
+                                    <!-- <div class="list_data" ng-if="nor.transcode_status != 1 && nor.transcode_status != 0 && nor.transcode_status != -1">
+                                        publish_column-->
+                                        <!--<span class="data-icon" ng-if="nor.publish_column== ''">-->
+                                        <!--<i class="typeface-list_weifabu"></i>-->
+                                        <!--未发布-->
+                                    <!-- </span>
+                                        <span class="data-icon" ng-if="nor.publish_column && nor.publish_column[0]">
+                                        <i class="typeface-form_yulan"></i>
+                                        {{nor.clicks}}
+                                    </span>
+                                        <span class="data-icon" ng-if="nor.publish_column && nor.publish_column[0] && nor.comments > 0">
+                                        <i class="typeface-gongzuotai_pinglunshu"></i>
+                                        {{nor.comments}}
+                                    </s>
+                                        <span class="data-icon" ng-if="nor.publish_column && nor.publish_column[0] && nor.praises > 0">
+                                        <i class="typeface-list_dianzan"></i>
+                                        {{nor.praises}}
+                                    </span>
+                                        <span class="data-icon" ng-if="nor.publish_column && nor.publish_column[0] && nor.shares > 0">
+                                        <i class="typeface-list_zhuanfa"></i>
+                                        {{nor.shares}}
+                                    </span>
+                                    </div> -->
+                                    <span class="video_label" ng-if="vm.stateType =='video'">
+                                        <div class="labels">
+                                            <span ng-repeat="label in nor.labels" ng-if="label.status==1">{{label.name}}</span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="list-status" ng-if="vm.stateType=='article'">-->
+                            <!--<span class="content-noAudit" ng-if="nor.has_media==0">无</span>-->
+                            <!--<span class="content-noAudit" ng-if="nor.has_media && nor.transcode_status ==2">已完成</span>-->
+                            <!--&lt;!&ndash;<span class="label primary m-l-sm light-green-200" ng-if="nor.status==3" translate="content.release"></span>&ndash;&gt;-->
+                            <!--<span class="content-noAudit" ng-if="nor.has_media && nor.transcode_status == -1">转码失败</span>-->
+                            <!--<span class="content-noAudit" ng-if="nor.has_media && nor.transcode_status == 0">等待转码</span>-->
+                            <!--<span class="content-noAudit" ng-if="nor.has_media && nor.transcode_status == 1">正在转码</span>-->
+                        <!--</div>-->
+                        <div class="list-weight" ng-style="{minWidth:(vm.showSource || vm.synchronize_show)?'90px':'160px'}" ng-if="vm.showSource">{{nor.sourceName}}</div>
+                        <div class="list-weight" ng-style="{minWidth:(vm.showSource || vm.synchronize_show || ((vm.stateType == 'article') && (vm.permission[vm.stateType].report | right) && vm.show_report))?'90px':'160px'}">{{nor.category_name}}</div>
+                        <div class="list-status status-target" ng-if="vm.stateType === 'youliao'">
+                            <div class="width-status" ng-click="vm.changeFlowStatus(nor)">
+                                <span class="content-audited" ng-if="nor.status == 1">已上架</span>
+                                <span class="content-repulsed" ng-if="nor.status == 0">已下架</span>
+                            </div>
+                        </div>
+                        
+                        <div class="list-status status-target" ng-if="vm.stateType !== 'youliao'">
+                            <!-- <div class="width-status" ng-click="vm.showStatus(nor, $index)"> -->
+                            <div class="width-status" ng-click="vm.goOperationRecords(nor, 'reviewing')">
+                                <span class="content-pendingAudit" ng-if="nor.status==1 && !nor.audit.id" translate="content.pendingAudit">待提审</span>
+                                <span class="content-audited" ng-if="nor.status==2" translate="content.audited">已审核</span>
+                                <span class="content-pb" ng-if="nor.status==3" translate="content.release">已发布</span>
+                                <span class="content-repulsed" ng-if="nor.status==4" translate="content.repulsed">已打回</span>
+                                <span class="content-repulsed" ng-if="nor.status==5 || (nor.status==1 && nor.audit.id)">审核中</span>
+                                <span class="content-will-pb" ng-if="nor.status==9">待发布</span>
+                                <!-- <span class="triangle-btn" ng-if="nor.audit.id" ng-style="{'borderTopColor': (nor.status==2||nor.status==3)?'#42A65A':(nor.status==4||nor.status==5)?'#F1453D':nor.status==9?'#f58935':''}"></span>
+                                <span class="triangle-btn" ng-if="nor.audit_user_name && !nor.audit.id && !(nor.status==9)" ng-style="{'borderTopColor': (nor.status==2||nor.status==3)?'#42A65A':(nor.status==4||nor.status==5)?'#F1453D':nor.status==9?'#f58935':''}"></span> -->
+                                <i class="typeface-form_tishi" ng-if="nor.audit.id" ng-style="{'color': (nor.status==2||nor.status==3)?'#42A65A':(nor.status==4||nor.status==5||nor.status==1)?'#F1453D':nor.status==9?'#f58935':''}"></i>
+                                <i class="typeface-form_tishi" ng-if="nor.audit_user_name && !nor.audit.id && !(nor.status==9)" ng-style="{'color': (nor.status==2||nor.status==3)?'#42A65A':(nor.status==4||nor.status==5||nor.status==1)?'#F1453D':nor.status==9?'#f58935':''}"></i>
+                            </div>
+                            <span class="list-weight" style="padding: 0" ng-if="nor.audit.id&&(nor.status == 5)">{{nor.audit.progress + 1}}级审核中</span>
+                            <div class="status-box pull-right list-icon-opera process-status-box"  ng-cloak ng-if="nor.audit.id" ng-class="{'status-show':nor.statusShow,
+                            'status-hide':!nor.statusShow}">
+                            <div class="currentProcess">当前进度({{vm.finished ? '审核完成' : vm.currentReviewProgress + '级审核'}})</div>
+                            <div class="process-nodes flex-item">
+                                <div class="node-item" ng-repeat="(ndx,node) in nor.showNodes">
+                                    <div class="node-main">
+                                        <div class="node-name" ng-if="!vm.configAudit" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}">{{node.rangeName}}</div>
+                                        <div class="node-name" ng-if="vm.configAudit" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}">{{ndx+1}}级审核</div>
+                                        <div class="node-role flex-item">
+                                            <div class="role-img" ng-class="{'role-list':node.range == 0}">
+                                                <i class="icon-all icon-ok typeface-alert_wancheng2" ng-if="node.pass == 1" ng-style="{'color': (nor.status==2||nor.status==3)?'#42A65A':(nor.status==4||nor.status==5)?'#F1453D':nor.status==9?'#f58935':''}"></i>
+                                                <i class="icon-all typeface-shengao_daishenhe" ng-if="node.pass == 0" ng-class="{'icon-unfinished': node.pass == 0, 'icon-notaudit': node.pass == 0 && nor.status==4}"></i>
+                                                <i class="icon-all icon-close typeface-alert_cuowu2" ng-if="node.pass == -1"></i>
+                                                <div class="avatar-34 ellipsis-box" ng-if="node.range == 0">
+                                                    <i class="typeface-list_caozuo"></i>
+                                                </div>
+                                            </div>
+                                            <div class="role-arrow" ng-if="ndx != nor.showNodes.length - 1">
+                                                <i class="typeface-shengao_xiayige"></i>
+                                            </div>
+                                        </div>
+                                        <div class="node-name" ng-if="vm.configAudit && node.pass != 0" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}">{{node.rangeName}}</div>
+                                        <div class="node-name" ng-if="vm.configAudit && node.pass == 0" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}" style="text-align:center;width:50px">审核中</div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- 非提审流程 -->
+                            <div class="status-box pull-right list-icon-opera process-status-box"  ng-cloak ng-if="nor.audit_user_name && !nor.audit.id" ng-class="{'status-show':nor.statusShow,
+                            'status-hide':!nor.statusShow}">
+                            <div class="currentProcess">操作人</div>
+                            <div class="process-nodes flex-item">
+                                <div class="node-item">
+                                    <div class="node-main">
+                                        <div class="node-name" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}">{{nor.audit_user_name}}</div>
+                                        <!-- <div class="node-name" ng-if="vm.configAudit" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}">{{ndx+1}}级审核</div> -->
+                                        <div class="node-role flex-item">
+                                            <div class="role-img">
+                                                <i class="icon-all icon-ok typeface-alert_wancheng2" ng-if="nor.status == 2 || nor.status == 3" ng-style="{'color': (nor.status==2||nor.status==3)?'#42A65A':(nor.status==4||nor.status==5)?'#F1453D':nor.status==9?'#f58935':''}"></i>
+                                                <!-- <i class="icon-all typeface-shengao_daishenhe" ng-if="node.pass == 0" ng-class="{'icon-unfinished': node.pass == 0, 'icon-notaudit': node.pass == 0 && nor.status==4}"></i> -->
+                                                <i class="icon-all icon-close typeface-alert_cuowu2" ng-if="nor.status == 4"></i>
+                                                <i class="icon-all icon-close typeface-shengao_daishenhe" ng-if="nor.status == 9" ng-style="{'color':nor.status==9?'#f58935':''}"></i>
+                                                <!-- <div class="avatar-34 ellipsis-box" ng-if="node.range == 0">
+                                                    <i class="typeface-list_caozuo"></i>
+                                                </div> -->
+                                            </div>
+                                            <!-- <div class="role-arrow" ng-if="ndx != nor.showNodes.length - 1">
+                                                <i class="typeface-shengao_xiayige"></i>
+                                            </div> -->
+                                        </div>
+                                        <!-- <div class="node-name" ng-if="vm.configAudit && node.pass != 0" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}">{{node.rangeName}}</div>
+                                        <div class="node-name" ng-if="vm.configAudit && node.pass == 0" ng-class="{'complete': node.pass == 1, 'unfinished': node.pass != 1}" style="text-align:center;width:50px">审核中</div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                        <!-- ai分析 -->
+                        <div class="list-analysis" ng-if="vm.stateType == 'video'&&vm.isAnalyzeAI">
+                            <span ng-if="nor.ai_analyze_status == 1" class="doing">正在分析...</span>
+                            <span ng-if="nor.ai_analyze_status == 2" class="normal">{{nor.analyze_result.video_suggestion_text}}</span>
+                            <span ng-if="nor.ai_analyze_status == 4" class="refused">{{nor.analyze_result.video_suggestion_text}}<i class="typeface-form_tishi"></i>
+                                <div class="suspectedTip">
+                                    <span class="tip-title">检测到视频涉及以下违规,建议拒绝!</span>
+                                    <div>
+                                        <span class="item-msg" ng-repeat="item in nor.analyze_result.image_result">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='politic'" width="14px" height="14px" src="/assets/images/mxu/video/ai/1.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='sensitive'" width="14px" height="14px" src="/assets/images/mxu/video/ai/2.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='porn'" width="14px" height="14px" src="/assets/images/mxu/video/ai/3.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='terrorism'" width="14px" height="14px" src="/assets/images/mxu/video/ai/4.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='illegal'" width="14px" height="14px" src="/assets/images/mxu/video/ai/5.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='ad'" width="14px" height="14px" src="/assets/images/mxu/video/ai/6.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business!='ad' && item.business!='illegal'&&item.business!='terrorism'&&item.business!='porn'&&item.business!='sensitive'&&item.business!='politic'" width="14px" height="14px" src="/assets/images/mxu/video/ai/7.png">
+                                            {{item.business_text}}<span style="color: chocolate;padding: 0 4px;">{{item.num}}</span>处
+                                        </span>
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <span class="item-msg" ng-repeat="item in nor.analyze_result.audio_result">
+                                            <img style="margin-right: 5px;" src="/assets/images/mxu/video/ai/8.png">
+                                            {{item.business_text}}<span style="color: chocolate;padding: 0 4px;">{{item.num}}</span>处
+                                        </span>
+                                    </div>
+                                </div>
+                            </span> 
+                            <span ng-if="nor.ai_analyze_status == 3" class="suspected">{{nor.analyze_result.video_suggestion_text}}<i class="typeface-form_tishi"></i>
+                                <div class="suspectedTip">
+                                    <span class="tip-title">检测到视频疑似以下违规,建议检查!</span>
+                                    <div>
+                                        <span class="item-msg" ng-repeat="item in nor.analyze_result.image_result">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='politic'" width="14px" height="14px" src="/assets/images/mxu/video/ai/1.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='sensitive'" width="14px" height="14px" src="/assets/images/mxu/video/ai/2.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='porn'" width="14px" height="14px" src="/assets/images/mxu/video/ai/3.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='terrorism'" width="14px" height="14px" src="/assets/images/mxu/video/ai/4.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='illegal'" width="14px" height="14px" src="/assets/images/mxu/video/ai/5.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business=='ad'" width="14px" height="14px" src="/assets/images/mxu/video/ai/6.png">
+                                            <img style="margin-right: 5px;" ng-if="item.business!='ad' && item.business!='illegal'&&item.business!='terrorism'&&item.business!='porn'&&item.business!='sensitive'&&item.business!='politic'" width="14px" height="14px" src="/assets/images/mxu/video/ai/7.png">
+                                            {{item.business_text}}<span style="color: chocolate;padding: 0 4px;">{{item.num}}</span>处
+                                        </span>
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <span class="item-msg" ng-repeat="item in nor.analyze_result.audio_result">
+                                            <img style="margin-right: 5px;" src="/assets/images/mxu/video/ai/8.png">
+                                            {{item.business_text}}<span style="color: chocolate;padding: 0 4px;">{{item.num}}</span>处
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                            <span ng-if="nor.ai_analyze_status == 5" class="failure" ng-click="vm.retry(nor)">分析失败！重试</span>
+                            <span ng-if="nor.ai_analyze_status == 0" class="failure"ng-click="vm.retry(nor)">未分析，开始分析</span>
+                        </div>
+                        <!-- 标签 -->
+                        <div class="list-label" ng-if="vm.stateType != 'youliao'&&vm.stateType != 'video'" ng-mouseenter="vm.showLabels(nor)" ng-mouseleave="vm.hideLabels(nor)">
+                            <div class="labels">
+                                <span ng-repeat="label in nor.labels" ng-if="label.status==1">{{label.name}}</span>
+                            </div>
+                            <div class="box-color text-color pos-rlt title-more publish-cb"
+                                 ng-class="{'opera-show':nor.labelShow,'opera-hide':!nor.labelShow
+                                 }">
+                                <span class="arrow top b-white"></span>
+                                <div class="more"> 
+                                    <div ng-repeat="label in nor.labels" ng-if="label.status==1">{{label.name}}</div>            
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 标签end -->
+                        <div class="list-publish" ng-if="vm.stateType !== 'youliao'" ng-mouseenter="vm.showPublished(nor)" ng-mouseleave="vm.hidePublished(nor)">
+                            <!--<span class="title">{{nor.publishName}}</span>-->
+                            <span class="title">
+                                <!--<a class="title-names" ng-repeat="names in nor.publishName">{{names}}</a>-->
+                                <a class="title-names" ng-repeat="column in nor.isPublishColumn" ng-click="vm.chosePublishColumn(column, nor)" ng-class="{'mengyu-font': vm.resMengyu(column.name)}">{{column.name}}</a>
+                            </span>
+                            <!--.splice()-->
+                            <span class="title" ng-if="nor.timesNum">{{ 'content.addTimes'| translate}} {{nor.timeName}}</span>
+                            <span class="title" ng-if="nor.timesNum">{{nor.publishTime}}</span>
+                            <div class="box-color text-color pos-rlt title-more publish-cb"
+                                 ng-class="{'middleLeft':(nor.publishNum==2&&!nor.timesNum)|| (nor.timesNum),'minLeft':nor.publishNum==1&&!nor.timesNum,'largeLeft':nor.publishNum==3&&!nor.timesNum,
+                                 'opera-show':nor.publishShow,'opera-hide':!nor.publishShow
+                                 }"
+                                 ng-style="{'bottom': ($index == 8 || $index == 9) ? '0' : null}">
+                                <span class="arrow top b-white"></span>
+                                <div class="more" ng-if="nor.publishNum">
+                                    <div class="has_publish">{{(nor.status == 1 || nor.status == 4 || nor.status == 5 || nor.status == 9) ? '待' : (nor.status == 2 || nor.status == 3) ? '已' : ''}}发布至{{nor.publishNum}}个栏目:</div>
+                                    <div class="publish-cols" ng-repeat="column in nor.publish_column">
+                                        <div class="cols-name">{{column.name}}</div>
+                                        <div class="cols-div">
+                                            <span class="cols-li" ng-repeat="site in column.column">
+                                                <a class="uderLine" ng-click="vm.chosePublishColumn(site, nor)"  ng-class="{'mengyu-font': vm.resMengyu(site.name)}">{{site.name}}</a>
+                                                <span style="margin-left:-1px;" ng-if="site.publish_client_type">({{site.publish_client_type}})</span>
+                                                <div class="mengyu-title" ng-show="nor.publishMengyu">
+                                                    <span class="jiantou arrow bottom"></span>
+                                                    <span class="hideTitle">{{site.name}}</span>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="more" ng-if="nor.timesNum">
+                                    <div class="has_publish" >定时发布至{{nor.timesNum}}个栏目:</div>
+                                    <div class="publish-cols" ng-repeat="column in nor.planned_publish_column.columns">
+                                        <div class="cols-name">{{column.name}}</div>
+                                        <div class="cols-div">
+                                            <span class="cols-li" ng-repeat="site in column.column">
+                                                <a class="uderLine">{{site.name}}</a>
+                                                <span style="margin-left:-1px;" ng-if="site.publish_client_type">({{site.publish_client_type}})</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 码流 -->
+                        <div ng-if="vm.stateType == 'video'" style="width:60px;margin-left:8px;" class="list-weights">
+                            <span class="bitRate-dark bitRate" ng-if="nor.bit_rate!=''" ng-style="{'background-color':'{{nor.bitrate_color}}'}">{{vm.toInt(nor.bit_rate)}}</span>
+                        </div>
+                        <div style="width:60px;margin-left:5px;" class="list-weights" ng-if="vm.open_weight">
+                            <model-weight weight="nor.weight" trigger-event="click" params="{ id : nor.id, type: nor.type, listType: 'newList'}" get-list="vm.getParams()"></model-weight>
+                        </div>
+                            <!-- 同步 -->
+                        <!-- 文稿，图集，视频，外链 -->
+                        <div class="list-synchronize"  ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery'||vm.stateType=='audio'
+                        || vm.stateType == 'video'||vm.stateType == 'link' )&& vm.synchronize_show">
+                        <!-- ng-if="nor.push_info.status!=1" -->
+                            <div style="position: relative" tabindex="-1" ng-blur="nor.showClickBox = false;">
+                                <!-- <span
+                                ng-class="{'grey-pending':nor.push_info.status==2,
+                                           'ori-pending':nor.push_info.status==3,
+                                           'green-success':nor.push_info.status==4,
+                                           'red-fail':nor.push_info.status==5 || nor.push_info.status==6}"
+                                >{{nor.push_info.status_title}}</span> 
+                                <span class="list-synchronize-msg">{{nor.push_info.push_msg}}</span>-->
+                                <span class="list-synchronize-msg" ng-if='nor.push_info'>
+                                    <i class="fa fa-plus-square-o" aria-hidden="true" style="color: #788091;font-size:12px;margin-right: 5px;cursor: pointer;" ng-click="vm.getFlatList(nor)"></i>
+                                    {{nor.push_info}}
+                                </span>
+                                <div class="list-click-box" ng-if='nor.showClickBox && vm.flatList.length > 0' >
+                                    <div>同步详情</div>
+                                    <ul style="margin-top: 10px;">
+                                        <li class="hoge-flex click-box-item" ng-repeat = 'item in vm.flatList'>
+                                            <span style="color:#3598DC;width: 50px;margin-right: 5px;">{{item.flat}}</span>
+                                            <span style="width: 60px;">{{item.status}}</span>
+                                            <span>{{item.message}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>              
+                        </div>
+                        <!-- 上报状态 -->
+                        <div class="list-status status-target" ng-if="(vm.stateType == 'article') && (vm.permission[vm.stateType].report | right) && vm.show_report">
+                            <span class="content-audited" ng-if="nor.report_status == 1" style="cursor: default;">成功</span>
+                            <span class="content-repulsed" ng-if="nor.report_status == 2" style="cursor: default;">打回</span>
+                            <span class="content-pendingAudit" ng-if="nor.report_status == 3" style="cursor: default;">待审核</span>
+                        </div>
+                        <div class="list-other" ng-style="{minWidth:vm.showSource?'120px':'140px'}">
+                            <span>{{nor.create_user_name}}</span>
+                            <span>{{nor.created_at}}</span>
+                        </div>
+                        <div class="hoge-list-i" ng-if="vm.stateType !== 'youliao'" ng-mouseenter="vm.showOpera(nor)" ng-mouseleave="vm.hideOpera(nor)">
+                            <div class="icon-tool pull-right">
+                                <i class="typeface-list_caozuo hoge-list_caozuo"
+                                   ng-class="{'active-bg':nor.searchShow}"></i>
+                                   <div class="pull-right list-icon-opera"  ng-style="{'top': -150 + 'px','right': '40px'}" ng-class="{'opera-show':nor.searchShow,'opera-hide':!nor.searchShow}">
+                                 
+                                    <div class="btn-group">
+                                        <!--编辑-->
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType === 'video' || vm.stateType == 'audio'"
+                                               ng-click="vm.selectTrans(1, nor)" ng-disabled="!nor.is_retranscode">重新转码</button>
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType === 'video'"
+                                        ng-click="vm.downLoadVideo(nor)">下载</button>
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType == 'audio'"
+                                        ng-click="vm.downLoadAudio(nor)">下载</button>
+                                        <button class="btn hoge-drop-icon" ng-show="!vm.zyPermissions" ng-if="nor.can_operate"
+                                               ng-click="vm.CommonService._goEdit(nor)">编辑</button>
+                                        <button class="btn hoge-drop-icon" ng-show="vm.zyPermissions" ng-if="nor.can_edit"
+                                            ng-click="vm.CommonService._goEdit(nor)">编辑</button>
+                                            
+                                        <!-- 杭州要的直接去到拆条页面 -->
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType === 'video' && nor.transcode_status==2"
+                                            ng-click="vm.goDemolition(nor)">拆条</button>
+
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType === 'video' && nor.transcode_status==2 && nor.has_video_edit==1"
+                                            ng-click="vm.goVideoEdit(nor)">快速编辑</button>
+                                        <button class="btn hoge-drop-icon" ng-if="!nor.can_operate"
+                                        ng-click="vm.CommonService._goEdit(nor)">查看</button>
+                                        <button class="btn hoge-drop-icon" ng-if="nor.can_operate  && (nor.article_type !== 'tv') && (nor.article_type !== 'weibo')"
+                                                ng-show="nor.main_column_id == nor.column_id" ng-click="vm.preview(nor)">预览</button>
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType == 'link'&& nor.link.includes('http')" ng-click="vm.openLink(nor.link)">打开链接</button>
+                                        <button ng-if="nor.translate_mw" class="btn hoge-drop-icon" ng-click="vm.CommonService._goEdit(nor, 'mw')">转存蒙语</button>
+                                        <button ng-if="nor.translate_zw" class="btn hoge-drop-icon" ng-click="vm.CommonService._goEdit(nor, 'zw')">转存藏语</button>
+                                        <button class="btn hoge-drop-icon"
+                                        ng-click="vm.goOperationRecords(nor,'history')">操作记录</button>
+                                        <button class="btn hoge-drop-icon push-style" ng-mouseenter="vm.mouseenterStyle(nor)"
+                                        ng-mouseleave="vm.mouseleaveStyle(nor)">
+                                            <span>样式设置</span>
+                                            <ul class="push-style-box list-icon-opera" ng-if="nor.publishStyle.length" ng-class="{'opera-show':nor.pushStyleShow ,'opera-hide':!nor.pushStyleShow}">
+                                                <li class="hoge-drop-icon" ng-repeat="style in nor.publishStyle" ng-click="vm.pushStyle(style,nor)">
+                                                    <span class="style-name">{{style.name}}</span>
+                                                    <span style="width: 40px;display: block;">
+                                                        <span class="dropdown_xuanze" ng-if="style.css_id==nor.css_id"><i class="typeface-dropdown_xuanze"></i></span>
+                                                    </span>
+
+                                                </li>
+                                            </ul>
+                                        </button>
+                                        <div class="btn-line"></div>
+                                        <button class="btn hoge-drop-icon" ng-if="vm.auditNumber && nor.status!=2 && nor.status!=3 && nor.status!=9 && nor.can_submit" ng-click="vm.audit(nor)">提审</button>
+                                        <button class="btn hoge-drop-icon" disabled ng-if="nor.can_revoke && nor.audit && nor.audit.edit_status && !vm.zyPermissions">已提审，可编辑</button>
+                                        <button class="btn hoge-drop-icon" disabled ng-if="nor.can_revoke && nor.audit && !nor.audit.edit_status && !vm.zyPermissions">已提审，无法编辑</button>
+                                        <button class="btn hoge-drop-icon" ng-if="nor.can_revoke" ng-click="vm.auditBack(nor)">撤回提审</button>
+                                        <div class="btn-line" ng-show="(nor.create_user_name==vm.user_name && vm.auditNumber && nor.status!=2 && !nor.can_revoke && (vm.permission[vm.stateType].update || right)) || (nor.can_revoke && (vm.permission[vm.stateType].update || right) )"></div>
+                                        <!--发布设置-->
+                                        <button class="btn hoge-drop-icon" ng-class="{'publish-time-show': nor.publishTimes != '定时发布'}" ng-if="(vm.permission[vm.stateType].publish | right)" >
+                                            <span class="first-publish" ng-if="nor.publishTimes != '定时发布'"><i class="glyphicon glyphicon-time"></i></span>
+                                            <span ng-click="vm.timeInterval(nor)">{{nor.publishTimes}}</span>
+                                            <span class="right-down" ng-if="nor.publishTimes != '定时发布'" ng-click="vm.selectTime(nor)" >
+                                                <i ng-if="nor.showPublish" class="glyphicon glyphicon-menu-up"></i>
+                                                <i ng-if="!nor.showPublish"  class="glyphicon glyphicon-menu-down"></i>
+                                            </span>
+                                        </button>
+                                        <button class="btn hoge-drop-icon push-style" ng-show="vm.stateType == 'article' && vm.is_Publish" ng-mouseenter="vm.mouseenterPublish(nor)"
+                                        ng-mouseleave="vm.mouseleavePublish(nor)" >
+                                            <span>一键发布</span>
+                                            <ul class="push-style-box list-icon-opera" ng-if="nor.publishStyle.length" ng-class="{'opera-show':nor.pushPublicShow ,'opera-hide':!nor.pushPublicShow}">
+                                                <li class="hoge-drop-icon" ng-click="vm.OnePublish()">
+                                                    <span class="style-name">微博</span>
+                                                    <span style="width: 40px;display: block;">
+                                                        <span class="dropdown_xuanze" ng-if="style.css_id==nor.css_id"><i class="typeface-dropdown_xuanze"></i></span>
+                                                    </span>  
+                                                </li>
+                                                <li class="hoge-drop-icon" ng-click="vm.OnePublish()">
+                                                    <span class="style-name">头条</span>
+                                                    <span style="width: 40px;display: block;">
+                                                        <span class="dropdown_xuanze" ng-if="style.css_id==nor.css_id"><i class="typeface-dropdown_xuanze"></i></span>
+                                                    </span>  
+                                                </li>
+                                                <li class="hoge-drop-icon" ng-click="vm.OnePublish()">
+                                                    <span class="style-name">微信</span>
+                                                    <span style="width: 40px;display: block;">
+                                                        <span class="dropdown_xuanze" ng-if="style.css_id==nor.css_id"><i class="typeface-dropdown_xuanze"></i></span>
+                                                    </span>  
+                                                </li>
+                                                <li class="hoge-drop-icon" ng-click="vm.OnePublish()">
+                                                    <span class="style-name">网易新闻</span>
+                                                    <span style="width: 40px;display: block;">
+                                                        <span class="dropdown_xuanze" ng-if="style.css_id==nor.css_id"><i class="typeface-dropdown_xuanze"></i></span>
+                                                    </span>  
+                                                </li>
+                                                <li class="hoge-drop-icon" ng-click="vm.OnePublish()">
+                                                    <span class="style-name">澎湃新闻</span>
+                                                    <span style="width: 40px;display: block;">
+                                                        <span class="dropdown_xuanze" ng-if="style.css_id==nor.css_id"><i class="typeface-dropdown_xuanze"></i></span>
+                                                    </span>  
+                                                </li>
+                                            </ul>
+                                        </button>
+                                        <!--添加到专题-->
+                                        <button class="btn hoge-drop-icon del-publish" ng-if="nor.timesNum && (vm.permission[vm.stateType].publish | right) && nor.showPublish" ng-click="vm.clearPublish(nor)">取消定时发布</button>
+                                        <button class="btn hoge-drop-icon" ng-click="vm.addSpecial(nor)"  ng-if="vm.stateType !='topic' && vm.stateType =='video' && nor.can_to_topic == 1">添加到专题</button>
+                                        <button class="btn hoge-drop-icon" ng-click="vm.addSpecial(nor)"  ng-if="vm.stateType !='topic' && vm.stateType !='video' ">添加到专题</button>
+                                        <button class="btn hoge-drop-icon" ng-if="(nor.status == 2 || nor.status == 3 || nor.status == 9 ) && (vm.permission[vm.stateType].publish | right)" ng-click="vm.publish(nor)">立即发布</button>
+                                        <button class="btn hoge-drop-icon" ng-if="nor.status == 3 && (vm.permission[vm.stateType].publish | right)" ng-click="vm.cancelPublish(nor)">取消发布</button>
+                                       
+                                        <button class="btn hoge-drop-icon" ng-click="vm.conDistribute(nor)" ng-if="vm.isConDistribute">内容分发</button>
+                                        <!-- 上报判断1.文稿2.角色有上报权限3.前端json文件配置4.已发布 5.nor.source_type !== 'general_platform'稿件为不是总平台来的 -->
+                                        <button class="btn hoge-drop-icon" ng-click="vm.goReport(nor)" ng-if="(vm.stateType == 'article') && (vm.permission[vm.stateType].report | right) && vm.show_report && nor.status ==3 && nor.source_type !== 'general_platform'">上报</button>
+                                        <button class="btn hoge-drop-icon" ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery' || vm.stateType == 'video') && vm.copyAble==1" ng-click="vm.copied(nor)">复制到</button>
+                                        <div class="btn-line"></div>
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType !== 'youliao'" ng-click="vm.editLabel(nor)">修改标签</button>
+                                        <div class="btn-line" ng-if="vm.stateType !== 'youliao'"></div>
+                                        <!-- 同步 -->
+                                        <button class="btn hoge-drop-icon" ng-click="vm.synchronize(nor)" 
+                                        ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery' ||vm.stateType=='audio'
+                                        || vm.stateType == 'video'||vm.stateType == 'link' ) && vm.synchronize_show">内容同步</button>
+                                        <div class="btn-line" ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery' ||vm.stateType=='audio'
+                                        || vm.stateType == 'video'||vm.stateType == 'link' ) && vm.synchronize_show"></div>
+                                        <!--操作-->
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType == 'topic'&& vm.is_fastTopic" ng-click="vm.fastTopic(nor)">快速专题</button>
+                                        <!-- <button class="btn hoge-drop-icon" ng-if="nor.can_audit && nor.status!=2" ng-click="vm.examine(nor)">审核</button> -->
+                                        <!-- 甘肃隐藏推送 -->
+                                        <button class="btn hoge-drop-icon" ng-if="nor.article_type === 'weibo' && vm.is_pushWB"ng-click="vm.pushWB(nor)">推送</button>
+                                        <!-- <button class="btn hoge-drop-icon" ng-if="nor.can_audit && (nor.status !== 4)"ng-click="vm.withdraw(nor)">打回</button> -->
+                                        <button class="btn hoge-drop-icon" ng-if="nor.can_audit" ng-click="vm.examine(nor)">审核</button>
+                                        <button class="btn hoge-drop-icon" ng-if="nor.can_recall && vm.getWithDrawAuthority(nor)" ng-click="vm.withdraw(nor)">打回</button>
+                                        <!--删除-->
+                                        <button class="btn hoge-drop-icon" ng-show="!vm.zyPermissions" ng-if="nor.can_operate && (vm.permission[vm.stateType].delete | right)"
+                                                ng-click="vm.delete(nor)">删除</button>
+                                        <button class="btn hoge-drop-icon" ng-show="vm.zyPermissions" ng-if="nor.can_delete"
+                                                ng-click="vm.delete(nor)">删除</button>
+                                        <button class="btn hoge-drop-icon" ng-if="vm.stateType == 'article'"
+                                                ng-click="vm.goDown(nor)">下载</button>
+                                        <button class="btn hoge-drop-icon" ng-if="(nor.status==2|| nor.status==3 || nor.status == 9)&&nor.is_recommend==0&&vm.site_id!==0&&vm.is_fusion==1&&vm.hotMaster&&!vm.systemSet"
+                                        ng-click="vm.goHot(nor)">推荐上头条</button>
+                                        <!-- 非本地站点&&融合号标识&&(当前类型有权限prms||all_prms=1) -->
+                                        <button class="btn hoge-drop-icon" ng-if="(nor.status==2|| nor.status==3 || nor.status==9)&&nor.is_recommend==1&&vm.site_id!==0&&vm.is_fusion==1&&vm.hotMaster&&!vm.systemSet">已推荐</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <!--bottom-->
+            <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                <div class="btn-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+                        <span class="all-checked">{{'content.select' | translate}}</span>
+                    </label>
+                </div>
+                <div class="btn-toolbar list_bar flex-one btn-box" ng-if="vm.stateType === 'youliao'">
+                    <div class="btn-group">
+                        <button ng-if="(vm.permission[vm.stateType].audit | right)" class="btn btn-comment" ng-click="vm.changeAllStatus(1)">上架</button>
+                        <button ng-if="(vm.permission[vm.stateType].audit | right)" class="btn del-btn" ng-click="vm.changeAllStatus(0)">下架</button>
+                    </div>
+                </div>
+                <div class="btn-toolbar list_bar flex-one btn-box" ng-if="vm.stateType !== 'youliao'">
+                    <div class="btn-group">
+                        <button ng-if="(vm.permission[vm.stateType].audit | right)" class="btn btn-comment" ng-click="vm.auditAll()">审核</button>
+                        <button ng-if="vm.stateType !== 'youliao'"class="btn btn-comment" ng-click="vm.withDrawAll('move')">打回</button>
+                        <button ng-if="vm.stateType !== 'youliao' && (vm.permission[vm.stateType].delete | right)" class="btn del-btn" ng-click="vm.deleteAll()">{{'content.delete' | translate}}</button>
+                        <button ng-if="vm.stateType !== 'youliao'" class="btn btn-comment" ng-click="vm.batchPulish()">发布</button>
+                        <!-- <button ng-if="vm.stateType == 'article'" class="btn btn-comment" ng-click="vm.copyPreLink('copy')">复制到</button> -->
+                        <button ng-if="vm.stateType != 'youliao'" class="btn btn-comment" ng-click="vm.copyPreLink('move')">移动</button>
+                        <button ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery') && vm.ziyang_push" class="btn btn-comment" ng-click="vm.pushTo()">推送</button>
+                        <button ng-if="vm.hideAccessKind && (vm.stateType == 'article' || vm.stateType == 'gallery' || vm.stateType == 'video' || vm.stateType == 'audio')" class="btn btn-comment" ng-click="vm.cancelProjectRelation()">取消选题</button>
+                        <button ng-if="vm.stateType == 'video' || vm.stateTyoe == 'audio'" class="btn btn-comment" ng-click="vm.selectTrans(2)">重新转码</button>
+                        <button ng-if="(vm.stateType == 'article' || vm.stateType == 'gallery' || vm.stateType == 'video') && vm.copyAble==1" class="btn btn-comment" ng-click="vm.copiedAll()">复制到</button>
+                        <button ng-if="vm.stateType == 'video' || vm.stateTyoe == 'audio'" class="btn btn-comment" ng-click="vm.AlldownLoadVideo()">下载</button>
+                        <button ng-if="vm.stateType == 'video' && vm.showEditVideoBtn" class="btn btn-comment" ng-click="vm.goEditPage()" ng-disabled="vm.checkStatus()">制作</button>
+                        <button ng-if="vm.stateType != 'youliao'" class="btn btn-comment" ng-click="vm.synchronizeAll()">同步</button>
+                    </div>
+                    <span class="gallery-photo" ng-if="vm.stateType === 'gallery'">共{{vm.photo_count || 0}}张图片</span>
+                </div>
+                <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 0"></page-nation>
+            </div>
+            </div>
+        <!-- / list -->
+    </div>
+    <div ng-style="{width:vm.stateType === 'youliao' ? '32%' : '0'}" style="position:relative;" ng-if="vm.stateType === 'youliao'" class="hoge-flex-justify-center">
+            <client-preview content="vm.youliaoDetail" class="hoge-flex-justify-center hoge-flex"></client-preview>
+    </div>
+    </div>
+    </div>
+    <div class="wait-progress fotter pos-flex" ng-if="vm.uploadNumber.isStatus == 1 && vm.uploadNumber.isMinimize">
+        <span>等待上传</span>
+        <div class="window">
+            <i class="fa fa-amplification map-close" ng-click="vm.amplification()" style="position: absolute;right: 40px;top: 8px;cursor: pointer;"></i>
+            <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 8px;cursor: pointer;"></i>
+        </div>
+    </div>
+    <div class="completing-progress fotter pos-flex" ng-if="vm.uploadNumber.isStatus == 2 && vm.uploadNumber.isMinimize">
+        <span>上传完成 100%</span>
+        <div class="window">
+            <i class="fa fa-amplification map-close" ng-click="vm.amplification()" style="position: absolute;right: 40px;top: 8px;cursor: pointer;"></i>
+            <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 8px;cursor: pointer;"></i>
+        </div>
+    </div>
+    <div class="zheng-progress fotter pos-flex pad-left" ng-if="vm.uploadNumber.isStatus == 3 && vm.uploadNumber.isMinimize">
+        <div class="mask-process" ng-style="{width:(320/vm.uploadNumber.totle)*vm.uploadNumber.num+ 'px'}"></div>
+        <span class="padding-le">正在上传({{vm.uploadNumber.num}}/{{vm.uploadNumber.totle}})</span>
+        <div class="window">
+            <i class="fa fa-amplification map-close" ng-click="vm.amplification()" style="position: absolute;right: 40px;top: 8px;cursor: pointer;"></i>
+            <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 8px;cursor: pointer;"></i>
+        </div>
+    </div>
+    <div class="completed-progress fotter" ng-if="vm.uploadNumber.isStatus == 4 && vm.uploadNumber.isMinimize">
+        <div class="successMsg pos-flex">
+            <span>上传完成({{vm.uploadNumber.num}}/{{vm.uploadNumber.totle}})</span>
+            <span></span>
+            <span></span>
+            <div class="window">
+                <i class="fa fa-amplification map-close" ng-click="vm.amplification()" style="position: absolute;right: 40px;top: 8px;cursor: pointer;"></i>
+                <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 8px;cursor: pointer;"></i>
+            </div>
+        </div>
+        <div class="errorMsg">
+            {{vm.uploadNumber.totle-vm.uploadNumber.num}}个文件上传失败
+        </div>
+    </div>
+</div>

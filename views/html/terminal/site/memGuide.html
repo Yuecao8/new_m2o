@@ -1,0 +1,67 @@
+<div class="memGuide">
+    <div class="box">
+        <div class="box-divider m-a-0"></div>
+        <div class="p-v-md">
+            <div class="control-phone control-member">
+                <div class="control-phone-d">
+                    <em translate="terminalMemGuide.memberSet"></em>
+                    <div class="box-tip collapse in">
+                        <i class="material-icons font-16">&#xe88f;</i>
+                        {{'terminalMemGuide.memberIntroduce' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="list_box">
+                <h3 translate="terminalMemGuide.memberCenter"></h3>
+                <div class="list_contain" ng-show="true" my-loading="vm.loading">
+                    <div class="list_header">
+                        <div class="wrap" ng-show="!vm.isSort">
+                            <div class="list-ctr">
+                                <i class="fa fa-bars" ng-click="vm.sort()"></i>
+                            </div>
+                            <div class="list-title" translate="terminalMemGuide.navName"></div>
+                            <div class="list-obj" translate="terminalMemGuide.link"></div>
+                            <div class="list-status"></div>
+                            <div class="list-other"></div>
+                        </div>
+                        <div class="sort_board red-50" ng-show="vm.isSort" style="">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            {{'terminalMemGuide.openSort' | translate}}
+                            <button class="btn btn-sm white pull-right" ng-click="vm.outSort()">{{'terminalMemGuide.save' | translate}}</button>
+                            <button class="btn btn-sm white pull-right m-r" ng-click="vm.sort()">{{'terminalMemGuide.cancel' | translate}}</button>
+                        </div>
+                    </div>
+                    <div class="list white" ui-sortable="vm.isSort"  ng-model="vm.navList" >
+                        <!--列表-->
+                        <div class="list-item" ng-repeat="item in vm.navList">
+                            <div class="level-one">
+                                <div class="list-ctr">
+                                    <i class="fa fa-bars" ng-show="vm.isSort"></i>
+                                </div>
+                                <div class="list-title">
+                                    <input ng-class="{'editable':item.editable}" ng-disabled="!item.editable" type="text" ng-model="item.settitle"/>
+                                </div>
+                                <div class="list-obj">
+                                    <input ng-class="{'editable':item.editable}" ng-disabled="!item.editable" placeholder="http://" type="text" ng-model="item.value"/>
+                                </div>
+                                <div class="list-status" >
+                                    <button class="btn btn-sm btn-comment" ng-show="!item.editable" ng-click="vm.edit(item)">{{'terminalMemGuide.edit' | translate}}</button>
+                                    <button class="btn btn-sm btn-comment" ng-show="item.editable" ng-click="vm.save(item)">{{'terminalMemGuide.save' | translate}}</button>
+                                </div>
+                                <div class="list-other" >
+                                    <button class="btn btn-sm del-btn" ng-show="!item.editable" ng-click="vm.delete(item)">{{'terminalMemGuide.delete' | translate}}</button>
+                                    <button class="btn btn-sm del-btn" ng-show="item.editable" ng-click="vm.cancel(item)">{{'terminalMemGuide.cancel' | translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--bottom-->
+                    <div class="list_bottom">
+                        <button class="btn btn-purple" ng-click="vm.create()">+{{'terminalMemGuide.addNav' | translate}}</button>
+                    </div>
+                    <!--bottom-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

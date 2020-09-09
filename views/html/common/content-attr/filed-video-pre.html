@@ -1,0 +1,20 @@
+<div class="shot-modal box-shadow-md">
+        <div class="modal-header">
+            <!--translate="tuji.preview"-->
+            <h5 class="modal-title" >{{vm.preTitle}}</h5>
+            <i class="fa fa-remove close-icon" ng-click="vm.close()" style=""></i>
+        </div>
+        <div class="modal-body" id='qq'>
+            <video controls="" id="video" autoplay="autoplay" ng-poster="{{vm.videoImg}}" ng-if="vm.preType == 'video' ">
+                    <source src="{{vm.preVideoUrl}}" type="video/mp4" />
+            </video>
+            <img src="{{vm.preVideoUrl}}" alt="" ng-if="vm.preType == 'image' " style="margin: auto;height: 453px;object-fit: contain">
+            <audio controls="" id="audio" autoplay="autoplay"  ng-if="vm.preType == 'audio' ">
+                <source src="{{vm.preVideoUrl}}" type="audio/mp3" />
+            </audio>
+        </div>
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{ 'common.confirm'| translate}}</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'common.cancel'| translate}}</button>
+        </div> -->
+    </div>

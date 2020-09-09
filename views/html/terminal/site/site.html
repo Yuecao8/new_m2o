@@ -1,0 +1,57 @@
+<div class="mxu_site_wrap">
+    <div class="box">
+        <div class="control-phone control-member">
+            <div class="control-phone-d">
+                <em translate="terminalSiteSet.siteSet"></em>
+                <button class="btn btn-purple magic pull-right" ng-click="vm.generate()">{{'terminalSiteSet.reBuild' | translate}}</button>
+            </div>
+        </div>
+        <div class="box-body"  my-loading="vm.getInfo_loading">
+            <form role="form" name="form" >
+                <div class="form_box">
+                    <div class="form-group">
+                        <label ng-class="{'active': vm.site.urlName}" translate="terminalSiteSet.domainName"></label>
+                        <input type="text" class="form-control" ng-model="vm.site.url"  ng-blur="vm.site.urlName = false" ng-focus="vm.site.urlName = true"  disabled>
+                    </div>
+                    <div class="form-group">
+                        <label ng-class="{'active': vm.site.tilte}">{{'terminalSiteSet.siteName' | translate}}（tilte)</label>
+                        <input type="text" class="form-control" ng-model="vm.site.name" ng-blur="vm.site.tilte = false" ng-focus="vm.site.tilte = true" required>
+                        <span translate="terminalSiteSet.siteIntroduce"></span>
+                    </div>
+                    <div class="form-group">
+                    	<label translate="terminalSiteSet.siteLogo"></label>
+                    	<div class="form-control siteLoge">
+							<div class="form-file">
+					          <input type="file" id="file" nv-file-select="" uploader="vm.uploader" accept="image/gif,image/jpeg,image/png,image/bmp"/>
+					          <div class="icon-jia"  ng-if="!vm.site.src || vm.site.src == '140x100/'" data-name="{{vm.site.src}}">+</div>
+					          <div class="img-box" style="background: url({{vm.site.src}}) center center no-repeat;">
+					          </div>
+					        </div><span translate="terminalSiteSet.logoIntroduce"></span>
+						</div>
+						
+                    </div>
+                    <div class="form-group">
+                    	<label translate="terminalSiteSet.refreshTime"></label>
+                    	<div class="form-control siteTimeBox row">
+                    		<div class="col-sm-3"><input type="radio" name="siteTime" ng-checked="vm.site.mk_time == 1" ng-click="vm.site.mk_time = 1"> <label translate="terminalSiteSet.min" translate-values="{min : 1}"></label></div>
+                    		<div class="col-sm-3"><input type="radio" name="siteTime" ng-checked="vm.site.mk_time == 5" ng-click="vm.site.mk_time = 5"> <label translate="terminalSiteSet.min" translate-values="{min : 5}"></label></div>
+                    		<div class="col-sm-3"><input type="radio" name="siteTime" ng-checked="vm.site.mk_time == 10" ng-click="vm.site.mk_time = 10"> <label translate="terminalSiteSet.min" translate-values="{min : 10}"></label></div>
+                    		<div class="col-sm-3"><input type="radio" name="siteTime" ng-checked="vm.site.mk_time == 60" ng-click="vm.site.mk_time = 60"> <label translate="terminalSiteSet.min" translate-values="{min : 60}"></label></div>
+                    	</div>
+						<span style="width: 80%;" translate="terminalSiteSet.refreshIntroduce"></span>
+					</div>
+                    <div class="form-group">
+                        <label ng-class="{'active': vm.site.keyword}" translate="terminalSiteSet.keyWord"></label>
+                        <input type="text" class="form-control" ng-model="vm.site.keywords" ng-blur="vm.site.keyword = false" ng-focus="vm.site.keyword = true" required>
+                        <span translate="terminalSiteSet.wordIntroduce"></span>
+                    </div>
+                    <div class="form-group">
+                        <label ng-class="{'active': vm.site.contenter}" translate="terminalSiteSet.describe"></label>
+                        <input type="text" class="form-control" ng-model="vm.site.content" ng-blur="vm.site.contenter = false" ng-focus="vm.site.contenter = true">
+                    </div>
+                </div>
+                <button type="submit" class="btn primary-btn m-t" ng-disabled="form.$invalid" ng-click="vm.save()"  my-loading="vm.save_loading">{{'terminalSiteSet.save' | translate}}</button>
+			</form>
+        </div>
+    </div>
+</div>

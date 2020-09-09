@@ -1,0 +1,69 @@
+<div class="modal-content-synchronize box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">内容同步</h5>
+    </div>
+    <div class="modal-body">
+        <div class="m-b platform-box flex-item" my-loading="loading">
+            <label for="" class="label-name">同步平台：</label>
+            <div style="margin-top: 6px;">
+                <div ng-repeat="(idx,item) in vm.platformList track by $index" style="margin-bottom: 15px;">
+                    <input type="checkbox" ng-checked="vm.isChecked(item)" ng-click="vm.toggle(item)">
+                    <label class="label-title">{{item.flat_name}}</label>
+                    <!-- 同步到栏目 -->
+                    <div class="platform-box flex-item" style="margin-top: 10px; padding-top: 10px" ng-if="item.columns.length > 0">
+                        <!-- ng-if="item.columns.length > 0" -->
+                        <div class="hoge-flex" >
+                            <label for="" class="flex-one label-name radio-label" style="text-align: left">同步栏目：</label>
+                            <div style="flex: 3; padding-left: 10px">
+                                <label class="column-item"  ng-repeat="cItem in item.columns">
+                                    <input type="checkbox" ng-click="vm.toggleColumn(cItem)" ng-checked = "vm.columnChecked(cItem)">{{cItem.name}}
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- 同步方式 -->
+                    <div class="platform-box flex-item" style="margin-top: 10px;">
+                        <label for="" class="label-name radio-label" style="text-align: left">同步方式：</label>
+                        <label class="radio-inline ">
+                            <input ng-model="item.push_method" type="radio" value="2"
+                                name="{{'synchronizeWay' + idx }}">立即同步
+                        </label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="item.push_method" type="radio" value="1"
+                                name="{{'synchronizeWay' + idx }}">定时同步
+                        </label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="item.push_method" type="radio" value="3"
+                                name="{{'synchronizeWay' + idx }}">不同步
+                        </label>
+
+                    </div>
+                    <div class="publish-time m-b" style="border: 1px solid #eee;padding: 15px;"
+                        ng-if="item.push_method==1">
+                        <span class="publish-label" style="margin-left: 0;margin-right: 30px">同步时间:</span>
+                        <span class="publish-label" style="margin-left: 0">发布后</span>
+                        <input type="number" ng-blur="item.time = false" ng-focus="item.time = true"
+                            ng-class="{'focus-color':item.time}" ng-model="item.delay_time_minute">
+                        <div class="btn-group dropdown hoge-dropdown" style="margin-left:8px !important;">
+                            <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="dropdown-label">{{item.timeTypeName}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm">
+                                <a class="dropdown-item" ng-repeat="type in vm.timeArr"
+                                    ng-click="vm.chooseType(type,item)">{{type.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">确定</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

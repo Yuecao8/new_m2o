@@ -1,0 +1,17 @@
+{
+    "documentTitle" :"MXU Converged Media Operation Platform",
+    "userName" : "Username",
+    "password" : "Password",
+    "effect" : "Keep for a week",
+    "login" : "Log in",
+    "reset" : "Reset Password",
+    "resetTip" : "The administrator has already set this account to change the password when logging in for the first time,you must modify the current password,then you can log in to the MXU.",
+    "originPwd" : "Initial password",
+    "newPwd" : "New password",
+    "newPwdTip" : "The new password can not be all blank",
+    "confirm" : "Confirm the new password",
+    "errorTip" : "Two passwords are not consistent",
+    "save" : "Save",
+    "copyright":"MXU Converged Media Operation Platform",
+    "success" : "Successfully modified"
+}

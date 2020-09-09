@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html ng-app="mxu" ng-controller="loginCtrl">
+
+<head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <title>M2O融合媒体综合运营平台</title>
+    <meta name="description" content="融合媒体综合运营平台" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="MXU Converged Media Operation Platform">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="./main/scripts/mxu/common/global.js?_v={{VERSION}}"></script>
+    <script src="./main/scripts/mxu/common/tpls/bridge.js?_v={{VERSION}}"></script>
+
+    <script src="./main/locale/dist/locale-<%= LANG %>.js"></script>
+
+    <!-- <link rel="shortcut icon" sizes="196x196" href="./assets/images/mxu/logo_32.ico"> -->
+    <link rel="shortcut icon" sizes="196x196" ng-href="{{vm.linkSrc}}">
+
+
+    <!-- style -->
+    <link rel="stylesheet" href="./assets/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="./assets/glyphicons/glyphicons.css" type="text/css" />
+    <!-- build:css .assets/styles/app.min.css -->
+    <link rel="stylesheet" href="./assets/global/dist/app.css?_v={{VERSION}}" type="text/css" />
+    <link rel="stylesheet" href="./assets/styles/mxu/common.css" />
+    <link rel="stylesheet" href="./assets/styles/mxu/login.css?_v={{VERSION}}" />
+    <!-- endbuild -->
+</head>
+
+<body class="white wrapper-login" ng-app="mxu">
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+        <img src='./assets/images/mxu/link_logo.png' />
+    </div>
+    <div class="login-head">
+        <!-- <div class="logo-box" id="mxuId">
+        </div> -->
+        <div class="logo-box">
+            <img class="logo-img" ng-show="!vm.is_open_customer" ng-class="{'mux-logo-img':vm.systemMXU,'fusion-logo-img':vm.systemFusion}" ng-src="{{vm.logoSrc}}" alt="">
+            <img class="logo-img" ng-show="vm.is_open_customer" ng-src="./assets/images/mxu/{{vm.imgSign}}.png" alt="">
+            <!-- <span>{{vm.systemMXU}}</span> -->
+        </div>
+        <span class="head-title">
+            <span ng-show="!vm.is_open_customer">{{vm.media}}</span>
+            <span ng-show="vm.is_open_customer">{{vm.customerTitle}}</span>
+		</span>
+    </div>
+    <!--ng-controller="loginCtrl"-->
+
+    <div class="login-contian">
+        <div class="logo-left logo-side"></div>
+        <div class="login-main">
+            <div ng-class="{'banner-img-box':vm.systemFusion}">
+                <img class="logo-img" ng-class="{'fusion-logo-img':vm.systemFusion}" ng-src="{{vm.bannerSrc}}" alt="">
+            </div>
+            <div class="login-item" ng-if="!vm.isNeedReset && !vm.isNeedCode" ng-class="{'showVerify': vm.isOpenVerifyCode}">
+                <div class="item-box">
+                    <!--二维码-->
+                    <!--<div class="login-code"></div>-->
+                    <div class="login-pass">{{vm.pwdlogin}}</div>
+                    <form name="form" class="login-form" onsubmit="javascript:return false;">
+                        <div class="input-item">
+                            <i class="input-icon use-icon " ng-class="{'use-icon-active': vm.user.active}"></i>
+                            <input type="text" class="login-input" ng-blur="vm.user.active = false" ng-focus="vm.user.active = true" placeholder="请输入用户名" ng-model="vm.userInfo.username" required>
+                        </div>
+                        <div class="input-item">
+                            <i class="input-icon pass-icon" ng-class="{'pass-icon-active': vm.password.active}"></i>
+                            <input type="password" class="login-input" ng-blur="vm.password.active = false" ng-focus="vm.password.active = true" placeholder="请输入密码" ng-model="vm.userInfo.password" required>
+                        </div>
+                        <div ng-if="vm.isOpenVerifyCode" class="input-item" style="display: flex;align-items: center;">
+                            <input class="login-input" style="width: 70%;" type="text" placeholder="请输入验证码" ng-model="vm.inputCode" required>
+                            <div class="verify-code" ng-click="vm.createCode()">{{vm.randomCode}}</div>
+                        </div>
+                        <div class="input-item check-box">
+                            <label class="md-check">
+								<input type="checkbox" ng-class="{'checked-box': vm.remember}" ng-model="vm.remember">记住密码（一周）
+							</label>
+                            <div class="forget-chose" ng-click="vm.forgetChose()">
+                                <span class="forget-password">忘记密码?</span>
+                            </div>
+                        </div>
+                        <div class="error-tip hide fade" ng-class="{'show': vm.isMessage}">{{vm.errorMessage}}</div>
+                        <div class="btn-wrap">
+                            <div class="img-item hide" ng-class="{'show':vm.login_loading}">
+                                <img src="./assets/images/mxu/loading.gif" />
+                            </div>
+                            <!--ng-disabled="form.$invalid"-->
+                            <button type="submit" class="btn primary-btn btn-block p-x-md" ng-click="vm.login()"><%= TRANS.login %></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="error-box hide" ng-class="{'show': vm.errorMessage}">
+                    <i class="icon-guanbi" ng-click="vm.errorMessage = false"></i>
+                    <div class="icon"></div>
+                    <div class="msg">{{vm.errorMessage}}</div>
+                </div>
+            </div>
+            <!--<div class="login-item login-special hide" ng-class="{'show': vm.isNeedReset && (!vm.isNeedCode) }">-->
+            <div class="login-item login-special " ng-if="vm.isNeedReset && (!vm.isNeedCode) " ng-class="{'isshow': vm.isNeedReset && (!vm.isNeedCode) }">
+                <div class="item-box">
+                    <div class="login-pass">
+                        重置密码
+                        <span class="sign">已有账号，
+							<span class="right" ng-click="vm.goSign()">马上登录</span>
+                        </span>
+                    </div>
+                    <form name="newForm" class="reset-form" onsubmit="javascript:return false;">
+                        <div class="input-item">
+                            <input type="password" class="reset-input" ng-blur="vm.newPassword.active = false" placeholder="请输入新密码" ng-focus="vm.newPassword.active = true" ng-model="vm.userInfo.newPassword" required>
+                        </div>
+                        <div class="input-item last-m-b">
+                            <input type="password" name="confirm_password" class="reset-input" ng-blur="vm.conformPassword.active = false" ng-focus="vm.conformPassword.active = true" placeholder="确认新密码" ng-model="vm.userInfo.conformPassword" required>
+                        </div>
+                        <div class="error-tip hide fade" ng-class="{'show': vm.errorSet}">{{vm.errorSetMessage}}</div>
+                        <div class="success-tip hide fade" ng-class="{'show': vm.successSet}">{{vm.successSetMessage}}</div>
+                        <div class="btn-wrap">
+                            <div class="img-item hide" ng-class="{'show':vm.reset_loading}">
+                                <img src="./assets/images/mxu/loading.gif" />
+                            </div>
+                            <button type="submit" class="btn primary-btn btn-block p-x-md" ng-disabled="newForm.$invalid" ng-click="vm.save()">确认</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="error-box hide" ng-class="{'show': vm.errorTipMessage}">
+                    <i class="icon-guanbi" ng-click="vm.errorTipMessage = false"></i>
+                    <div class="icon"></div>
+                    <div class="msg">{{vm.errorTipMessage}}</div>
+                </div>
+            </div>
+            <!--短信验证-->
+            <div class="login-item sms-verification" ng-if="!vm.isNeedReset && vm.isNeedCode " ng-class="{'isshow': !vm.isNeedReset && vm.isNeedCode }">
+                <div class="item-box">
+                    <div class="login-pass">
+                        <span ng-show="!vm.isForget">短信验证</span>
+                        <span ng-show="vm.isForget">忘记密码</span>
+                        <span class="back-login" ng-click="vm.backLogin()">返回登录</span>
+                    </div>
+                    <form name="newForm" class="reset-form" onsubmit="javascript:return false;">
+                        <div class="input-item">
+                            <i class="input-icon typeface-fankuibiaodan_form_shoujihao" ng-class="{'msg-icon-active': vm.confirm.telActive}"></i>
+                            <input type="tel" ng-class="{'forgetClass': !vm.isForget}" ng-disabled="vm.isdisable" class="reset-input" ng-blur="vm.confirm.telActive = false" placeholder="请输入手机号" ng-focus="vm.confirm.telActive = true" ng-model="vm.confirm.tel" required>
+                        </div>
+                        <div class="input-item last-m-b">
+                            <i class="input-icon typeface-icon_login_yanzhengma" ng-class="{'msg-icon-active': vm.confirm.codeActive}"></i>
+                            <input type="text" name="confirm_password" class="reset-input confirm-code" autocomplete="off" ng-blur="vm.confirm.codeActive = false" ng-focus="vm.confirm.codeActive = true" placeholder="输入验证码" ng-model="vm.confirm.code" required>
+                            <p class="get-confirm">
+                                <span class="get-code" ng-click="vm.getConfirmCode()" ng-if="!vm.isShowTime">发送验证码</span>
+                                <span class="time-num" ng-if="vm.isShowTime"><span style="font-family: 'Helvetica Neue',monospace;padding: 0;">重发({{vm.times}})</span></span>
+                            </p>
+                        </div>
+                        <div class="error-tip hide fade" ng-class="{'show': vm.errorCode}">{{vm.codeMessage}}</div>
+                        <div class="error-tip hide fade" ng-class="{'show': vm.errorCode}">{{vm.codeMessage}}</div>
+                        <div class="success-tip hide fade" ng-class="{'show': vm.successCode}">{{vm.successCodeMessage}}</div>
+                        <div class="btn-wrap">
+                            <div class="img-item hide" ng-class="{'show':vm.code_loading}">
+                                <img src="./assets/images/mxu/loading.gif" />
+                            </div>
+                            <button type="submit" class="btn primary-btn btn-block p-x-md" ng-disabled="newForm.$invalid" ng-if="!vm.isForget" ng-click="vm.nextStep()">确认</button>
+                            <!-- 忘记密码下一步 -->
+                            <button type="submit" class="btn primary-btn btn-block p-x-md" ng-disabled="newForm.$invalid" ng-if="vm.isForget" ng-click="vm.forgetNext()">下一步</button>
+                        </div>
+                    </form>
+                </div>
+                <!--<div class="error-box hide" ng-class="{'show': vm.errorTipMessage}">-->
+                <!--<i class="icon-guanbi" ng-click="vm.errorTipMessage = false"></i>-->
+                <!--<div class="icon"></div>-->
+                <!--<div class="msg">{{vm.errorTipMessage}}</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="logo-right logo-side"></div>
+
+    </div>
+    <div class="footer">
+        <div class="footer-content">
+            <!-- <span class="footer-icon"></span> -->
+            <!-- <div class="mini-logo" id="miniId"></div> -->
+            <div class="mini-logo">
+                <img class="foot-mini-logo" ng-show="!vm.is_open_customer" ng-class="{'mux-foot-mini':vm.systemMXU}" ng-src="{{vm.miniLogoSrc}}" alt="">
+                <img class="foot-mini-logo" ng-show="vm.is_open_customer" ng-src="./assets/images/mxu/{{vm.imgSign}}.png" alt="">
+            </div> 
+            <span ng-show="!vm.is_open_customer" class="footer-text">融合媒体运营平台&nbsp;&nbsp;{{vm.version}}</span>
+            <span ng-show="vm.is_open_customer" class="footer-text">{{vm.customerTitle}}&nbsp;&nbsp;{{vm.version}}</span>
+            <!-- <span class="footer-border"></span> -->
+            <!-- <span class="footer-empower footer-text">授权使用：yun.hoge.cn</span> -->
+        </div>
+    </div>
+    <script>
+        window.addEventListener('message', (ev) => {
+            const data = ev.data;
+            if (window.localStorage.getItem('workcall_jump_manuscript')) {
+                window.localStorage.removeItem('workcall_jump_manuscript');
+            }
+            window.localStorage.setItem('workcall_jump_manuscript', data);
+        }, false);
+        // if (window.sessionStorage.getItem('edition') == 'mxu') {
+        //     var childElement = document.createElement("img");
+        //     childElement.setAttribute("src", './assets/images/mxu/home/mxu-logo.png');
+        //     childElement.setAttribute("width", '38px');
+        //     childElement.setAttribute("height", '38px');
+        //     var MUl = document.getElementById("mxuId");
+        //     MUl.appendChild(childElement)
+
+        //     var footChildElement = document.createElement("img");
+        //     footChildElement.setAttribute("src", './assets/images/mxu/home/mxu-logo.png');
+        //     footChildElement.setAttribute("width", '14px');
+        //     footChildElement.setAttribute("height", '14px');
+        //     var mimiUl = document.getElementById("miniId");
+        //     mimiUl.appendChild(footChildElement);
+        // } else {
+        //     var childElement = document.createElement("img");
+        //     childElement.setAttribute("src", './assets/images/mxu/home/new/logo_login_top_2x.png');
+        //     childElement.setAttribute("width", '160px');
+        //     childElement.setAttribute("height", '38px');
+        //     var MUl = document.getElementById("mxuId");
+        //     MUl.appendChild(childElement)
+
+        //     var footChildElement = document.createElement("img");
+        //     footChildElement.setAttribute("src", './assets/images/mxu/home/new/logo_login_small.png');
+        //     footChildElement.setAttribute("width", '60px');
+        //     footChildElement.setAttribute("height", '14px');
+        //     var mimiUl = document.getElementById("miniId");
+        //     mimiUl.appendChild(footChildElement)
+        // }
+    </script>
+    <script src="./libs/angular/angular-1.4.8/angular.min.js"></script>
+    <!-- <script src="./libs/angular/angular/angular.js"></script> -->
+    <script src="./libs/jquery/jquery/dist/jquery.js"></script>
+    <script src="./libs/js/aes/aes.js"></script>
+    <script src="./libs/js/aes/pad-zeropadding.js"></script>
+    <script src="./main/scripts/mxu/common/login.js?_v={{VERSION}}"></script>
+    <script src="./libs/angular/angular-ui-utils/ui-utils.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+
+<div class="box comment-list border-radius hoge-border" my-loading="vm.manual_listLoading">
+    <!-- list -->
+    <div class="list_contain m-b-20 hoge-table-contain border-radius">
+        <div class="copy-tip" ng-show="vm.showCopy">{{vm.showCopyTip}}</div>
+        <div class="hoge-table-search">
+            <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                <button class="btn dropdown-toggle " data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.channel_name}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-12" style="max-height: 200px;overflow-y:auto;">
+                    <a class="dropdown-item" ng-repeat="cha in vm.channel_list" ng-click="vm.goChannel(cha.id)">{{cha.name}}</a>
+                </div>
+            </div>
+            <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                <button class="btn dropdown-toggle " data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.status}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-12">
+                    <a class="dropdown-item" ng-repeat="sta in vm.stateArr" ng-click="vm.goState(sta.state)">{{sta.name}}</a>
+                </div>
+            </div>
+            <div class="form-group hoge-input-search pull-right" >
+                <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+            </div>
+        </div>
+        <hoge-error hight-num="'277px'" arr-length="vm.includeList.length" load="vm.loading"></hoge-error>
+        <div class="list_header hoge-table-header" ng-show="vm.includeList.length">
+            <div class="wrap">
+                <div class="list-ctr"></div>
+                <div class="list-name" translate="manual.manualName"></div>
+                <div class="list-state" translate="manual.includeState"></div>
+                <div class="list-channel" translate="manual.channel"></div>
+                <div class="list-start" translate="manual.includeTime"></div>
+                <div class="list-len" translate="manual.transcribeDur"></div>
+                <div class="list-cycle">创建人</div>
+                <div class="list-i"></div>
+            </div>
+        </div>
+
+        <div class="list white" ng-show="vm.includeList.length">
+            <!--列表-->
+            <div class="list-item hoge-item-border"  ng-repeat="item in vm.includeList track by $index" id="{{item.id}}">
+                    <div class="list-ctr">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                        </label>
+                    </div>
+                    <div class="list-name" style="align-self: center;">
+                        {{item.title}}
+                    </div>
+                    <div class="list-state" >
+                        <span class="label primary" ng-class="{'light-green-200':item.status==1,'red-200':item.status==2,'orange-300':item.status==0}">{{item.text}}</span>
+                        <!--<span class="label primary  red-200" >正在收录</span>-->
+                    </div>
+                    <div class="list-channel">
+                        <span >{{item.channel_name}}</span>
+                    </div>
+
+                    <div class="list-start" >
+                        <span>{{item.start_time.substring(0,16)}}</span>
+                    </div>
+                    <div class="list-len" >
+                        <span>{{item.toff}}</span>
+                    </div>
+                    <div class="list-cycle" >
+                        <span>{{item.create_user_name}}</span>
+                    </div>
+                    <div class="list-i" >
+                        <div class="icon-tool pull-right">
+                            <i class="fa icon-caozuo" data-toggle="dropdown" aria-expanded="false"></i>
+                            <div class="dropdown-menu dropdown-menu-scale pull-right">
+                                <a class="dropdown-item" ng-click="vm.singleDelete(item)" translate="include.delete"></a>
+                                <a class="dropdown-item" ng-click="vm.viewAddress(item)">回看地址</a>
+                                <input type="text" id="manual_{{item.id}}" ng-model="item.m3u8" class="copy-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!--bottom-->
+        <!--bottom-->
+        <div class="list_bottom hoge-table-bottom">
+            <div class="btn-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="option1"  ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">{{'include.allSelected' | translate}}
+                </label>
+            </div>
+            <div class="btn-toolbar list_bar flex-one btn-box">
+                <div class="btn-group">
+                    <button class="btn del-btn" ng-disabled="vm.includeList.length == 0" ng-click="vm.moreDelete()">{{'include.delete' | translate}}</button>
+                </div>
+            </div>
+            <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+        </div>
+        <!--bottom-->
+
+    </div>
+    <!-- / list -->
+</div>

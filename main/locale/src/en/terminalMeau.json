@@ -1,0 +1,8 @@
+{
+    "terminal" : "Terminal",
+    "introduce" : "Here you can manage site, APP, WeChat, and weibo corresponding to the MXU",
+    "website" : "Site",
+    "APP" : "Mobile app",
+    "weixin" : "WeChat",
+    "wechat" : "Weibo"
+}

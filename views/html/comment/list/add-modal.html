@@ -1,0 +1,22 @@
+
+    <div class="modal-header" style="position:relative;">
+        <h5 class="modal-title">回复评论</h5>
+    </div>
+    <span class="typeface-form_guanbi " style="position: absolute;right:16px;top:16px;color:#DBE1E9 " ng-click="vm.close()"></span>
+    <div class="modal-body">
+        <div class="form-group" style="position: relative;margin-bottom: 0">
+            <div class="form-group">
+                <div class="label-name label-position" style="margin-left:16px;float:left;">回复内容：</div>
+                <textarea ng-change="vm.keyChange()" style="width:340px ;height: 145px;resize:none ; border-radius :4px;border-color: #DBE1E9;margin-left: 23px;" type="text"  maxlength="200" ng-model="vm.replyInfo.content" ng-focus="vm.contributeContentFocus = true"
+                        ng-class="{'focus-color':vm.contributeContentFocus}" ng-blur="vm.contributeContentFocus = false">
+                </textarea>
+                 <span style="color:black;margin-left:8px;font-size:12px;">{{vm.currentLength}}/200</span>
+            </div>
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{'column.save' | translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'column.cancel' | translate}}</button>
+    </div>
+

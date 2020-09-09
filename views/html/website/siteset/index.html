@@ -1,0 +1,69 @@
+<div class="siteSet-wrapper">
+    <div class="site-section">
+        <div class="p-v-md">
+            <div class="site-head">
+                <em translate="terminalSiteSet.siteSet"></em>
+                <div class="box-tip collapse in">
+                    <i class="material-icons font-16">&#xe88f;</i>
+                    {{'terminalSiteSet.versionMsg'| translate}}
+                </div>
+            </div>
+        </div>
+        <div class="site-list">
+            <div class="m-b list-header">
+                <div class="btn-toolbar list_bar">
+                    <div class="list-title" translate="terminalSiteSet.siteList"></div>
+                    <button class="btn btn-purple ng-binding" ng-click="vm.editSite();">
+                        {{'terminalSiteSet.newSite'| translate}}
+                    </button>
+                </div>
+            </div>
+            <div class="ErrorTip" ng-show=" !vm.siteList.length">
+                <p>{{vm.errorList}}</p>
+            </div>
+            <div class="list_contain hoge-table-contain" ng-show=" vm.siteList.length > 0">
+                <div class="table_header hoge-table-header">
+                    <div class="wrap b-l b-white">
+                        <div class="list-body flex-one" translate="terminalSiteSet.siteName1"></div>
+                        <div class="list-keywords flex-one" translate="terminalSiteSet.keywords"></div>
+                        <div class="list-domain flex-one" translate="terminalSiteSet.domainName1"></div>
+                        <div class="list-other" >{{ 'terminalSiteSet.createTime'| translate}}</div>
+                        <!--{{ 'terminalSiteSet.creator'| translate}}/-->
+                        <div class="list-i" ></div>
+                    </div>
+                </div>
+                <div class="list white">
+                    <div class="list-item hoge-item-border"
+                         ng-repeat="item in vm.siteList track by $index"
+                         ng-mouseenter="">
+                        <div class="list-body flex-one">
+                            <div class="list_img"  ng-show="item.index_pic" style="background:url({{item.index_pic}}) center center no-repeat">
+                                <div ng-show="!item.index_pic" class="defalut-img"></div>
+                            </div>
+                            <span class="name_contain">{{item.title}}</span>
+                        </div>
+
+                        <div class="list-keywords flex-one">
+                            <span>{{item.keywords}}</span>
+                        </div>
+
+                        <div class="list-domain flex-one" >
+                            <span>{{item.website_domain}}</span>
+                        </div>
+
+                        <div class="list-other" >
+                            <!--<span>{{item.create_user}}</span>-->
+                            <span>{{item.create_time}}</span>
+                        </div>
+
+                        <div class="list-i">
+                            <div class="icon-tool pull-right" ng-click="vm.editSite(item);" ng-show="!vm.isSort">
+                                <i class="fa icon-bianji " data-toggle="dropdown" aria-expanded="false"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

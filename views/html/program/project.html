@@ -1,0 +1,84 @@
+<div class="project-wrapper wrapper">
+	<div class="p-16 p-b-52">
+		<div class="content_list_head hoge-table-add">
+			<div class="pull-left hoge-table-title">
+				节目计划
+			</div>
+			<div class="btn-group pull-right">
+				<button class="btn btn-purple" ng-click="vm.goEdit()" >
+					{{'programProject.addProgram'| translate}}
+				</button>
+		</div>
+		<div class="btn-toolbar list_bar">
+			<!-- <div class="form-group">
+				<div class="input-group input-group-sm">
+					<input type="text" class="form-control p-x b-a rounded " ng-model="vm.key" placeholder="搜索...">
+					  <span class="input-group-btn">
+						<button type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search()"><i class="fa fa-search"></i></button>
+					  </span>
+				</div>
+			</div>    -->
+		</div>
+	</div>
+
+		<div class="list_contain hoge-table-contain white">
+			<hoge-error  arr-length="vm.program_plan.length" load="vm.loadding" error-hight="true"></hoge-error>
+			<div class="table_header hoge-table-header" ng-show="vm.program_plan.length">
+				<div class="wrap">
+					<div class="list-ctr"></div>
+					<div class="list-body flex-one" translate="programProject.program"></div>
+					<div class="list-start" translate="programProject.startTime"></div>
+					<div class="list-end" translate="programProject.endTime"></div>
+					<div class="list-other" translate="programProject.weekDay"></div>
+					<div class="list-btn"></div>
+				</div>
+			</div>
+			<div class="list-wrap list" my-loading="vm.loadding" ng-show="vm.program_plan.length">
+				<div class="list-item hoge-item-border" ng-repeat="item in vm.program_plan">
+					<div class="list-ctr">
+						<label class="checkbox-inline">
+							<input type="checkbox" value="option1" ng-checked="vm.check(item)" ng-click="vm.toggle(item)">
+						</label>
+					</div>
+					<div class="list-body flex-one">
+						<div class="info-box">
+							<div class="list_img" >
+								<img ng-src="{{item.indexpic}}" class="img-responsive">
+								<div ng-show="!item.indexpic" class="img-project">
+									<span class="icon-tuji1"></span>
+								</div>
+							</div>
+							<div class="project-title">
+								{{item.program_name}}（{{'programProject.startTimes'| translate}}{{item.start}}）
+							</div>
+						</div>
+					</div>
+					<div class="list-start">
+						<span class="date-txt">{{item.start_date}}</span>
+					</div>
+					<div class="list-end">
+						<span class="date-txt m-l-sm ">{{item.end_date}}</span>
+					</div>
+					<div class="list-other">
+						<span class="date-txt" >{{item.weekday}}</span>
+					</div>
+					<div class="list-btn">
+						<a ng-click="vm.goEdit(item)" class="m-r"><i class="icon-bianji" ></i> </a>
+						<a ng-click="vm.del(item)"><i class="icon-shanchu1 " ></i> </a>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer list_bottom hoge-table-bottom" ng-show="vm.program_plan.length">
+				<label class="m-r checkbox-inline">
+					<input type="checkbox" ng-click="vm.toggleAll()" ng-checked="vm.allChecked()"> {{'programProject.allSelected'| translate}}
+				</label>
+				<div class="btn-toolbar list_bar flex-one btn-box">
+					<button class="btn del-btn m-r" style="margin: 0 0 0 5px !important;" ng-click="vm.del('all')" ng-disabled="!vm.program_plan.length && !vm.loadding">{{'programProject.delete'| translate}}</button>
+				</div>
+				<page-nation options="vm.pageOptions" turn-page="vm.getList()"></page-nation>
+			</div>
+		</div>
+
+	</div>
+</div>
+<!--<div ui-include="'../views/mxu/common/footer.html'"></div>-->

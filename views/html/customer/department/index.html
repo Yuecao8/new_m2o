@@ -1,0 +1,57 @@
+<div class="site-column-wrap department-column-wrap">
+
+    <div class="column-head">
+        <!--<i class="fa fa-reply" onclick="history.back(-1)"></i> -->
+        <em>{{vm.className}}管理</em>
+    </div>
+
+    <div class="column_content">
+        <ks-swiper-container  swiper="vm.swiper" class="swiper-container"
+                              observer='true'
+                              slides-per-view="vm.systemSet?3:4"
+                              pagination-clickable='true'
+                              space-between= '0'
+                              override-parameters="
+              {'grabCursor':'true',
+                   'observeParents':'true',
+                   'observer':'true',
+              }"
+
+        >
+            <ks-swiper-slide class="swiper-slide list_box" ng-repeat="column in vm.columnData track by $index" >
+                <div class="table_header">
+                    <div class="header">
+                        <span class="column-name">{{$index + 1}}级{{vm.className}}</span>
+                        <span class="btn-sort" ng-click="vm.sort(column)" ng-if="column.length >1 && vm.className == '分类'">
+                            <i class="fa fa-exchange"></i>
+                        </span>
+                    </div>
+                    <div class="add-box" ng-show="!column.isSort" ng-click="vm.goAdd('',$index)" ng-if="!(vm.type == 'member' && $index>0)">
+                        <i class="fa fa-plus-circle"></i>
+                        <span>新建{{vm.className}}</span>
+                    </div>
+                    <div class="sort_board red-50" ng-show="column.isSort">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        {{'column.sort' | translate}}
+                        <button class="btn btn-sm white pull-right" ng-click="vm.outSort(column)">{{'column.save' | translate}}</button>
+                        <button class="btn btn-sm white pull-right m-r" ng-click="vm.cancelSort(column,$index)">{{'column.cancel' | translate}}</button>
+                    </div>
+                </div>
+                <div ng-show="column.banSort" class="banSort"></div>
+                <div class="list" ui-sortable="vm.sortableOpt" ng-model="column">
+                    <div class="list_item" ng-click="vm.goNext(item,$parent.$index+1,column.isSort)" ng-repeat="item in column"  ng-class="{'active':item.active}">
+                        <div class="column_title">{{item.name}}</div>
+                        <div class="pull-right next_icon">
+                            <i class="icon-jinru" ng-show="item.is_last == 0"></i>
+                        </div>
+                        <div class="pull-right icon_box">
+                            <i class="fa typeface-form_edit" ng-click="vm.goEdit(item,$parent.$index)" ng-show="!column.isSort"></i>
+                            <i class="fa typeface-form_shanchu" ng-click="vm.deleteItem(item,$parent.$index)" ng-show="!column.isSort"></i>
+                        </div>
+                    </div>
+                </div>
+            </ks-swiper-slide>
+        </ks-swiper-container>
+    </div>
+</div>
+<m2o-footer ></m2o-footer>

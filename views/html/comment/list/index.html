@@ -1,0 +1,24 @@
+<div class="mxu_comment_wrap new-wrapper">
+    <!-- msg_box -->
+    <div class="text-center p-lg new_comment" ng-if="vm.new_count && vm.new_count !== 0">
+        <p class="grey-200 new_count" translate="comment.received" translate-values="{ count: {{vm.new_count}} }"><span class="refresh" ng-click="vm.refresh()" translate="comment.load"></span></p>
+    </div>
+    <!-- msg_box -->
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">评论</div>
+    </div>
+    <!-- / header -->
+    <div class="btn-toolbar list_bar">
+        <button class="btn btn-comment m-r-15" ng-if="vm.content_id" ng-click="vm.cancelContent()" translate="comment.cancelView"></button>
+    </div>
+    <!-- / header -->
+
+
+    <div class="row-col">
+        <div class="col-md-12 col-md-push-12 comment_list">
+            <!-- list -->
+            <div ui-include="'../views/mxu/comment/list/list.html'"></div>
+            <!-- list -->
+        </div>
+    </div>
+</div>

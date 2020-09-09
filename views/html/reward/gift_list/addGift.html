@@ -1,0 +1,80 @@
+<div class="modal-addGift-publish box-shadow-md">
+        <div class="modal-header">
+            <h5 class="modal-title">新增礼物<img ng-click="vm.close()" style="float: right;width: 23px;margin-top: 12px" src="../../../../assets//images//删除.png" alt=""></h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-item">
+              <label for="">
+                  礼物名称：
+                  <input class="giftName" type="text" ng-model="vm.goodsTitle" maxlength="15" placeholder="请输入">
+              </label>
+          </div>
+          <div class="form-item">
+              <label for="">
+                  等价关系：
+                  <div class="btn-group dropdown hoge-dropdown" style="margin-left: 3px;
+                  margin-right: 8px;margin-left: 2px !important;">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" style="font-size:14px;">
+                            <span class="dropdown-label">{{vm.virtualName}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="virtual in vm.virtualArr" ng-click="vm.chooseVirtual(virtual)">{{virtual.name}}</a>
+                        </div>
+                  </div>
+                  <input class="giftNum" type="text" ng-model="vm.goodsValue" placeholder="输入个数"><span style="margin-left:5px;color: black">个</span>
+              </label>
+          </div>
+          <div class="form-item">
+              <label for="">
+                  礼物分类：
+                  <div class="btn-group dropdown hoge-dropdown giftType" style="margin-left: 3px;
+                  margin-right: 8px;margin-left:2px !important;">
+                        <button style="width:200px;font-size:14px;" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.sortName}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div style="width:200px" class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="good in vm.sortArr" ng-click="vm.chooseSort(good)">{{good.name}}</a>
+                        </div>
+                    </div>
+              </label>
+          </div>
+          <div class="form-item">
+              <label for="">
+                  礼物图标：
+                  <div class="i-f-b pos-rlt">
+                        <div my-loading="vm.iconLoading" ng-click="vm.chooseIcon()" class="giftpic" style="left: 72px;top: -22px;">
+                            <img ng-if="!vm.iconUrl" src="/assets//images//加号.png" alt="">
+                            <img style="width:50px;height:50px;" ng-if="vm.iconUrl" ng-src="{{vm.iconUrl}}" alt="">
+                        </div>
+                        <input style="position: absolute;left: -1000%;top: -1000%;" id="gifticon" type="file" nv-file-select="" uploader="vm.uploaderIcon"
+                                accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                        <span style="font-size: 12px;
+                        color: #788091;display: inline-block;margin:10px 0 0 133px;">
+                            请上传PNG/JPG格式图片，尺寸50*50，背景透明
+                        </span>
+                  </div>
+              </label>
+          </div>
+          <div class="form-item" style="margin-top:15px;">
+                <label for="">
+                    效果图：
+                    <button class="choose-file" ng-click="vm.chooseImg()" ng-if="!vm.imgUrl">选择文件</button>
+                    <input style="position: aboslute;left: -1000%;
+                        top: -1000%;" id="giftpic" type="file" nv-file-select="" uploader="vm.uploaderImg"
+                        accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                    <div class="i-f-b pos-rlt" ng-if="vm.imgUrl">
+                        <div my-loading="vm.imgLoading" class="giftpic" style="left: 72px;top: -22px;">
+                            <img ng-if="!vm.imgUrl" ng-click="vm.chooseImg()" src="/assets//images//加号.png" alt="">
+                            <img style="width:50px;height:50px;" ng-click="vm.chooseImg()" ng-if="vm.imgUrl" ng-src="{{vm.imgUrl}}" alt="">
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-disabled="vm.saveDisabled" my-loading="vm.save_loading">确定</button>
+        </div>
+</div>

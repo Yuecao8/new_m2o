@@ -1,0 +1,147 @@
+<div class="mxu_import">
+    <div class="p-v-md">
+        <div class="hoge-edit-head">
+            <div class="hoge-return-body" onclick="history.back(-1)">
+                <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                <span class="return-tip">返回列表</span>
+            </div>
+            <em>上传节目单</em>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="navigation border-top-radius">
+            <div class="ready">
+                <i class="fa" ng-class="{'fa-circle-o': vm.step == 1, 'typeface-alert_wancheng': vm.step == 2}"></i>
+                <div class="name">导入准备</div>
+            </div>
+            <div class="go" ng-class="{'go-active': vm.step == 2}"></div>
+            <div class="achieve" ng-class="{'icon-active': vm.step == 2}">
+                <i class="fa fa-circle-o"></i>
+                <div class="name">确认导入</div>
+            </div>
+        </div>
+        <div class="firstContent" ng-show="vm.step == 1">
+            <div class="content">
+                <div class="part">
+                    <div class="title">准备节目单</div>
+                    <div class="part-body">
+                        <div class="bottom">
+                            <button class="btn common-btn down-template" ng-click="vm.goDown()">下载表格模板</button>
+                            <button class="btn common-btn" ng-click="vm.goTxtDown()">下载TXT模板</button>
+                        </div>
+                        <div class="tip-more">
+                            <div>选择偏好的节目单模板，按规则填写后进行上传导入。规则如下：</div>
+                            <div>1）表格模板以及TXT模板的所有字段均为必填，具体样式可参考模板；</div>
+                            <div>2）时间格式为xx:xx（英文输入法的冒号），如12:03；</div>
+                            <div>3）日期格式表格模板为年-月-日，TXT模板为年/月/日，若日期格式错误、日期重复或日期在该年份中不存在（闰年和普通年份的2月存在区别），将无法识别整个节目单；</div>
+                            <div>4）导入后，若在该日期下后台已存在节目单，则原有的节目单将被覆盖。</div>
+                            <!-- <div>5）导入后，系统内日期下原有的节目单将被覆盖；</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="part part-two">
+                    <div class="title">上传数据文件</div>
+                    <div class="first-upload" ng-if="!vm.fileName">
+                        <div class="upload-box">
+                            <div class="upload-img" ng-click="vm.uploadClick()"></div>
+                            <div class="click-tip">点击这里上传文件</div>
+                            <div class="file-tip">目前支持的文件类型为*.xls，*.xlsx，*.txt。</div>
+                        </div>
+                    </div>
+                    <div class="part-body" ng-if="vm.fileName">
+                        <p class="bottom">
+                            <button class="btn common-btn" ng-click="vm.uploadClick()">更换文件</button>
+                        </p>
+                        <div class="file-tip">已传文件： {{vm.fileName}}</div>
+                    </div>
+                    <input  class="input-upload" type="file" id="localFile" nv-file-select  uploader="vm.localUploader" accept=".xls, .xlsx, .txt" multiple>
+                </div>
+            </div>
+        </div>
+        <div class="import_list" ng-show="vm.step == 2">
+            <div class="btn-contain btn-group">
+                <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.isImport == 1}" ng-click="vm.isImport = 1">可导入({{vm.canOptions.total}})</button>
+                <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.isImport == 2}" ng-click="vm.isImport = 2">不可导入({{vm.canNotOptions.total}})</button>
+            </div>
+            <div class="list-content" ng-show="vm.isImport == 1">
+                <div class="table_header hoge-table-header">
+                    <div class="wrap b-l b-white head flex-item">
+                        <!-- <div class="list-body">时间</div>
+                        <div class="one list-name flex-one">节目</div> -->
+                        <div class="list-body" style="margin-left:36px">时间</div>
+                        <div class="one list-name flex-one">节目</div>
+                        <div class="one list-name flex-one" style="margin-left:-40px" ng-if="vm.fileName.includes('xls')">是否开启屏蔽</div>
+                        <div class="one list-name flex-one" style="margin-left:32px" ng-if="vm.fileName.includes('xls')">屏蔽地址</div>
+                        <div class="one list-name flex-one" style="margin-left:-33px" ng-if="vm.fileName.includes('xls')">直播屏蔽</div>
+                        <div class="one list-name flex-one" ng-if="vm.fileName.includes('xls')">时移屏蔽</div>
+                        <div class="one list-name flex-one" ng-if="vm.fileName.includes('xls')">屏蔽类型(0 图片 1 视频)</div>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="ErrorTip" ng-show="!vm.canList.length">
+                        <p>暂无数据</p>
+                    </div>
+                    <div class="hoge-item-border" ng-repeat="item in vm.canList" ng-show="vm.isShowProgram == item.name">
+                        <div ng-show="vm.isShowProgram == item.name">
+                            <div class="wrap b-l b-white head list-back" ng-repeat="itemChild in item.programs">
+                                <div class="list-body" ng-repeat="nor in itemChild"><span  ng-if="!nor.display.includes('http')"  style="margin-left:25px">{{nor.display}}</span><a  ng-if="nor.display.includes('http')" href="{{nor.display}}" style="margin-left:32px" target="_blank">屏蔽链接</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-list" ng-show="vm.canList.length" ng-class="{'active': vm.isShowProgram == item.name, 'first-list': $index == 0}" ng-repeat="item in vm.canList track by $index" ng-click="vm.showProgram(item)">
+                        <span>{{item.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="list-content" ng-show="vm.isImport == 2">
+                <div class="table_header hoge-table-header">
+                    <div class="wrap b-l b-white head flex-item">
+                        <div class="list-body" style="margin-left:36px">时间</div>
+                        <div class="one list-name flex-one">节目</div>
+                        <div class="one list-name flex-one" style="margin-left:-40px" ng-if="vm.fileName.includes('xls')">是否开启屏蔽</div>
+                        <div class="one list-name flex-one" style="margin-left:32px" ng-if="vm.fileName.includes('xls')">屏蔽地址</div>
+                        <div class="one list-name flex-one" style="margin-left:-33px" ng-if="vm.fileName.includes('xls')">直播屏蔽</div>
+                        <div class="one list-name flex-one" ng-if="vm.fileName.includes('xls')">时移屏蔽</div>
+                        <div class="one list-name flex-one" ng-if="vm.fileName.includes('xls')">屏蔽类型(0 图片 1 视频)</div>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="ErrorTip" ng-show="!vm.notList.length">
+                        <p>暂无数据</p>
+                    </div>
+                    <div class="hoge-item-border" ng-repeat="item in vm.notList" ng-show="vm.isShowPrograms == item.name">
+                        <div ng-show="vm.isShowPrograms == item.name">
+                            <div class="wrap b-l b-white head list-back" ng-repeat="itemChild in item.programs">
+                                <!-- <div class="list-body" ng-class="{'red-list': !nor.status}" ng-repeat="nor in itemChild">{{nor.display ? nor.display : '？？？'}}</div> -->
+                                <div class="list-body" ng-repeat="nor in itemChild" ng-class="{'red-list': !nor.status}"><span  ng-if="!nor.display.includes('http')"  style="margin-left:25px">{{nor.display}}</span><a  ng-if="nor.display.includes('http')" href="{{nor.display}}" style="margin-left:32px" target="_blank">屏蔽链接</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-list" ng-show="vm.notList.length" ng-class="{'active': vm.isShowPrograms == item.name, 'first-list': $index == 0}" ng-repeat="item in vm.notList track by $index" ng-click="vm.showProgramFaile(item)">
+                        <span ng-class="{'red-list': !item.status}">{{item.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="num-tip">{{vm.importList.length}} / {{vm.importList.length + vm.importNotList.length}}天节目信息将会被导入</div>
+        </div>
+        <div class="btn-bottom">
+            <button type="submit" class="btn common-btn m-r" ng-click="vm.save()" ng-show="vm.step == 1">
+                下一步
+                <i class="fa typeface-pagination_xiayiye" style="font-size: 12px;transform: scale(0.8);"></i>
+            </button>
+            <button type="submit" class="btn common-btn m-r" ng-click="vm.next()" ng-show="vm.step == 2">
+                <i class="fa typeface-pagination_shangyiye" style="font-size: 12px;transform: scale(0.8);"></i>
+                上一步
+            </button>
+            <button type="submit" class="btn common-btn sure-btn m-r" ng-click="vm.importSure()" ng-show="vm.step == 2" ng-disabled="!vm.importList.length" ng-class="{'point': !vm.importList.length}">确定导入</button>
+            <!-- <button class="btn common-btn cancel-btn" ng-click="vm.cancel()">取消</button> -->
+        </div>
+    </div>
+
+    <div class="animation-loading" ng-if="vm.animationLoading">
+        <div style="margin: 0 auto;">
+            <spin></spin>
+            <span class="text">处理中...</span>
+        </div>
+    </div>
+</div>

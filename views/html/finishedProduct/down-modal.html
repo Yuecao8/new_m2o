@@ -1,0 +1,36 @@
+<div class="push-wrapper lif-headlines box-shadow-md download-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" style="margin-left:6px;">选择尺寸</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+      <div class="left-img">
+        <div class="image">
+            <img class="avatar-img" ng-src='{{vm.param.info.photo_url}}'>
+        </div>
+        <p style="width: 230px;">格式：JPEG</p>
+      </div>
+      <div class="rigth-box">
+          <div class="form-group change-margin">
+              <div class="group-box size-position">
+                  <label class="size-radio size-low">
+                      <input ng-model="vm.listData.water_position" type="radio" value="1" ng-click="vm.changeSize(1)">
+                      <span class="one-span">低分辨率</span><span>600px</span>
+                  </label>
+                  <label class="size-radio size-high">
+                      <input ng-model="vm.listData.water_position" type="radio" value="2" ng-click="vm.changeSize(2)">
+                      <span class="one-span">高分辨率</span><span>1500px</span>
+                  </label>
+                  <label class="size-radio size-original">
+                      <input ng-model="vm.listData.water_position" type="radio" value="3" ng-click="vm.changeSize(3)">
+                      <span class="one-span">原图</span><span></span>
+                  </label>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        <a class="primary-btn" style="display: inline-block;line-height: 32px;border-radius: 2px;" ng-href="{{vm.exportUrl}}" ng-click="vm.save()">确定</a>
+    </div>
+</div>

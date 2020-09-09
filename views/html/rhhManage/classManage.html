@@ -1,0 +1,42 @@
+<div class="site-column-wrap department-column-wrap">
+
+        <div class="column-head">
+            <!--<i class="fa fa-reply" onclick="history.back(-1)"></i> -->
+            <em>分类管理</em>
+        </div>
+    
+        <div class="column_content">
+            <div class="class-list-box">
+                <div class="header" ng-show="!vm.shortBox">
+                    <span>一级分类</span>
+                    <span class="sort-icon" ng-click="vm.showSortBox()"><i class="fa fa-exchange"></i></span>
+                </div>
+                <div class="header" ng-class="{'sort-box':vm.shortBox}" ng-show="vm.shortBox">
+                    <i class="fa fa-exclamation-triangle"></i> 排序功能已开启
+                    <button class="sort-btn save" ng-click="vm.sortSave()">保存</button>
+                    <button class="sort-btn cancel" ng-click="vm.sortCancel()">取消</button>
+                </div>
+                
+                <div class="creat-box" ng-click="vm.addClassify()">
+                    <i class="fa fa-plus-circle"></i>
+                    <span class="icon-tianjia-btn">新建分类</span>
+                </div>
+                <div ui-sortable="vm.columnSortableOpt" ng-model="vm.typeList">
+                    <div class="list-box" ng-repeat="typeItem in vm.typeList track by $index">
+                        <div class="list-item">
+                            <span title="{{typeItem.name}}" class="item_name">
+                                <span class="item_name_span">{{typeItem.name}}</span>
+                            </span>
+                            <div class="icons-box">
+                                <i class="fa typeface-form_edit" ng-click="vm.editClassify(typeItem)"></i>
+                                <i class="fa typeface-form_shanchu m-l" ng-click="vm.deleteClass(typeItem)"></i>
+                            </div>
+                            
+                        </div>     
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <m2o-footer ></m2o-footer>

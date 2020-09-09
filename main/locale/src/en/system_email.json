@@ -1,0 +1,30 @@
+{
+    "title" : "Mail server settings",
+    "tip" : "Used to send a member registration, retrieve the password to use the verification code",
+    "buttonText" : "Mail verification code template",
+    "server" : "SMTP server",
+    "port" : "Port",
+    "email" : "Sender email address",
+    "username" : "Mailbox username",
+    "password" : "Email Password",
+    "save" : "Save",
+    "verify" : "Verify",
+    "sendedMsg" : "Please check your email!",
+    "saveSuccess" : "Save successfully",
+
+    "verifyServer" : "Verify the Mailbox server",
+    "receiveEmail" : "Receive mail",
+    "emailAddress" : "Email address",
+    "receiveTip" : "The system will send a test message to the receiving mailbox through the currently set mail server. If the mail is successfully received, the mail server is configured correctly.",
+    "sure" : "Confirm",
+    "cancel" : "Cancel",
+
+    "tplTitle" : "Verification Code Mail Template Configuration",
+    "emailTitle" : "Mail title",
+    "emailContent" : "The content of SMS",
+    "emailContentTip" : "* Mail template support html; Please ensure that the template configuration is correct, in the need to display the activation code to the location, {$ bspace0} instead, for example, enter the 「注册激活码：{$bspace0}」, if the changes have problems, click Reset",
+    "reset" : "Reset",
+    "resetTitle" : "XXX network - verification code mail",
+    "resetContent" : "Your verification code: {$ bspace0}, do not reveal the verification code to others！",
+    "modifySuccess" : "modifiy successfully!"
+}

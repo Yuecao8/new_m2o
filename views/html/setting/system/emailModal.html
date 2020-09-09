@@ -1,0 +1,23 @@
+<form class="modal-email box-shadow-md" name="emailForm" id="emailForm">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="system_email.tplTitle"></h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <div class="m-b">
+            <label>{{ 'system_email.emailTitle'| translate}}</label>
+            <input type="text" placeholder="" class="content" style="width: 90%;height: 32px;line-height: 32px;padding: .375rem .75rem;" ng-model="vm.title" required>
+        </div>
+        <div class="m-b">
+            <label>{{ 'system_email.emailContent'| translate}}</label>
+            <textarea class="form-control" rows="6" placeholder="" name="create_word" ng-model="vm.content" required></textarea>
+            <p><small style="color: #969696;" translate="system_email.emailContentTip"></small></p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-purple" ng-click="vm.reset()" style="float: left;">{{vm.DOC.reset}}</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading" ng-disabled="emailForm.$invalid"
+                >{{ 'system_email.save'| translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()" translate="system_email.cancel"></button>
+    </div>
+</form>

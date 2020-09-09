@@ -1,0 +1,40 @@
+{
+    "leave" : "Did the page you edited have not been saved yet. Are you sure you want to leave this page?",
+    "chooseColumn" : "Column",
+    "mainColumn" : "The main part can not be empty",
+    "linkMust" : "The link can not be empty",
+    "titleMust" : "The title can not be empty",
+    "saveSuccess" : "Save successfully",
+    "updateSuccess" : "update successfully",
+    "contentLink" : "Content link to",
+    "contentLinkTip" : "Please enter the link to the url",
+    "abstract" : "Outside the chain to describe",
+    "abstractTip" : "Please input the content",
+    "addCover" : "Click to add the cover",
+    "coverALL" : "Global cover settings",
+    "coverDefault" : "Will use the first picture as the cover map of the atlas by default",
+    "open" : "Opened",
+    "time" : "Time",
+    "release" : "Immediately release",
+
+    "publish" : "Publish",
+    "forwarding" : "Forwarding",
+    "source" : "Source",
+    "originalLink" : "The original link",
+    "save" : "Save",
+    "savePublish" : "Save and publish",
+
+    "pushTitle" : "Please enter the title (5-45 words)",
+
+    "optional" : "(optional)",
+    "edition" : "Outside the chain to release",
+    "history" : "Version history",
+    "keywords" : "Keywords",
+    "pushKeys" : "Add key",
+    "refresh" : "refresh",
+    "pushTiming" : "Time interval",
+    "cancel" : "cancel",
+    "autTip" : "Unable to obtain, the outer chain is described as empty",
+    "describe" : "Support to fill in the links of the web page and the client side, and when filling in the internal links of the client, you can jump between the original pages of the client"
+
+}

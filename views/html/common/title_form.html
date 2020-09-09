@@ -1,0 +1,13 @@
+<!-- 需要引入colorpick和count相关js -->
+<div class="new-title flex-item">
+	<div class="title-wrap flex-one col-sm-10">
+		<input type="text" name="title"  placeholder="{{ 'common.pushTitle'| translate}}" maxlength="50" ng-model="vm.title" ng-style="{color:vm.bgcolor, fontWeight:vm.is_bold, fontStyle:vm.is_italic}"/>
+		
+	</div>
+	<div class="head-btn-wrap col-sm-2 text-right pos-rlt">
+		<!--<div class="color-item m-r-sm" my-colpicker get-color = "vm.getColor( color )" ng-style="{backgroundColor:vm.bgcolor}"></div>-->
+		<!--<div class="font-item m-r-sm" ng-click="vm.fontSet('B')" ng-class="{'fouces':vm.is_bold == 'bold'}"  >B</div>-->
+		<!--<div class="font-item i-item" ng-click="vm.fontSet('I')" ng-class="{'fouces':vm.is_italic == 'italic'}"  >I</div>-->
+		<div num-count="vm.title" count-top="13" count-max="50" count-position="right"></div>
+	</div>
+</div>

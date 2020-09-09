@@ -1,0 +1,27 @@
+{
+  "targetDur" : "目标时长",
+  "empty" : "清空",
+  "preview" : "预览",
+  "save" : "保存",
+  "dropTip" : "从下面视频内拖动选择",
+  "duration" : "时长",
+  "search" : "搜索...",
+  "play" : "播放",
+  "upCover" : "本地上传封面",
+  "replace" : "替换封面",
+  "title" : "标题",
+  "description" : "描述",
+  "publish" : "发布",
+  "cancel" : "取消",
+  "allTime" : "全部时间段",
+  "yesterday" : "昨天",
+  "today" : "今天",
+  "latelyThree" : "最近三天",
+  "latelySeven" : "最近七天",
+  "customize" : "自定义时间段",
+  "confirm" : "确认",
+  "selColumn" : "选取发布栏目",
+  "errTitle" : "请填写视频标题",
+  "errColumn" : "请选择发布栏目"
+
+}

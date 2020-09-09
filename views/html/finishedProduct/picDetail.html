@@ -1,0 +1,247 @@
+<div class="pic-edit_serve hoge_side_wrapper">
+    <div class="pic-edit-wrap">
+        <div class="pic-hoge-table-add" style="overflow: none">
+            <span class="big-title" onclick="history.back(-1)" ng-if="vm.currentFromType == 'finished'">成品库</span>
+            <span class="big-title" onclick="history.back(-1)" ng-if="vm.currentFromType == 'original'">原稿库</span>
+            <span class="big-title" onclick="history.back(-1)" ng-if="vm.currentFromType == 'isolate'">隔离库</span>
+            <span class="big-title" onclick="history.back(-1)" ng-if="vm.currentFromType == 'activity'">作品详情</span>
+            <span class="slash">/</span>
+            <span class="min-title">图片详情</span>
+            <div class="pull-right">
+              <button class="btn btn-comment m-r-10" ng-show="vm.currentFromType != 'libraries'" ng-click="vm.choseColumn()" ng-if="vm.atlasDetail.status == 2 ||  vm.atlasDetail.status == 3">
+                  <span class="surf-icon"></span>
+                  上网
+              </button>
+              <button class="btn btn-comment m-r-10" ng-show="vm.currentFromType == 'libraries'">
+                <span class="down-icon"></span>下网
+              </button>
+              <button class="btn btn-comment m-r-10" ng-show="vm.currentFromType == 'finished' || vm.currentFromType == 'original'" ng-click="vm.goPicEdit()">
+                <i class="typeface-form_edit"></i>编辑
+              </button>
+              <!-- 下载 -->
+              <div class="btn-group dropdown m-r-15 chose-btn hoge-dropdown m-r-10">
+                  <button class="btn btn-sm dropdown-toggle bule-btn" data-toggle="dropdown">
+                      <span class="dropdown-label">{{vm.currentDownloadType}}</span>
+                      <span class="caret"></span>
+                  </button>
+                  <div class="dropdown-menu text-left text-sm font-12">
+                      <a class="dropdown-item" ng-href="{{vm.singleUrl}}" ng-click="vm.chooseDownload('current')">下载当前</a>
+                      <a class="dropdown-item" ng-href="{{vm.allUrl}}" ng-click="vm.chooseDownload('all')">下载全部</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="pic-info">
+          <div class="pic-score-detial" ng-if="vm.isShowScore">
+              <div class="item score">
+                  <div class="sc-first">
+                      <span class="font-20 m-r-20">{{vm.currentScore}}</span>
+                      <div class="handle-score write-score">
+                        <span class="handle-score" id="handle-score" ng-click="vm.showChange($event)">修改得分</span>
+                        <div class="change-score-hover" id="change-score" ng-if="vm.isShowChange">
+                          <div class="change-score">
+                            <label>
+                              修改得分：<input type="text" maxlength="15"
+                              ng-model="vm.score" id="change-score-input" class="score-change">
+                            </label>
+                          </div>
+                          <div class="change-btn">
+                            <button type="button" class="btn cancel-btn score-cancel" ng-click="vm.cancelScore()">取消</button>
+                            <button type="button" class="btn btn-sure score-sure" ng-click="vm.saveScore()">确定</button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="font-14">当前得分</div>
+              </div>
+              <div class="item ranking">
+                  <div class="sc-second">
+                      <span class="font-20">{{vm.atlasDetail.rank}}</span>
+                  </div>
+                  <div class="font-14">当前排名<span>(共{{vm.atlasDetail.total_atlass}}个作品)</span></div>
+              </div>
+              <div class="item person">
+                  <div class="sc-third">
+                      <span class="font-20 m-r-20">{{vm.atlasDetail.committeed_total}}</span>
+                      <div class="handle-score watch-score">
+                        <span class="handle-score">查看得分</span>
+                        <div class="score-question-hover">
+                          <p class="score-title" style="color: #333333">评分<span style="color: #ccc">（共{{vm.scoreLog.length}}人）</span></p>
+                          <div class="score-info">
+                            <div class="score-line" ng-repeat="nor in vm.scoreLog track by $index">
+                              <div class="score-key">
+                                <span class="item-img">
+                                  <img class="avatar-img" ng-src='{{nor.avatar}}'>
+                                </span>
+                                <span>{{nor.member_name}}</span>
+                              </div>
+                              <span class="score-value" ng-if="nor.score_status == 0">待评分</span>
+                              <span class="score-value" ng-if="nor.score_status == 1">{{nor.score}}</span>
+                            </div>
+                          </div>
+                          <span class="question-tip"></span>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="font-14">评分人数<span>(共{{vm.atlasDetail.committee_total}}位评委)</span></div>
+              </div>
+          </div>
+        </div>
+        <div class="pic-info-box">
+          <div class="pic-box">
+            <img ng-src="{{vm.atlasDetail.index_pic}}" alt="">
+          </div>
+          <div class="info-box">
+            <span class="isolation-btn" ng-show="vm.currentFromType == 'isolate'">已隔离</span>
+            <span class="info-title" ng-class="{'show-isolation-btn': vm.currentFromType == 'isolate'}">{{vm.atlasDetail.title}}</span>
+            <span class="check-dynamic-btn" ng-click="vm.viewAtlasDynamic()">查看图集动态</span>
+            <div class="info-detail">
+              <!-- <img class="portrait" src="../assets/images/mxu/avatar-40.jpg" alt=""> -->
+              <div>
+                  <span class="source">{{vm.atlasDetail.author_str}}</span>
+                  <span class="source">来源：{{vm.atlasDetail.source}}</span>
+              </div>
+              <span class="brief">{{vm.atlasDetail.brief}}</span>
+              <div class="time-box">
+                <span class="m-r-40">上网时间：{{vm.atlasDetail.updated_at || '--'}}</span>
+                <span class="m-r-40">类型：{{vm.atlasDetail.category_name || '--'}}</span>
+                <span class="m-r-40">标签：{{vm.atlasDetail.keywords || '--'}}</span>
+                <span class="m-r-40">发布至：{{vm.columnNameStr || '--'}}</span>
+                <span class="m-r-40">地区：{{vm.atlasDetail.areaAll || '--'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="image-info-box">
+          <div class="left-images">
+            <div class="current-image">
+              <div>
+                <div class="img">
+                  <img ng-src="{{vm.currentItem.photo_url}}" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="rolling-box">
+                <div class="all-img-box">
+                    <div ng-repeat="item in vm.picList track by $index">
+                        <div class="img-box" ng-class="{'chooseImg': vm.chooseImgIndex == $index}" ng-click="vm.getCurrentImg($index)" >
+                            <img class="pic" ng-src="{{item.photo_url}}" alt="">
+                        </div>     
+                    </div>
+                </div>
+                 <!-- 左右按钮 -->
+                <div class="pre-img" ng-click="vm.preImg()">
+                    <i class="fa typeface-pagination_shangyiye"></i>
+                </div>
+                <div class="next-img" ng-click="vm.nextImg()">
+                    <i class="fa typeface-pagination_xiayiye"></i>
+                </div>
+            </div>
+          </div>
+          <div class="right-info-box">
+              <p class="pic-title">{{vm.currentItem.photo_name}}</p>
+              <span class="min-info">浏览数：{{vm.currentItem.clicks || 0}}</span>
+              <span class="min-info">下载：{{vm.currentItem.downloads || 0}}</span>
+              <div class="details-box">
+                <p class="details-title">详情信息</p>
+                <span class="inline-text">
+                    <span class="name">ID：</span>
+                    <span class="num">{{vm.currentItem.id}}</span>
+                </span>
+                <span class="inline-text">
+                    <span class="name">尺寸：</span>
+                    <span class="num">{{vm.currentItem.width}}*{{vm.currentItem.height}}像素</span>
+                </span>
+                <span class="inline-text">
+                    <span class="name">格式：</span>
+                    <span class="num">{{vm.currentItem.format}}</span>
+                </span>
+                <span class="inline-text">
+                    <span class="name">大小：</span>
+                    <span class="num">{{vm.currentItem.filesize||0}}</span>
+                </span>
+                <span class="inline-text">
+                    <span class="name">上传时间：</span>
+                    <span class="num">{{vm.currentItem.created_at}}</span>
+                </span>
+              </div>
+              <div class="brief-box">
+                <p class="describe-title">描述</p>
+                <span class="describe-text">{{vm.currentItem.brief}}
+                </span>
+              </div>
+              <div class="EXIF-wrap">
+                  <div class="EXIF-box">
+                      <button class="btn btn-comment exif-btn">EXIF信息</button>
+                      <div class="question-hover">
+                          <p class="exif-title" ng-if="vm.currentItem.exif.length">EXIF信息</p>
+                          <div class="exif-info" ng-if="vm.currentItem.exif.length">
+                            <div class="exif-line" ng-repeat="info in vm.currentItem.exif">
+                              <span class="exif-key">{{info.name}}：</span>
+                              <span class="exif-value">{{info.value}}</span>
+                            </div>
+                          </div>
+                          <hoge-error hight-num="'170px'" arr-length="vm.currentItem.exif.length"></hoge-error>
+                          <!-- <div ng-if="!vm.currentItem.exif.length">暂无</div>
+                          <span class="question-tip"></span> -->
+                      </div>
+                    </div>
+              </div>
+             
+          </div>
+            <!-- <div class="img-info">
+                <div class="img">
+                    <img ng-src="{{vm.currentItem.photo_url}}" alt="">
+                </div>
+                <div class="right-info">
+                    <div class="info-title-box">
+                        <span class="info-title-btn base-btn" ng-class="{'active': vm.currentIndex == 0}" ng-click="vm.toggleBox('0')">基本信息</span>
+                        <span class="info-title-btn EXIF-btn" ng-class="{'active': vm.currentIndex == 1}" ng-click="vm.toggleBox('1')">EXIF信息</span>
+                    </div>
+                    <div class="base-info-box" ng-if="vm.currentIndex == 0">
+                        <div class="base-brief">
+                            <span ng-show="!vm.editable" ng-click="vm.goEditBrief()">
+                                    {{vm.currentItem.photo_name}}
+                            </span>
+                            <textarea class="edit-box" type="text" ng-model="vm.currentItem.photo_name" maxlength="255" ng-blur="vm.editBrief(1)" ng-keyup="vm.editBrief($event)" autofocus ng-show="vm.editable">
+                        </div>
+                        <div class="base-sign-box">
+                            <span>标签</span>
+                            <span class="ele-sign" ng-repeat="signItem in vm.currentItem.tags track by $index" ng-click="vm.delSign($index)">
+                                {{signItem}}<i class="keywords-icon-del typeface-alert_cuowu"></i>
+                                <span ng-show="$index !== vm.currentItem.tags.length-1">,</span> 
+                            </span>
+                            <input class="sign-box" type="text" ng-model="vm.editSignContent" maxlength="5" ng-blur="vm.editSign(1)" ng-keyup="vm.editSign($event)" autofocus ng-show="vm.signEditable">
+                            <div class="add-group" ng-click="vm.getFocus()" ng-show="vm.currentItem.tags.length < 5">
+                                <i class="fa typeface-form_zengjia"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="EXI-info-box" ng-if="vm.currentIndex == 1">
+                        <div class="strip" ng-repeat="exifItem in vm.currentItem.exif track by $index">
+                            <span class="strip-name">{{exifItem.name}}：</span>
+                            <span class="strip-content">{{exifItem.value}}</span>
+                        </div>
+                        <div class="hoge-error hoge-error-hight" ng-if="!vm.currentItem.exif.length" >
+                            <div>
+                                <div class="error-img"></div>
+                                <p>暂无内容</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- 轮转图组 -->
+            <!-- <div class="rolling-box">
+                <div class="all-img-box">
+                    <div class="img-box" ng-repeat="item in vm.picList track by $index">
+                        <div>
+                            <img class="pic" ng-src="{{item.photo_url}}" alt="" ng-class="{'chooseImg': vm.chooseImgIndex == $index}" ng-click="vm.getCurrentImg($index)">
+                        </div>     
+                    </div>
+                </div>
+               
+            </div> -->
+        </div>
+    </div>
+</div>

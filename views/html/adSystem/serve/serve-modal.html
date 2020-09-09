@@ -1,0 +1,38 @@
+<div class="modal-serve box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">素材选择</h5>
+        <i class="fa typeface-form_guanbi map-close" ng-click="vm.cancel()" style="position: absolute;right: 15px;top: 18px;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="list-top">
+            <span>素材列表</span>
+            <div class="form-group hoge-input-search">
+                <input type="text" placeholder="搜索素材" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+            </div>
+        </div>
+        <div class="serve-list" my-loading="vm.loading" ng-class="{'serve-list-data':vm.serveList.length}">
+            <div class="hoge-error hoge-hight-other" ng-if="!vm.serveList.length">
+                <div>
+                    <div class="error-img" ng-if="vm.errorMessage && !vm.loading"></div>
+                    <p>{{vm.errorMessage}}</p>
+                </div>
+            </div>
+            <div ng-repeat="item in vm.serveList" class="serve-item-body" ng-if="vm.serveList.length">
+                <div class="serve-list-item" ng-click="vm.choseServe(item)" ng-class="{'choose':vm.checkId === item.id,'border-usual':vm.checkId === item.id}">
+                    <img class="tem-item" ng-click="vm.pre()" src="{{item.index_pic}}" alt="" ng-if="item.type === 'image' || item.type === 'video'">
+                    <img class="tem-item" ng-click="vm.pre()" src="/assets/images/mxu/advertise/flash.png" alt="" ng-if="item.type === 'flash'">
+                    <img class="tem-item" ng-click="vm.pre()" src="/assets/images/mxu/advertise/img_daimakuai@2x.png" alt="" ng-if="item.type === 'js'">
+                </div>
+                <div class="serve-title">{{item.name}}</div>
+            </div>
+        </div>
+        <div class="hoge-table-bottom" ng-if="vm.serveList.length">
+            <page-nation options="vm.pageOptions" turn-page="vm.getServe()"></page-nation>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{'include.cancel' | translate}}</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.confirmChoose()" my-loading="vm.include_saveLoading">{{'include.submit' | translate}}</button>
+    </div>
+</div>

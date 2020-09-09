@@ -1,0 +1,51 @@
+<div class="video-list-body">
+    <div class="video-search-body clearfix">
+        <!-- 分类下拉 -->
+        <div class="list-role-user-drop list-role-drop" ng-click="vm.showColumn()">
+            <!-- <button class="btn white btn-sm dropdown-toggle black-dropdown" data-toggle="dropdown"> -->
+                    <button class="btn white btn-sm dropdown-toggle black-dropdown" data-toggle="dropdown" ng-class="{'stateBox':vm.stateBox}">
+                <span class="dropdown-label" ng-if="vm.category.name">{{vm.category.name}}</span>
+                <span class="dropdown-label" ng-if="!vm.category.name">全部分类</span>
+                <span class="caret"></span>
+            </button>
+            <div class="column-top-box" ng-if="vm.categoryShow">
+                <classify-preview classify-data="vm.radioList" classify-name="''" box-name="'选择部门'" classify-check="vm.category" radio-style="'all'"
+                    classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)" classify-focus="false" box-status="true" show-class="vm.stateBox = $event"
+                    show-chose-all="true" all-name="'全部分类'" choose-function="vm.chooseColumns(Item)"></classify-preview>
+            </div>
+        </div>
+        <!--时间下拉-->
+        <div class="btn-group dropdown hoge-dropdown">
+            <button class="btn btn-sm dropdown-toggle black-dropdown" style="padding-right: 24px !important;" data-toggle="dropdown">
+                <span class="dropdown-label">{{vm.time}}</span>
+                <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                    {{time.name}}
+                    <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                        type="text" options="vm.options" />
+                </a>
+            </div>
+        </div>
+        <!--搜索-->
+        <div class="form-group hoge-input-search pull-right black-input-search" ng-class="{'black-search-focus':vm.blackSearch}">
+            <input type="text" placeholder="{{'content.search' | translate }}" ng-keypress="vm.keyPress($event)" ng-model="vm.titles"  ng-focus="vm.blackSearch=true" ng-blur="vm.blackSearch=false">
+            <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+        </div>
+    </div>
+    <div class="video-list" id="fast-editing-list" my-loading="vm.videoLoading">
+        <div class="video-list-item" ng-if="vm.videoList.length" ng-click="vm.handlerAdd(item)" ng-repeat="item in vm.videoList">
+            <div class="video-item-img">
+                <img ng-src="{{item.index_pic}}" alt="" ng-if="item.index_pic">
+                <img ng-if="!item.index_pic" src="/assets/images/mxu/img_cover.png" alt="">
+                <!-- <img ng-if="item.type=='audio'&&!item.index_pic" src="/assets/images/mxu/video/voice@2x.png" alt=""> -->
+                <span class="show-time">{{item.duration_format}}</span>
+            </div>
+            <div class="show-title">{{item.title}}</div>
+        </div>
+        <div class="no-video-list" ng-if="!vm.videoList.length&&!vm.videoLoading">
+            <span>暂无数据</span>
+        </div>
+    </div>
+</div>

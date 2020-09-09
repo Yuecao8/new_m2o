@@ -1,0 +1,116 @@
+<form class="edit-column box-shadow-md" name="editColumnForm">
+    <div class="modal-header">
+        <h5 class="modal-title">{{vm.opera}}{{vm.className}}</h5>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" style="position: relative;margin-bottom: 0" ng-class="{'mengyu-font': vm.resMengyu(vm.column_detail.name)}">
+            <label>{{vm.className}}名称</label>
+            <input type="text" maxlength="15" class="form-control"
+                   ng-model="vm.column_detail.name"
+                   ng-blur="vm.addColumn.name = false"
+                   ng-focus="vm.addColumn.name = true"
+                   ng-keydown="vm.keydown($event)">
+            <div class="count" style="position: absolute;top:14px;right:9px;">
+                <div num-count="vm.column_detail.name" count-top="0" count-right="0" count-max="15" count-position="right"></div>
+            </div>
+        </div>
+
+        <!--新版M2O功能屏蔽注释-->
+        <!--<div class="form-group">-->
+            <!--<label translate="column.currentSite"></label>-->
+            <!--<div class="form-control" style="border-bottom: none;">{{vm.column_detail.site_title}}</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label ng-class="{'active': vm.addColumn.keyword}" translate="column.keyword"></label>-->
+            <!--<input type="text" class="form-control"-->
+                   <!--ng-model="vm.column_detail.keywords"-->
+                   <!--ng-blur="vm.addColumn.keyword = false"-->
+                   <!--ng-focus="vm.addColumn.keyword = true">-->
+            <!--<small>*{{'column.keywordMore' | translate}}</small>-->
+        <!--</div>-->
+        <!--<div class="form-group" style="position: relative;">-->
+            <!--<label ng-class="{'active': vm.addColumn.content}" style="vertical-align: top;" translate="column.description"></label>-->
+            <!--<textarea type="text" class="form-control"-->
+                      <!--ng-model="vm.column_detail.column_brief"-->
+                      <!--ng-blur="vm.addColumn.content = false"-->
+                      <!--ng-focus="vm.addColumn.content = true"-->
+                      <!--maxlength="128"></textarea>-->
+            <!--<div num-count="vm.column_detail.content" count-max="128" class="m-b"></div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label ng-class="{'active': vm.addColumn.meta_title}" translate="column.meta"></label>-->
+            <!--<input type="text" class="form-control"-->
+                   <!--ng-model="vm.column_detail.meta_title"-->
+                   <!--ng-blur="vm.addColumn.meta_title = false"-->
+                   <!--ng-focus="vm.addColumn.meta_title = true">-->
+            <!--<small>*{{'column.SEO' | translate}}</small>-->
+        <!--</div>-->
+        <!--<div class="form-group footer_form">-->
+            <!--<label ng-class="{'active': vm.addColumn.father}" translate="column.columnParent"></label>-->
+            <!--<div class="md-form-group float-label">-->
+                <!--<div class="input-box" ng-if="!vm.id">-->
+                    <!--<input type="text" class="md-input"-->
+                           <!--ng-blur="vm.addColumn.father = false"-->
+                           <!--ng-focus="vm.addColumn.father = true" readonly-->
+                           <!--ng-class="{'ng-dirty' :  vm.mainColumn.length }">-->
+                    <!--<div class="list-point" ng-show="vm.mainColumn.length">-->
+                        <!--<div class="form-pop" ng-repeat="item in vm.mainColumn" title="{{::item.fn}}">-->
+                            <!--{{item.name}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="column-top" ng-if="vm.id">-->
+                    <!--<classify-preview-->
+                            <!--classify-data="vm.radioList"-->
+                            <!--box-name="'栏目弹框'"-->
+                            <!--classify-check="vm.mainColumn"-->
+                            <!--classify-type="'radio'"-->
+                            <!--radio-style="'all'"-->
+                            <!--classify-next="vm.nextColumn(Id,Level + 1,Type)"-->
+                            <!--classify-focus="vm.addColumn.father"-->
+                    <!--&gt;</classify-preview>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<small>*{{'column.defaultColumn' | translate}}</small>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label ng-class="{'active': vm.addColumn.sign}" translate="column.mark"></label>-->
+            <!--<input type="text" maxlength="60" class="form-control"-->
+                   <!--ng-model="vm.column_detail.column_sign"-->
+                   <!--ng-blur="vm.addColumn.sign = false"-->
+                   <!--ng-focus="vm.addColumn.sign = true">-->
+            <!--&lt;!&ndash;ng-change="vm.replace(vm.column_detail.column_sign)"&ndash;&gt;-->
+            <!--&lt;!&ndash;<small>*{{'column.limit' | translate}}</small>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label ng-class="{'active': vm.addColumn.link}" translate="column.link"></label>-->
+            <!--<input type="text" maxlength="60" class="form-control"-->
+                   <!--ng-model="vm.column_detail.column_link"-->
+                   <!--ng-blur="vm.addColumn.link = false"-->
+                   <!--ng-focus="vm.addColumn.link = true"-->
+                   <!--placeholder="http://">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label translate="column.diagram"></label>-->
+            <!--<div class="form-file">-->
+                <!--<div class="pos-abt fileUpTip" ng-show="vm.column_detail.index_pic" style="" translate="column.changeDiagram"></div>-->
+                <!--<input type="file" id="columnFile" nv-file-select uploader="vm.localUploader" accept="image/gif,image/jpeg,image/png,image/bmp" style="cursor: pointer;">-->
+                <!--<img  ng-if="vm.column_detail.index_pic" ng-src="{{vm.column_detail.index_pic}}"/>-->
+                <!--<div class="file_form" ng-show="!vm.column_detail.index_pic">-->
+                    <!--<i class="icon-tianjia"></i>{{'column.uploadImg' | translate}}-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="check">-->
+                <!--<input data_name="{{vm.column_detail.is_audio}}" ng-model="vm.column_detail.is_audio"-->
+                       <!--ng-checked="vm.column_detail.is_audio" type="checkbox">-->
+                <!--{{'column.audio' | translate}}-->
+            <!--</label>-->
+        <!--</div>-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{'column.save' | translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'column.cancel' | translate}}</button>
+    </div>
+</form>

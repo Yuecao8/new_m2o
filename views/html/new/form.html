@@ -1,0 +1,736 @@
+<main class="main-form-wrap article-form-wrap" my-loading="vm.info_loading">
+    <div class="logoing" ng-show="vm.logoing" style="color:  #a5a5a5;">
+        <img src="../assets/images/mxu/news/loading.gif" alt="">
+    </div>
+    <nav class="hoge-nav">
+        <div class="hoge-table-add">
+            <div class="hoge-edit-head">
+                <div id="manage-section" ng-show="false"></div>
+                <div class="hoge-return-body" ng-if="vm.noEdit == 'topic'" onclick="history.go(-1)">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回专题</span>
+                </div>
+                <div class="hoge-return-body" ng-if="!vm.isOriginal&&!vm.hotFlag && !vm.publishFlag && !vm.commentFlag && !vm.reviewFlag && !vm.platform && vm.noEdit !='topic'" ui-sref="app.content.menu.list({type:'article',page:vm.pageCount,per_num:vm.pageSize,title:vm.listSearch, hideSynergyKind: vm.hideAccessKind ? true : null, project_id: vm.listProjectId ? vm.listProjectId : null, project_title: vm.listProjectTitle ? vm.listProjectTitle : null,article_type:vm.moduleType,status:vm.moduleStatus, access_token: vm.access_token,category_id:vm.category_id, category_id:vm.category_id,date_search:vm.date_search,start_time:vm.start_time,end_time:vm.end_time})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div class="hoge-return-body" ng-click="vm.goNewTime()" ng-if="!vm.isOriginal&&!vm.hotFlag && !vm.publishFlag && !vm.commentFlag && !vm.reviewFlag && vm.platform">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.hotFlag" class="hoge-return-body" ui-sref="app.hot.menu.list({title:vm.listSearch,page:vm.pageCount,per_num:vm.pageSize, hideSynergyKind: vm.hideAccessKind ? true : null, project_id: vm.listProjectId ? vm.listProjectId : null, project_title: vm.listProjectTitle ? vm.listProjectTitle : null,date_search:vm.date_search,start_time:vm.start_time,end_time:vm.end_time})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.publishFlag" class="hoge-return-body" ui-sref="app.publish.menu.list({page:vm.pageCount,per_num:vm.pageSize,type:vm.publishType, hideSynergyKind: vm.hideAccessKind ? true : null, column_id:vm.column_id, column_id:vm.column_id,date_search:vm.date_search,start_time:vm.start_time,end_time:vm.end_time})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.commentFlag" class="hoge-return-body" ui-sref="app.comment.list({title:vm.listSearch, hideSynergyKind: vm.hideAccessKind ? true : null, project_id: vm.listProjectId ? vm.listProjectId : null, project_title: vm.listProjectTitle ? vm.listProjectTitle : null,date_search:vm.date_search,start_time:vm.start_time,end_time:vm.end_time})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.isOriginal" class="hoge-return-body"  ng-click="vm.cancelForm()">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <div ng-if="vm.reviewFlag" class="hoge-return-body" ui-sref="app.content.review.list({page:vm.pageCount,per_num:vm.pageSize,type:vm.reviewType, hideSynergyKind: vm.hideAccessKind ? true : null,date_search:vm.date_search,start_time:vm.start_time,end_time:vm.end_time})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <em ng-if="!vm.hotFlag && vm.noEdit != 'topic'">{{vm.param.id?'编辑':'新建'}}{{vm.articleName}}</em>
+                <em ng-if="vm.hotFlag || vm.noEdit == 'topic'">阅读模式</em>
+                <span ng-show="vm.draftLoading" style="color:  #a5a5a5;">
+                    <img src="../assets/images/mxu/news/loading.gif" alt="">
+                    正在保存
+                </span>
+                <span ng-show="vm.draftLoadingOn" style="color:  #a5a5a5;">
+                    <i class="typeface-alert_wancheng2"></i>
+                    已保存
+                </span>
+               <!-- 新建 -->
+                <div class="process-width-status" ng-show="!vm.param.id && !vm.isOriginal && !vm.platform">
+                    <span class="content-pendingAudit padding-r-w">待审核</span>
+                    <span class="process-span" ng-click="vm.chooseProcess()">{{vm.is_show_process ? '已选审核流程': '选择流程'}}</span>
+                    <div class="process-data-box new-process-data-box" ng-if="vm.showProcessBox">
+                        <div class="step-nav-box">
+                            <span class="nav-box nav-title">已选流程&nbsp;&nbsp;(保存后生效)</span>
+                            <span class="nav-box nav-btn-re-election" ng-click="vm.reElectionProcess()">重选</span>
+                            <span class="nav-box nav-btn-clear" ng-click="vm.clearProcess()">清空</span>
+                        </div>
+                        <div class="step-box" ng-repeat="(stepIndex,stepItem) in vm.pro_list.nodes">
+                            <span class="step-name-box">{{stepItem.rangeName}}</span>
+                            <div class="flex-item">
+                                <div class="step-img-box" ng-style="{'min-width': stepItem.range != 0 && 50+'px' ,'width': (stepItem.users.length > 0 && stepItem.users.length *30+'px') || (stepItem.role_departments.length > 0 && stepItem.role_departments.length *30+'px')}">
+                                    <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="stepItem.range==1">
+                                    <!-- <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}"> -->
+
+                                    <div class="user-one no-avatar-bg{{idx}}" ng-repeat="(idx,userItem) in stepItem.users" title="{{userItem.name}}" ng-style="{'left':idx*25+'px'}" ng-if="idx <= 2">
+                                        <span class="avatar-34 no-avatar " ng-if="!userItem.avatar"></span>
+                                        <img class="avatar-34" ng-src="{{userItem.avatar}}" alt="" ng-if="userItem.avatar">
+                                        <!-- <img class="avatar-34" ng-src="userItem.avatar" alt="" ng-if="userItem.avatar"> -->
+                                        <span>{{userItem.name}}</span>
+                                    </div>
+                                    <div class="user-range-3" ng-style="{'left':idx*25+'px'}" ng-if="stepItem.range==3" ng-repeat="(idx,userItem) in stepItem.role_departments">
+                                        <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                    </div>
+                                    <span class="overflow-user" ng-if="stepItem.users.length >= 4">
+                                        <i class="typeface-form_zengjia fa"></i>
+                                        <span class="overflow-num">{{stepItem.users.length - 3}}</span>                       
+                                    </span>
+                                </div>
+                                <div class="role-arrow" ng-if="stepIndex != (vm.processData.nodes.length - 1)">
+                                    <i class="typeface-shengao_xiayige"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- 编辑 -->
+                <div class="process-width-status" ng-show="vm.param.id && vm.create_user_name == vm.user_name && !vm.isOriginal">
+                    <span class="process-span" ng-if="vm.editStatus==1 && !vm.auditId" ng-click="vm.chooseProcess()">{{vm.is_show_process ? '已选审核流程': '选择流程'}}</span>
+                    <div class="process-data-box mxu-last" ng-if="vm.showProcessBox">
+                        <div class="step-nav-box">
+                            <span class="nav-box nav-title">已选流程&nbsp;&nbsp;(保存后生效)</span>
+                            <span class="nav-box nav-btn-re-election" ng-click="vm.reElectionProcess()">重选</span>
+                            <span class="nav-box nav-btn-clear" ng-click="vm.clearProcess()">清空</span>
+                        </div>
+                        <div class="step-box" ng-repeat="(stepIndex,stepItem) in vm.pro_list.nodes">
+                            <span class="step-name-box">{{stepItem.rangeName}}</span>
+                            <div class="flex-item">
+                                <div class="step-img-box" ng-style="{'min-width': stepItem.range != 0 && 50+'px' ,'width': (stepItem.users.length > 0 && stepItem.users.length *30+'px') || (stepItem.role_departments.length > 0 && stepItem.role_departments.length *30+'px')}">
+                                    <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="stepItem.range==1">
+                                    <!-- <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}"> -->
+
+                                    <div class="user-one no-avatar-bg{{idx}}" ng-repeat="(idx,userItem) in stepItem.users" ng-style="{'left':idx*25+'px'}" ng-if="idx <= 2">
+                                        <span class="avatar-34 no-avatar " ng-if="!userItem.avatar"></span>
+                                        <img class="avatar-34" ng-src="{{userItem.avatar}}" alt="" ng-if="userItem.avatar">
+                                        <!-- <img class="avatar-34" ng-src="userItem.avatar" alt="" ng-if="userItem.avatar"> -->
+                                        <span>{{userItem.name}}</span>
+                                    </div>
+                                    <div class="user-range-3" ng-style="{'left':idx*25+'px'}" ng-if="stepItem.range==3" ng-repeat="(idx,userItem) in stepItem.role_departments">
+                                        <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                    </div>
+                                    <span class="overflow-user" ng-if="stepItem.users.length >= 4">
+                                        <i class="typeface-form_zengjia fa"></i>
+                                        <span class="overflow-num">{{stepItem.users.length - 3}}</span>                       
+                                    </span>
+                                </div>
+                                <div class="role-arrow" ng-if="stepIndex != (vm.processData.nodes.length - 1)">
+                                    <i class="typeface-shengao_xiayige"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- 王亚让改的 所有从发布库进去的都直接显示已发布且不可点击 -->
+                <div class="edit-width-status" ng-if="vm.param.id && !vm.isOriginal && vm.publishFlag">
+                    <span class="content-audited">已发布</span>
+                </div>
+                <div class="edit-width-status" ng-class="{'other-edit-width-status': vm.editStatus!=1 || vm.create_user_name != vm.user_name}" ng-show="vm.param.id && !vm.isOriginal && !vm.publishFlag">
+                    <span class="content-pendingAudit" ng-if="vm.editStatus==1 && !vm.auditId">待审核</span>
+                    <span class="content-audited" ng-if="vm.editStatus==2">已审核</span>
+                    <span class="content-audited" ng-if="vm.editStatus==3" translate="content.release">已发布</span>
+                    <span class="content-repulsed" ng-if="vm.editStatus==4">已打回</span>
+                    <span class="content-repulsed" ng-if="vm.editStatus==9">待发布</span>
+                    <span class="content-repulsed" ng-if="vm.editStatus==5 || (vm.editStatus==1 && vm.auditId)">审核中</span>
+                    <!-- 陈标注释的审稿二期功能 -->
+                    <span class="triangle-btn status-btn" ng-style="{borderTopColor: (vm.editStatus == 2 || vm.editStatus == 3) ? '#42a65a' : '#f1453d'}" ng-if="(vm.editStatus==5 || (vm.editStatus==1 && vm.auditId) || vm.editStatus==2 || vm.editStatus==3 || vm.editStatus==4 || vm.editStatus==9) && vm.auditId" ng-click="vm.toggleShowAudit()"></span>
+                    <div class="audit-contain audit-lif" ng-if="vm.showAudit">
+                        <div class="audit-top audit-lif">
+                            <button class="tog-btn audit-lif" ng-click="vm.toggleLog(1)" ng-class="{'active': !vm.showLog}">基本信息</button>
+                            <button class="tog-btn posi audit-lif" ng-click="vm.toggleLog(2)" ng-class="{'active': vm.showLog}">审稿日志</button>
+                        </div>
+                        <div class="audit-mid" ng-if="!vm.showLog">
+                            <div class="mid-top audit-lif">
+                                <span class="cur-pro audit-lif">当前进度(<span ng-if="vm.editStatus==5 || (vm.editStatus==1 && vm.auditId)">{{vm.currentNewProgress}}级审核</span><span ng-if="vm.editStatus==2 || vm.editStatus==3">审核完成</span><span ng-if="vm.editStatus==4">已打回</span><span ng-if="vm.editStatus==9">待发布</span>)</span>
+                                <span class="full-pro audit-lif" ng-click="vm.showFullProcess()">完整流程</span>
+                                <div class="right-div" ng-if="vm.showRightDiv">
+                                    <div class="box"></div>
+                                    <div class="process-nodes audit-lif">
+                                        <div class="node-item audit-lif" ng-repeat="(ndx,node) in vm.processData.nodes">
+                                            <div class="node-main">
+                                                <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                                <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                                    <span ng-if="node.range == 2">指定用户</span>
+                                                    <span ng-if="node.range == 1">全体用户</span>
+                                                    <span ng-if="node.range == 3">部门角色</span>
+                                                    <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                                    <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                                </div>
+                                                <div class="node-role flex-item">
+                                                    <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                        <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                        <div class="user-img-box" ng-if="node.range==2" >
+                                                            <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                                ng-style="{'left':idx*25+'px'}">
+                                                                <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                                <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                                <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                                <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                                <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                                    <span class="arrow bottom b-white"></span>
+                                                                    <div class="box-body">{{user.name}}</div>
+                                                                </div>
+                                                            </div>
+                                                            <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                                <i class="typeface-form_zengjia fa"></i>
+                                                                <span class="overflow-num">{{node.users.length-3}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                            <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                                <span class="arrow bottom b-white"></span>
+                                                                <div class="box-body">{{user.role.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                            <i class="typeface-list_caozuo"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="role-arrow"ng-if="$index != (vm.processData.nodes.length - 1)">
+                                                        <i class="typeface-shengao_xiayige"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-div" ng-if="vm.showBottomDiv">
+                                    <div class="box"></div>
+                                    <div class="process-nodes">
+                                        <div class="node-item" ng-repeat="(ndx,node) in vm.processData.nodes">
+                                            <div class="node-main">
+                                                <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                                <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                                    <span ng-if="node.range == 2">指定用户</span>
+                                                    <span ng-if="node.range == 1">全体用户</span>
+                                                    <span ng-if="node.range == 3">部门角色</span>
+                                                    <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                                    <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                                </div>
+                                                <div class="node-role flex-item">
+                                                    <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                        <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                        <div class="user-img-box" ng-if="node.range==2" >
+                                                            <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                                ng-style="{'left':idx*25+'px'}">
+                                                                <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                                <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                                <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                                <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                                <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                                    <span class="arrow bottom b-white"></span>
+                                                                    <div class="box-body">{{user.name}}</div>
+                                                                </div>
+                                                            </div>
+                                                            <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                                <i class="typeface-form_zengjia fa"></i>
+                                                                <span class="overflow-num">{{node.users.length-3}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                            <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                                <span class="arrow bottom b-white"></span>
+                                                                <div class="box-body">{{user.role.name}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                            <i class="typeface-list_caozuo"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="role-arrow"ng-if="$index != (vm.processData.nodes.length - 1)">
+                                                        <i class="typeface-shengao_xiayige"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="process-nodes">
+                                <div class="node-item" ng-repeat="(ndx,node) in vm.currentNodes">
+                                    <div class="node-main">
+                                        <div class="node-name" ng-if="node.user.name">{{node.user.name}}</div>
+                                        <div class="node-name" ng-if="(node.range == 1 || node.range == 2 || node.range == 3) && !node.user.name">
+                                            <span ng-if="node.range == 2">指定用户</span>
+                                            <span ng-if="node.range == 1">全体用户</span>
+                                            <span ng-if="node.range == 3">部门角色</span>
+                                            <img class="branch" ng-if="node.range == 3" src="/assets/images/mxu/review/icon_bumenjuese@2x.png" alt="">
+                                            <span class="content-repulsed" ng-if="node.isAuditing">审核中</span>
+                                        </div>
+                                        <div class="node-role flex-item">
+                                            <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                                <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                                <div class="user-img-box" ng-if="node.range==2" >
+                                                    <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                        ng-style="{'left':idx*25+'px'}">
+                                                        <i class="typeface-dropdown_xuanze audit-pass" ng-if="node.hasPass"></i>
+                                                        <i class="typeface-form_guanbi audit-back" ng-if="node.isBlocked"></i>
+                                                        <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                        <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                        <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                            <span class="arrow bottom b-white"></span>
+                                                            <div class="box-body">{{user.name}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                        <i class="typeface-form_zengjia fa"></i>
+                                                        <span class="overflow-num">{{node.users.length-3}}</span>
+                                                    </span>
+                                                </div>
+                                                <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                                    <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                                    <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                        <span class="arrow bottom b-white"></span>
+                                                        <div class="box-body">{{user.role.name}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                                    <i class="typeface-list_caozuo"></i>
+                                                </div>
+                                            </div>
+                                            <div class="role-arrow" ng-if="node.hasNext">
+                                                <i class="typeface-shengao_xiayige"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mid-bottom">
+                                <div class="title">稿件评论({{vm.commentList.length}})</div>
+                                <div class="content">
+                                    <div class="no-data" ng-if="!vm.commentList.length && !vm.commentLoading">
+                                        <div>
+                                            <img class="no-data-img" src="/assets/images/mxu/review/img_nothing@2x.png" alt="">
+                                            <p class="text">暂无评论</p>
+                                        </div>
+                                    </div>
+                                    <div class="item" ng-repeat="comment in vm.commentList track by $index">
+                                        <img class="image" ng-src="{{comment.user.avatar}}" ng-if="comment.user.avatar" alt="">
+                                        <span class="image no-avatar-bg{{comment.user.bgColor}}" ng-if="!comment.user.avatar">{{comment.user.avatarName}}</span>
+                                        <div class="name">
+                                            <span>{{comment.user.name}}</span>
+                                            <span class="time">{{comment.time}}</span>
+                                        </div>
+                                        <p class="comment">{{comment.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="audit-bottom" ng-if="!vm.showLog">
+                            <input type="text" class="bottom-input" ng-model="vm.comment" placeholder="输入评论">
+                            <button class="primary-btn" ng-click="vm.setComment()">确定</button>
+                        </div>
+                        <div class="audit-mid" ng-if="vm.showLog">
+                            <div class="no-data" ng-if="!vm.logList.length && !vm.logLoading">暂无数据</div>
+                            <div class="log-item" ng-repeat="log in vm.logList track by $index">
+                                <p class="time">{{log.created_at}}</p>
+                                <p class="operation">{{log.name}} {{log.operationName}} 了该稿件。<span ng-if="log.operation == 2">评论：{{log.reason}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="history-dropdown" ng-show="vm.param.id" ng-style="{'padding-right': vm.isOriginal ? 232 + 'px': null}">
+                    <span ng-click="vm.compareHistroy()">
+                        <a href  ng-class="{'simple-dropdown': vm.isOriginal, 'common-dropdown': !vm.isOriginal}">
+                          历史记录
+                        </a>
+                        <!-- <ul class="uib-dropdown-menu"  aria-labelledby="simple-dropdown">
+                          <li class="history-show-tip">显示最近10次记录</li>
+                          <li class="list-content" style="min-height:'282px'" my-loading="vm.histLoading">
+                                <div class="history-list" ng-repeat="historyItem in vm.historyList track by $index"
+                            ng-if="vm.historyList.length">
+                                    <div class="history-list-body">
+                                        <span>{{historyItem.created_at.substr(0,10)}}</span>
+                                        <span>{{historyItem.created_at.substr(11,5)}}</span>
+                                        <span>{{historyItem.user.username}}</span>
+                                        <span ng-click="vm.compareHistroy(historyItem)">对比</span>
+                                    </div>
+                                </div>
+                                <div ng-show="!vm.historyList.length && vm.noHistory" class="no-history">
+                                    暂无内容
+                                </div>
+                          </li>
+                          
+                         
+                        </ul> -->
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="form-content hoge-flex" ng-class="{'no-event':vm.noEdit}">
+        <aside class="left-aside hoge-radius">
+            <div class="draft-left hoge-radius">
+                <div class="side_form_fixed hoge-radius" style="z-index: 1001;">
+                        <!-- <div class="hoge-border template-list" ng-class="{'other':vm.templateState==false}" style="z-index: 1000;" scroll-aside> -->
+                    <div class="hoge-border template-list" style="z-index: 1000;" scroll-aside>
+                        <div class="toggle-header">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item" ng-click="vm.otherTab()">
+                                    <a class="nav-link active" data-toggle="tab" data-target="#attr">属性</a>
+                                </li>
+                                <li class="nav-item" ng-click="vm.otherTab()">
+                                    <!-- 引导 -->
+                                    <div ng-if="vm.showmaterialguide" class="animated tada material-guid">选题成果素材<br/> 都在这里！</div>
+                                    <a class="nav-link can-event" id="upload-toggle" data-toggle="tab" data-target="#material">素材</a>
+                                </li>
+                                <li class="nav-item" ng-click="vm.getTemplateList()">
+                                    <a class="nav-link " data-toggle="tab" data-target="#component">组件</a>
+                                </li>
+                                 <li class="nav-item" ng-click="vm.getHtmlList()" ng-if="vm.weixin_template">
+                                    <a class="nav-link " data-toggle="tab" data-target="#template">模板</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="hoge-radius tab-pane animated fadeIn text-muted active" id="attr">
+                                <div class="rolling">
+                                    <content-attr  content-param="vm.contentParam" is-zyshow="vm.showZY" platform="vm.platform" is-Original="vm.isOriginal" dropdown-show="vm.showDropdown" detail-category-name="vm.detailCategoryName" article-type="'commonarticle'" detail-column-name="vm.detailColumnName" detail-fenlei-name="vm.detailFenleiName" auto-get-abstract="vm.openAbstract" is-video-pre="vm.isVPre" open-base="vm.openBase" cover-style="vm.coverStyle"></content-attr>
+                                </div>
+                            </div>
+                            <div class="tab-pane animated fadeIn text-muted" id="material">
+                                <news-resources resources-list="vm.newsresources"  upload-resource="vm.newsUpload(false)"
+                                                delete-media="vm.deleteMedia(item)"
+                                                re-try="vm.newsRetry(item)"
+                                                insert-resource="vm.getResourceHtml(item)"
+                                                down-load-resource="vm.downLoad(item)"
+                                                operate-loading="vm.operateLoading"
+                                                pre="vm.preResource(item)"
+                                                show-guide="vm.showmaterialguide2"
+                                                is-read-only="vm.noEdit" mouse-out="vm.mouseLeave(event, item)"
+                                                mouse-enter="vm.mouseIn(event, item)"
+                                ></news-resources>
+                            </div>
+                            <div class="tab-pane animated fadeIn text-muted" id="component">
+                                <!-- <div class="no-news-component">暂未开放，敬请期待~</div> -->
+                                <div class="news-component">
+                                    <div class="search-input-box">
+                                        <input type="text" ng-model="vm.keyValue" placeholder="请输入关键字">
+                                        <span class="search-icon" ng-click="vm.searchTemplate()">
+                                            <i class="fa typeface-searchbar_sousuo"></i>
+                                        </span>
+                                        <span class="history-icon">
+                                            <i class="fa typeface-TimePicker_shijian" ng-class="{'recentlyActive':vm.recentType == true}" ng-click="vm.recentlyUsed()"></i>
+                                            <div class="box-color text-color pos-rlt">
+                                                <span class="arrow bottom"></span>
+                                                <div class="tips">最近使用</div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="component-content-box">
+                                        <div class="component-btns">
+                                            <button class="com-btn"
+                                            ng-class="{'active':vm.btnIndex == btnItem.id}"
+                                            ng-click="vm.componentBtns(btnItem.id)"
+                                            ng-repeat="btnItem in vm.btnList track by $index"
+                                            >{{btnItem.name}}</button>
+                                        </div>
+                                        <div class="component-list-box" id="component-list-box" my-loading="vm.list_loading">
+                                        <!-- <div class="component-list-box" id="component-list-box" my-loading="vm.list_loading"> -->
+                                            <!-- 最近使用 -->
+                                            <div class="component-box">
+                                                <div class="component-body" ng-repeat="(index,htmlCode) in vm.htmlCodes track by $index" >
+                                                    <div class="showHtml" id="{{'haha' + $index}}" ng-click="vm.showHtml(htmlCode.code)" ng-mouseenter="vm.mouseEnter($index, htmlCode)" ng-mouseleave="vm.mouseOut($index, htmlCode)" ng-bind-html= "htmlCode.code"></div>
+                                                    <div class="{{'show-area-cbb' + $index}}" style="width: 500px;position:absolute;left:-30000px">
+                                                        <div class="show-show" ng-bind-html="htmlCode.code"></div>
+                                                        <div class="arrow">
+                                                            <div class="son"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="showHtml" id="{{'haha' + $index}}" ng-repeat="(index,htmlCode) in vm.htmlCodes track by $index" ng-click="vm.showHtml(htmlCode.code)" ng-mouseenter="vm.mouseEnter($index, htmlCode)" ng-mouseleave="vm.mouseOut($index, htmlCode)" ng-bind-html= "htmlCode.code"></div> -->
+                                                <!-- <div class="showHtml" ng-repeat="(index,htmlCode) in vm.htmlCodes track by $index" ng-click="vm.showHtml(htmlCode.code)" ng-bind-html= "htmlCode.code"></div> -->
+                                                <hoge-error hight-num="'277px'" arr-length="vm.htmlCodes.length" load="vm.list_loading"></hoge-error>
+                                            </div>
+                                        </div>
+                                    </div>                      
+                                 </div>
+                            </div>
+                            <div class="tab-pane animated fadeIn text-muted" id="template">
+                                <!-- <div class="no-news-component">暂未开放，敬请期待~</div> -->
+                                <div class="news-component">
+                                    <div class="search-input-box">
+                                        <input type="text" ng-model="vm.htmlKey" placeholder="请输入关键字">
+                                        <span class="search-icon" ng-click="vm.getHtmlList()">
+                                            <i class="fa typeface-searchbar_sousuo"></i>
+                                        </span>
+                                        <span class="history-icon">
+                                            <i class="fa typeface-TimePicker_shijian" ng-class="{'recentlyActive':vm.recentType == true}" ng-click="vm.getHtmlList()"></i>
+                                        </span>
+                                    </div>
+                                    <div class="component-content-box">
+                                        <div class="component-list-box" my-loading="vm.list_loading">
+                                            <!-- 最近使用 -->
+                                            <div class="component-box">
+                                                <div class="component-body" ng-repeat="(index,htmlCode) in vm.htmlList track by $index"  ng-click="vm.insterHtml(htmlCode.id, $index)" >
+                                                     <div style="background-image: url({{htmlCode.indexpic}});background-size: 100%;" class="component-item">
+                                                    </div>
+                                                    <div class="list-componet" style="background-image: url({{htmlCode.pic}});background-size:100%;">
+                                                        <div class="arrow">
+                                                            <div class="son"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hoge-error hight-num="'277px'" arr-length="vm.htmlList.length" load="vm.list_loading"></hoge-error>
+                                            </div>
+                                        </div>
+                                    </div>                      
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+        <div class="edit-bg" ng-class="{'phone-edit-bg':vm.mobile}">
+            <div class="main-form-content" ng-class="{'phone-form-content':vm.mobile}">
+                <!--padding-->
+                <div class=" content" ng-class="{'phone-content':vm.mobile}">
+                    <div class="draft-box" ng-if = "vm.isNew && vm.draftDown">
+                        <span class="draft-tip">{{vm.draftTip}}</span>
+                        <span class="draft-del" ng-if = "!vm.isDel" ng-click="vm.delDraft()">撤销</span>
+                    </div>
+                    <div class="tip-box-recheck" ng-if="vm.isCheckMsg">
+                        <div class="tip-box-top">查重结果<span ng-click="vm.checkClose()">X</span></div>
+                        <div class="tip-box-content">
+                            <span class="tip-title">有<span style="color:red">{{vm.checkTotal}}</span>篇稿件有较高的相似度</span>
+                            <span class="tip-btn" ng-click="vm.checkList()">查看</span>
+                        </div>
+                        <span class="question-tip"></span>
+                    </div>
+                    <div class="content-form-title">
+                        <div class="title-box edit-phone-title list-title">
+                            <textarea type="text" name="title" autocomplete="off"
+                                   placeholder="请输入文稿标题" ng-model="vm.title" ng-blur="vm.relevant('blur')" ng-class="{'mengyu-font': vm.resMengyu(vm.title)}" ng-change="vm.textChange()"></textarea>
+                                <div  ng-class="{'mengyu-title': vm.resMengyu(vm.title)}" ng-if="vm.resMengyu(vm.title)">
+                                    <span class="jiantou arrow bottom"></span>
+                                    <span class="hideTitle">{{vm.title}}</span>
+                                </div>
+                            <span class="recheck" ng-click="vm.rechecking()" ng-class="{'reColor':vm.logoing}">
+                                <i class="typeface-caozuo_biaotichachong"></i>
+                            </span>
+                            <!-- <i id="loadScale" class="typeface-wating_biaotichachong" ng-if="vm.logoing"></i> -->
+
+                            <!-- <img id="loadScale" src='../assets/images/mxu/logo.png'> -->
+                            <content-title-tip tip-Top="55" is-zyshow="vm.showZY" tip-title="vm.title" top="0"></content-title-tip>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <!--<div class="form-title flex-item">-->
+                        <!--<div class="title-wrap flex-one col-sm-11">-->
+                        <!--<input type="text" name="title"-->
+                        <!--placeholder="{{ 'atlas.titleTip'| translate}}" ng-model="vm.title" ng-blur="vm.relevant('blur')"/>-->
+                        <!--</div>-->
+                        <!--<content-title-tip tip-title="vm.title" top="20"></content-title-tip>-->
+                        <!--</div>-->
+
+
+                        <div class="ueditor-wrap" id="news-ueditor" ng-class="{'news-is-shrink':vm.showType ==1, 'hangzhou': vm.editor_change == 1}">
+                            <div class="editor-item"  my-loading="vm.editor_loading" scroll-tool>
+                                <script ng-show="vm.ready_show" id="newEditor" type="text/plain"></script>
+                            </div>
+                            <div id="morechose" class="down-more">
+                                <!--<div class="auto-save down-item">自动保存</div>-->
+                                <div class="add-annex down-item" ng-click="vm.addAnnex();">添加附件</div>
+                            </div>
+                            <input  id="up-file" class="insert-vdo"  style="display: none;" type="file" nv-file-select="" uploader="vm.attachmentloader"
+                                    multiple/>
+                            <input  id="up-file-word" class="insert-vdo" style="display: none;" type="file" nv-file-select="" uploader="vm.wordloader"/>
+                        </div>
+                        <!--展开收起-->
+                        <!--<div class="toggle-text" ng-click="vm.toShow()" ng-class="{'open':vm.showType==1,'closed':vm.showType==2}">-->
+                            <!--<div class="contain-text">-->
+                                <!--<p>-->
+                                    <!--<i ng-class="{'typeface-edit_zhankai':vm.showType==1,'typeface-edit_shouqi':vm.showType==2}"></i>-->
+                                    <!--<span>{{vm.showType == 1 ? '展开' : '收起'}}</span>正文-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="footer-btn-box" ng-show="!vm.mobile&&!vm.hotFlag && vm.noEdit !='topic'"  ng-class="{'pos-rel': !vm.newsfixedBottom}"> 
+                <!-- <div class="footer-btn-box" ng-show="!vm.mobile&&!vm.hotFlag"> -->
+                    <div class="count-area" ng-show="vm.ready_show">
+                      <div class="count-line word-all"><span class="word-label">已选:</span><span class="word-count word-length">0</span></div>
+                      <div class="count-line"><span  class="word-label">总字数:</span><span class="word-length">{{vm.counter || 0}}</span></div>
+                    </div>
+                    <button class="footer-btn btn-first" ng-click="vm.phoneModel()">手机模式</button>
+                    <button class="footer-btn can-event" ng-click="vm.preview()">预览</button>
+                    <button class="footer-btn save-btn can-event" ng-click="vm.save('saveAs')" ng-show="vm.param.id" ng-disabled="vm.clicked === '1'" ng-if="vm.translate == 'common'">另存为</button>
+                    <button class="footer-btn save-btn" ng-click="vm.save('save')" ng-disabled="vm.clicked === '1'"  ng-if="vm.translate == 'common'">保存</button>
+                    <button class="footer-btn save-btn" style="width:94px;" ng-click="vm.save('saveAudit')" ng-disabled="vm.clicked === '1'"  ng-if="vm.translate == 'common' && vm.showZY && !vm.isOriginal && !vm.platform">保存并提审</button>
+                    <!--蒙语 藏语的保存直接另存为-->
+                    <button class="footer-btn save-btn" ng-click="vm.save('saveAs')" ng-disabled="vm.clicked === '1'" ng-if="vm.translate !== 'common'">保存</button>
+                    <button class="footer-btn" ng-disabled="vm.isCancelDisable" ng-click="vm.cancelForm()">取消</button>
+                </div>
+                <!-- <div class="footer-btn-box" ng-show="vm.mobile"> -->
+                <div class="footer-btn-box phone-footer-btn-box" ng-show="vm.mobile">
+                        <button class="footer-btn btn-first" ng-click="vm.webModel()">网页模式</button>
+                        <button class="footer-btn can-event" ng-click="vm.preview()">预览</button>
+                        <button class="footer-btn save-btn can-event" ng-click="vm.save('saveAs')" ng-show="vm.param.id" ng-disabled="vm.clicked === '1'" ng-if="vm.translate == 'common'">另存为</button>
+                        <button class="footer-btn save-btn" ng-click="vm.save('save')" ng-disabled="vm.clicked === '1'"  ng-if="vm.translate == 'common'">保存</button>
+                        <button class="footer-btn save-btn" style="width:94px;" ng-click="vm.save('saveAudit')" ng-disabled="vm.clicked === '1'"  ng-if="vm.translate == 'common' && vm.showZY && !vm.isOriginal && !vm.platform">保存并提审</button>
+                        <!--蒙语 藏语的保存直接另存为-->
+                        <button class="footer-btn save-btn" ng-click="vm.save('saveAs')" ng-disabled="vm.clicked === '1'" ng-if="vm.translate !== 'common'">保存</button>
+                        <button class="footer-btn" ng-click="vm.cancelForm()">取消</button>
+                    </div>
+                <!-- <content-save  handle-cancel="vm.cancelForm()" save="vm.save()" preview="vm.preview()" load="vm.save_loading" clicked="vm.clicked" is-show="false" show-type="vm.showType" type="vm.contentParam.urlType" id="vm.param.id" news-content="vm.newsInfo.content"> -->
+            </div>
+        </div>
+        <div class="show-area-cb" ng-style="{'top': vm.showAreaTop + 'px', 'left': vm.showAreaLeft + 'px', maxHeight: vm.preMaxHeight}" ng-mouseenter="vm.enterHa()" ng-mouseleave="vm.mouseOut()">
+            <div class="show-show" ng-bind-html="vm.showHtmlCode"></div>
+            <div class="arrow" style="position:fixed" ng-style="{'top': vm.showAreaTopMiddle + 'px', 'left': vm.showAreaLeft - 20 + 'px'}">
+                <div class="son"></div>
+            </div>
+        </div>
+        <div class="show-area-lf" ng-style="{'top': (vm.showImageTop + 15)+ 'px', 'left': (vm.showImageLeft + 15 )+'px', maxHeight: vm.preMaxHeight}" ng-mouseenter="vm.enterHa()" ng-mouseleave="vm.mouseOut()">
+            <!-- <img ng-src='{{vm.showImg}}'> -->
+            <div class="show-show" ng-bind-html="vm.showHtmlImg"></div>
+        </div>
+        <aside class="right-aside">
+            <div class="draft-right">
+                <div class="side_form_fixed">
+                    <workcall-front ng-show="vm.initFinished && !vm.platform" topic-array="vm.topicAssociated" topic-id="vm.topicId"></workcall-front>
+                    <key-words match-key="vm.achieve()"
+                               key-list="vm.keyList"
+                               loading="vm.matchLoading"
+                               key= "vm.key"
+                               lin-key="vm.associate()"
+                    >
+                    </key-words>
+                    <div class="m-t" ng-if="!vm.platform">
+                        <content-relevant related-ids="vm.relatedIds" relevant-list="vm.relevantList"
+                                          content-id="vm.newsInfo.id" content-type="'article'"
+                                          relevant-error="vm.relevantError"
+                                          get-relevant="vm.getRelevantList()"
+                                          is-Original="vm.isOriginal"
+                        >
+                        </content-relevant>
+                    </div>
+                    <div class="m-t" ng-if="!vm.platform">
+                        <author-add author-ids="vm.authorIds" author-List="vm.contentParam.author_info"
+                                          content-id="vm.newsInfo.id" content-type="'article'"
+                                          author-error="vm.authorError"
+                                          get-author="vm.getAuthorList()"
+                                          is-Original="vm.isOriginal"
+                                          show-Author="vm.showAuthor"
+                        >
+                        </author-add>
+                    </div>
+                    <div class="m-t" style="width: 60px;float: left;" ng-if="!vm.isOriginal && vm.is_showPrelink">
+                           <div class='preview' ng-click="vm.showPreviews()">
+                               <img ng-src="{{vm.is_showSrc ? vm.ActiveSrc :vm.PreSrc}}" ng-mouseleave='vm.is_showSrc = false' ng-mouseenter='vm.is_showSrc = true'  alt="">
+                               <p>预览链接</p>
+                           </div>
+                           <div class="preview-link" ng-show="vm.is_showPreview">
+                                <span class="typeface-alert_wancheng2"></span>
+                                <p>稿件已经自动保存</p>
+                                <input id='copy-text' type="text"  ng-value="vm.preLink" >
+                                <span id='copy-link' ng-click="vm.copyLink()" >复制链接</span>
+                           </div>
+                    </div>
+                    <div class="m-t" id="backTop" style="width: 60px;float:right;display:none;">
+                        <div class="preview backTop" ng-click="vm.backTop()">
+                            <!-- <label class="ui-switch">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.switchMengyu()" ng-checked="vm.is_open==1">
+                                <i></i>
+                            </label> -->
+                        </div>
+                    </div>
+                    <!-- <div class="m-t">
+                        <news-resources resources-list="vm.newsresources"  upload-resource="vm.newsUpload()"
+                                        delete-media="vm.deleteMedia(item)"
+                                        re-try="vm.newsRetry(item)"
+                                        insert-resource="vm.getResourceHtml(item)"
+                                        down-load-resource="vm.downLoad(item)"
+                                        operate-loading="vm.operateLoading"
+                                        pre="vm.preResource(item)"
+                        ></news-resources>
+                    </div> -->
+
+                </div>
+                
+                <writing-assistant is-check="vm.isHeiMa" all-img="vm.contentImages" a-title="vm.title" brief="vm.contentParam.brief" select-title="vm.contentParam.subtitle" body-text="vm.newsInfo.content" is-apply-content="vm.isApplyRight" cover-img="vm.contentParam.cover_keys" cover-type="vm.contentParam.cover_type"></writing-assistant>
+                <!-- 快速评分 -->
+                <div class="fast-score-box" ng-if="vm.fastScore&&vm.param.id">
+                        <span ng-if="vm.newsInfo.can_score && !vm.newsInfo.base_score" ng-class="{'spanActive': !vm.newsInfo.base_score && vm.newsInfo.can_score == 1}" class="showScore" ng-mouseenter="vm.showScore(vm.newsInfo)" ng-mouseleave="vm.hideScore(vm.newsInfo)">快速<br>评分
+                                        
+                                <div class="score" ng-class="{'score-show':vm.newsInfo.statusShow,
+                                'score-hide':!vm.newsInfo.statusShow}">
+                                    <div class="score-star">
+                                        <div class="star"></div><div class="functions-hint" class="input hint"></div>
+                                        <!-- <span>1.0</span> -->
+                                    </div>
+                                    <div class="score-states">
+                                        <span class="btn-deter" ng-click="vm.setScore(vm.newsInfo)">确定</span>
+                                        <span class="btn-cancel" ng-click="vm.cancelScore(vm.newsInfo)">取消</span>
+                                    </div>
+                                </div>
+                                
+                        </span>
+                        <!-- <span ng-if="(vm.permission.all_prms == 0 && ! vm.isCan) || (nor.status==5 || nor.status==1)" class="noCan">暂无评分</span> -->
+                        <span ng-if="vm.newsInfo.can_score && vm.newsInfo.base_score" class="showScore detailScore" ng-class="{'hasSpanActive': vm.newsInfo.can_score == 1 && vm.newsInfo.base_score}" ng-mouseenter="vm.showScore(vm.newsInfo)" ng-mouseleave="vm.hideScore(vm.newsInfo)">
+                            <img width="14px" height="14px" style="margin-bottom: 3px;margin-right: 3px;" src="/assets/images/mxu/workload/score/icon_star_manxing.png">
+                            <span>{{vm.newsInfo.base_score}}分</span>
+                                <div class="score" ng-class="{'score-show':vm.newsInfo.statusShow,
+                                'score-hide':!vm.newsInfo.statusShow}">
+                                    <div class="score-star">
+                                        <div class="star"></div><div class="functions-hint" class="input hint"></div>
+                                        <!-- <span>1.0</span> -->
+                                    </div>
+                                    <div class="score-state" ng-if="vm.userMsg.id == vm.newsInfo.scores.user_id">
+                                        <div class="score-time">已评</div>
+                                        <span class="btn-modify" ng-click="vm.changeScore(vm.newsInfo)">修改</span>
+                                    </div>
+                                    <div class="score-stated" ng-if="vm.userMsg.id != vm.newsInfo.scores.user_id">
+                                        <div class="score-user">评分人：{{vm.newsInfo.scores.user.username}}</div>
+                                        <span class="score-time">评分时间：{{vm.newsInfo.scores.updated_at}}</span>
+                                    </div>
+                                    <!-- <div class="score-states">
+                                        <span class="btn-deter" ng-click="vm.setScore(item)">确定</span>
+                                        <span class="btn-cancel">取消</span>
+                                    </div> -->
+                                </div>
+                        </span>
+                </div>
+                <!-- 右侧按钮 -->
+                <!-- <div class="btn-group-box" ng-show="vm.mobile">
+                    <ul>
+                        <li class="btn-item" ng-click="vm.webModel()">网页模式</li>
+                        <li class="btn-item" ng-click="vm.preview()">文章预览</li>
+                        <li class="btn-item save-btn-item" ng-click="vm.save()">保存文章</li>
+                        <li class="btn-item" ng-click="vm.cancelForm()">取消</li>
+                    </ul>
+                </div> -->
+            </div>
+        </aside>
+
+    </div>
+    <m2o-footer is-color="true" is-show="1"></m2o-footer>
+</main>
+<hot-footer ng-if="vm.hotFlag" hot-id="vm.id" hot-status="vm.status" this-status="vm.thisStatus" hot-title="vm.title" type="vm.type" this-type="vm.thisType" button-id="vm.ButtonId"></hot-footer>
+<div class="hogeTipModal hoge-no-edit-tip" ng-if="vm.noEdit" ng-class="{'no-edit-tip-revise': vm.is_workcall_to_plus == true}">
+    <div class="hoge-modal-tip hoge-tip-orgInfo">
+        <i class="typeface-alert_jinggao fa"></i>
+        <!-- 8.24调整 状态文案调整，状态细分 -->
+        <!-- <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList">当前稿件的审核状态为{{vm.noEditStatus == 2?'已审核':vm.noEditStatus == 9?'待发布':'审核中'}}，编辑功能不可用</span> -->
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 2">当前稿件的审核状态为已审核，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 3">当前稿件的审核状态为已发布，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 5">当前稿件的审核状态为审核中，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && !vm.hotList && vm.noEditStatus == 9">当前稿件的审核状态为待发布，编辑功能不可用</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==2">当前稿件权限为只读</span>
+        <span class="hoge-tip-txt" ng-if="(vm.noEdit==1 && vm.hotFlag) || vm.noEdit == 'topic'">内容仅供阅读，不可编辑</span>
+        <span class="hoge-tip-txt" ng-if="vm.noEdit==1 && !vm.hotFlag && vm.hotList">目前稿件已被采纳不可编辑</span>
+    </div>
+</div>
+
+

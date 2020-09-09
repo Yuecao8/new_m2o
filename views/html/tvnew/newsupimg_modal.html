@@ -1,0 +1,139 @@
+<div class="modal-cover-img box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title" >{{vm.isReplace ? '替换图片': '网络图片'}}</h5>
+        <i class="fa fa-remove close-icon" ng-click="vm.close()"></i>
+    </div>
+    <div class="modal-body">
+         <div class="" ng-if="vm.isReplace">
+            <ul class="tab-ul nav nav-pills">
+                <li class="tab-item nav-item ">
+                    <span class="nav-link" data-toggle="tab" data-target="#tab1">{{ 'common.manualUpload'| translate}}</span>
+                </li>
+                <li class="tab-item nav-item">
+                    <span class="nav-link active" data-toggle="tab" data-target="#tab3">{{ 'common.networkPictures'| translate}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" ng-class="{'no-top-border':!vm.isReplace}">
+            <div class="tab-pane animated fadeIn text-muted upload-tab1" id="tab1">
+                <div class="upload-cover" ng-if="!vm.showList[0]">
+                    <img src="../../../../assets/images/mxu/content/impUp_2x.png" alt="">
+                    <div class="upload-contain">
+                        <input ng-if="!vm.isReplace" type="file" nv-file-select="" uploader="vm.newsImgloader" accept="image/gif,image/jpeg,image/png,image/jpg" multiple/>
+
+                        <input ng-if="vm.isReplace" type="file" nv-file-select="" uploader="vm.newsImgloader" accept="image/gif,image/jpeg,image/png,image/jpg" />
+
+                        <button class="btn btn-purple">{{ 'common.clickToUpload'| translate}}</button>
+                    </div>
+                    <p class="upload-tip">
+                        {{ 'common.clickToUploadTip'| translate}}
+                    </p>
+                </div>
+                <div class="content-imgs" ng-if="vm.showList[0]">
+                    <div class="gallery-body">
+                        <div class="gallery-body-flex">
+                            <div class="gallery-contain newsup-box" ng-if="!vm.isReplace">
+                                <div class="image-contain" style="border: none">
+                                    <div class="add-img">
+                                        <i class="icon-tianjia"></i>
+                                    </div>
+                                    <input type="file" class="newsup-input" nv-file-select="" size="5242880" uploader="vm.newsImgloader" accept="image/gif,image/jpeg,image/png,image/jpg" multiple/>
+                                </div>
+                            </div>
+                            <div class="gallery-contain" ng-repeat="show in vm.showList" ng-class="{'chosedItem': show.chosed}">
+                                <div class="image-contain"  >
+                                    <img  class="gallery-url" src="{{show.url}}" alt="">
+                                </div>
+                                <div class="chose-box" ng-if="!show.chosed" ng-click="vm.uploadChose(show,true)">
+                                    <div class="change-tip" >{{ 'common.clickChoseCover'| translate}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--图片上传进度弹框-->
+                <div class="modal modal-picUp newsup-progress" id="picUp" data-backdrop="true" ng-if="!vm.isReplace">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="content">
+                                    <p class="file-tip">{{'common.fileBeUp'| translate}}</p>
+                                    <!--<p class="">{{'tuji.source'| translate}} : &nbsp;{{vm.upName}}</p>-->
+                                    <uib-progressbar class="progress-striped progress-bar-success active m-b-sm " value="vm.proValue" type="success" max="100" >
+                                    </uib-progressbar>
+                                    <p class="up-progress" ng-hide="vm.picSuccess">{{'common.hasUp'| translate}}{{vm.proValue}}%</p>
+                                    <p class="up-progress" ng-show="vm.picSuccess" >{{'common.UpSuccess'| translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="tab-pane animated fadeIn text-muted active" id="tab3">
+                <div class="input-group input-group-sm search-webimg">
+                    <input type="text" class="form-control p-x b-a rounded n" ng-keypress="vm.keyPress($event)" ng-model="vm.searchWord" placeholder="{{ 'common.search'| translate}}...">
+                    <span class="input-group-btn">
+                        <button style="border-width:0;background:#108ee9;" type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search()">
+                            搜索
+                        </button>
+                    </span>
+                </div>
+                <div class="content-imgs search-contain">
+                    <div class="gallery-body search-body">
+                        <div class="text-right search-tip">图片均来自网络，请遵守版权</div>
+                        <div class="no-gallery hoge-error" ng-if="!vm.searchList[0]">
+                            <div>
+                                <div class="error-img"></div>
+                                <p>暂无内容</p>
+                            </div>
+                        </div>
+                        <div class="gallery-contain-body gallery-body-flex" ng-if="vm.searchList[0]">
+                            <div class="gallery-contain" ng-class="{'chosedItem': searchItem.chosed}"  ng-repeat="searchItem in vm.searchList">
+                                <div class="image-contain">
+                                    <img  class="search-url gallery-url" src="{{searchItem.url}}" alt="">
+                                </div>
+                                <div class="down-box"  ng-if="!searchItem.ondown && !searchItem.isdown && !searchItem.chosed" ng-click="vm.searchDown(searchItem, $index)">
+                                    <div class="on-down" ></div>
+                                </div>
+                                <div class="ondown-box" ng-show="searchItem.ondown">
+                                    <div class="progress-contain">
+                                        <uib-progressbar   class="progress-striped progress-bar-success active m-b-sm " value="searchItem.proValue" type="success" max="100" >
+                                        </uib-progressbar>
+                                    </div>
+                                </div>
+                                <div class="chose-box" ng-if="searchItem.isdown && !searchItem.chosed && !searchItem.ondown" ng-click="vm.searchChose(searchItem, $index)">
+                                    <div class="change-tip" >点击选择图片</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_bottom" ng-if="vm.searchList.length > 0">
+                        <div class="pages-operate">
+                            <div class="list_page">
+                                <div class="btn-group" >
+                                    <button type="button"  class="btn btn-sm white btn-page" ng-disabled="vm.searchOptions.pageCur==0" ng-click="vm.onPrev()">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" style="" class="btn btn-sm white btn-page btn-radius"  ng-click="vm.onNext()">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <!--ng-show="vm.chosedList[0][0]|| vm.chosedList[0][1]"-->
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{ 'common.confirm'| translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'common.cancel'| translate}}</button>
+    </div>
+</div>

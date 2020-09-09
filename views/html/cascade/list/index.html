@@ -1,0 +1,267 @@
+<div class="cascade-menu-wrapper" my-loading="vm.loading">
+        <!-- my-loading="vm.loading" -->
+    <!--nav-->
+    <nav class="hoge-nav">
+        <div class="hoge-table-add">
+            <div class="hoge-edit-head">
+                <em>频道列表</em>
+            </div>
+        </div>
+    </nav>
+    <!--nav-->
+
+    <!--main-->
+    <div style="height: 500px;" ng-if="vm.readyingLoading">
+
+    </div>
+    <main  class="hoge-radius live-streaming-main" ng-class="{'fade': vm.editShow}" ng-if="!vm.readyingLoading">
+        <div class="no-channel" ng-if="!vm.channelList[0] && !vm.channerListShow && !vm.currentCategory.id &&!vm.loading">
+            <div class="channel-tip-box">
+                <div class="no-title">
+                        暂无频道
+                </div>
+                        <!-- ng-if="!vm.channelList[0]" -->
+                <div class="add-channels">
+                    <p class="add-icon" ng-click="vm.addChannel()">
+                        <i class="typeface-form_zengjia"></i>
+                        <span>添加频道</span>
+                    </p>
+                    
+                </div>
+            </div>
+            
+    
+        </div>
+        <!-- top -->
+        <div class="border-top-radius live-main hoge-flex" ng-show="vm.channelList.length > 0 || vm.currentCategory.id">
+            
+
+            <!-- channel-list -->
+            <div class="channel-list">
+                    <!-- <div class="boder-hr" ng-if="vm.showDom != 2"></div> -->
+                    <div class="channel-classify" ng-class="{'hidden-contain': vm.moreClassify == 1}">
+                        <div class="btn-group dropdown hoge-dropdown" ng-show="!vm.sortTip">
+                            <button class="btn btn-sm dropdown-toggle toggle-btn" style="width: 198px;" data-toggle="dropdown">
+                                <span class="dropdown-label" ng-cloak>{{vm.currentCategory.name}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left toggle-drop-box" data-toggle="dropdown">
+                                <a class="dropdown-item" ng-repeat="category in vm.categoryList track by $index" ng-click="vm.choseCategory(category)">
+                                {{category.name}}
+                            </div>
+                        </div>
+                        <!--搜索-->
+                        <search-Box key-Word="vm.titles"
+                                    search-Key="vm.search(Item)"
+                                    key-Press="vm.keyPress(Event)"
+                                    hide-Kind="vm.hideAccessKind"
+                                    is-Focus="vm.blackSearch"
+                                    place-Holder="vm.placeHolder"
+                                    isShow="!vm.sortTip" 
+                        >         
+                        </search-Box>
+                        <!-- <div class="hoge-input-search pull-right black-input-search" ng-show="!vm.sortTip" ng-class="{'black-search-focus':vm.blackSearch}">
+                            <input class="search-input" id="keyword" type="text" placeholder="请输入关键字" ng-keypress="vm.keyPress($event)" ng-model="vm.titles" ng-focus="vm.blackSearch=true" ng-blur="vm.blackSearch=false" ng-cloak>
+                            <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                        </div> -->
+                    </div>
+                    <!-- <div class="channel-classify" ng-class="{'hidden-contain': vm.moreClassify == 1}">
+                        <div class="classify-contain"> -->
+                                <!-- hoge-flex -->
+                            <!-- <p class="classify-item" 
+                            ng-repeat="category in vm.categoryList" 
+                            ng-click="vm.choseCategory(category)"
+                            ng-class="{'active':category.isChose}" category-height>
+                                <span>{{category.name}}</span>
+                            </p> -->
+                            
+                        <!-- </div> -->
+                        <!--  -->
+                        <!-- <div class="more-classify" ng-if="vm.showDom == 2" ng-class="{'shouqi':vm.moreClassify == 2}"> -->
+                            <!-- xr -->
+                            <!-- <span ng-click="vm.showMore();" class="more-text" ng-class="{'packUp':vm.moreClassify == 2}">
+                                {{vm.moreClassify == 1 ? '更多' : '收起更多'}}
+                                <i ng-class="{'shouqi-icon':vm.moreClassify == 2}"></i>
+                            </span> -->
+                            <!-- <div class="border-hr-more no-shadow cover-shadow" ng-show="vm.moreClassify == 2"></div> -->
+                            <!-- <div class="border-hr-more" ng-show="vm.moreClassify == 2"></div>
+                            <div class="border-hr-more no-shadow cover-shadow" ng-show="vm.moreClassify == 2"></div> -->
+                            <!-- <span>
+                                <i ng-click="vm.showMore();" ng-class="{'typeface-edit_zhankai':vm.moreClassify == 1,'typeface-edit_shouqi':vm.moreClassify == 2}"></i>
+                            </span> -->
+                            
+                        <!-- </div> -->
+                    <!-- </div> -->
+
+                    <div class="channel-box">
+                        <div class="channel-contain" id="channel-contain" ui-sortable="vm.sortableOpt" ng-model="vm.channelList">
+                            <div class="no-channel-list" ng-if="!vm.loading && !vm.channelList.length">
+                                <span>暂无频道</span>
+                            </div>
+                            <div class="channel-item" ng-repeat="channel in vm.channelList">
+                                <p class="channel-box-contain" ng-click="vm.choseChannel(channel);" ng-class="{'active':channel.isChose}">
+                                    <img ng-src="{{channel.index_pic}}" alt="">
+                                    <span title="{{channel.name}}">{{channel.name}}</span>
+                                </p>
+                            </div>
+                            <div class="add-list" ng-show="vm.channelPage.pageNum > vm.channelPage.pageCur && !vm.isSort">
+                                <img src="/assets/images/mxu/home/new/icon_loading_2x.png" alt="">
+                                <span>正在加载</span>
+                            </div>
+                        </div>
+                        <div class="channel-operate">
+                            <div class="sort_board red-50" ng-show="vm.isSort">
+                                <span class="paixu_setting">拖拽排序</span>
+                                <button class="btn btn-sm white pull-right " ng-click="vm.cancelSort()" translate="system_search.cancel"></button>
+                                <button class="m-r-sm btn btn-sm hoge-btn-blue pull-right" ng-click="vm.outSort()" translate="system_search.save"></button>
+                            </div>
+                            <div class="operate-icons" ng-show="!vm.isSort">
+                                <span class="new-icon">
+                                    <i class="typeface-form_zengjia"  ng-click="vm.addChannel()"></i>
+                                    <div class="box-color text-color pos-rlt operate-tip-box operate-new">
+                                        <span class="arrow bottom"></span>
+                                        <div class="tips">新增</div>
+                                    </div>
+                                </span>
+                                <span class="sort-icon">
+                                    <i class="typeface-form_paixu" ng-click="vm.sort()"></i>
+                                    <div class="box-color text-color pos-rlt operate-tip-box operate-sort">
+                                        <span class="arrow bottom"></span>
+                                        <div class="tips">排序</div>
+                                    </div>
+                                </span>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!--  channel-list-->
+
+          
+            <div class="" style="width: 1010px;" >
+                    <!-- hoge-flex-one -->
+
+                <!-- channel-detail -->
+                <div class="channel-detail">
+                    <div class="channel-title">
+                        <div class="cascade-menu" ng-if="vm.currentChannel.is_control && vm.currentChannel.has_schedule">
+                            <div class="point"></div>
+                            <div class="text">串联单</div>
+                        </div>
+                        <div class="virtual-channel" ng-if="vm.currentChannel.is_control && !vm.currentChannel.has_schedule">
+                            <i class="typeface-tag_xunipindao point"></i>
+                            <div class="text">虚拟频道</div>
+                        </div>
+                        <h5>{{vm.channelDetails.name}}</h5>
+                        <!-- <label class="ui-switch">
+                            <span class="switch-open">开</span>
+                            <span class="switch-close">关</span>
+                            <input type="checkbox" ng-click="vm.toggleChannel(vm.channelDetails)" ng-checked="vm.channelDetails.is_publish" >
+                            <i></i>
+                        </label> -->
+                    </div>
+                    <div class="channel-describe">
+                        <span>台号：{{vm.channelDetails.code}}</span>
+                        <span>比例：{{vm.channelDetails.aspect}}</span>
+                        <span>信号类型：{{vm.channelDetails.is_push == 1 ? '推送' : '拉取'}}</span>
+                        <span>分类：{{vm.channelDetails.category.name}}</span>
+                    </div>
+                    <div class="pull-right tool-btn">
+                        <!-- <button class="btn hoge-btn-blue" ng-click="vm.shieldingShow()">屏蔽节目</button> -->
+                        <button class="btn hoge-btn-blue" ng-if="vm.channelDetails.is_control" ng-click="vm.cascadeShow()">串联单</button>
+                        <!-- <button class="btn hoge-btn-blue" ng-click="vm.addChannel(vm.currentChannel)">设置</button>
+                        <button class="btn hoge-btn-blue btn-delete" ng-click="vm.delChannel()">删除</button> -->
+                    </div>
+                </div>
+                <!-- channel-detail -->
+
+                <div class="hoge-flex">
+                    <!-- video-contain -->
+                    <div class="video-contain">
+                        <div class="video-plays"
+                        ng-class="{'common-index':!vm.videoShow,'under-index':vm.videoShow,}">
+                            <video id="play-channel-video" 
+                                class="video-js vjs-big-play-centered video-js vjs-default-skin can-event" 
+                                controls preload="auto"  style="width:100%;height: 100%;" 
+                                poster="{{vm.channelDetails.index_pic}}" data-setup='{}' autoplay>
+                                <!-- autoplay -->
+                            </video>
+                        </div>
+                        <div class="video-detail">
+                            <div class="plays-chose" ng-if="vm.playStreams.length > 0" ng-style="{top: -(vm.playStreams.length)*40 - 36 + (vm.playStreams.length - 1) * 8 + 'px'}">
+                                <div class="plays-item" ng-class="{'chosed': plays.isChose}" ng-repeat="plays in vm.playStreams" ng-click="vm.choseStream(plays);">
+                                    <span >{{plays.name}}</span>
+                                </div>
+                            </div>
+                            <div class="details">
+                                <span class="currentName">流名称：{{vm.currentStreams.name}}</span>
+                                <!-- <span>码率： {{vm.currentStreams.bitrate}}</span> -->
+                                <span class="currentName">码率： {{vm.currentStreams.bitrate}}</span>
+                                <!-- <span>分辨率：{{vm.currentStreams.category}}</span> -->
+                                <span class="currentName">流状态：{{vm.currentStreams.status == 1 ? '正常' : '异常'}}</span>
+
+
+                            </div>
+                            <div class="details current-box">
+                                <span class="currentM3u8" ng-click="vm.copyText()">
+                                    播放地址:
+                                    <span class="m3u8-url">{{vm.currentStreams.m3u8}}</span>
+                                    <input type="text" id="m3u8-copy" value="{{vm.currentStreams.m3u8}}">
+                                </span>
+                            </div>
+                            <div class="details current-box">
+                                
+                                <span class="currentM3u8 currentStream" ng-click="vm.copyTextStream()">
+                                    推/拉流地址:
+                                    <span class="m3u8-url stream-url">{{vm.currentStreams.stream_url}}</span>
+                                    <input type="text" id="stream-copy" value="{{vm.currentStreams.stream_url}}">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- video-contain -->
+
+                    <!-- program-list -->
+                    <div class="program-list">
+                        <div class="program-header">
+                            <div class="hoge-flex date-box">
+                                <div class="arrow-box arrow-left">
+                                    <i class="typeface-pagination_shangyiye" ng-click="vm.toPreview()" ng-class="{'no-pre': !vm.canPreview,'can-pre':false}"></i>
+                                </div>
+                                <div class="hoge-flex date-chose">
+                                    <div class="time-box" ng-class="{'chosed':date.isChose}"ng-repeat="date in vm.dateList" ng-click="vm.togglePrograms(date);">
+                                        <div class="week">星期{{date.weekName}}</div>
+                                        <div class="date">{{date.dateName}}日</div>
+                                    </div>
+                                </div>
+                                <div class="arrow-box arrow-right">
+                                    <i class="typeface-pagination_xiayiye" ng-click="vm.toNext()"></i>
+                                </div>
+                            </div>
+                            <div class="pull-right set-program">
+                                <button class="btn hoge-btn-blue btn-set" ng-click="vm.goProgramme()">设置节目单</button>
+                            </div>
+                        </div>
+                        <div class="program-list-contain">
+                            <div class="program-item hoge-flex" 
+                            ng-class="{'program-normal': program.can_play == 1, 'program-disable': program.can_play == 0, 'program-on': program.isChose}"
+                            ng-repeat="program in vm.programList">
+                                <div class="list-time">{{program.time}}</div>
+                                <div class="list-body hoge-flex-one" ng-click="vm.choseProgram(program)">{{program.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--main-->
+    
+    <!-- addchanne -->
+    <div class="add-channel-box" ng-class="{'fade': vm.editShow, 'in': !vm.editShow}">
+        <div ui-include="'../views/mxu/cascade/addChannel/index.html'"></div>
+    </div>
+    <!-- addchanne -->
+
+</div>

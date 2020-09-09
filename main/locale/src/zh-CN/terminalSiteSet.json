@@ -1,0 +1,33 @@
+{
+    "siteSet" : "站点设置",
+
+    "reBuild" : "重新生成",
+    "domainName" : "域名*",
+    "domainPrefix" : "域名前缀*",
+    "prefixIntroduce" : "* 请确保域名前缀填写正确,举例:'www'.",
+    "domainIntroduce" : "* 请确保域名填写正确,举例:'hoge.cn'.",
+    "siteName" : "站点名称*",
+    "siteIntroduce" : "* 站点名称会在浏览器的标题栏和 Microsoft Windows 的任务栏上显示",
+    "siteLogo" : "网站LOGO",
+    "logoIntroduce" : "* 建议使用PNG/JPEG格式图片，尺寸 140*100 px",
+    "keyWord" : "关键字",
+    "wordIntroduce" : "* 可以包含多个关键字，以逗号分隔",
+    "describe" : "描述",
+    "save" : "保存",
+
+    "genSuccess" : "生成成功!",
+    "upDate" : "更新成功!",
+
+    "versionMsg":" 当前MXU系统版本为 MXU 旗舰版，支持创建10个站点。",
+    "siteList":"站点列表",
+    "newSite":"新建站点",
+    "siteName1":"站点名称",
+    "keywords":"关键词",
+    "domainName1":"域名",
+    "creatorOrDate":"创建人/创建日期",
+    "creator":"创建人",
+    "createTime":"创建日期",
+    "cancel":"取消",
+    "sortTip" : "排序功能已开启",
+    "sortSuccess" : "排序成功"
+}

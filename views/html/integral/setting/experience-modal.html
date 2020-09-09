@@ -1,0 +1,51 @@
+<form class="edit-column box-shadow-md" name="editColumnForm">
+        <div class="modal-header">
+            <h5 class="modal-title">单位编辑</h5>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" style="position: relative;margin-bottom: 0">
+                <div class="m-t m-b">
+                    <label class="label-title">单位名称:</label>
+                    <input class="unit-input" id="unitValue" type="text" placeholder="{{vm.unitName}}" maxlength="5" ng-model="vm.unitName" value="{{vm.unitName}}">
+                    <div class="count" style="position: absolute;top:12px;right:28px;">
+                        <div num-count="vm.unitName" count-top="0" count-right="0" count-max="5" count-position="right"></div>
+                    </div>
+                </div>
+                <div class="m-t m-b">
+                    <label class="label-title">描述:</label>
+                    <span class="describe-msg" ng-show="{{vm.currentId == 1 || vm.currentId == 2}}">系统默认的一种单位，未来和用户等级挂钩，默认不可删除</span>
+                    <input class="unit-input" ng-show="{{vm.currentId != 1 && vm.currentId != 2}}" id="unitValue" type="text" placeholder="用于消耗的一种货币单位" ng-model="vm.brief" value="{{vm.brief}}">
+                </div>
+                <div class="m-t m-b" ng-show="{{vm.currentId != 1}}">
+                    <label class="label-title">积分商城货币:</label>
+                    <label class="md-check m-r-1" style="width:125px;">
+                        <input type="radio" name="currency" ng-model="vm.currentIsTrans" value="1">
+                        <i class="blue"></i>
+                        是
+                    </label>
+                    <label class="md-check">
+                        <input type="radio" name="currency"  ng-model="vm.currentIsTrans" value="0">
+                        <i class="blue"></i>
+                        否
+                    </label>
+                </div>
+                <div class="m-t m-b">
+                    <label class="label-title">是否启用:</label>
+                    <label class="md-check m-r-1" style="width:125px;">
+                        <input type="radio" name="use"   ng-model="vm.currentIsOn" value="1">
+                        <i class="blue"></i>
+                        是
+                    </label>
+                    <label class="md-check">
+                        <input type="radio" name="use"  ng-model="vm.currentIsOn" value="0">
+                        <i class="blue"></i>
+                        否
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{'column.save' | translate}}</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'column.cancel' | translate}}</button>
+        </div>
+    </form>

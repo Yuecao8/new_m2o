@@ -1,0 +1,33 @@
+<div class="modal-content box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title"  translate="contribute.imgView" ></h5>
+        <i class="fa fa-remove map-close" ng-click="vm.close()"></i>
+    </div>
+    <div class="modal-body" style="margin: 15px;height:600px;">
+        <!-- <uib-carousel>
+            <uib-slide class="carousel-item" ng-repeat="slide in vm.slides">
+                <img ng-src="{{slide.index_pic}}" style="margin:auto;height:530px;object-fit:contain;" class="w-full">
+                <div class="carousel-caption">
+                    <h6 translate="contribute.numberZ" translate-values="{ index: {{$index + 1}} }"></h6>
+                </div>
+            </uib-slide>
+        </uib-carousel> -->
+        <div ng-repeat="slide in vm.slides track by $index" ng-class= "{activeCarousel:vm.tab == $index}" class="hideCarousel" style="position: relative;">
+            <img ng-src="{{slide.index_pic}}" style="margin:auto;height:530px;object-fit:contain;" class="w-full" >
+            <!-- <span class="typeface-pagination_shangyiye" style="color: #fff;font-size:40px;position:absolute;left:8px;top:245px;cursor: pointer;" ng-click="vm.pre()"></span>
+            <span class="typeface-pagination_xiayiye" style="color: #fff;font-size:40px;position:absolute;right:8px;top:245px;cursor: pointer;" ng-click="vm.next()"></span> -->
+            <a role="button" href="" class="left carousel-control" ng-click="vm.prev()" >
+                <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">previous</span>
+            </a>
+            <a role="button" href="" class="right carousel-control" ng-click="vm.next()">
+                <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">next</span>
+              </a>
+        </div>
+        <div class="carousel-caption">
+            <h6 translate="contribute.numberZ" translate-values="{ index: {{vm.tab + 1}} }"></h6>
+        </div>
+        
+    </div>
+</div>

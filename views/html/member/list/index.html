@@ -1,0 +1,150 @@
+<div class="mxu_customers_list mxu_side_wrapper ">
+    <div class=" member-cont">
+
+    	<div class="list-body" my-loading="vm.info_loading">
+		    <!-- list -->
+			<div class="hoge-table-add">
+				<div class="hoge-table-title">会员列表</div>
+			</div>
+		    <div class="list_contain white hoge-table-contain hoge-radius">
+				<div class="hoge-table-search">
+					<div class="btn-toolbar list_bar">
+						<div class="btn-group dropdown pull-left hoge-dropdown">
+							<button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+								<span class="dropdown-label">{{vm.state}}</span>
+								<span class="caret"></span>
+							</button>
+							<div class="dropdown-menu text-left text-sm">
+								<a class="dropdown-item" ng-repeat="item in vm.stateList" ng-click="vm.stateSelect( item )">{{item.name}}</a>
+							</div>
+						</div>
+						<div class="form-group pull-right">
+							<div class="input-group input-group-sm">
+								<input type="text" class="form-control p-x b-a rounded" ng-model="vm.key" placeholder="{{ 'member.search'| translate}}" ng-keyup="vm.search($event)">
+								<span class="input-group-btn">
+	                         <button type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search('1')"><i class="fa fa-search"></i></button>
+	                      </span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ErrorTip" ng-show="(!vm.memberList || !vm.memberList[0]) && !vm.info_loading">{{ vm.errorMessage}}</div>
+		        <div class="list_header hoge-table-header" ng-show="vm.memberList &&vm.memberList[0] ">
+		            <div class="wrap flex-item">
+		                <div class="list-ctr"></div>
+		                <div class="list-customer flex-one" translate="member.member"></div>
+		                <div class="list-role" translate="member.group"></div>
+						<div class="list-status" translate="member.state"></div>
+		                <div class="list-other" translate="member.addTime"></div>
+		                <div class="list-i"></div>
+		            </div>
+		        </div>
+		        <div class="list white member-list" ng-show="vm.memberList &&vm.memberList[0] ">
+		            <div class="list-item flex-item hoge-item-border" ng-repeat="item in vm.memberList track by $index" ng-hide = "item.hide">
+		                <div class="list-ctr">
+		                    <label class="checkbox-inline">
+		                       <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+		                    </label>
+		                </div>
+
+		                <div class="list-customer flex-one">
+		                    <div class="list-left w-40 avatar ">
+								<span class="w-40 circle member_img" ng-if="!item.avatar"></span>
+		                        <img ng-show="item.avatar" ng-src="{{item.pic_src}}" class="w-40 circle">
+								<div class="box customer_card">
+									<div class="item">
+										<div class="item-bg">
+											<img ng-if="item.pic_src" src="{{item.pic_src}}" class="blur">
+											<div ng-if="!item.pic_src" class="blur" style="height: 100%;background: url('/assets/images/mxu/customer_bg.png') no-repeat center;"></div>
+										</div>
+										<div class="p-a-lg pos-rlt text-center">
+											<img src="{{item.pic_src?item.pic_src:'../assets/images/mxu/avatar-50.jpg'}}" class="img-circle w-56" style="margin-bottom: -7rem">
+										</div>
+									</div>
+									<div class="p-a text-center">
+										<a href="" class="text-md block">{{item.member_name}}</a>
+										<p ng-if="item.nick_name"><small>{{item.nick_name}}</small></p>
+										<div class="text-xs">
+											<em>
+												{{ 'member.memberState' | translate }}:<strong translate>{{item.status=='1'?'member.normalState':'member.lockedState'}}</strong>&nbsp;
+												{{ 'member.integral' | translate }}: <strong>{{item.credits}}</strong>&nbsp;&nbsp;&nbsp;
+												{{ 'member.memberGroup' | translate }}: <strong>{{item.groupname}}</strong>
+											</em>
+										</div>
+										<p><small>{{ 'member.joinTime' | translate }} :  {{item.created_at | date:'yyyy-MM-dd HH:mm' }}</small></p>
+										<p><small>{{ 'member.regDevice' | translate }}:  {{item.reg_device }}</small></p>
+										<p><small>{{ 'member.lastDevice' | translate }}:  {{item.last_login_device}}</small></p>
+									</div>
+								</div>
+		                    </div>
+		                    <div class="list-body">
+		                        <a href="" class="member_name">{{item.member_name}}</a>
+		                        <small class="block text-muted">{{item.nick_name}}</small>
+		                    </div>
+		                </div>
+
+						<div class="list-role" my-loading="item.group_loading">
+							<span ng-if="!(vm.permission.member.group | right)">{{item.placeholder}}</span>
+							<div class="group-wrap" ng-if="vm.permission.member.group | right">
+					            <div class="btn-group dropdown hoge-dropdown">
+					                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown" ng-disabled="!vm.groupList[0]">
+					                    <span class="dropdown-label">{{item.placeholder}}</span>
+					                    <span class="caret"></span>
+					                </button>
+					                <div class="dropdown-menu text-left text-sm">
+					                    <a class="dropdown-item" ng-repeat="group in vm.groupList" ng-click="vm.changeGroup(item,group)">{{group.group_name}}</a>
+					                </div>
+					            </div>
+				            </div>
+		                </div>
+
+						<div class="list-status">
+		                    <span ng-if="item.status=='1' && (vm.permission.member.lock | right)" class="normal"  ng-click="vm.editState( item )"  translate="member.normalState"></span>
+		                    <span ng-if="item.status=='1' && !(vm.permission.member.lock | right)" class="normal no-under" translate="member.normalState"></span>
+		                    <span ng-if="item.status=='0'&& (vm.permission.member.lock | right)" class="lock" ng-click="vm.editState( item )"  translate="member.lockedState"></span>
+		                    <span ng-if="item.status=='0' && !(vm.permission.member.lock | right)" class="lock no-under" translate="member.lockedState"></span>
+		                </div>
+		                <div class="list-other" time="{{item.createTime}}" >
+		                    <span>{{ item.createTime | date:'MM-dd HH:mm' }}</span>
+		                </div>
+		            	<div class="list-i"><i class="fa icon-shanchu1" ng-click="vm.singleDelete(item)" ng-if="vm.permission.member.delete | right"></i></div>
+		            </div>
+		        </div>
+		        <!--bottom-->
+		        <div class="list_bottom hoge-table-bottom" ng-show="vm.pageOptions.total > vm.pageOptions.pageSize">
+					<div class="btn-group">
+						<label class="checkbox-inline">
+							<input type="checkbox" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+							{{ 'member.allChose' | translate }}
+						</label>
+					</div>
+					<div class="btn-toolbar list_bar flex-one btn-box">
+						<div class="btn-group" my-loading="vm.release_loading">
+							<button class="btn btn-outline btn-comment" ng-click="vm.releaseAll(1)" translate="member.unLocked" ng-if="vm.permission.member.lock | right"></button>
+						</div>
+						<div class="btn-group" my-loading="vm.lock_loading">
+							<button class="btn btn-outline btn-comment" ng-click="vm.releaseAll(0)" translate="member.locked" ng-if="vm.permission.member.lock | right"></button>
+						</div>
+						<div class="btn-group dropdown dropup hoge-dropdown" ng-if="vm.permission.member.group | right">
+							<button class="btn dropdown-toggle btn-sm groupBtn" data-toggle="dropdown" ng-disabled="!vm.groupList[0]"
+								aria-expanded="false" my-loading ="vm.group_loading" >
+
+								<span class="dropdown-label">{{ 'member.changeGroup' | translate }}</span>
+							</button>
+							<div class="dropdown-menu dropdown-menu-scale dropdown-menu-group">
+								<a class="dropdown-item" ng-repeat="group in vm.groupList"  ng-click="vm.changeGroup('all',group)">{{group.group_name}}</a>
+							</div>
+						</div>
+						<div class="btn-group">
+							<button class="btn  del-btn" ng-click="vm.deleteAll()" ng-if="vm.permission.member.delete | right" translate="member.delete"></button>
+						</div>
+					</div>
+					<page-nation  options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+				</div>
+		        <!--bottom-->
+		    </div>
+		    <!-- / list -->
+
+		</div>
+    </div>
+</div>

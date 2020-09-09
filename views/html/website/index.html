@@ -1,0 +1,18 @@
+<div class="mxu_side_wrapper">
+    <div class="col-md w_list menu-wrap">
+        <div class="title" translate="terminalWeb.siteManage"></div>
+        <div class="tip" translate="terminalWeb.siteIntroduce"></div>
+        <ul class="menu-content">
+            <li ng-class="{active:$state.includes('app.website.links')}">
+                <a ng-click="$state.go('app.website.links',{per_num : '',page:'',site_id : ''});">
+                    <i class="fa icon-wailian2"></i>
+                    <span translate="terminalAnchor.links"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="second-view">
+        <div ui-view></div>
+    </div>
+    <m2o-footer ></m2o-footer>
+</div>

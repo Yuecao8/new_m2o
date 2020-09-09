@@ -1,0 +1,25 @@
+<div class="save-audio-model">
+  <div class="header">保存</div>
+  <div class="content">
+    <div>正在合成，请稍后...</div>
+    <div class="progress-bar">
+      <div class="seek-bar" ng-style="{width: vm.transcodePercent + '%'}"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="render-cancel-btn" ng-click="vm.close()">取消</span>
+  </div>
+  <div class="warning-mask" ng-if="vm.showModel">
+    <div class="warning-wrap">
+      <i class="warning-icon"></i>
+      <div class="title-wrap">
+        <div class="first-title">是否取消？</div>
+        <div class="second-title">取消后将不再保存当前合成进度</div>
+      </div>
+      <div class="footer">
+        <span class="render-cancel-btn" ng-click="vm.closeTooltip()">取消</span>
+        <span class="render-confirm-btn" ng-click="vm.cancelProgress()">确定</span>
+      </div>
+    </div>
+  </div>
+</div>

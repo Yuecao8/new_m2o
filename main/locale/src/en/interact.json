@@ -1,0 +1,21 @@
+{
+    "classify" : "Category",
+    "allClassify" : "All Categories",
+    "create" : "New",
+    "classifyName" : "Please fill in the name of the classification",
+    "success" : "Successful operation",
+    "whether" : "Are you sure you want to delete?",
+    "successDelete" : "Delete successfully!",
+    "choose" : "Please select an option first",
+    "commentClassify":"Comment Category",
+
+    "interaction":"Interactive",
+    "comment":"Comment",
+    "contribute":"Contribute",
+    "vote":"Vote",
+    "description":"Where you can initiate a poll, view and manage the comment and contribute of the terminal members",
+    "commentTip":"Here you can view and manage comments from the terminal members",
+    "contributeTip":"Here you can view and manage the contribute from the terminal members"
+
+
+}

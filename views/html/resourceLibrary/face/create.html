@@ -1,0 +1,41 @@
+<div class="face-upload-wrap">
+    <div class="face-upload-box">
+        <div class="head">上传图片</div>
+        <div class="content d-flex">
+            <div class="upload-left-bg" id="upload-box">
+                <div class="upload-box">
+                   <div class="upload-box-info">
+                        <span class="icon"></span>
+                        <span class="icon-title">点击上传</span>
+                   </div>
+                   <input class="input-upload" type="file" name="file" ng-change="vm.uploadFiles(e)" ng-model="vm.imgs">
+                </div>
+                <!-- <img src="" id="img"> -->
+            </div>
+            <div class="upload-right">
+                <div class="review">预览</div>
+                <div class="review-info d-flex">
+                    <div class="default90">
+                        <img class="default90-img" id="default90" />
+                        <span class="default90-title">90*90 px</span>
+                    </div>
+                    <div class="default130">
+                        <img class="default130-img" id="default130" />
+                        <span class="default130-title">130*130 px</span>
+                    </div>
+                </div>
+                <div class="review-tip">
+                    请上传仅包含一张人脸的清晰照片；<br>
+                    图片格式支持JPG、PNG、GIF，且大小不超过5M。
+                </div>
+            </div>
+        </div>
+        <div class="face-upload-btn d-flex">
+            <div class="re-upload-box">
+                <button class="re-upload">重新上传</button>
+                <input class="again-input-upload" type="file" name="file" ng-change="vm.againUploadFiles(e)" ng-model="vm.imgs">
+            </div>
+            <button class="start-portrait-analysis" ng-class="{'start-portrait-analysis-disabled': !vm.showBtn}"  ng-click="vm.goToAnalysis()" ng-disabled="!vm.showBtn">开始人像分析</button>
+        </div>
+    </div>
+</div>

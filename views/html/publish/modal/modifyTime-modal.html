@@ -1,0 +1,68 @@
+<div class="modify-wrapper box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title">修改发布时间</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="date-box date">
+                <input placeholder="选择日期" class="form-control"
+                       ng-model="vm.modifyDate"
+                       data-date-format="yyyy-MM-dd"
+                       data-icon-left="fa fa-chevron-left"
+                       data-icon-right="fa fa-chevron-right"
+                       name="date" autocomplete='off'
+                       bs-datepicker >
+            </div>
+            <div class="time-box time">
+                <input placeholder="选择时间" class="form-control"
+                       ng-model="vm.modifyTime"
+                       data-icon-left="fa fa-chevron-left"
+                       data-icon-right="fa fa-chevron-right"
+                       data-time-format="HH:mm"
+                       data-time-type="number"
+                       data-autoclose="1" lang="zh-cn"
+                       placement="bottom-right" name="time"
+                       autocomplete='off'
+                       bs-timepicker />
+            </div>
+        </div>
+        <!-- <div class="contain-default date-height">
+            <div class="form-contain">
+                <span class="label-name">开始日期：</span>
+                <div class="time-box">
+                    <div class="time-date">
+                        <input class="date-input" placeholder="不填为即刻生效" class="form-control"
+                            ng-model="vm.startTime_hour"
+                            data-date-format="yyyy-MM-dd"
+                            data-date-type="number"
+                            data-autoclose="1"
+                            data-icon-left="fa fa-chevron-left"
+                            data-icon-right="fa fa-chevron-right"
+                            name="date" autocomplete='off'
+                            data-min-date="today"
+                            bs-datepicker>
+                        <i class="icon-biaodan"></i>
+                    </div>
+                    <div class="time-minutes">
+                        <input class="date-input form-control" placeholder="不填默认零点"
+                            ng-model="vm.startTime_hour"
+                            data-icon-left="fa fa-chevron-left"
+                            data-icon-right="fa fa-chevron-right"
+                            data-time-format="HH:mm"
+                            data-time-type="number"
+                            data-autoclose="1"
+                            placement="bottom-right" name="time"
+                            autocomplete='off'
+                            bs-timepicker>
+                        <i class="icon-shijian"></i>
+                    </div>
+                </div>
+            </div>      
+        </div> -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">保存</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

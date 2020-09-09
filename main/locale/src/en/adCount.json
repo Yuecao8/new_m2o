@@ -1,0 +1,12 @@
+{
+    "allStatus" : "All status",
+    "wait" : "Waiting for delivery",
+    "throwIn" : "Delivering",
+    "soldOuted" : "Sold out",
+    "name" : "Name",
+    "contains":"Contains material (Strip)",
+    "state":"Status",
+    "view":"Total views",
+    "click":"Total hits",
+    "analysis":"Detailed analysis"
+}

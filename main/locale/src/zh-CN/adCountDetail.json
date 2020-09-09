@@ -1,0 +1,21 @@
+{
+  "allClient" : "全部客户端",
+  "throwIn" : "投放中",
+  "soldOuted" : "已下架",
+  "wait" : "等待投放",
+  "trend" : "流量趋势",
+  "trendBrief" : "投放期间广告浏览量及点击量趋势",
+  "distribution" : "流量分布",
+  "distributionBrief" : "投放期间不同广告位流量分布情况",
+  "materiel" : "物料",
+  "pos" : "广告位",
+  "view" : "浏览量",
+  "proportion" : "占比",
+  "viewProportion" : "该广告位的浏览量在浏览总量中的占比",
+  "clickProportion" : "该广告位的点击量在点击总量中的占比",
+  "viewDay" : "日均浏览量",
+  "clickDay" : "日均点击量",
+  "click" : "点击量",
+  "conversion" : "转化",
+  "ratio" : "点击量/浏览量比值"
+}

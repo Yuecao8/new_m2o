@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="vm.closeModal()"><span>&times;</span></button>
+  <h3 class="modal-title">{{::vm.title}}</h3>
+</div>
+<div class="modal-body">
+    <video-preview video-info="vm.info" current-index="vm.currentIndex" on-current-change="vm.handleCurrentChange($event)"></video-preview>
+</div>
+<div class="modal-footer">
+  <ul class="tab-box" ng-style="vm.tabStyle">
+    <li class="tab-item" ng-class="{active: $index === vm.currentIndex}" 
+        ng-repeat="video in vm.info track by video.uid" ng-click="vm.changeVideo($index)">
+      <img class="pic" ng-show="video.index_pic" ng-src="{{::vm.fixImgPath(video.index_pic)}}" alt="video">
+      <div class="cover" ng-show="!video.index_pic"></div>
+    </li>
+  </ul>
+</div>

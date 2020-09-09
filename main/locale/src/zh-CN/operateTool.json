@@ -1,0 +1,15 @@
+{
+
+    "live" : "图文直播",
+    "liveIntroduce" : "对新闻事件进行图文形式的快速直播",
+    "workload" : "工作量",
+    "workloadIntroduce" : "可以查看后台管理人员的工作量",
+    "broadcast" : "直播互动",
+    "broadcastIntroduce" : "可以在直播页面，和使用手机终端的会员进行互动交流",
+    "card" : "自定义客户端首页",
+    "cardIntroduce" : "用于配置手机APP首页布局和组件",
+    "list" : "拆条",
+    "listIntroduce" : "用于将一条视频拆分成多条较小的视频片段",
+    "encoding" : "快编",
+    "encodingIntroduce" : "用于将多个视频片段合并成一个视频"
+}

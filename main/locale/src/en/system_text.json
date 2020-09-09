@@ -1,0 +1,19 @@
+{
+    "title" : "SMS server settings",
+    "tip" : "For the foreground phone registration member operation, send a registration verification code to the member",
+    "buttonText" : "SMS verification code template",
+    "progress" : "SMS usage progress",
+    "sended" : "Sent {{num}} Strip , Remaining {{number}} Strip",
+    "strip" : "Strip",
+    "remain" : "Remaining",
+    "charge" : "Recharge tips",
+    "chargeTip" : "If you handle the message margin recharge, you can contact us through the following ways: customer service phone 4000012000-9800",
+    "tplSet" : "Verification code SMS template configuration",
+    "text" : "SMS text",
+    "content" : "[Your APP name] your verification code: {{CODE}}, do not reveal the verification code to other people",
+    "tplTip" : "*Note that when setting up the SMS template, please follow the prompts to modify, otherwise you can not verify through the SMS server gateway, SMS text to [your APP name] at the beginning of the need to display the activation code inserted {{code}}, such as input 「Your verification code is:{{code}}」. If there is a problem with the changes, click Reset",
+    "reset" : "Reset",
+    "save" : "Save",
+    "cancel" : "Cancel",
+    "modify" : "Modify Successfully "
+}

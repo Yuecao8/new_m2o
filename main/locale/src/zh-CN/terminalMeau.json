@@ -1,0 +1,8 @@
+{
+    "terminal" : "终端",
+    "introduce" : "在此可以管理设置MXU对应的网站、APP、微信、微博",
+    "website" : "网站",
+    "APP" : "手机App",
+    "weixin" : "微信",
+    "wechat" : "微博"
+}

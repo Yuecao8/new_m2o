@@ -1,0 +1,21 @@
+{
+  "allClient" : "ll client",
+  "throwIn" : "Delivering",
+  "soldOuted" : "Sold out",
+  "wait" : "Waiting for delivery",
+  "trend" : "Flow trend",
+  "trendBrief" : "The amount of ad browsing and clicks during launch",
+  "distribution" : "Flow distribution",
+  "distributionBrief" : "Flow distribution of different advertising sites during the launch",
+  "materiel" : "Materiel",
+  "pos" : "Advertising position",
+  "view" : "Browse volume",
+  "proportion" : "Proportion",
+  "viewProportion" : "The amount of advertising in the total amount of browsing in the proportion of",
+  "clickProportion" : "The click of the ad in the total amount of clicks",
+  "viewDay" : "Average daily volume",
+  "clickDay" : "Daily Click",
+  "click" : "Clicks",
+  "conversion" : "Conversion",
+  "ratio" : "The ratio of Clicks and Browse volume"
+}

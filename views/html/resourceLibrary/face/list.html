@@ -1,0 +1,44 @@
+<div class="face-wrap">
+    <div class="d-flex">
+        <div class="flex-one"></div>
+        <button class="face-add" ng-click="vm.add()">新增</button>
+    </div>
+    <div class="face-list-head">
+        <div class="d-flex search-box">
+            <input class="search-keyword" type="text" ng-model="vm.k" placeholder="搜索人物">
+            <span class="search-btn" ng-click="vm.search()" >搜索</span>
+        </div>
+        <div class="status d-flex">
+            <label>状态：</label>
+            <div class="status-box">
+                <span ng-repeat="list in vm.statusType" ng-class="{'all': $index == vm.currentStatus}" ng-click="vm.changeStatus($index, list.type)">{{list.name}}</span>
+            </div>
+        </div>
+        <div class="sort d-flex">
+            <label>排序：</label>
+            <div class="sort">
+                <span ng-repeat="list in vm.sortList" ng-class="{'all': $index == vm.currentSort}" ng-click="vm.changeSort($index, list.val)">{{list.name}}</span>
+                <!-- <span>最早入库</span> -->
+                <!-- <span>人像名称</span> -->
+            </div>
+        </div>
+    </div>
+    <div class="search-result"></div>
+    <div class="face-list-body">
+        <div class="content">
+            <div ng-if="vm.faceList.length > 0" my-loading="vm.loading">
+                <div class="list" ng-repeat="list in vm.faceList" ng-click="vm.goDetail(list);" ng-if="list.face_image.image != false">
+                    <img ng-src="{{list.face_image.image.host}}{{list.face_image.image.dir}}{{list.face_image.image.filepath}}{{list.face_image.image.filename}}" />
+                    <div class="title">{{list.title}}</div>
+                    <div class="num">ID：{{list.id}}</div>
+                    <div class="geli" ng-if="list.is_isolation == 2">已隔离</div>
+                </div>
+            </div>
+        </div>
+        <hoge-error class="error-hight error-tip" hight-num="'300px'" arr-length="vm.faceList.length" ng-show="!vm.loading && vm.faceList.length == 0"></hoge-error>
+        <div class="face-list-footer d-flex">
+            <div class="flex-one"></div>
+            <page-nation ng-cloak class="sub-page list-page" options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+        </div>
+    </div>
+</div>

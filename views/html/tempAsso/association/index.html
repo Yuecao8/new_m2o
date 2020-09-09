@@ -1,0 +1,291 @@
+<div class="association-body">
+    <div class="hoge-table-add" style="overflow: unset;">
+        <div class="hoge-table-title">模板关联</div>
+        <div class="btn-group dropdown m-r-15 hoge-dropdown site-dropdown" ng-if="rootSiteItems.id==0">
+            <button class="btn dropdown-toggle " data-toggle="dropdown">
+                <span class="dropdown-label">{{vm.site_name}}</span>
+                <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu text-left text-sm font-12" style="max-height:210px;overflow: auto">
+                <a class="dropdown-item" ng-if="site.type=='m2o'" ng-repeat="site in vm.siteList" ng-click="vm.changeSite(site)">{{site.name}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="association-list-body hoge-border">
+        <div class="set-information">
+            <div class="list-title header-before">套系信息</div>
+            <div class="set-information-list">
+                <div>
+                    <span class="inform-title">终端名称：</span>
+                    <span class="inform-name">{{vm.theme.client_name}}</span>
+                </div>
+                <div>
+                    <span class="inform-title">当前套系：</span>
+                    <span class="inform-name">{{vm.theme.title}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="global-body">
+            <div class="list-title">
+                <span class="header-before">全局模板</span>
+                <button class="btn cancel-btn ng-binding pull-right" ng-click="vm.goEditAll()">
+                    <i class="fa fa-code"></i>
+                    代码编辑
+                </button>
+            </div>
+            <div class="global-list">
+
+                <div class="global-list-column" my-loading="vm.colListLoading">
+                    <div class="global-list-title">栏目模板</div>
+                    <div class="column-list" ng-if="vm.colList.length">
+                        <div class="column-list-item" ng-repeat="item in vm.colList">
+                            <div class="column-info">
+                                <div class="column-list-title-list">
+                                    <span class="column-list-title">{{item.typeName}}</span>
+                                    <div class="column-info-title" ng-if="item.id">{{item.template_name}}</div>
+                                    <div class="column-info-title no-bind" ng-if="!item.id">暂无绑定</div>
+                                </div>
+                                <div class="column-info-opera" ng-class="{'opera-bind':item.id,'opear-no-bind':!item.id}">
+                                    <span class="chain" ng-click="vm.bindTemp(item,'global')">
+                                        <i class="fa typeface-form_bangding"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">绑定</div>
+                                         </div>
+                                        <!--绑定-->
+                                    </span>
+                                    <span class="edit" ng-click="vm.goEdit(item)" ng-if="item.id">
+                                        <!--编辑-->
+                                        <i class="fa typeface-form_daimabianji"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">代码编辑</div>
+                                         </div>
+                                    </span>
+                                    <span class="eye-edit" ng-click="vm.goVisualEdit(item)" ng-if="item.id">
+                                        <!--编辑-->
+                                        <i class="fa typeface-form_keshihuabianji eye-edit-i"></i>
+                                         <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">可视化编辑</div>
+                                         </div>
+                                    </span>
+                                    <span class="eye" ng-click="vm.toPrev(item)" ng-if="item.id">
+                                        <i class="fa typeface-form_yulan"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">预览</div>
+                                         </div>
+                                        <!--预览-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="global-list-common" my-loading="vm.usualListLoading">
+                    <div class="global-list-title">通用模板</div>
+                    <div class="column-list" ng-if="vm.usualList.length" >
+
+                        <div class="column-list-item" ng-repeat="item in vm.usualList">
+                            <div class="column-info">
+                                <div class="column-list-title-list">
+                                    <span class="column-list-title">{{item.typeName}}</span>
+                                    <div class="column-info-title" ng-if="item.id">{{item.template_name}}</div>
+                                    <div class="column-info-title no-bind" ng-if="!item.id">暂无绑定</div>
+                                </div>
+                                <div class="column-info-opera" ng-class="{'opera-bind':item.id,'opear-no-bind':!item.id}">
+                                    <span class="chain" ng-click="vm.bindTemp(item,'global')">
+                                        <i class="fa typeface-form_bangding"></i>
+                                         <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">绑定</div>
+                                         </div>
+                                        <!--绑定-->
+                                    </span>
+                                    <span class="edit" ng-click="vm.goEdit(item)" ng-if="item.id">
+                                        <!--编辑-->
+                                        <i class="fa typeface-form_daimabianji"></i>
+                                         <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">代码编辑</div>
+                                         </div>
+                                    </span>
+                                    <span class="eye-edit" ng-click="vm.goVisualEdit(item)" ng-if="item.id">
+                                        <!--编辑-->
+                                        <i class="fa typeface-form_keshihuabianji eye-edit-i"></i>
+                                         <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">可视化编辑</div>
+                                         </div>
+                                    </span>
+                                    <span class="eye" ng-click="vm.toPrev(item)" ng-if="item.id">
+                                        <i class="fa typeface-form_yulan"></i>
+                                         <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">预览</div>
+                                         </div>
+                                        <!--预览-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="associated-body clearfix">
+            <div class="list-title header-before">模板关联</div>
+            <div class="associated-list">
+                <div class="associated-list-column">
+                    <div class="hoge-table-header column-header">栏目列表</div>
+                    <div class="associated-list-list">
+                        <!--栏目-->
+                        <search-Box key-Word="vm.key"
+                                    search-Key="vm.searchKey(Item)"
+                                    key-Press="vm.keyPress(Event)"
+                                    hide-Kind="vm.hideAccessKind"
+                                    is-Focus="vm.isFocus"
+                                    clear-Float="true"
+                                    place-Holder="vm.placeHolder"
+                        >         
+                        </search-Box>
+                        <!-- <div class="form-group hoge-input-search">
+                            <input type="text" placeholder="搜索栏目" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                            <i class="fa typeface-searchbar_sousuo" ng-click="vm.searchKey()"></i>
+                        </div> -->
+                        <div class="pos-rlt hoge_nav_classify_body" ng-if="!vm.search">
+                            <div class="hoge_nav_classify">
+                                <nav class="navside m-b">
+                                    <div class="nav-border b-primary" flex>
+                                        <class-tree class="classify-tree" tree-data= "vm.columnClass" sort-id="vm.storageSort"
+                                                    no-add="true"
+                                                    no-edit="true"
+                                                    no-del="true"
+                                                    get-child="vm.getChilds(item)"
+                                                    tree-level="10"
+                                                    switch-class-temp="vm.getColumnInfo(tempItem, 'bind')"
+                                                    is-prev="true"
+                                                    is-switch="true"
+                                                    prev-class-temp ="vm.getColumnInfo(tempItem, 'prev')"
+                                                    select-class= "vm.getCategory(param)"
+                                        ></class-tree>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="column-search" ng-if="vm.search" my-loading="vm.searchLoading">
+                            <div class="hoge-error hoge-error-hight" ng-if="!vm.searchList.length" >
+                                <div>
+                                    <div class="error-img" ng-if="vm.errorMessage&&!vm.searchLoading"></div>
+                                    <p ng-if="vm.errorMessage &&!vm.searchLoading">{{vm.errorMessage}}</p>
+                                </div>
+                            </div>
+                            <div class="column-search-item" ng-repeat="item in vm.searchList" ng-show="vm.searchList.length" ng-click="vm.getCategory(item.column)">
+                                <div class="info-item">
+                                    <span class="column-need">{{item.column.name}}</span>
+                                </div>
+                                <div class="operate-item">
+                                    <span class="operate m-r-ope operate-preview" ng-click="vm.getColumnInfo(item.column, 'prev')">
+                                        <i class="fa typeface-form_yulan"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">预览</div>
+                                         </div>
+                                    </span>
+
+                                    <span ng-click="vm.getColumnInfo(item.column, 'bind')" class="operate operate-bind">
+                                        <i class="fa typeface-form_bangding"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                             <span class="arrow bottom b-white"></span>
+                                             <div class="box-body">绑定</div>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="lanmu">
+                                    {{item.relation.substring(0,item.relation.length-1)}}
+                                </div>
+                                <div class="box-color text-color pos-rlt title-box">
+                                    <span class="arrow bottom pull-left b-white"></span>
+                                    <div class="box-body">{{item.relation.substring(0,item.relation.length-1)}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--栏目-->
+                    </div>
+                </div>
+            </div>
+            <div class="customize-list">
+                <div class="associated-list-column">
+                    <div class="hoge-table-header column-header">自定义模板栏目</div>
+                    <div class="column-list"></div>
+                </div>
+                <div class="customize-list-list" my-loading="vm.customizeListLoading">
+                    <div class="hoge-error hoge-error-hight" ng-if="!vm.customizeList.length">
+                        <div>
+                            <div class="error-img" ng-if="vm.errorMessage&& !vm.customizeListLoading"></div>
+                            <p ng-if="vm.errorMessage&& !vm.customizeListLoading">{{vm.errorMessage}}</p>
+                        </div>
+
+                    </div>
+                    <div class="customize-list-item flex-item hoge-item-border" ng-repeat="item in vm.customizeList" ng-if="vm.customizeList.length">
+                        <div class="item-title flex-one">
+                            <div class="item-column">
+                                {{item.column_name}}
+                            </div>
+                            <div class="item-title-title">栏目列表页：{{item.template_name}}</div>
+                        </div>
+                        <div class="customize-opera">
+                            <span ng-click="vm.toPrev(item)">
+                                <i class="fa typeface-form_yulan"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">预览</div>
+                                 </div>
+                            </span>
+                            <span ng-click="vm.bindTemp(item)">
+                                <i class="fa typeface-form_bangding"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">绑定</div>
+                                 </div>
+                            </span>
+                            <span  ng-click="vm.goEdit(item)" class="code-edit">
+                                <i class="fa typeface-form_daimabianji"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">代码编辑</div>
+                                 </div>
+                            </span>
+                            <span ng-click="vm.goVisualEdit(item)" class="eye-edit">
+                                <i class="fa typeface-form_keshihuabianji eye-edit-i"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">可视化编辑</div>
+                                 </div>
+                            </span>
+                            <span ng-click="vm.reset(item)">
+                                <i class="fa  typeface-form_huifu"></i>
+                                 <div class="box-color text-color pos-rlt">
+                                     <span class="arrow bottom b-white"></span>
+                                     <div class="box-body">解绑</div>
+                                 </div>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="customize-list-bottom hoge-table-bottom border-bottom-radius" ng-if="vm.customizeList.length">
+                    <page-nation options="vm.pageOptions" turn-page="vm.getCustomizeList()"></page-nation>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

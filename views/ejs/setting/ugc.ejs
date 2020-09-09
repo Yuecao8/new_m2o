@@ -1,0 +1,94 @@
+<div class="wrapper-ugc">
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">UCG设置</div>
+    </div>
+    <div class="ugc_container">
+        <div class="control-header">
+            <!--<em translate="ugc.auditControl"></em>-->
+            <div class="box-tip collapse in">
+                <i class="material-icons font-16">&#xe88f;</i>
+                {{'ugc.ugcTip'| translate}}
+            </div>
+        </div>
+
+        <div class="list_contain hoge-table-contain white" ng-show="vm.state">
+            <div class="box_header hoge-table-header">
+                <div class="list-ctr">
+                </div>
+                <div class="app" translate="ugc.application">
+                </div>
+                <div class="des" translate="ugc.description">
+                </div>
+                <div class="c_ctr" translate="ugc.review">
+                </div>
+                <div class="r_ctr" translate="ugc.postReview">
+                </div>
+            </div>
+            <ul>
+                <li class="list_item hoge-item-border" ng-repeat="item in vm.list" ng-if="$index<3">
+                    <div class="list-ctr">
+                    </div>
+                    <div class="app">
+                        {{item.title}}
+                    </div>
+                    <div class="des">
+                        {{item.describe}}
+                    </div>
+                    <div class="c_ctr">
+                        <div class="check_box" ng-if="item.app_status!=undefined">
+                            <label class="ui-switch m-t-xs m-r">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.switch(item,1)" ng-checked="item.content_audit">
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="r_ctr">
+                        <div class="check_box">
+                            <label class="ui-switch m-t-xs m-r">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.switch(item,2)" ng-checked="item.comment_audit">
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <% if (edition === 'pro' || edition === 'ult') { %>
+                <li class="list_item" ng-repeat="item in vm.list" ng-if="$index===3">
+                    <div class="list-ctr">
+                    </div>
+                    <div class="app">
+                        {{item.title}}
+                    </div>
+                    <div class="des">
+                        {{item.describe}}
+                    </div>
+                    <div class="c_ctr">
+                        <div class="check_box" ng-if="item.app_status!=undefined">
+                            <label class="ui-switch m-t-xs m-r">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.switch(item,1)" ng-checked="item.content_audit">
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="r_ctr">
+                        <div class="check_box">
+                            <label class="ui-switch m-t-xs m-r">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.switch(item,2)" ng-checked="item.comment_audit">
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+
+    </div>
+</div>

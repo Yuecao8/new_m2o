@@ -1,0 +1,18 @@
+<div class="publish-wrapper">
+    <div class="main-body ">
+        <div class="contain-body flex-item mxu_side_wrapper column-set">
+            <!--左侧栏目设置-->
+            <div class="w_list menu-wrap" style="min-width: 144px;">
+              <li ng-click="vm.jumpClassify(n.id)" ng-repeat="n in vm.navList track by $index" ng-class="{'sideNav':true,'acticeNav': n.isChoose}">
+                {{n.name}}
+              </li>
+            </div>
+            <!--发布列表-->
+            <div class="flex-one second-view">
+                <div ui-view></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<m2o-footer ></m2o-footer>

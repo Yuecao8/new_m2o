@@ -1,0 +1,23 @@
+<div class="modal-content box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="system_email.verifyServer"></h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <form role="form" class="ng-pristine ng-valid" name="verifyForm" id="verifyForm">
+
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label">{{ 'system_email.receiveEmail'| translate}}:</label>
+                <div class="col-sm-9">
+                    <input type="email" ng-model="vm.email" placeholder="{{ 'system_email.emailAddress'| translate}}" class="form-control" required>
+                    <small><i class="icon-tixing"></i>{{ 'system_email.receiveTip'| translate}}</small>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn primary-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.save()" translate="system_email.sure"></button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()" translate="system_email.cancel"></button>
+    </div>
+</div>

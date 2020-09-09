@@ -1,0 +1,198 @@
+<div class="platform-box">
+    <div class="application-list">
+        <div class="list" ng-click="vm.backList()">应用列表 ></div>
+        <div class="edit">编辑应用</div>
+    </div>
+    <div class="info-box">
+        <!-- 基本信息 -->
+        <div class="basic-info" ng-class="{'fade': vm.createShow}">
+            <div class="title">
+                <p class="border-left"></p>
+                <p class="title-info">基本信息</p>
+            </div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">应用名称:</label>
+                    <div class="input-focus" ng-class="{'focus-show':vm.nameFocus}">
+                        <input type="text" ng-model="vm.applicationName"
+                            ng-class="{'focus-color':vm.nameFocus}">
+                            <!-- ng-blur="vm.nameFocus = false" -->
+                        <button type="button" class="btn primary-btn input-btn" ng-click="vm.saveName()">保存</button>
+                        <button type="button" class="btn cancel-btn input-btn" ng-click="vm.nameFocus = false">取消</button>
+                    </div>
+                    <div class="channel-count" ng-class="{'focus-show': !vm.nameFocus}">
+                        <span>{{vm.dataDetail.name}}</span>
+                        <i class="icon typeface-form_edit" ng-click="vm.editName()"></i>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">描述:</label>
+                    <div class="input-focus" ng-class="{'focus-show': vm.briefFocus}">
+                        <textarea type="text" ng-model="vm.applicationBrief"
+                            ng-class="{'focus-color':vm.briefFocus}"></textarea>
+                        <button type="button" class="btn primary-btn input-btn" ng-click="vm.saveBrief()">保存</button>
+                        <button type="button" class="btn cancel-btn input-btn" ng-click="vm.briefFocus = false">取消</button>
+                    </div>
+                    <div class="channel-count brief-box" ng-class="{'focus-show': !vm.briefFocus}">
+                        <span class="brief-box">{{vm.dataDetail.brief}}</span>
+                        <i class="icon typeface-form_edit" ng-click="vm.editBrief()"></i>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">标识:</label>
+                    <div class="input-focus" ng-class="{'focus-show':vm.logoFocus}">
+                        <input type="text" ng-model="vm.applicationLogo"
+                            ng-class="{'focus-color':vm.logoFocus}">
+                        <button type="button" class="btn primary-btn input-btn" ng-click="vm.saveLogo()">保存</button>
+                        <button type="button" class="btn cancel-btn input-btn" ng-click="vm.logoFocus = false">取消</button>
+                    </div>
+                    <div class="channel-count" ng-class="{'focus-show':!vm.logoFocus}">
+                        <span>{{vm.dataDetail.logo}}</span>
+                        <i class="icon typeface-form_edit" ng-click="vm.editLogo()"></i>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">APPID:</label>
+                    <div class="channel-count show-logo" ng-class="{'focus-show':!vm.logoFocus}">
+                        <span>{{vm.dataDetail.APPID}}</span>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">APPSecret:</label>
+                    <div class="channel-count show-logo" ng-class="{'focus-show':!vm.logoFocus}">
+                        <span ng-show="!vm.APPShow">*********</span>
+                        <span ng-show="vm.APPShow">{{vm.dataDetail.APP}}</span>
+                        <!-- <i class="icon typeface-form_edit" ng-show="!vm.APPShow" ng-click="vm.APPShow = true"></i> -->
+                        <i class="icon typeface-form_yulanguanbi" ng-show="!vm.APPShow" ng-click="vm.APPShow = true"></i>
+                        <i class="icon typeface-form_yulan" ng-show="vm.APPShow" ng-click="vm.APPShow = false"></i>
+                        <!-- <span class="reset" ng-show="vm.APPShow" ng-click="vm.resetAPP()">重置</span> -->
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">基准路由:</label>
+                    <div class="channel-count show-logo" ng-class="{'focus-show':!vm.logoFocus}">
+                        <span>{{vm.dataDetail.base_route}}</span>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- API权限管理 -->
+        <div class="API-permissions" ng-class="{'fade': vm.createShow}">
+            <div class="title">
+                <p class="border-left"></p>
+                <p class="title-info">API权限管理</p>
+            </div>
+            <div class="btn-box">
+                <div class="interface-btn first" ng-class="{'active': vm.interface == 1}" ng-click="vm.getSystemInterface()">系统接口</div>
+                <div class="interface-btn no-border" ng-class="{'active': vm.interface == 2}" ng-click="vm.getInfoInterface()">自定义接口</div>
+                <div class="form-group hoge-input-search m-l-20" ng-show="vm.interface == 2">
+                    <input type="text" placeholder="请输入关键字" ng-keypress="vm.keyPress($event)" id="keyValue" ng-model="vm.key" class="ng-pristine ng-valid ng-empty ng-touched">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                </div>
+                <div class="interface-btn creat-btn" ng-show="vm.interface == 2" ng-click="vm.createSystem()">创建接口</div>
+                <div class="interface-btn import-btn" ng-show="vm.interface == 2">
+                        <input class="import-input" style="opacity: 0" id="import-json" type="file" multiple="multiple" nv-file-select uploader="vm.localUploader" accept="application/json">
+                        导入接口
+                </div>
+            </div>
+            <div class="system-status-box" ng-if="vm.interface == 1">
+                <div class="table_header hoge-table-header hoge-header-border">
+                    <div class="list-body">功能</div>
+                    <div class="list-weight flex-one">接口名称</div>
+                    <div class="list-body">接口路由</div>
+                    <div class="list-publish">接口状态</div>
+                    <div class="list-state">开启状态</div>
+                </div>
+                <div class="hoge-table-content">
+                    <hoge-error hight-num="'277px'" arr-length="vm.systemList.length" load="vm.loading"></hoge-error>
+                    <div class="list" ng-repeat="item in vm.systemList track by $index" ng-class="{'last-content': vm.systemList.length - 1 === $index}">
+                        <div class="list-body">{{item.name}}</div>
+                        <div class="list-content">
+                            <div class="list-content-box" ng-repeat="nor in item.apis track by $index" ng-class="{'last-content': item.apis.length - 1 === $index}">
+                                <div class="list-weight flex-one">{{nor.name}}</div>
+                                <div class="list-body">{{nor.api_url}}</div>
+                                <div class="list-publish"  ng-class="{'text-color' : nor.is_open}">{{nor.is_open == 1 ? '已获得' : '未获得'}}</div>
+                                <div class="list-state">
+                                    <label class="ui-switch">
+                                        <span class="switch-open" ng-show="nor.is_open == 1">启用</span>
+                                        <span class="switch-close" ng-show="nor.is_open == 0">关闭</span>
+                                        <input type="checkbox" ng-click="vm.toggleComment(nor)" ng-checked="nor.is_open">
+                                        <i></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="interface-box" ng-if="vm.interface == 2">
+                <div class="table_header hoge-table-header">
+                    <div class="list-ctr"></div>
+                    <div class="list-weight flex-one">接口名称</div>
+                    <div class="list-publish">接口路由</div>
+                    <div class="list-publish">接口状态</div>
+                    <div class="list-state">开启状态</div>
+                    <div class="list-body">操作</div>
+                </div>
+                <hoge-error hight-num="'277px'" arr-length="vm.stateList.length" load="vm.loading"></hoge-error>
+                <input type="text" id="copy-text" class="copy-text" value = "{{vm.api_full_route}}">
+                <div class="hoge-table-content hoge-content" ng-repeat="item in vm.stateList track by $index"  ng-class="{'last-content': vm.stateList.length - 1 === $index}">
+                    <div class="list-ctr">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                        </label>
+                    </div>
+                    <div class="list-weight flex-one">{{item.name}}</div>
+                    <div class="list-publish">{{item.api_url}}
+                        <span><i class="fa typeface-form_fuzhi" ng-click="vm.copyApi(item)"></i></span>
+                    </div>
+                    <div class="list-publish" ng-class="{'text-color' : item.is_open}">{{item.is_open == 1 ? '已获得' : '未获得'}}</div>
+                    <div class="list-state">
+                        <label class="ui-switch">
+                            <span class="switch-open" ng-show="item.is_open">启用</span>
+                            <span class="switch-close" ng-show="!item.is_open">关闭</span>
+                            <input type="checkbox" ng-click="vm.toggleInterface(item)" ng-checked="item.is_open">
+                            <i></i>
+                        </label>
+                    </div>
+                    <div class="list-body list-set">
+                        <span>
+                            <a class="export-a" id="export-a" ng-click="vm.exportDownload(item)" ng-href="{{vm.exportUrl}}">导出</a>
+                        </span>
+                        <span ng-click="vm.reduction(item)">还原</span>
+                        <span ng-click="vm.edit(item)">编辑</span>
+                        <span ng-click="vm.preview(item)">预览</span>
+                        <span ng-click="vm.copy(item)">复制</span>
+                        <span ng-click="vm.deleteInterface(item)">删除</span>
+                    </div>
+                </div>
+                <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                    <div class="btn-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+                            <span class="all-checked">{{'content.select' | translate}}</span>
+                        </label>
+                    </div>
+                    <div class="btn-toolbar list_bar flex-one btn-box">
+                        <div class="btn-group">
+                            <button class="btn btn-comment">
+                                <a class="export-a" ng-click="vm.batchDownload()" ng-href="{{vm.batchExportUrl}}">导出</a>   
+                            </button>
+                        </div>
+                    </div>
+                    <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 0"></page-nation>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{'pop-page': !vm.createShow}">
+            <div ui-include="'../views/mxu/platform/create.html'"></div>
+        </div>
+    </div>
+    
+</div>

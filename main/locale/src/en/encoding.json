@@ -1,0 +1,27 @@
+{
+  "targetDur" : "Target duration",
+  "empty" : "Empty",
+  "preview" : "Preview",
+  "save" : "Save",
+  "dropTip" : "Drag the selection from within the video below",
+  "duration" : "Duration",
+  "search" : "Search...",
+  "play" : "Play",
+  "upCover" : "Local upload cover",
+  "replace" : "Replace the cover",
+  "title" : "Title",
+  "description" : "Description",
+  "publish" : "Publish",
+  "cancel" : "Cancel",
+  "allTime" : "All time period",
+  "yesterday" : "Yesterday",
+  "today" : "Today",
+  "latelyThree" : "The last three days",
+  "latelySeven" : "The last seven days",
+  "customize" : "Custom time period",
+  "confirm" : "Confirm",
+  "selColumn" : "Select column",
+  "errTitle" : "Please fill in the video title",
+  "errColumn" : "Please select the publication section"
+
+}

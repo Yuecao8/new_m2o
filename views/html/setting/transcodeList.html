@@ -1,0 +1,120 @@
+<div class="transcodeList">
+  <div class="table_title">
+      <div class="page-title">转码列表</div>
+      <!-- <button class="btn btn-purple pull-right" ng-click="vm.stateGo(vm.url)">新增配置</button> -->
+  </div>
+  
+  
+  <div class="box hoge-border">
+      <div class="control-title">
+          <!-- 全部状态 -->
+          <!--状态下拉-->
+          <div class="btn-group dropdown hoge-dropdown">
+              <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                  <span class="dropdown-label">{{vm.status}}</span>
+                  <span class="caret"></span>
+              </button>
+              <div class="dropdown-menu text-left text-sm">
+                  <a class="dropdown-item" ng-repeat="state in vm.statusArr" ng-click="vm.chooseStatus(state)">{{state.name}}</a>
+              </div>
+          </div>
+          <!--搜索-->
+          <div class="pull-right">
+              <search-Box key-Word="vm.key"
+                      search-Key="vm.search(Item)"
+                      key-Press="vm.keyPress(Event)"
+                      hide-Kind="vm.hideAccessKind"
+                      is-Focus="vm.isFocus"
+                      place-Holder="vm.placeHolder"
+              >         
+              </search-Box>
+          </div>
+      </div>
+      <div class="box-body p-v-md" my-loading="vm.sub_loading">
+          <div class="transcode-title hoge-table-header" ng-if="vm.listData.length">
+              
+              <div class="list-ctr">
+                  <div class="kind-sorting" ng-click="vm.sort()">
+                      <i class="typeface-form_paixu"></i>
+                  </div></div>
+              <div class="list-name flex-one" >转码任务</div> 
+              <div class="frame_rate">大小</div>                   
+              <div class="output_format">转码配置</div>
+              <!-- <div class="codec_format">编码格式</div> -->
+              <div class="codec_progress">进度</div>
+              <div class="code_time">剩余时间</div>
+              <div class="code_height">服务器</div>
+              <div class="code_operation">操作</div>
+              
+          </div>
+          <div class="sort-board red-50" ng-if="vm.isSort">
+              <i class="fa typeface-login_tishi"></i>　<span class="paixu_setting">排序功能已开启</span>
+              <button class="btn btn-sm white pull-right btn-cancel" ng-click="vm.cancelSort()">取消</button>
+              <button class="btn btn-sm hoge-btn-blue pull-right m-r" ng-click="vm.outSort()">保存</button>
+          </div>
+          <div class="transcode-list" ui-sortable="vm.sortableOpt" ng-model="vm.listData">                
+              <div class="item-list" ng-repeat="item in vm.listData track by $index">
+                  <div class="wrap">
+                      <div class="list-ctr">
+                          <input type="checkbox" ng-if="!vm.isSort" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                          <i class="fa fa-bars" ng-if="vm.isSort"></i>
+                      </div>
+                      <div class="list-name flex-one textoverflow" >{{item.title}}</div>  
+                      <div class="frame_rate">{{item.origin_size}}</div>                    
+                      <div class="output_format">{{item.transcode_setting_name}}</div>
+                      <!-- <div class="codec_format">{{item.codec_format}}</div> -->
+                      <div class="codec_progress">
+                        <div class="progress progress-sm" ng-if="item.transcode_status == 1 && item.is_task_paused == 'false'">
+                            <div class="progress-bar info" ng-style="{width:item.transcode_percent+'%'}" ng-if="item.transcode_status == 1 && item.is_task_paused == 'false'">{{item.transcode_percent+'%'}}</div>
+                            <div class="progress-bar info" style="width: 100%;background: #ccc;" ng-if="item.transcode_status == -1"></div>
+                        </div>
+                        <div class="progress progress-sm" ng-if="item.transcode_status == 1 && item.is_task_paused == 'true'">
+                          <div class="suspended-progress-bar-bar" style="background-color: #C7D4E5;" ng-style="{width:item.transcode_percent+'%'}" ng-if="item.transcode_status == 1 && item.is_task_paused == 'true'">{{item.transcode_percent+'%'}}</div>
+                          <div class="progress-bar info" style="width: 100%;background: #ccc;" ng-if="item.transcode_status == -1"></div>
+                        </div>
+                        <span ng-if="item.transcode_status == 1">{{item.transcode_percent+'%'}}</span>
+                        <div class="video-info" ng-if="item.transcode_status == 0">
+                            <span class="m-r">等待转码</span>
+                            
+                        </div>
+                        <!-- <div class="progress" ng-if="!vm.showState">
+                          <div class="progress-bar primary" ng-style="{width:vm.percent+'%'}">{{vm.percent}}%</div>
+                        </div>
+                        <span class="upload-tip" ng-if="vm.showState">
+                            <span class="wait-tip" ng-if="vm.fileList[idxs].progress == 0">等待上传</span>
+                            <span class="ok-tip" ng-if="vm.fileList[idxs].progress == 100&&vm.fileList[idxs].uploadTrue">上传完成</span>
+                            <span class="error-tip" ng-if="vm.fileList[idxs].progress == null">上传失败</span>
+                            <span class="ing-tip" ng-if="(vm.fileList[idxs].progress > 0)&&!vm.fileList[idxs].uploadTrue">上传{{vm.fileList[idxs].progress}}%</span>
+                        </span> -->
+                      </div>
+                      <div class="code_time">{{item.transcode_lefttime}}</div>
+                      <div class="code_height">{{item.transcode_server_host}}</div>
+                      <div class="code_operation">
+                        <span class="oper-btn" ng-show="item.is_task_paused == 'false' && item.transcode_status == 1 " ng-click="vm.pauseTransCode(item)">暂停</span>
+                        <span class="oper-btn" ng-show="item.is_task_paused == 'true' && item.transcode_status == 1" ng-click="vm.restoreTransCode(item)">开始</span>
+                        <!-- <span class="oper-btn" ng-show="item.transcode_status == -1" ng-click="vm.pauseTransCode(item)">重新转码</span> -->
+                        <span class="oper-btn" ng-click="vm.deleteTransCode(item.hash_id,$index)">删除</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <hoge-error hight-num="'277px'" arr-length="vm.listData.length" load="vm.loading"></hoge-error>
+      <div class="footerCl" ng-if="vm.listData.length>0">
+          <div class="list_bottom hoge-list-bottom border-bottom-radius" ng-show="vm.listData">
+              <div class="btn-group">
+                  <label class="checkbox-inline">
+                      <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">全选
+                  </label>
+              </div>
+              <div class="btn-toolbar list_bar flex-one btn-box">
+                  <div class="btn-group">
+                      <button class="btn del-btn" ng-click="vm.deleteAllTransCode()">删除</button>
+                  </div>
+              </div>
+              <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+          </div>
+      </div>
+
+  </div>
+</div>

@@ -1,0 +1,135 @@
+<div class="memSet hoge-radius">
+    <div class="page-title">会员设置</div>
+    <div class="box hoge-radius">
+        <!--<div class="box-divider m-a-0"></div>-->
+        <div class="p-v-md hoge-radius">
+            <div class="control-phone control-member hoge-radius">
+                <div class="control-phone-d">
+                    <!--<em translate="terminalMemSet.memberSet"></em>-->
+                    <div class="box-tip collapse in">
+                        <i class="material-icons font-16">&#xe88f;</i>
+                        在这里可以修改会员注册、会员登录、会员中心的相关配置
+                    </div>
+                </div>
+            </div>
+            <div class="list_box">
+                <div class="list white set_wrap">
+                    <div class="list-register">
+                        <h3>
+                            <span class="icon-box">
+                                <i class="fa icon-new-shoujizhuce"></i>
+                            </span>
+                            开启手机注册
+                            <label class="list-switch ui-switch">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.checkSet()" ng-checked="vm.phoneChecked" ng-model="vm.phoneChecked">
+                                <i></i>
+                            </label>
+                        </h3>
+                        <p>通过开关此项，可以管理网站是否开放手机注册。当选择开时，可以直接使用手机获取短信验证码注册网站；当选择关时，无法通过手机注册会员</p>
+
+                    </div>
+                    <div class="list-login" >
+                        <h3>
+                            <span class="icon-box">
+                                <i class="fa icon-new-disanfangdenglu"></i>
+                            </span>
+                            <!-- {{'terminalMemSet.thirdLanded' | translate}} -->
+                            是否强制绑定手机号
+                            <label class="list-switch ui-switch">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-click="vm.checkMandatory()" ng-checked="vm.mandatoryChecked" ng-model="vm.mandatoryChecked">
+                                <i></i>
+                            </label>
+                        </h3>
+                        <p>通过此开关，可以让客户端登陆之后强制绑定手机号
+                        </p>
+                    </div>
+                </div>
+                <!--<div class="list white set_wrap other-login" >-->
+                    <!--<div class="list_item"  ng-repeat="item in vm.thirdList">-->
+                        <!--<div class="list-left">-->
+                        <!--<span>-->
+                          <!--<img ng-src="{{item.icon}}">-->
+                        <!--</span>-->
+                        <!--</div>-->
+                        <!--<div class="list_body">-->
+                            <!--{{item.settitle}}-->
+                        <!--</div>-->
+                        <!--<div class="list_open">-->
+                            <!--<label class="ui-switch">-->
+                                <!--<input type="checkbox" ng-click="vm.changeStatus(item)" ng-checked="item.checked" ng-model="item.checked">-->
+                                <!--<i></i>-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="list_config"><i class="icon-cebian-shezhi pull-right" ng-click="vm.goSet(item)"></i></div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<div class="list white set_wrap">-->
+                    <!--<div class="list-navigation">-->
+                        <!--<h3 class="navigation">-->
+                            <!--<span class="icon-box">-->
+                                <!--<i class="fa icon-new-huiyuanzhongxindaohang"></i>-->
+                            <!--</span>-->
+                            <!--{{'terminalMemSet.memberNav' | translate}}-->
+                            <!--<button class="btn btn-comment" ng-click="vm.goGuide()">{{'terminalMemSet.setNav' | translate}}</button>-->
+                        <!--</h3>-->
+                        <!--<p>{{'terminalMemSet.navIntroduce' | translate}}-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--<div class="list-login" >-->
+                    <!--<h3>-->
+                        <!--<span class="icon-box">-->
+                            <!--<i class="fa icon-new-zhanshixinxi"></i>-->
+                        <!--</span>-->
+                        <!--{{'terminalMemSet.centerDisplay' | translate}}-->
+                    <!--</h3>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="list white set_wrap other-login">-->
+                    <!--<form name="memberInfo" id="memberInfo">-->
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-sm-2" ng-class="{'active': vm.set.logo}" translate="terminalMemSet.centerLogo"></label>-->
+                            <!--<div class="col-sm-10">-->
+                                <!--<input id="getImg" class="file" type="file" nv-file-select="" uploader="vm.uploader" multiple="" ng-blur="vm.set.logo = false" ng-focus="vm.set.logo = true" accept="image/jpeg,image/png" />-->
+                                <!--<div ng-if="!vm.memInfo.logo" class="list-left img-channel ng-scope">-->
+                                    <!--<span class="icon-tuji1"></span>-->
+                                <!--</div>-->
+                                <!--<img ng-if="vm.memInfo.logo" ng-src="{{vm.memInfo.logo}}" style="width: 105px;height: 63px;border: 1px solid #eee;">-->
+                                <!--<small class="img-tip" translate="terminalMemSet.logoIntroduce"></small>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-sm-2" ng-class="{'active': vm.set.title}" translate="terminalMemSet.centerTitle"></label>-->
+                            <!--<input class="col-sm-10" ng-model="vm.memInfo.title" type="text" ng-blur="vm.set.title = false" ng-focus="vm.set.title = true" required="" class="ng-pristine ng-untouched ng-valid ng-valid-required">-->
+                        <!--</div>-->
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-sm-2" ng-class="{'active': vm.set.info}" translate="terminalMemSet.copyRight"></label>-->
+                            <!--<input class="col-sm-10" ng-model="vm.memInfo.copyright" type="text" ng-blur="vm.set.info = false" ng-focus="vm.set.info = true" required="" class="ng-pristine ng-untouched ng-valid ng-valid-required">-->
+                        <!--</div>-->
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-sm-2" ng-class="{'active': vm.set.num}" translate="terminalMemSet.record"></label>-->
+                            <!--<input class="col-sm-10" ng-model="vm.memInfo.sicp" type="text" ng-blur="vm.set.num = false" ng-focus="vm.set.num = true" required="" class="ng-pristine ng-untouched ng-valid ng-valid-required">-->
+                        <!--</div>-->
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-sm-2" ng-class="{'active': vm.set.phone}" translate="terminalMemSet.contact"></label>-->
+                            <!--<div class="col-sm-10">-->
+                                <!--<input ng-model="vm.memInfo.tel" type="text" ng-blur="vm.set.phone = false" ng-focus="vm.set.phone = true" required="" class="ng-pristine ng-untouched ng-valid ng-valid-required" style="width: 100%;">-->
+                                <!--<p style="border-bottom: none;margin-left: 0;" translate="terminalMemSet.contactIntroduce"></p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-sm-2"></label>-->
+                            <!--<div class="col-sm-10">-->
+                                <!--<button type="submit" class="btn primary-btn m-b" ng-disabled="memberInfo.$invalid" ng-click="vm.save()" style="float: right;">{{'terminalMemSet.save' |translate}}</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>

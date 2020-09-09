@@ -1,0 +1,41 @@
+{
+    "link":"友情链接",
+    "createLink" : "新增友情链接",
+    "linkName" : "名称",
+    "logo" : "LOGO",
+    "href" : "链接地址",
+    "allSelect" : "全选",
+    "delete" : "删除",
+    "save" : "保存",
+    "sortTip" : "开启排序",
+
+
+    "addLinks" : "新建/编辑友情链接",
+    "icon" : "图标",
+    "links" : "链接",
+    "uploadIcon" : "上传图标",
+    "logoChange" : "点击更换图标",
+    "logoAdd" : "点击添加图标",
+    "submit":"确认",
+    "cancel" : "取消",
+    "textPlaceHolder" : "请填写链接名称",
+    "urlPlaceHolder" : "请填写链接地址",
+
+
+    "fillLinkName" : "链接名称不能为空",
+    "addLinkLogo" : "请添加链接图标",
+    "editLinkUrl" : "链接地址不能为空/链接格式错误",
+    "inputTip" : "链接名称不能小于2个字符或大于10个字符",
+    "operateSuccess" : "操作成功",
+
+
+    "deleteConfirm" : "确认删除选中的友情链接吗？",
+    "selectMsg" : "请选择需要删除的友情链接！",
+    "sortSuccess" : "排序成功！",
+
+
+    "help" : "帮助与支持",
+    "order" : "工单",
+    "name" : "M2O融合媒体综合运营平台",
+    "errSiteId":"缺少站点ID"
+}

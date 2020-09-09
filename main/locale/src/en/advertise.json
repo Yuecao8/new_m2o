@@ -1,0 +1,14 @@
+{
+    "search" : "Search...",
+    "addAdv" : "Add ads",
+    "wait" : "Waiting for delivery",
+    "tiao" : " strip",
+    "edit" : "Edit",
+    "delete" : "Delete",
+    "soldOut" : "Remove",
+    "throwIn" : "Delivering",
+    "soldOuted" : "Sold out",
+    "confirmDel" : "Confirm to delete the selected data?",
+    "confirmData" : "Confirm to remove the selected data?"
+
+}

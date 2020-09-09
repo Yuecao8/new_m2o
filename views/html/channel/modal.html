@@ -1,0 +1,47 @@
+<form class="modal-channel box-shadow-md" name="reviseForm" id="reviseForm">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="channelForm.modificationStream"></h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <small class="tip"><i class="fa icon-tixing"></i>{{'channelForm.modificationTip' | translate}}</small>
+
+        <div class="m-b m-t p-t">
+            <label translate="channelForm.streamType"></label>
+            <select class="c-select content" ng-model="vm.selected.set" style="width: 40%;" required ng-change="vm.change(vm.selected.set)">
+                <option value="{{sets.set}}" ng-repeat="sets in vm.settings">{{sets.set}}</option>
+            </select>
+        </div>
+        <div class="m-b p-t">
+            <label ng-if="vm.selPush==0">{{'channelForm.address' | translate}}</label>
+            <label ng-if="vm.selPush==1">{{'channelForm.intranetAddress' | translate}}</label>
+            <input type="text" placeholder="{{vm.channel.channel_stream[0].url}}" class="content" style="width: 90%;" ng-if="vm.selPush==0" ng-model="vm.url">
+            <input type="text" ng-model="vm.pull" class="content" style="width: 90%;" ng-if="vm.selPush==1" readonly/>
+            <p ng-if="vm.selPush==0"><small translate="channelForm.pullTip"></small></p>
+        </div>
+        <div class="m-b p-t" ng-if="vm.selPush==1">
+            <label translate="channelForm.outerNetAdress"></label>
+            <input type="text" ng-model="vm.out_pull" class="content" style="width: 90%;" ng-if="vm.selPush==1" readonly/>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <div class="model-bottom m-b">
+            <div class="m-b p-t" ng-if="vm.channel.authentication.sign == 1">
+                <label translate="channelForm.userName"></label>
+                <input type="text" class="content" ng-model="vm.channel.authentication.username" style="width: 90%;" readonly>
+            </div>
+            <div class="m-b p-t password_box" ng-if="vm.channel.authentication.sign == 1">
+                <label translate="channelForm.password"></label>
+                <input type="{{vm.type ? 'text' : 'password'}}" class="content" ng-model="vm.channel.authentication.password" style="width: 90%;" readonly>
+                <i class="fa" ng-class="{true:'icon-liulan',false:'icon-chakanmima'}[vm.type]" ng-click="vm.type = !vm.type"></i>
+            </div>
+            <p><i class="fa fa-exclamation-circle"></i><small>{{'channelForm.rtmpTip' | translate}}<a ng-click="vm.goSet()" style="text-decoration: underline;" class="blue_tip" translate="channelForm.systemSettings"></a></small></p>
+        </div>
+        <div class="button_box">
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-disabled="reviseForm.$invalid">{{'channelForm.submit' | translate}}</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'channelForm.cancel' | translate}}</button>
+        </div>
+    </div>
+</form>

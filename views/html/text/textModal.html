@@ -1,0 +1,18 @@
+<form class="modal-text box-shadow-md" name="textForm">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="system_text.tplSet"></h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <div class="m-b">
+            <label>{{ 'system_text.text'| translate}}</label>
+            <textarea class="form-control" rows="6" placeholder="" name="create_word" ng-model="vm.content" required></textarea>
+            <p><small style="color: #969696;" translate="system_text.tplTip" translate-values="{code:'\{\{CODE\}\}' }"></small></p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-purple" ng-click="vm.reset()" style="float: left;" translate="system_text.reset"></button>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading" ng-disabled="textForm.$invalid">{{ 'system_text.save'| translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()" translate="system_text.cancel"></button>
+    </div>
+</form>

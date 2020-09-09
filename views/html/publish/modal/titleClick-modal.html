@@ -1,0 +1,48 @@
+<div class="modify-wrapper edit-virtual-modal">
+    <div class="modal-header">
+        <h3 class="modal-title">修改标题</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body" style="min-height:100px !important;">
+        <div class="form-card">
+            <div class="formControl">
+                <label for="">标题
+                    <div class="count-over">
+                            <i class="fa typeface-form_tishi"  ng-class="{'color-active':vm.titleShow||vm.titleHover}"
+                            ng-mouseenter="vm.titleEnter()" ng-mouseleave="vm.titleLeave()"></i>
+                            <div class="tip-box1" style="line-height:18px;" ng-style="{'top':vm.tipTop+'px'}" ng-show="vm.titleShow||vm.titleHover" ng-class="{'has-know': vm.titleShow,'no-know':!vm.titleShow}">
+                                <span class="tip-header">提示</span>
+                                <span class="tip-content">
+                                    文字当前字数为{{vm.titleNum.length}}字，已经超出推荐字数 45字，继续输入将影响文章的排版美观。
+                                </span>
+                                <span class="tip-know" ng-click="vm.titleknow()" ng-show="vm.titleShow">
+                                    我知道了
+                                </span>
+                            </div>
+                        </div>：</label>
+                <input type="text" class="content-box-input" ng-model="vm.titleNum" ng-change="vm.titleChange()" ng-blur="vm.getKey()">
+            </div>
+            <div class="formControl">
+                <label for="">精选标题
+                    <div class="count-over">
+                        <i class="fa typeface-form_tishi"  ng-class="{'color-active':vm.show||vm.hover}"
+                        ng-mouseenter="vm.enter()" ng-mouseleave="vm.leave()"></i>
+                        <div class="tip-box" style="line-height:18px;" ng-style="{'top':vm.tipTop+'px'}" ng-show="vm.show||vm.hover" ng-class="{'has-know': vm.show,'no-know':!vm.show}">
+                            <span class="tip-header">提示</span>
+                            <span class="tip-content">
+                                填写精编标题后，终端内容列表中将显示精编标题。
+                            </span>
+                            <!-- <span class="tip-know" ng-click="vm.know()" ng-show="vm.show">
+                                我知道了
+                            </span> -->
+                        </div>
+                    </div>：</label>
+                <input type="text" class="content-box-input" ng-model="vm.selecTtitle" ng-blur="vm.getKey()">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">保存</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

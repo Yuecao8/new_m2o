@@ -1,0 +1,244 @@
+<div class="mxu_add_role">
+    <div class="p-v-md">
+        <div class="hoge-edit-head">
+            <div class="hoge-return-body" ui-sref="app.customer.role({page:vm.pageCount,per_num:vm.pageSize})">
+                <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                <span class="return-tip">返回列表</span>
+            </div>
+            <em>{{vm.currentId ? '编辑角色' : '新增角色'}}</em>
+        </div>
+    </div>
+
+    <div class="edit-form">
+        <!--基本信息-->
+        <div class="form-card">
+            <div class="header">基本信息</div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">角色名称</label>
+                    <input type="text" ng-model="vm.roleDetail.name" ng-focus="vm.titleFocus = true"
+                           ng-class="{'focus-color':vm.titleFocus}" ng-blur="vm.titleFocus = false"  maxlength="10">
+                    <div class="count">
+                        <div num-count="vm.roleDetail.name" count-top="-26" count-max="10" count-position="right"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name">描述</label>
+                    <textarea class="text-top" cols="30" rows="4" ng-model="vm.roleDetail.description" ng-focus="vm.briefFocus = true"
+                              ng-class="{'focus-color':vm.briefFocus}" ng-blur="vm.briefFocus = false" maxlength="128"></textarea>
+                    <div class="count">
+                        <div num-count="vm.roleDetail.description" count-top="-17" count-max="128" count-position="right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--权限范围-->
+        <div class="form-card">
+            <div class="header">权限范围</div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="label-name">站点权限</label>
+                    <label class="radio-inline m-r">
+                        <input ng-model="vm.roleDetail.all_columns" type="radio" value="1">全部站点
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-model="vm.roleDetail.all_columns" type="radio" value="2">部分站点
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-model="vm.roleDetail.all_columns" type="radio" value="0">部分站点栏目
+                    </label>
+                    <div class="box-color text-color pos-rlt site-part" ng-show="vm.roleDetail.all_columns == 2">
+                        <span class="arrow top b-white"></span>
+                        <div>
+                            <label class="checkbox-inline m-r" ng-repeat="site in vm.siteList track by $index">
+                                <input ng-checked="vm.siteCheck(site)" ng-click="vm.choseSite(site)" type="checkbox">{{site.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="box-color text-color pos-rlt site-part-column" ng-show="vm.roleDetail.all_columns == 0" my-loading="vm.siteColumnLoading">
+                        <span class="arrow top b-white"></span>
+                        <div>
+                            <div ng-repeat="item in vm.columnList" ng-if="item.column" ng-cloak>
+                                <div class="col_list">
+                                    <span class="site_tit">{{item.name}}</span>
+                                    <span ng-repeat="v in item.column">
+                                        <span class="col_name">{{v.name}}
+                                        <i class="icon-guanbi cursor_pointer" ng-click="vm.deleteCheck(v.id,item)"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="icon-column" ng-click="vm.choseColumn(1, '')">
+                                <i class="fa fa-plus"></i>
+                                添加栏目
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--应用权限(Brothers, please take your cell phone, call ready to do 120, I have not done, rely on you! ! !)-->
+        <div class="form-card">
+            <div class="header">
+                应用权限
+            </div>
+            <div class="card-body" my-loading="vm.cardLoading">
+                <div class="card-list">
+                    <div class="card-list-column" ng-repeat="application in vm.applyPermission">
+                        <div class="card-list-title">
+                            <label ng-class="{'indeterminate': vm.applicationPartChecked(application)}">
+                                <input type="checkbox" ng-checked="vm.checkAllApplication(application)" ng-click="vm.handleAllCheck(application)">
+                            </label>
+                            {{application.name}}
+                        </div>
+                        <div class="list-box">
+                            <div class="list" ng-repeat="modular in application.prms">
+                                <div class="item">
+                                    <label class="checkbox-inline m-r" ng-class="{'indeterminate': vm.modulepPartChecked(modular)}"> <!-- ng-class="vm.handleCheck(modular)" -->
+                                        <input type="checkbox" ng-checked="vm.modulepAllChecked(modular)" ng-click="vm.handleCheck(modular,application)">{{modular.name}}
+                                    </label>
+                                    <span class="fa fa-angle-double-down open-icon" ng-if="modular.prms.length > 0"></span>
+                                    <div class="tipMsg" ng-if="modular.prms.length > 0 && modular.child_check_length == 0">含{{modular.prms.length}}个子模块，未选中任何权限</div>
+                                    <div class="tipMsg" ng-if="modular.prms.length > 0 && modular.child_check_length < modular.prms.length && modular.child_check_length != 0">含{{modular.prms.length}}个子模块，已选中部分权限</div>
+                                    <div class="tipMsg" ng-if="modular.prms.length > 0 && modular.child_check_length == modular.prms.length">含{{modular.prms.length}}个子模块，已选中全部权限</div>
+                                    <div class="tipMsg" ng-if="modular.prms.length == 0 && modular.checked == 0">独立模块，未选访问与操作权限</div>
+                                    <div class="tipMsg" ng-if="modular.prms.length == 0 && modular.checked == 1">独立模块，已选访问与操作权限</div>
+                                </div>
+                                <div class="item-more hide">
+                                    <div class="topNav">
+                                        <label class="checkbox-inline m-r" ng-class="{'indeterminate': vm.modulepPartChecked(modular)}">
+                                            <input type="checkbox" ng-checked="vm.modulepAllChecked(modular)" ng-click="vm.handleCheck(modular,application)">{{modular.name}}
+                                        </label>
+                                        <div class="tipMsg" ng-if="modular.prms.length > 0 && modular.child_check_length == 0">含{{modular.prms.length}}个子模块，未选中任何权限</div>
+                                        <div class="tipMsg" ng-if="modular.prms.length > 0 && modular.child_check_length < modular.prms.length && modular.child_check_length != 0">含{{modular.prms.length}}个子模块，已选中部分权限</div>
+                                        <div class="tipMsg" ng-if="modular.prms.length > 0 && modular.child_check_length == modular.prms.length">含{{modular.prms.length}}个子模块，已选中全部权限</div>
+                                        <div class="tipMsg" ng-if="modular.prms.length == 0 && modular.checked == 0">独立模块，未选访问与操作权限</div>
+                                        <div class="tipMsg" ng-if="modular.prms.length == 0 && modular.checked == 1">独立模块，已选访问与操作权限</div>
+                                    </div>
+                                    <div class="detail" ng-if="modular.prms.length">
+                                        <div class="detail-content" ng-repeat="subMod in modular.prms">
+                                            <!--{{subMod}}-->
+                                            <check-group group-list="subMod" handle-click="vm.handleClick(modular)"></check-group>
+                                            <!-- <div class="card-head" ng-class="{'card-bottom-border': subMod.prms.length}">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" ng-checked="subMod.checked == 1" ng-click="vm.subCheck(subMod, modular)">{{subMod.name}}
+                                                </label>
+                                            </div> -->
+                                            <!--操作-->
+                                            <!-- <div class="check-list" ng-if="subMod.is_have_node == 0">
+                                                <label class="checkbox-inline" ng-repeat="operate in subMod.prms">
+                                                    <input type="checkbox" ng-checked="operate.checked == 1" ng-click="vm.opeCheck(operate, subMod, modular)">{{operate.name}}
+                                                </label>
+                                            </div> -->
+                                        </div>
+                                        <!--查看他人数据-->
+                                        <div class="lookUp" ng-if="modular.is_have_data_prm == 1" data="{{modular.watch_others}}">
+                                            <label class="name">查看他人数据</label>
+                                            <select ng-disabled="modular.can_watch === 0" class="c-select" ng-if="modular.module=='article'||modular.module=='gallery'||modular.module=='video'||modular.module=='link'||modular.module=='topic'||modular.module=='audio'||modular.module=='publish'" ng-options="option.label for option in vm.optionsData track by option.value" ng-model="modular.chosenCheck" ng-blur="vm.lookUp = false" ng-focus="vm.lookUp = true" ng-class="{'focus-color':vm.lookUp}">{{modular.module}}</select>
+                                            <select ng-disabled="modular.can_watch === 0" class="c-select" ng-if="modular.module!='article'&&modular.module!='gallery'&&modular.module!='video'&&modular.module!='link'&&modular.module!='topic'&&modular.module!='audio'&&modular.module!='publish'"  ng-options="option.label for option in vm.optionsData1 track by option.value" ng-model="modular.chosenCheck" ng-blur="vm.lookUp = false" ng-focus="vm.lookUp = true" ng-class="{'focus-color':vm.lookUp}">{{modular.module}}</select>
+                                        </div>
+                                        <!--修改他人数据-->
+                                        <div class="modify" ng-if="modular.is_have_data_prm == 1">
+                                            <label class="name">修改他人数据</label>
+                                            <select ng-disabled="modular.can_operate === 0" class="c-select" ng-if="modular.module=='article'||modular.module=='gallery'||modular.module=='video'||modular.module=='link'||modular.module=='topic'||modular.module=='audio'||modular.module=='publish'" ng-options="option.label for option in vm.optionsData track by option.value" ng-model="modular.chosenModify" ng-blur="vm.modify = false" ng-focus="vm.modify = true" ng-class="{'focus-color':vm.modify}"></select>
+                                            <select ng-disabled="modular.can_operate === 0" class="c-select" ng-if="modular.module!='article'&&modular.module!='gallery'&&modular.module!='video'&&modular.module!='link'&&modular.module!='topic'&&modular.module!='audio'&&modular.module!='publish'" ng-options="option.label for option in vm.optionsData1 track by option.value" ng-model="modular.chosenModify" ng-blur="vm.modify = false" ng-focus="vm.modify = true" ng-class="{'focus-color':vm.modify}"></select>
+                                        </div>
+                                        <!--分类管理-->
+                                        <div class="category" ng-if="modular.is_have_node == 1">
+                                            <label class="name" ng-if="modular.node_type == 'category'">分类权限范围</label>
+                                            <label class="name" ng-if="modular.node_type == 'group'">分组权限范围</label>
+                                            <label class="name" ng-if="modular.node_type == 'department'">可编辑部门</label>
+                                            <div class="check-list">
+                                                <label class="radio-inline m-r">
+                                                    <input ng-model="modular.node_prms" type="radio" value="-1" ng-checked="modular.node_prms == -1" ng-click="">
+                                                    <span ng-if="modular.node_type == 'category'">所有分类</span>
+                                                    <span ng-if="modular.node_type == 'group'">所有分组</span>
+                                                    <span ng-if="modular.node_type == 'department'">所有部门</span>
+                                                </label>
+                                                <label class="radio-inline m-r">
+                                                    <input ng-model="modular.node_prms" type="radio" value="" ng-checked="modular.node_prms != '' && modular.node_prms != -1" ng-click="">
+                                                    <span ng-if="modular.node_type == 'category'">部分分类</span>
+                                                    <span ng-if="modular.node_type == 'group'">部分分组</span>
+                                                    <span ng-if="modular.node_type == 'department'">部分部门</span>
+                                                </label>
+                                                <div class="pos-rlt site-part-classify" ng-show="modular.node_prms != '' && modular.node_prms != -1">
+                                                    <span class="arrow top b-white"></span>
+                                                    <div class="box-body">
+                                                        <div class="form-pop" ng-repeat="class in modular.node_prm_info">
+                                                            {{class.name}}
+                                                            <i class="icon-guanbi" ng-click="vm.removeClass(class, modular)"></i>
+                                                        </div>
+                                                        <div class="form-pop add-pop" ng-click="vm.choseColumn(2, modular)">
+                                                            <i class="fa fa-plus"></i>
+                                                            <span ng-if="modular.node_type == 'category'">分类</span>
+                                                            <span ng-if="modular.node_type == 'group'">分组</span>
+                                                            <span ng-if="modular.node_type == 'department'">部门</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--其他权限-->
+        <div class="form-card other-authority">
+            <div class="header">其他权限</div>
+            <div class="content" style="min-height: 102px;">
+                <div class="form-group">
+                    <label class="label-name pull-left">工作台角色</label>
+                    <div class="role-box">
+                        <div class="checkRole dropdown-toggle" ng-click="vm.roleFocus = true;" ng-blur="vm.roleFocus = false;"
+                             ng-class="{'focus-color':vm.roleFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                            <span class="check-item" ng-repeat="role in vm.roleList" ng-show="role.check">
+                                {{role.name}}
+                                <i class="fa icon-guanbi" ng-click="role.check = false" style="cursor: pointer"></i>
+                            </span>
+                        </div>
+                        <div class="role-list dropdown-menu">
+                            <div class="item" ng-repeat="role in vm.roleList" ng-click="vm.chooseRole(role)">
+                                <label class="">{{role.name}}</label>
+                                <span class="fa fa-check" ng-show="role.check"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-name pull-left">上头条栏目</label>
+                    <div class="box-color text-color pos-rlt site-part-column headlines-column" my-loading="vm.siteColumnLoading">
+                        <!-- <span class="arrow left b-white headlines-arrow"></span> -->
+                        <div>
+                            <div ng-repeat="item in vm.headlinesColumnList">
+                                <div class="col_list">
+                                    <!-- <span class="site_tit">{{item.name}}</span> -->
+                                    <!-- <span ng-repeat="v in item.site"> -->
+                                        <span>
+                                        <span class="col_name">{{item.name}}
+                                        <i class="icon-guanbi cursor_pointer" ng-click="vm.deleteHeadlineCheck(item.id)"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="icon-column" ng-click="vm.addHeadlinesColumn()">
+                                <i class="fa fa-plus"></i>
+                                添加栏目
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="md-form-group">
+            <button type="submit" class="btn primary-btn m-r" my-loading="vm.loading" ng-click="vm.save()">保存</button>
+            <button class="btn cancel-btn" ng-click="vm.cancel()">取消</button>
+        </div>
+    </div>
+</div>

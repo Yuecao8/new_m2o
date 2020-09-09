@@ -1,0 +1,78 @@
+<div class="modal-tempSet box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">{{ 'column_temp.addCustomize'| translate}}</h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <div class="modal-top">
+            <div class="nav_classify pos-rlt" name="{{vm.show}}">
+                <div class="site_nav">
+                    <ul class="" ng-style="{width:vm.siteList.length * 86 + 'px', left: vm.navLeft * 86 + 'px'}" data="{{vm.siteList.length}}">
+                        <li class="inline" ng-repeat="nav in vm.siteList track by $index" ng-class="{'navActive': vm.navActive == nav.id}" ng-click="vm.siteNavGo(nav,$index+1)">
+                            <a class="word_break"  data = {{event}}>
+                                <span>{{nav.title}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <nav class="navside">
+                    <div class="nav-border b-primary" ng-if="vm.navList.length">
+                        <classify-box classify-list="vm.navList" list-check="vm.navListCheck" list-name="''"
+                                      list-type="'radio'" radio-style="'all'" box-status="'false'"
+                                      list-next="vm.nextColumn(id,level+1,type)" disabled-radio="vm.disChose"
+                        ></classify-box>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="list_contain" my-loading="vm.loading">
+                <div class="list_option">
+                    <span class="list_title">{{ 'column_temp.tempList'| translate}}</span>
+                    <div class="btn-toolbar list_bar">
+                        <div class="form-group pull-right">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control p-x b-a rounded" ng-keypress="vm.keyPress($event)" ng-model="vm.key"
+                                       placeholder="{{ 'common.search'| translate}}...">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search()"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list_temp">
+                    <div class="list_body">
+                        <div class="ErrorTip" ng-if="!vm.tempList.length">
+                            <p>{{vm.errorMessage}}</p>
+                        </div>
+                        <div class="list-item" ng-repeat="item in vm.tempList ">
+                            <div class="list-img"  ng-if="item.index_pic_display" ng-style="{'background':'url('+item.index_pic_display+') no-repeat'}" ng-class="{'active':item.active}" ng-click="vm.choseTmp(item)"></div>
+                            <div class="no-img" ng-if="!item.index_pic_display"  ng-class="{'active':item.active}" ng-click="vm.choseTmp(item)"><i class="icon-tuji1"></i></div>
+
+                            <div class="list-name">{{item.title}}</div>
+                        </div>
+                    </div>
+                    <div class="list_bottom pull-right" ng-if="vm.tempList.length">
+                        <page-nation options="vm.pageOptions" turn-page="vm.changePages()"></page-nation>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-list">
+            <div>
+                <span>{{ 'column_temp.selected'| translate}}：</span>
+                <span>{{ vm.navListCheck[0].name}}</span>
+            </div>
+            <div>
+                <span>{{ 'column_temp.selectedTemp'| translate}}：</span>
+                <span >{{vm.chosedTmp.title}}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.confirmBind()" my-loading="vm.include_saveLoading">{{'include.submit' | translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{'include.cancel' | translate}}</button>
+    </div>
+</div>

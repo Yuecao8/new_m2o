@@ -1,0 +1,226 @@
+<div class="mxu_side_wrapper mxu_content_wrapper vote-wrap">
+        <div class="menu-wrap">
+            <div class="sidebar-header">
+                <span class="all-list" ng-click="vm.allState()" ng-class="{'backStyle':vm.currentLevelIndex != 'level1'}">
+                    <i class="fa typeface-menu_fanhuishangji" ng-show="vm.currentLevelIndex != 'level1'"></i>
+                    {{vm.currentLevelIndex == 'level1' ? '全部':'返回上级'}}
+                </span>
+                <i class="fa typeface-menu_mianbaoxie all-icon"></i>
+            </div>
+            <span class="other-all" ng-show="vm.currentLevelIndex != 'level1'">全部</span>
+            <div class="all-level-box">
+                 <div class="level-box" id="levelBox1">
+                    <div class="aside-list" ng-repeat="classItem in vm.classList track by $index" ng-click="vm.choseClass(classItem)" >
+                        <div class="aside-item">
+                            <span class="item_name" ng-class="{blueColor:vm.currentClassName == classItem.name}">
+                                <span class="item_name_span" ng-click="vm.searchClassList(classItem)">{{classItem.name}}</span>
+                            </span>
+                            <span class="next-box" ng-show="classItem.childs" ng-click="vm.nextLevel1(classItem)">
+                                <i class="fa fa-angle-right"></i>
+                            </span>
+                        </div>     
+                    </div>
+                </div>
+                <div class="level-box" id="levelBox2">
+                    <div class="aside-list" ng-repeat="level2Item in vm.level2List track by $index" ng-click="vm.choseClass2(level2Item)" >
+                        <div class="aside-item">
+                            <span class="item_name" ng-class="{blueColor:vm.currentLevel2Name == level2Item.name}">
+                                <span class="item_name_span" ng-click="vm.searchClassList(level2Item)">{{level2Item.name}}</span>
+                            </span>
+                            <span class="next-box" ng-show="level2Item.childs" ng-click="vm.nextLevel2(level2Item)">
+                                <i class="fa fa-angle-right"></i>
+                            </span>
+                        </div>     
+                    </div>
+                </div>
+                <div class="level-box" id="levelBox3">
+                    <div class="aside-list" ng-repeat="level3Item in vm.level3List track by $index" ng-click="vm.choseClass3(level3Item)" >
+                        <div class="aside-item">
+                            <span class="item_name" ng-class="{blueColor:vm.currentLevel3Name == level3Item.name}">
+                                <span class="item_name_span" ng-click="vm.searchClassList(level3Item)">{{level3Item.name}}</span>
+                            </span>
+                            <span class="next-box" ng-show="level3Item.childs" ng-click="vm.nextLevel3(level3Item)">
+                                <i class="fa fa-angle-right"></i>
+                            </span>
+                        </div>     
+                    </div>
+                </div>
+                <div class="level-box" id="levelBox4">
+                    <div class="aside-list" ng-repeat="level4Item in vm.level4List track by $index" ng-click="vm.choseClass4(level4Item)" >
+                        <div class="aside-item">
+                            <span class="item_name" ng-class="{blueColor:vm.currentLevel4Name == level4Item.name}">
+                                <span class="item_name_span" ng-click="vm.searchClassList(level4Item)">{{level4Item.name}}</span>
+                            </span>
+                            <span class="next-box" ng-show="level4Item.childs" ng-click="vm.nextLevel()">
+                                <i class="fa fa-angle-right"></i>
+                            </span>
+                        </div>     
+                    </div>
+                </div>
+            </div>
+           
+            <!-- <div class="creat-box" style="height:38px;line-height:38px;">
+                <div class="item_name" style="color:#969696;cursor: pointer;" ng-click="vm.addClassify()">
+                    <i class="icon-tianjia"></i>
+                    <span class="icon-tianjia-btn">新建分类</span>
+                </div>
+            </div> -->
+        </div>
+        <div class="second-view member-cont">
+            <div class="manage-list-box">
+                <div class="manage-header-box">
+                    <!-- <span class="title-font-l">融合号</span>
+                    <span class="title-font-l m-connector">></span> -->
+                    <span class="title-font-d">投票列表</span>
+                    <button class="btn hoge-btn-blue creat-btn" ng-click="vm.goCreat()">新增投票</button>
+                </div>
+                <div class="hoge-flex">
+                    <div class="manage-content-box">
+                        <div class="content-toolbar">
+                            <!--状态下拉-->
+                             <div class="btn-group dropdown hoge-dropdown">
+                                 <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                     <span class="dropdown-label">{{vm.status}}</span>
+                                     <span class="caret"></span>
+                                 </button>
+                                 <div class="dropdown-menu text-left text-sm">
+                                     <a class="dropdown-item" ng-repeat="state in vm.stateList" ng-click="vm.chooseStatus(state)">{{state.name}}</a>
+                                 </div>
+                             </div>
+                             <!--时间下拉-->
+                             <div class="btn-group dropdown hoge-dropdown">
+                                 <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                                     <span class="dropdown-label">{{vm.time}}</span>
+                                     <span class="caret"></span>
+                                 </button>
+                                 <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                                     <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                                         {{time.name}}
+                                         <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                                type="text" options="vm.options"/>
+                                     </a>
+                                 </div>
+                             </div>
+                             <!--搜索-->
+                             <div class="form-group hoge-input-search pull-right black-input-search">
+                                 <input type="text" placeholder="{{'content.search' | translate }}" id="keyword" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                                 <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                             </div>
+                        </div>
+                        <hoge-error hight-num="'277px'" arr-length="vm.voteList.length" load="vm.loading"></hoge-error>
+                        <div my-loading="vm.vote_loading">
+                            <div class="table_header hoge-table-header xr-table-style" ng-show="vm.voteList.length">
+                                <div class="wrap">
+                                    <div class="list-ctr"></div>
+                                    <div class="min-300 flex-one" style="padding-left:18px">标题</div>
+                                    <div class="min-w-200">分类</div>
+                                    <!-- <div class="min-w-200">状态</div> -->
+                                    <div class="min-w-200">截止时间</div>
+                                    <div class="min-w-200">开启/关闭</div>
+                                    <div class="min-w-200">创建人/时间</div>
+                                    <div class="min-w-100"></div>
+                                </div>
+                            </div>
+                            <div class="vote-list" ng-model="vm.voteList">                
+                                    <div class="item-list" ng-repeat="item in vm.voteList track by $index">
+                                        <div class="wrap">
+                                            <div class="list-ctr">
+                                                <input type="checkbox" ng-if="!vm.isSort" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                                                <i class="fa fa-bars" ng-if="vm.isSort"></i>
+                                            </div>
+                                            <div class="item-style flex-one min-300">
+                                                <div class="list_img">
+                                                    <div class="img-square">
+                                                        <!-- <img ng-show="item.index_pic" src="{{item.index_pic}}" alt=""> -->
+                                                        <img ng-show="!item.index_pic" src="../assets/images/mxu/img_cover.png">
+                                                        <img ng-show="item.index_pic" ng-src="{{item.index_pic[0].origin_url}}?imageView/0/h/150/w/200"> 
+                                                    </div>
+                                                </div>
+                                                <div class="list_info">
+                                                    <div class="part_one">                                            
+                                                        <a href class="vote-title"  ng-click="vm.goDetail(item)">
+                                                            <span>{{item.title}}</span>
+                                                        </a>
+                                                        <span class="vote-num" ng-show="item.vote_num > 0">|</span>
+                                                        <span class="label-count" ng-show="item.vote_num > 0">{{item.vote_num}}票</span>
+                                                    </div>                                      
+                                                </div>
+                                            </div>                    
+                                            <div class="item-style">
+                                               <span class="item-class">{{item.category_name}}</span>
+                                            </div>
+                                            <!-- <div class="item-style"></div> -->
+                                            <div class="item-style">
+                                               <span class="date-green" ng-if="item.closing_date == '永久有效'">{{item.closing_date}}</span>
+                                               <span class="date-red" ng-if="item.closing_date == '已过期'">{{item.closing_date}}</span>
+                                               <span ng-if="item.closing_date != '已过期'&&item.closing_date != '永久有效'">{{item.closing_date}}</span>
+                                            </div>
+                                            <div class="item-style">
+                                                <label class="ui-switch">
+                                                    <span class="switch-open">开</span>
+                                                    <span class="switch-close">关</span>
+                                                    <input type="checkbox" ng-click="vm.toggleStatus(item)" ng-checked="item.is_use==1">
+                                                    <!-- ng-checked="vm.voteInfo.login_limit" ng-click="vm.loginChecked()" -->
+                                                    <i></i>
+                                                </label>
+                                            </div>
+                                            <div class="item-style">
+                                                    <div class="create-user-info">
+                                                            <div class="create-user">                                            
+                                                                <a href class="create-user-name"  ng-click="vm.goEdit(nor)">
+                                                                    {{item.create_user_name}}
+                                                                </a>
+                                                                <span class="create-user-time">
+                                                                    {{item.created_at}}
+                                                                </span>
+                                                                <span class="label-count" ng-show="vm.stateType=='gallery'">{{nor.photo_count}}P</span>
+                                                                <span class="label-count" ng-show="vm.stateType=='video' || vm.stateType=='audio'">{{nor.duration_format}}</span>
+                                                            </div>                                      
+                                                        </div>
+                                            </div>
+                                            <div class="item-style item-icon">     
+                                                <div class="icon-tool" ng-mouseenter="vm.showOpera(item,$index)" ng-mouseleave="vm.hideOpera(item,$index)">
+                                                    <i class="typeface-list_caozuo hoge-list_caozuo"></i>
+                                                    <div class="pull-right list-icon-opera"
+                                                            ng-class="{'opera-show':vm.operaShow}" ng-show="vm.currentIndex == $index">
+                                                        <div class="btn-group">
+                                                            <button class="btn hoge-drop-icon" ng-click="vm.goDetail(item)">详情</button>
+                                                            <button class="btn hoge-drop-icon" ng-click="vm.goEdit(item)">编辑</button>
+                                                            <button class="btn hoge-drop-icon" ng-click="vm.goPreview(item)">预览</button>
+                                                            <button class="btn hoge-drop-icon bottom-top" ng-click="vm.goDel(item)">删除</button>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                       
+                         
+                         <div class="list_bottom hoge-table-bottom border-bottom-radius" ng-show="vm.voteList.length">
+                             <div class="btn-group">
+                                 <label class="checkbox-inline">
+                                     <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+                                     <span class="all-checked">{{'content.select' | translate}}</span>
+                                 </label>
+                             </div>
+                             <div class="btn-toolbar list_bar flex-one btn-box">
+                                 <div class="btn-group">
+                                     <button  class="btn del-btn" ng-click="vm.allDelete()">删除</button>
+                                 </div>
+                             </div>
+                             <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+                         </div>
+         
+         
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        
+    </div>
+    <m2o-footer></m2o-footer>

@@ -1,0 +1,24 @@
+<div>
+    <i class="close-icon" ng-click="vm.close()"></i>
+    <div class="is-video">
+      <div style="width:720px;position: relative;">
+        <div class="video-name">{{vm.item.name}}</div>
+        <video ng-poster="{{vm.item.thumb}}" src="{{vm.item.path_info.url}}" crossorigin="Anonymous" controls="" preload="true" class="preview-video" controlslist="nodownload"></video>
+      </div>
+      <span class="img-info video-info">
+          <ul>
+            <li class="image-detail">视频详情</li>
+            <li class="lineClamp">分类：{{vm.item.name}}</li>
+            <li>时长：{{vm.item.duration}}</li>
+            <li>清晰度：未知</li>
+            <li>格式：{{vm.item.extension}}</li>
+            <li>大小：<span>{{vm.item.format_size}}</span></li>
+            <li>时间：{{vm.item.created_at}}</li>
+          </ul>
+      </span>
+    </div>
+    <div class="preview-operate video-operate">
+      <i class="download-icon" ng-click="vm.download()" ng-class="{'is-disabled': vm.isDisabled('public-download')}"></i>
+      <i class="delete-icon" ng-click="vm.del()" ng-class="{'is-disabled': vm.isDisabled('public-delete')}"></i>
+    </div>
+  </div>

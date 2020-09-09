@@ -1,0 +1,47 @@
+<form class="modal-editForm box-shadow-md" name="singleEditForm" id="singleEditForm">
+    <div class="modal-header">
+        <!--translate="system_search.createWord"-->
+        <h5 class="modal-title" translate="singleEdit.editProgram"></h5>
+    </div>
+    <div class="modal-body" style="min-height: 150px;">
+        <div class="m-b program-name">
+            <p><small translate="singleEdit.programName"></small></p>
+            <input type="text" class="form-control" name="program_name" ng-disabled="vm.disable" ng-model="vm.programTitle">
+            <!--ng-model=""-->
+        </div>
+        <div class="start-time m-b">
+            <!--<span>开始时间:</span>-->
+            <p><small translate="singleEdit.startingTime"></small></p>
+            <div class="input-group change-time">
+                <input class="content form-control"
+                       ng-model="vm.editTime"
+                       data-icon-left="fa fa-chevron-left"
+                       data-icon-right="fa fa-chevron-right"
+                       data-time-format="HH:mm:ss"
+                       placement="bottom-left"
+                       name="startTime"
+                       minute-step="1"
+                       ng-change="vm.changeTimeTip(vm.editTime)" bs-timepicker required>
+                <span class="input-group-addon"><i class="fa fa-clock-o fa-rotate-90"></i></span>
+            </div>
+        </div>
+        <div class="program-duration m-b">
+            <p><small translate="singleEdit.programDuration"></small></p>
+            <input class="content form-control"
+                   ng-model="vm.durationTime"
+                   data-icon-left="fa fa-chevron-left"
+                   data-icon-right="fa fa-chevron-right"
+                   data-time-format="HH:mm:ss"
+                   placement="bottom-left"
+                   name="durationTime"
+                   minute-step="1"
+                   second-step="1"
+                   ng-change="vm.changeDuration(vm.durationTime)" bs-timepicker required>
+            <span class="duration-tip" translate="singleEdit.durationTip"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save(singleEditForm)" ng-disabled="wordForm.$invalid">{{'singleEdit.sure'| translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'system_search.cancel'| translate}}</button>
+    </div>
+</form>

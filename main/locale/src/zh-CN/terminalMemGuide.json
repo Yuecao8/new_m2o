@@ -1,0 +1,18 @@
+{
+
+    "memberSet" : "会员设置",
+    "memberIntroduce" : "在这里可以修改会员注册、会员登录、会员中心的相关配置",
+    "memberCenter" : "会员中心/导航信息设置",
+    "navName" : "导航名称",
+    "link" : "链接",
+    "openSort" : "排序功能已开启",
+    "save" : "保存",
+    "cancel" : "取消",
+    "edit" : "编辑",
+    "delete" : "删除",
+    "addNav" : "添加导航",
+
+    "successSort" : "排序成功!",
+    "noEmpty" : "导航名称或链接不能为空!",
+    "delNav" : "您确定删除该导航?"
+}

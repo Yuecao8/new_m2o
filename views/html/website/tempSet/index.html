@@ -1,0 +1,136 @@
+<div class="tempSet-list wrapper">
+    <div class="nav-active-border b-info">
+        <ul class="nav nav-md">
+            <li class="nav-item inline">
+                <a class="nav-link" href data-toggle="tab" data-target="#tab_1"  ng-class="{'active':vm.tabOne}">
+                    <span class="text-md">{{ 'terminal_temp.myTemp'| translate}}</span>
+                </a>
+            </li>
+            <li class="nav-item inline">
+                <a class="nav-link dis" href data-toggle="tab" data-target="#tab_2"  ng-class="{'active':vm.tabTwo}" disabled="disabled">
+                    <span class="text-md" translate="">{{ 'terminal_temp.tempMarket'| translate}}</span>
+                    <span class="upcoming">{{ 'terminal_temp.ready'| translate}}</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content clear b-t">
+            <div class="tab-pane" id="tab_1" ng-class="{'active':vm.tabOne}">
+                <!--aria-expanded="false"-->
+                <div class="list">
+                    <div class="current">
+                        <div class="site">
+                            <span class="m-r color-96">{{ 'terminal_temp.site'| translate}}</span>
+                            <div class="btn-group dropdown hoge-dropdown">
+                                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="dropdown-label">{{vm.siteCurrent.name}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm">
+                                    <a class="dropdown-item" ng-repeat="site in vm.siteList">{{site.title}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list_title m-t">
+                            <a class="title">{{ 'terminal_temp.preTemp'| translate}}</a>
+                        </div>
+                        <div class="current_list">
+                            <div class="current_pic" data="{{vm.used.index_pic}}">
+                                <div class="current_img cur_no-img" ng-if="!vm.used.index_pic"><i class="icon-tuji1"></i></div>
+                                <div class="current_img" ng-if="vm.used.index_pic" ng-style="{'background-image': 'url(' + vm.used.pic + ')'}" ng-click="vm.showModal(vm.used.index_pic_display)"></div>
+                            </div>
+                            <div class="current_tip">
+                                <div class="right_title">{{vm.used.title}}</div>
+                                <div class="right_tip">
+                                    <div class="right_brief">{{vm.used.brief}}</div>
+                                    <div class="right_details">
+                                        <span>{{ 'terminal_temp.creatName'| translate}} {{vm.used.author}}</span>
+                                        <span>{{ 'terminal_temp.openTime'| translate}} {{vm.used.updated_at}}</span>
+                                        <span>{{ 'terminal_temp.lastTime'| translate}} {{vm.used.deploy_time}}</span>
+                                    </div>
+                                </div>
+                                <div class="right_button">
+                                    <button class="btn m-r cancel-btn" disabled="disabled"><i class="fa icon-new－xinmoli"></i>{{ 'terminal_temp.magic'| translate}}</button>
+                                    <button class="btn m-r cancel-btn" ng-click="vm.goEdit()"><i class="fa fa-code"></i>{{ 'terminal_temp.codeEdit'| translate}}</button>
+                                    <button class="btn m-r cancel-btn upload" ng-click="vm.uploadClick(vm.used.sign)">
+                                        <i class="fa fa-upload"></i>
+                                        <input type="file" class="file uploadFile" nv-file-select uploader="vm.uploader">
+                                        {{ 'terminal_temp.upload'| translate}}</button>
+                                    <button class="btn m-r cancel-btn"  ng-click="vm.choseTemp(vm.used)"><i class="fa fa-refresh"></i>{{ 'terminal_temp.update'| translate}}</button>
+                                    <button class="btn m-r cancel-btn download"  ng-click="vm.downloadTemp(vm.used.sign)"><i class="fa fa-download"></i>{{ 'terminal_temp.downTemp'| translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="other">
+                        <div class="list_title">
+                            <a class="title">{{ 'terminal_temp.otherTemp'| translate}}</a>
+                            <button class="btn btn-purple pull-right upload" ng-click="vm.uploadClick('')">
+                                <input type="file" class="file uploadFile" nv-file-select uploader="vm.uploader" ng-click="vm.uploadClick(item.sign)">
+                                {{ 'terminal_temp.addTemp'| translate}}
+                            </button>
+                        </div>
+                        <div class="ErrorTip" ng-if="!vm.tempList.length">
+                            <p>{{vm.errorMessage}}</p>
+                        </div>
+                        <div class="other_list" ng-if="vm.tempList.length">
+                            <div class="other_item" ng-repeat="item in vm.tempList | orderBy: 'id'">
+                               <div class="item_item">
+                                   <div class="other_img has_img" ng-style="{'background-image': 'url(' + item.pic + ')'}"
+                                        ng-click="vm.showModal(item.index_pic)"
+                                        ng-if="item.index_pic"
+                                   >
+                                   </div>
+                                   <div class="other_img no_img" ng-if="!item.index_pic">
+                                       <i class="icon-tuji1"></i>
+                                       <!--<div class="icon_group">-->
+                                       <!--<span ng-click="vm.choseTemp(item, $event)" title="{{ 'terminal_temp.useThis'| translate}}"><i class="fa icon-new－qiyong"></i></span>-->
+                                       <!--<span><i class="fa icon-new－xinmoli2"></i></span>-->
+                                       <!--<span><i class="fa icon-new－daima"></i></span>-->
+                                       <!--<span><i class="fa icon-shanchu1"></i></span>-->
+                                       <!--</div>-->
+                                   </div>
+                                   <div class="other_tit_use" >
+                                       <span class="other_title">
+                                            {{item.title}}
+                                       </span>
+                                       <div class="other_use" >
+                                           <!--<i class="fa  fa-check-circle"></i>-->
+                                           <!--{{  'terminal_temp.use'| translate}}-->
+
+
+                                           <div class="icon-tool pull-right">
+                                               <i class="fa icon-caozuo" data-toggle="dropdown" aria-expanded="false"></i>
+                                               <div class="dropdown-menu dropdown-menu-scale pull-right">
+                                                   <div class="dropdown-item" ng-click="vm.choseTemp(item)">{{ 'terminal_temp.useTemp'| translate}}</div>
+                                                   <!--<a class="dropdown-item">魔力视图</a>-->
+                                                   <div class="dropdown-item" ng-click="vm.goEdit(item)">{{ 'terminal_temp.codeTemp'| translate}}</div>
+                                                   <div class="dropdown-item upload">
+                                                       <input type="file" class="file uploadFile" nv-file-select uploader="vm.uploader" ng-click="vm.uploadClick(item.sign)">
+                                                       {{ 'terminal_temp.upload'| translate}}
+                                                   </div>
+                                                   <div class="dropdown-item" ng-click="vm.downloadTemp(item.sign)">{{ 'terminal_temp.downTemp'| translate}}</div>
+                                                   <div class="dropdown-item" ng-click="vm.delTemp(item.id)">{{ 'terminal_temp.delete'| translate}}</div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="other_brief">
+                                           {{item.brief}}
+                                       </div>
+                                   </div>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="list_bottom pull-right" ng-if="vm.tempList.length">
+                            <page-nation  options="vm.pageOptions" turn-page="vm.changePage()" ></page-nation>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_2" ng-class="{'active':vm.tabTwo}">
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

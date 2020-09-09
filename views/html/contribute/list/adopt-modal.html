@@ -1,0 +1,16 @@
+<div class="modal-content box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">提示</h5>
+        <!-- <i class="fa fa-remove map-close" ng-click="vm.close()"></i> -->
+    </div>
+    <div class="modal-body">
+        <p>是否确认采纳已选内容？</p>
+        <label>
+            <input type="checkbox" ng-click="vm.toggleAdopt()" ng-checked="vm.isAdopt"> 采纳后，同步创建文稿
+        </label>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">确认</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

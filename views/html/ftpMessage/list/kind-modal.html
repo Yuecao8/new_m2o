@@ -1,0 +1,50 @@
+<form class="edit-column kind-model box-shadow-md" name="editColumnForm">
+        <div class="modal-header">
+            <h5 class="modal-title">提交设置</h5>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" ng-class="{'isMerge':vm.param.commitType=='2'}">
+                <div class="form-group inputMsg">
+                    <label class="label-name">分类:</label>
+                    <div class="group-box">
+                        <input type="text" ng-model="vm.category_name" autocomplete="off" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+                                ng-blur="vm.groupFocus = false" ng-class="{'focus-color':vm.groupFocus}" ng-click="vm.groupFocus = !vm.groupFocus">
+                        <div class="group dropdown-menu">
+                            <a class="dropdown-item" ng-repeat="type in vm.ad_posGroup" ng-click="vm.stateActive(type)">{{type.name}}</a>
+                        </div>
+                    </div>
+                    <i class="fa fa-sort-desc i-desc"></i>
+                </div>
+                <div class="content-box" ng-if="vm.param.commitType=='1'">
+                    <label class="label-name">转码配置:</label>
+                    <div class="switch">
+                        <label class="checkbox-inline" ng-repeat='item in vm.transcodeSet'>
+                            <input ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)" type="checkbox">{{item.name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="content-code" ng-if="vm.param.commitType=='1'">
+                    <label class="label-name">转码:</label>
+                    <label class="ui-switch" ng-class="{'not-ctrl-switch':vm.selected.length==0}">
+                        <span class="switch-open">开</span>
+                        <span class="switch-close">关</span>
+                        <input type="checkbox" ng-click="vm.toggleIsCode()" ng-checked="vm.is_transcode==1" ng-disabled="!vm.selected.length">
+                        <i></i>
+                    </label>
+                </div>
+                
+            </div>
+            <div class="animation-loading" ng-if="vm.animationLoading">
+                <div class="linecenter" style="margin: 0 auto;">
+                    <spin></spin>
+                    <span class="text">正在提交，请稍等...</span>
+                </div>
+            </div>
+    
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">确认</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        </div>
+        
+    </form>

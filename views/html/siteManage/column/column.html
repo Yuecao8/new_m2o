@@ -1,0 +1,95 @@
+<div class="site-column-wrap">
+
+    <div class="column-head">
+        <!--<i class="fa fa-reply" onclick="history.back(-1)"></i> -->
+        <em>栏目管理</em>
+        <!-- 站点 -->
+        <m2o-site-chose handler-site="vm.initSite(site_id,site_name)" clear-state-param="vm.clearStateParam()" change-site="vm.changeSite(site)"></m2o-site-chose>
+    </div>
+    <!--多站点筛选屏蔽-->
+    <!--<div class="site-head">-->
+        <!--<div class="top-bar">-->
+            <!--<span class="now-site" translate="publish.currentSite"></span>-->
+            <!--<div class="btn-group dropdown m-r-15">-->
+                <!--<button class="btn white dropdown-toggle " data-toggle="dropdown">-->
+                    <!--<span class="dropdown-label">{{vm.site_name.name}}</span>-->
+                    <!--<span class="caret"></span>-->
+                <!--</button>-->
+                <!--<div class="dropdown-menu text-left text-sm font-12">-->
+                    <!--<a class="dropdown-item" ng-repeat="site in vm.siteList" ng-click="vm.goSite(site)">{{site.name}}</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="column_content" ng-class="{'fade': vm.editShow}">
+        <ks-swiper-container  swiper="vm.swiper" class="swiper-container"
+                              observer='true'
+                              slides-per-view="4"
+                              pagination-clickable='true'
+                              space-between= '0'
+                              override-parameters="
+              {'grabCursor':'true',
+                   'observeParents':'true',
+                   'observer':'true',
+              }"
+
+        >
+            <ks-swiper-slide class="swiper-slide list_box" ng-repeat="column in vm.columnData track by $index" >
+                <div class="table_header">
+                    <div class="header">
+                        <span class="column-name">{{$index + 1}}级栏目</span>
+                        <!--<i class="fa fa-bars pull-right" ng-click="vm.sort(column)" ng-if="column.length >1"></i>-->
+                        <!--<button class="btn white btn-sm btn-sort" ng-click="vm.sort(column)" ng-if="column.length >1">排序</button>-->
+                        <span class="btn-sort" ng-click="vm.sort(column)" ng-if="column.length >1">
+                            <i class="fa typeface-form_paixu"></i>
+                        </span>
+                        <!--<button class="btn btn-purple btn-add" ng-click="vm.goAdd('',$index)" ng-show="!column.isSort">+增加{{$index + 1}}级栏目</button>-->
+                    </div>
+                    <div class="add-box" ng-show="!column.isSort" ng-click="vm.goAdd('',$index)">
+                        <i class="fa fa-plus-circle"></i>
+                        <span>新建栏目</span>
+                    </div>
+                    <div class="sort_board red-50" ng-show="column.isSort">
+                        <i class="fa typeface-login_tishi" style="margin-right:8px;"></i>
+                        <!-- {{'column.sort' | translate}} -->
+                        拖拽栏目排序
+                        <button class="btn btn-sm white pull-right" ng-click="vm.cancelSort(column,$index)">{{'column.cancel' | translate}}</button>
+                        <button class="btn btn-sm hoge-btn-blue pull-right m-r" ng-click="vm.outSort(column)">{{'column.save' | translate}}</button>
+                        
+                    </div>
+                </div>
+                <div ng-show="column.banSort" class="banSort"></div>
+                <div class="list" ui-sortable="vm.sortableOpt" ng-model="column" ng-class="{'m-t-44':column.isSort}">
+                    <div class="list_item column-item" ng-click="vm.goNext(item,$parent.$index+1,column.isSort)" ng-repeat="item in column"  ng-class="{'active':item.active}" style="position: relative;">
+                        <div class="column_title" ng-click="vm.editTitle(item,$parent.$index+1,$index)">{{item.name}}
+                        </div>
+                        <div  class="mengyu-title" ng-if="vm.resMengyu(item.name)">
+                            <span class="hideTitle">{{item.name}}</span>
+                        </div> 
+                        <div class="edit_column_title" ng-show="vm.isShowEdit && vm.currentShowIndex == $index && vm.currentFatherIndex == $parent.$index+1">
+                            <input class="edit-input" id="edit_column_title" ng-blur="vm.hideEditInput(item)"  maxlength="40" ng-model="vm.newTitle" type="text" placeholder="请输入新的栏目名称">
+                        </div>
+                        <div class="is_headline" style="display: inline-block;color: #3598dc" ng-if="item.is_headline==1">头条栏目</div>
+                        <div class="pull-right next_icon">
+                            <i class="fa fa-angle-right" ng-show="item.is_last == 0"></i>
+                        </div>
+                        <div class="pull-right icon_box">
+                            <i class="fa typeface-form_edit" ng-click="vm.goEdit(item)" ng-show="!column.isSort"></i>
+                            <i class="fa typeface-form_shanchu" ng-click="vm.deleteItem(item,$parent.$index)" ng-show="!column.isSort"></i>
+                        </div>
+                    </div>
+                    <!--<div class="add" ng-click="vm.goAdd('',$index)" ng-show="!column.isSort">-->
+                        <!--<i class="icon-tianjia"></i>-->
+                        <!--{{'column.addColumn' | translate}}-->
+                    <!--</div>-->
+                </div>
+            </ks-swiper-slide>
+        </ks-swiper-container>
+    </div>
+    <div>
+        <div ui-include="'../views/mxu/siteManage/column/editColumn.html'"></div>
+    </div>
+
+</div>
+<div ui-include="'../views/mxu/common/footer.html'"></div>

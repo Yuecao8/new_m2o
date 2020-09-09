@@ -1,0 +1,23 @@
+{
+    "siteSet" : "站点设置",
+    "siteIntroduce" : "可以对网站的基本属性进行设置",
+    "memberSet" : "会员设置",
+    "memberntroduce" : "管理前台会员的注册和登录设置",
+    "indexSet" : "首页设置",
+    "indexIntroduce" : "可以在此给首页设置模板，决定首页的表现样式",
+    "columnSet" : "栏目设置",
+    "columnIntroduce" : "给栏目选择相应的模板，决定栏目的表现样式",
+    "styleManage" : "样式管理",
+    "styleIntroduce" : "给栏目选择相应的模板，决定栏目的表现样式",
+    "templateManage" : "模板管理",
+    "templateIntroduce" : "提供模板管理",
+    "dataManage" : "数据源管理",
+    "dataIntroduce" : "提供模板展示数据的来源",
+    "layout" : "专题布局",
+    "layoutIntroduce" : "查看、更新专题页面预设布局",
+    "links" : "友情链接",
+    "linksIntroduce" : "在此可以为站点添加友情链接，并可对已有的友情链接进行管理",
+    "tempSet": "模板设置",
+    "tempintroduce":"管理网站各页面对应的模板"
+}
+

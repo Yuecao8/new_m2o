@@ -1,0 +1,75 @@
+<div class="split_list_wrap">
+    <div class="page-title">文件列表</div>
+    <div class="split-list-wrap hoge-border">
+        <div class="btn-toolbar list_bar">
+            <div class="btn-group dropdown hoge-dropdown">
+                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.queryName}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                    <a class="dropdown-item" ng-click="vm.queryDate(null)" translate="splitList.allTime"></a>
+                    <a class="dropdown-item" ng-click="vm.queryDate(1)" translate="splitList.latelySev"></a>
+                    <a class="dropdown-item" ng-click="vm.queryDate(2)" translate="splitList.latelyThirty"></a>
+                    <a class="dropdown-item" ng-click="vm.queryDate(3)" translate="splitList.latelyNinety"></a>
+                    <a class="dropdown-item out">
+                        {{ 'splitList.custom' | translate }}
+                        <input style="cursor: pointer" date-range-picker  ng-model="vm.rangeDate" class="date-picker opacity-0" type="text" options="vm.options"/>
+                    </a>
+                </div>
+                <!--<div class="btn-group dropdown">-->
+                <!--<input type="daterange" ng-model="vm.queryName" ranges="vm.ranges" ng-click="vm.queryDate()" options="vm.options">-->
+                <!--</div>-->
+            </div>
+            <div class="btn-group dropdown hoge-dropdown">
+                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.split_status}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm">
+                    <a class="dropdown-item" ng-repeat="item in vm.splitArr" ng-click="vm.choseSplit(item)">{{item.name}}</a>
+                </div>
+
+            </div>
+            <div class="form-group hoge-input-search pull-right" >
+                <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="split_list row">
+                <div class="split_item col-xs-6 col-sm-4 col-md-4 col-lg-2" ng-repeat="item in vm.splitList">
+                    <div class="box p-a-xs" ng-click="vm.split(item)">
+                        <span class="a-img" href="#">
+                            <img class="img-responsive cursor_pointer" ng-src="{{item.index_pic}}" alt="" ng-show="item.index_pic">
+                            <div class="img-responsive img_back"  alt="" ng-show="!item.index_pic"></div>
+                            <span ng-if="item.mark_count!=0" class="span-num">
+                                {{ 'splitList.already' | translate }}
+                                {{item.mark_count}}
+                                {{ 'splitList.tiao' | translate }}
+                            </span>
+                            <span class="span-time">{{item.duration}}</span>
+                        </span>
+                        <div class="p-a-sm">
+                            <div class="text-ellipsis">{{item.title}}</div>
+                            <small><i class="fa icon-shijian"></i>{{item.created_at}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list_bottom" ng-show="vm.splitList.length">
+                <page-nation  options="vm.pageOptions" turn-page="vm.changePages()"></page-nation>
+            </div>
+            <!-- <div class="ErrorTip" ng-show="!vm.splitList.length">
+                {{vm.errorMessage}}
+            </div> -->
+            <hoge-error hight-num="'260px'" arr-length="vm.splitList.length"></hoge-error>
+        </div>
+    </div>
+
+
+</div>
+
+
+<m2o-footer ></m2o-footer>

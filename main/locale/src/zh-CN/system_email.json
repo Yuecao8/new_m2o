@@ -1,0 +1,30 @@
+{
+    "title" : "邮件服务器配置",
+    "tip" : "用于发送会员注册、找回密码使用的验证码",
+    "buttonText" : "邮件验证码模板",
+    "server" : "SMTP服务器",
+    "port" : "端口",
+    "email" : "发件人邮箱地址",
+    "username" : "邮箱用户名",
+    "password" : "邮箱密码",
+    "save" : "保存",
+    "verify" : "验证",
+    "sendedMsg" : "请注意查收邮件!",
+    "saveSuccess" : "保存成功",
+
+    "verifyServer" : "验证邮箱服务器",
+    "receiveEmail" : "接收邮箱",
+    "emailAddress" : "邮箱地址",
+    "receiveTip" : "系统将通过当前设置的邮件服务器向接收邮箱发送一封测试邮件，如果接收邮箱成功收到该邮件，则说明邮件服务器配置正确。",
+    "sure" : "确定",
+    "cancel" : "取消",
+
+    "tplTitle" : "验证码邮件模板配置",
+    "emailTitle" : "邮件标题",
+    "emailContent" : "短信正文",
+    "emailContentTip" : "* 邮件模板支持html；请保证模板配置的正确性，在需要显示激活码的位置，以{$bspace0}代替，例如输入「注册激活码：{$bspace0}」，如果修改出现问题，请点击重置",
+    "reset" : "重置",
+    "resetTitle" : "XXX网-验证码邮件",
+    "resetContent" : "您的验证码：{$bspace0}，请勿将验证码泄露给其他人！",
+    "modifySuccess" : "修改成功!"
+}

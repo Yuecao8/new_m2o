@@ -1,0 +1,177 @@
+<div class="mxu_content_wrapper">
+    <div class="content-statistical-box">
+        <div class="manage-header-box">
+            <span class="title-font-l" ng-click="vm.backRhh()">融合号</span>
+            <span class="title-font-l m-connector">></span>
+            <span class="title-font-d">稿件内容统计</span>
+        </div>
+        <div class="manage-content-box" >
+            <div class="content-box-filter">
+                <!-- 时间 -->
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.time}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':vm.open}">
+                        <a class="dropdown-item" ng-repeat="time in vm.timeArr track by $index" ng-click="vm.chooseTime(time)" ng-class="{out: vm.timeArr.length - 1 === $index}">
+                            {{time.name}}
+                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                                    type="text" options="vm.options"/>
+                        </a>
+                    </div>
+                </div>
+                <!-- 融合号 -->
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle rhh-dropdown-toggle" data-toggle="dropdown" style="display: flex">
+                        <span class="dropdown-label rhhOmit">{{vm.currentRhhItemName}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm can-rolling">
+                        <div class="dropdown-item">
+                            <input type="checkbox" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()"/>
+                            <span>{{vm.rhhList[0].name}}</span>
+                        </div>
+                        <div class="dropdown-item" ng-repeat="rhhItem in vm.rhhList track by $index" ng-if="rhhItem.type == 'commom'">
+                            <input type="checkbox" ng-checked="vm.itemCheck(rhhItem)" ng-click="vm.toggleSingle(rhhItem)"/>
+                            <!-- <input type="checkbox" ng-checked="rhhItem.isChecked" ng-click="vm.toggleSingle(rhhItem)"/> -->
+                            <span>{{rhhItem.name}}</span>
+                        </div>
+                        
+                        <!-- <a class="dropdown-item" ng-repeat="rhhItem in vm.rhhList" ng-click="vm.chooseRhhType(rhhItem)">{{rhhItem.name}}</a> -->
+                    </div>
+                </div>
+                <!-- 类型 -->
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.currentType.name}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="type in vm.classList" ng-click="vm.chooseType(type)">{{type.name}}</a>
+                    </div>
+                </div>
+                <!--搜索-->
+                <div class="form-group hoge-input-search black-input-search">
+                    <input type="text" placeholder="搜索关键词" ng-keypress="vm.keyPress($event)" ng-model="vm.title">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.titleSearch(vm.title)"></i>
+                </div>
+                <div class="form-group hoge-input-search black-input-search">
+                    <input type="text" placeholder="搜索作者" ng-keypress="vm.keyPress($event)" ng-model="vm.author">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.authorSearch(vm.author)"></i>
+                </div>
+                <div class="form-group hoge-input-search black-input-search">
+                    <input type="text" placeholder="搜索来源" ng-keypress="vm.keyPress($event)" ng-model="vm.source">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.sourceSearch(vm.source)"></i>
+                </div>
+            </div>
+            
+            <div class="content-box-summary" my-loading="vm.statistical_loading">
+                <div class="rhh-summary-box">
+                    <div class="rrh-summary-title">关键指标</div>
+                    <div class="rrh-num-box">
+                        <div class="quarter">
+                            <span class="quarter-title">总记录条数</span>
+                            <span class="quarter-num">{{vm.statisticalInfo.access.total_num}}</span>
+                        </div>
+                        <div class="quarter">
+                            <span class="quarter-title">总分享量</span>
+                            <span class="quarter-num">{{vm.statisticalInfo.access.share_num}}</span>
+                        </div>
+                        <div class="quarter">
+                            <span class="quarter-title">总点击量</span>
+                            <span class="quarter-num">{{vm.statisticalInfo.access.click_num}}</span>
+                        </div>
+                        <div class="quarter">
+                            <span class="quarter-title">总虚拟点击量</span>
+                            <span class="quarter-num">{{vm.statisticalInfo.access.virtual_click_num}}</span>
+                        </div>
+                        <div class="quarter">
+                            <span class="quarter-title">总评论量</span>
+                            <span class="quarter-num">{{vm.statisticalInfo.access.comment_num}}</span>
+                        </div>
+                        <!-- <div class="quarter">
+                            <span class="quarter-title">有效评论量</span>
+                            <span class="quarter-num">{{vm.statisticalInfo.access.comment_num}}</span>
+                        </div> -->
+                    </div>
+                </div> 
+            </div>
+            <div class="content-box-rank" my-loading="vm.statistical_loading">         
+                <div class="btn-contain btn-group time-bar">
+                    <span class="rank-text">稿件数据分析</span>
+                    <button class="btn btn-outline export-btn" ng-disabled = "vm.statisticalInfo.data.length" ng-click="vm.exportForm()">
+                        <a class="export-a" id="export-a" ng-click="vm.exportDownload()" ng-href="{{vm.exportUrl}}">导出表格</a>
+                    </button>
+                </div>
+                <div class="options-box">
+                    <label class="option-text">
+                        数据类型
+                        <i class="typeface-form_tishi"></i>：
+                        <div class="question-hover">勾选项将显示在表格中<span class="question-tip"></span></div>
+                    </label>
+                    <div class="switch">
+                        <label class="checkbox-inline" ng-repeat='item in vm.dataTypeList' ng-show="item.status">
+                            <input class="border-blue" ng-model="item.isChecked" ng-change="vm.toggle(item)" type="checkbox">{{item.name}}
+                            <!-- <input class="border-blue" ng-checked="{{item.isChecked}}" ng-click="vm.toggle(item)" type="checkbox">{{item.name}} -->
+                        </label>
+                    </div>
+                </div>
+                <div class="rank-list-box">
+                    <div class="box-body p-v-md" ng-show="vm.statisticalInfo.data.length">
+                        <div class="rank-title hoge-table-header"> 
+                            <div class="min-w-60 ">排行</div> 
+                            <div class="min-w-300">文章标题</div>                   
+                            <div class="min-w-100 xr-gestures" ng-class="{'min-w-200': item.field == 'publish_time' || item.field== 'site_name' || item.field== 'source'}" ng-repeat='item in vm.dataTypeList track by $index' ng-show="item.isChecked">
+                                {{item.name}}
+                                <div class="icon_sort" ng-show="item.type == 'sort' && item.field != 'share_click_num'" ng-click="vm.doSort(item.field)">
+                                    <i  class="fa fa-sort-asc" ng-class="{none:vm.sort_key==item.field&& vm.sort_type=='desc',top:vm.sort_key==item.field&& vm.sort_type=='asc'}"></i>
+                                    <i  class="fa fa-sort-desc" ng-class="{bottom:vm.sort_key==item.field&& vm.sort_type=='desc',none:vm.sort_key==item.field&& vm.sort_type=='asc'}"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rank-list">                
+                            <div class="item-list" ng-repeat="(index,item) in vm.statisticalInfo.data track by $index">
+                                <div class="wrap">    
+                                        <div class="min-w-60">
+                                            <!-- <img class="top-3-icon" ng-show="index == 0" src="/assets/images/mxu/content_icon_num1_default@2x.png" alt="">
+                                            <img class="top-3-icon" ng-show="index == 1" src="/assets/images/mxu/content_icon_num2_default@2x.png" alt="">
+                                            <img class="top-3-icon" ng-show="index == 2" src="/assets/images/mxu/content_icon_num3_default@2x.png" alt=""> -->
+                                            <span>{{index + 1}}</span>
+                                            <!-- src="/assets/images/mxu/img_morentu@2x.png" -->
+                                        </div> 
+                                        <div class="min-w-300" title="{{item.title}}">{{item.title}}</div>
+                                        <div class="min-w-100" ng-class="{'min-w-200': typeItem.field == 'publish_time' || typeItem.field== 'site_name' || typeItem.field== 'source'}" ng-repeat="typeItem in vm.dataTypeList track by $index" ng-show="typeItem.isChecked">{{item[typeItem.field]}}</div>
+                                        <!-- <div class="min-w-200" ng-show="vm.dynamicField.site_name">{{item.site_name}}</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.create_user_name">{{item.create_user_name}}</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.source">{{item.source}}</div>                   
+                                        <div class="min-w-200" ng-show="vm.dynamicField.is_headline">{{item.is_headline  ? '是' : '否'}}</div>
+                                        <div class="min-w-300" ng-show="vm.dynamicField.publish_time">{{item.publish_time}}</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.click_num">{{item.click_num}}</div>           
+                                        <div class="min-w-200" ng-show="vm.dynamicField.share_click_num">暂无</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.share_num">{{item.share_num}}</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.comment_num">{{item.comment_num}}</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.is_comment">暂无</div>
+                                        <div class="min-w-200" ng-show="vm.dynamicField.is_original">{{item.is_original ? '是' : '否'}}</div> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <hoge-error class="error-hight" hight-num="'506px'" arr-length="vm.statisticalInfo.data.length" load="vm.statistical_loading"></hoge-error>
+                    <div class="page-box">
+                        <page-nation ng-show="vm.pageOptions.total > 10" class="sub-page" options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                    </div>
+                </div>
+                <!--bottom-->
+                <!-- <div class="list_bottom hoge-table-bottom" ng-class="{'hoge-table-bottom-wx': vm.wxPublish}"> -->
+                    <!-- <page-nation  options="vm.pageOptions" turn-page="vm.pageChange()" ng-show="vm.pageOptions.total > 10"></page-nation> -->
+                <!-- </div> -->
+
+            </div>
+        
+            
+        </div>
+    </div>
+</div>
+<m2o-footer></m2o-footer>

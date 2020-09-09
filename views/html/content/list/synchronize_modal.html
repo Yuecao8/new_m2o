@@ -1,0 +1,53 @@
+<div class="modal-content-synchronize box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">内容同步</h5>
+    </div>
+    <div class="modal-body">
+
+        <div class="m-b platform-box flex-item"  my-loading="loading">
+            <label for="" class="label-name">同步平台：</label>
+            <div>
+                <div ng-repeat="(idx,nor) in vm.platformList track by $index" class="platform-item">
+                    <input type="checkbox" ng-checked="vm.isChecked(nor)" ng-click="vm.toggle(nor)">
+                    <label class="label-title">{{nor.flat_name}}</label>
+                </div>
+            </div>
+            
+           
+        </div>
+        <!-- 同步方式 -->
+        <div class="platform-box flex-item">
+            <label for="" class="label-name radio-label">同步方式：</label>
+            <label class="radio-inline m-r">
+                <input ng-model="vm.push_method" type="radio" value="2" name="synchronizeWay">立即同步
+            </label>
+            <label class="radio-inline m-r">
+                <input ng-model="vm.push_method" type="radio" value="1" name="synchronizeWay">定时同步
+            </label>
+            <label class="radio-inline m-r">
+                <input ng-model="vm.push_method" type="radio" value="3" name="synchronizeWay">不同步
+            </label>
+            
+        </div>
+        <!-- 发布后 -->
+        <div class="publish-time m-b" ng-if="vm.push_method==1">
+            <span class="publish-label">发布后</span>
+            <input type="number" ng-blur="vm.time = false" ng-focus="vm.time = true" 
+            ng-class="{'focus-color':vm.time}"
+            ng-model="vm.delay_time">
+            <div class="btn-group dropdown hoge-dropdown" style="margin-left:8px !important;">
+                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.timeTypeName}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm">
+                    <a class="dropdown-item" ng-repeat="type in vm.timeArr" ng-click="vm.chooseType(type)">{{type.name}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">确定</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

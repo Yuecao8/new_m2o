@@ -1,0 +1,102 @@
+<div class="mxu_add_customer">
+    <div class="p-v-md">
+        <div class="hoge-edit-head">
+            <!-- <div class="hoge-return-body" onclick="history.back(-1)">
+                <span class="pre-title">签约审核</span>
+                <span class="slash">/</span>
+            </div>
+            <em class="title-w">签约信息</em> -->
+            <span class="big-title" onclick="history.back(-1)">签约审核</span>
+            <span class="slash">/</span>
+            <span class="min-title">签约信息</span>
+        </div>
+    </div>
+    <div class="box" style="box-shadow: none;" my-loading="vm.edit_loading">
+        <div class="box-body hoge-border">
+            <div class="contract-info-box">
+                <p class="img-info">签约信息</p>
+                <div class="form-card">
+                    <div class="content">
+                        <div class="form-group">
+                            <label class="label-name">真实信息：</label>
+                            <span class="span-value">{{vm.truthName}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">身份证信息：</label>
+                            <span class="span-value">{{vm.ID}}</span>
+                            <div class="id-card-box">
+                                <div class="card-img-box">
+                                    <img class="card-img" src="../../../assets/images/mxu/advertise/img_daimakuai.png" ng-if="!vm.ID_photos_front" alt="">
+                                    <img class="card-img" ng-src="{{vm.ID_photos_front}}" ng-if="vm.ID_photos_front" alt="">
+                                    <div class="cover-img" ng-click="vm.goPreview('1')">点击预览</div>
+                                </div>
+                                <div class="card-img-box">
+                                    <img class="card-img" src="../../../assets/images/mxu/advertise/img_daimakuai.png" ng-if="!vm.ID_photos_back" alt="">
+                                    <img class="card-img" ng-src="{{vm.ID_photos_back}}" ng-if="vm.ID_photos_back" alt="">
+                                    <div class="cover-img" ng-click="vm.goPreview('2')">点击预览</div>
+                                </div>
+                            </div>        
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">提审时间：</label>
+                            <span class="span-value">{{vm.authentication_time}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">当前状态：</label>
+                            <span class="span-value" ng-if="vm.detailData.is_verify == 1">待审核</span>
+                            <span class="span-value" ng-if="vm.detailData.is_verify == 2">已审核</span>
+                            <span class="span-value" ng-if="vm.detailData.is_verify == 3">已打回</span>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <!-- 会员 -->
+            <div class="members-info-box">
+                <p class="img-info">会员信息</p>
+                <div class="form-card">
+                    <div class="content">
+                        <div class="form-group">
+                            <label class="label-name">昵称：</label>
+                            <span class="span-value">{{vm.detailData.nick_name}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">分组：</label>
+                            <span class="span-value">{{vm.detailData.group_name}}</span>
+                        </div> 
+                        <div class="form-group">
+                            <label class="label-name">邮箱：</label>
+                            <span class="span-value">{{vm.detailData.email}}</span>
+                        </div> 
+                        <div class="form-group">
+                            <label class="label-name">手机号：</label>
+                            <span class="span-value">{{vm.detailData.mobile}}</span>
+                        </div> 
+                        <div class="form-group">
+                            <label class="label-name">注册时间：</label>
+                            <span class="span-value">{{vm.detailData.created_at}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name">简介：</label>
+                            <span class="span-value">{{vm.detailData.signature}}</span>
+                        </div>              
+                    </div>
+                </div>
+            </div>
+            <!-- 代表作品 -->
+            <div class="works-info-box">
+                <p class="img-info">代表作品</p>
+                <div class="form-card">
+                    <div class="content">
+                        <div class="form-group">
+                            <div class="work-img-box" ng-repeat="item in vm.workList">
+                                <img class="card-img" src="../../../assets/images/mxu/advertise/img_daimakuai.png" ng-if="!item.url" alt="">
+                                <img class="card-img" ng-src="{{item.url}}" ng-if="item.url" alt="">
+                                <div class="cover-img" ng-click="vm.goPreview(item)">点击预览</div>
+                            </div>
+                        </div>         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

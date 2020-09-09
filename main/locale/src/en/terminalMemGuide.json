@@ -1,0 +1,17 @@
+{
+    "memberSet" : "Membership settings",
+    "memberIntroduce" : "Here you can modify the membership registration, membership landing, member center of the relevant configuration",
+    "memberCenter" : "Member Center / Navigation Information Settings",
+    "navName" : "Navigation name",
+    "link" : "Link",
+    "openSort" : "The sort function is turned on",
+    "save" : "Save",
+    "cancel" : "Cancel",
+    "edit" : "Edit",
+    "delete" : "Delete",
+    "addNav" : "Add navigation",
+
+    "successSort" : "Sort successfully!",
+    "noEmpty" : "Navigation name or link can not be empty!",
+    "delNav" : "Are you sure you want to delete the navigation?"
+}

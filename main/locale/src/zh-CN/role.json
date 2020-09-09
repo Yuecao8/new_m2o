@@ -1,0 +1,19 @@
+{
+    "tipBasic":"当前MXU系统版本为 MXU 基础版，支持创建2个角色",
+    "tipStandard":"当前MXU系统版本为 MXU 标准版，支持创建5个角色",
+    "tipProfession":"当前MXU系统版本为 MXU 专业版，支持创建10个角色",
+    "tipUltimate":"当前MXU系统版本为 MXU 旗舰版，支持创建无限个角色",
+
+    "add":"添加",
+    "operateTime":"操作时间",
+    "edit":"编辑",
+    "delete":"删除",
+    "whether" : "您确定删除选中数据?",
+    "choose" : "请先选择一个选项",
+
+    "jurisdiction":"权限",
+    "description":"在此可以管理后台用户、角色以及角色拥有的权限",
+    "user":"用户",
+    "role":"角色",
+    "allRoe":"所有角色"
+}

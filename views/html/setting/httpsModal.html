@@ -1,0 +1,38 @@
+<form class="httpsModal" name="" id=""  ng-if="!vm.verify">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="system_https.recoverTitle"></h5>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+    </div>
+    <div class="modal-body p-b-3  p-l-4 p-r-3">
+       <div class="modal-tip p-t-2" ng-if="!vm.sure" translate="system_https.titleTip">
+       </div>
+        <div class="modal-tip m-l-20 p-t-2" ng-if="vm.sure">
+            <span> <a class="fa fa-check-circle-o"></a>{{ 'system_https.recoverSuccess'| translate}}</span>
+            <span class="m-t-sm m-b-sm m-l-20" translate="system_https.restart"></span>
+            <span class="m-l-20 m-b-1">/m2odata/server/nginx/sbin/nginx -s reload</span>
+        </div>
+    </div>
+    <div class="modal-footer" ng-if="!vm.sure">
+        <button type="button" class="btn primary-btn" ng-click="vm.reset()" translate="system_https.sure"></button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()"  translate="system_https.cancel"></button>
+    </div>
+    </div>
+</form>
+<form class="httpsModal" name="" ng-if="vm.verify">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="system_https.result"></h5>
+
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+    </div>
+    <div class="modal-body p-b-3  p-l-4 p-r-3">
+        <div class="modal-tip m-l-23 p-t-2" ng-if="vm.success">
+            <span> <a class=" fa fa-check-circle-o"></a>{{ 'system_https.passMessage'| translate}}</span>
+            <span class="m-t-sm m-b-sm m-l-20">{{vm.DOC.restart}}</span>
+            <span class="m-l-20 m-b-1">/m2odata/server/nginx/sbin/nginx -s reload</span>
+        </div>
+        <div class="modal-tip m-l-24 p-t-2" ng-if="!vm.success" style="text-align: center">
+            <span> <i class=" fa fa-times-circle"></i>{{ 'system_https.matchError'| translate}}</span>
+        </div>
+
+    </div>
+</form>

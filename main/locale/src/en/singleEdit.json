@@ -1,0 +1,45 @@
+{
+  "file":"Files",
+  "channel":"Channels",
+  "edit":"Edit",
+  "delete":"Delete",
+  "allChannels":"All channels",
+  "startingTime":"Starting time：",
+  "view":"View generated program",
+  "save":"Save",
+  "generate":"Generate program list",
+
+  "editProgram":"Edit series program",
+  "programName":"Program name:",
+  "programDuration":"Program duration:",
+  "durationTip":"*If you shorten the time,start from the program time,automatically cut out more time.",
+  "sure":"Sure",
+
+  "confirm" : "Confirm",
+  "cancel" : "Cancel",
+
+  "liveChannel" : "All time period",
+  "yesterday" : "Yesterday",
+  "today" : "Today",
+  "lastThreeDays" : "Last three days",
+  "lastSevenDays" : "Last seven days",
+  "customTime" : "Custom time period",
+
+  "startNoToday":"A single program start time can not exceed today!",
+  "endNoToday": "A single program ends longer than today!",
+  "startMoreTen": "edit the start time shall not be less than 10 minutes before today's current time!",
+  "startNoOver": "The edit start time should not be greater than the start time of the scheduled program in the current program!",
+  "noDelEdit": "The same day has been generated series does not allow editing to delete!",
+  "sureDel": "confirm delete the current program?",
+  "todayNoUpdate": "the same day has been generated series alone does not allow updates to save!",
+  "dragToRight": "Please drag the video from the right to the string single!",
+  "saveSuccess": "serial single save success!",
+  "genSuccess": "series generation is successful!",
+  "delSuccess": "delete success!",
+
+  "startLessMin": "The program start time can not be less than the minimum start time of the program!",
+  "lengthNotGrow": "video or program length can only be shortened can not grow!",
+  "durationMin": "Video or program duration can not be 0!",
+  "fillName": "Please fill in the program name!",
+  "errorMessage":"No data！"
+}

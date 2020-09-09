@@ -1,0 +1,458 @@
+<div class="details-wrapper " >
+        <div class="hoge-table-add">
+            <div class="hoge-table-title"><span onclick="history.back(-1)">平台统计 ></span><span>部门详情</span></div>
+        </div>
+        <div class="white avatar-contain hoge-border">
+            <div class="user-head lf">
+                <span class="avatar w-73">
+                    {{vm.departname}}
+                </span>
+                <!-- <span class="_500 avatar-name"> {{vm.username}}</span> -->
+                <div class="user-img-box" ng-style="{'margin-left':vm.departname.length*15+'px'}">
+                    <div class="hoge-tip-arrow" ng-repeat="(idx,item) in vm.Members| limitTo:5 track by $index" ng-style="{'left':idx*25+'px'}">
+                        <img class="avatar-34" ng-if="item.url" ng-src="{{item.url}}">
+                        <span class="avatar-34 no-avatar no-avatar-bg{{item.bgColor}}" ng-if="!item.url">{{item.name}}</span>
+                    </div>
+                </div>
+                <span class="member-totle" ng-style="{'margin-left': vm.Members.length>4?'150px':34*vm.Members.length+20+'px'}">共{{vm.user_num}}人</span>
+            </div>
+            <div class="user-info rt">
+                <p class="push-number" >{{vm.accumulate}}</p>
+                <p class="text-muted push-detail">累计发布</p> 
+            </div>
+        </div>
+        <div class="timeTab-toggle white">
+            <div class="tab-chose">
+                <span class="group" ng-class="{'actived':vm.isGroup}" ng-click="vm.departChose('group')">部门总览</span>
+                <span class="member" ng-class="{'actived':vm.isMember}" ng-click="vm.departChose('member')">成员统计</span>
+            </div>
+            <div class="time-chose">
+                <div class=" btn-group">
+                    <button class="btn btn-outline btn-comment" ng-click="vm.getWeek()" ng-class="{actived:vm.timeType=='w'}">本周</button>
+                    <button class="btn btn-outline btn-comment" ng-click="vm.getMonth()" ng-class="{actived:vm.timeType=='m'}">本月</button>
+                    <button class="btn btn-outline btn-comment" ng-click="vm.getYear()" ng-class="{actived:vm.timeType=='y'}" >本年</button>
+                    <button class="btn btn-outline btn-comment btn-custom" ng-click="vm.getCustom()" ng-show="vm.timeType!='c'">自定义时间</button>
+                    <div class="daterange" ng-show="vm.timeType=='c'">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                        <input date-range-picker  ng-model="vm.rangeDate" class="date-picker" type="text" options="vm.option"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="details-contain" ng-show="vm.isGroup">
+            <div class="contain-left lf">
+                <div class="work-detial border-setting white">
+                    <p class="workload-title">工作量统计</p>
+                   
+                    <div class="content-row">
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.user_create || 0}}</p>
+                            <p>内容产出量</p>
+                        </div>
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.rank_create || 0}}</p>
+                            <p>同级部门排名</p>
+                        </div>
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.rate_create || 0}}</p>
+                            <p>同级部门中占比</p>
+                        </div>
+                    </div>
+                    <div class="content-row">
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.user_publish || 0}}</p>
+                            <p>内容发布量</p>
+                        </div>
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.rank_publish || 0}}</p>
+                            <p>同级部门排名</p>
+                        </div>
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.rate_publish || 0}}</p>
+                            <p>同级部门中占比</p>
+                        </div>
+                    </div>
+                    <div class="content-row">
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.user_recall || 0}}</p>
+                            <p>内容打回量</p>
+                        </div>
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.rank_recall || 0}}</p>
+                            <p>同级部门排名</p>
+                        </div>
+                        <div class="content-col lf col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p>{{vm.rate_recall || 0}}</p>
+                            <p>同级部门中占比</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="com-effect border-setting white">
+                    <p class="workload-title">传播效果统计</p>
+                    <div class="effect-total">
+                        <div class="lf col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <p>{{vm.click_count || 0}}</p>
+                            <p>总浏览数</p>
+                        </div>
+                        <div class="lf col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <p>{{vm.commment_count || 0}}</p>
+                            <p>总评论数</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contain-right white border-setting rt">
+                <p class="workload-title">类型统计</p>
+                <!--<span class="outputed">已产出</span>
+                <span class="released">已发布</span>-->
+                <div class="chart-box"  ui-jp="chart" ui-refresh="vm.isRefresh" ui-options="{{vm.optionsPie}}" > </div>
+                
+            </div>
+        </div>
+    
+        <div class="data-list white border-setting" ng-show="vm.isGroup">
+            <div class=" btn-toolbar list_bar ">
+                <!--全部类型-->
+                <div class="btn-group dropdown type-box hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.type}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="type in vm.typeArr track by $index" ng-click="vm.choseType(type)">{{type.name}}</a>
+                    </div>
+                </div>
+                <!--全部状态-->
+                <div class="btn-group dropdown type-box hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.status}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="status in vm.statusArr track by $index" ng-click="vm.choseStatus(status)">{{status.name}}</a>
+                    </div>
+                </div>  
+                    <!-- 分类筛选 -->
+                <div class="btn-group dropdown type-box hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.column}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="column in vm.columnArr" ng-click="vm.choseColumn(column)">{{column.name}}</a>
+                    </div>
+                </div>             
+                
+                <div class="lf dropdown">
+                    <!--默认排序-->
+                    <button class="btn btn-outline btn-comment" ng-click="vm.getTime()" ng-class="{actived:vm.sortList=='time_num'}">默认排序</button>
+                    <!--浏览量-->
+                    <button class="btn btn-outline btn-comment btn-margin btn-sort" ng-click="vm.getClick()" ng-class="{actived:vm.sortList=='clicks'}">
+                        浏览量
+                        <i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.click_num=='ASC'}"></i>    <!--升序-->
+                        <i class="fa fa-caret-down order-descend" ng-class="{'has-chose':vm.click_num=='DESC'}"></i> <!--降序-->
+                    </button>
+                    <!--评论数-->
+                    <button class="btn btn-outline btn-comment btn-margin btn-sort" ng-click="vm.getComment()" ng-class="{actived:vm.sortList=='comments'}" >
+                        评论数
+                        <i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.comment_num=='ASC'}"></i>    <!--升序-->
+                        <i class="fa fa-caret-down order-descend" ng-class="{'has-chose':vm.comment_num=='DESC'}"></i> <!--降序-->
+                    </button>
+                </div>
+                
+                <!--搜索框-->
+                <div class="form-group search-bottom">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control p-x b-a rounded" ng-keypress="vm.keyPress($event)" ng-model="vm.searchKey" placeholder="搜索">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn white b-a rounded no-shadow" ng-click="vm.search()"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="ex-box">
+                    <a class="exList" ng-click="vm.exportDepartList()" ng-href="{{vm.exportDepartUrl}}">导出表格</a>
+                </div>
+            </div>
+            <!-- list -->
+            <div class="list_contain hoge-table-contain" >
+                <div class="table_header hoge-table-header" ng-show="vm.dataList.length>0">
+                    <div class="wrap b-l b-white">
+                        <div class="list-body flex-one">标题（点击可预览）</div>
+                        <div class="list-type" translate="workload.type"></div>
+                        <div class="list-status" translate="workload.state"></div>
+                        <div class="list-column" translate="workload.column"></div>
+                        <div class="list-views" translate="workload.views"></div>
+                        <div class="list-comments" translate="workload.comments"></div>
+                        <div class="list-time">创建人/时间</div>
+                        <div class="list-score">评分</div>
+                    </div>
+                </div>
+                <div class="ErrorTip" ng-show="!vm.dataList.length && !vm.loadingList">
+                    <p>{{vm.errorList}}</p>
+                </div>
+                <div class="list white" ng-show="vm.dataList.length>0">
+                    <div ng-repeat="(idx,item) in vm.dataList track by $index" on-finish-render>
+                        <div class="list-item hoge-item-border">
+                                    <div class="list-body flex-one m-r-sm"  ng-click="vm.workPreview(item)">
+                                        <span style="cursor:pointer">{{item.title}}</span>
+                                    </div>
+                
+                                    <div class="list-type">
+                                        <!--// article-文稿，gallery-图集，video-视频，audio-音频，link-外链，topic-专-->
+                                        <span >{{item.type_name}}</span>
+                                    </div>
+                
+                                    <div class="list-status" >
+                                        <!--<span class="label primary m-l-sm grey-300" ng-if="item.status=='0'" translate="workload.beReleased"></span>-->
+                                        <!--<span class="label primary m-l-sm light-green-200" ng-if="item.status=='1'" translate="workload.bepublished"></span>-->
+                                        <!--<span class="label primary m-l-sm red-200" ng-if="item.status=='2'" translate="workload.hasWithdrawn"></span>-->
+                
+                                        <span class="label primary m-r-sm grey-300" ng-if="item.status==1">待审核</span>
+                                        <span class="label primary m-r-sm purple-100" ng-if="item.status==2">已审核</span>
+                                        <span class="label primary m-r-sm gray-300" ng-if="item.status==3">已发布</span>
+                                        <span class="label primary m-r-sm red-100" ng-if="item.status==4">已打回
+                                            <i class="typeface-form_tishi"></i>
+                                            <div class="reason-box" ng-show="item.reason">{{item.reason}}</div>
+                                        </span>
+                                        <span class="label primary m-r-sm red-100" ng-if="item.status==5">审核中</span>
+                                        <span class="label primary m-r-sm gray-200" ng-if="item.status==9">待发布</span>
+                                    </div>
+                
+                                    <div class="list-column" >
+                                        <span>{{item.category_name}}</span>
+                                    </div>
+                
+                                    <div class="list-views" >
+                                        <span>{{item.clicks}}</span>
+                                    </div>
+                
+                                    <div class="list-comments" >
+                                        <span ng-if="item.type !='topic'">{{item.comments}}</span>
+                                        <span ng-if="item.type=='topic'">/</span>
+                                    </div>
+                
+                                    <div class="list-time" >
+                                        <!--<span>{{item.publish_time | date:'MM-dd HH:mm' }}</span>-->
+                                        <span>{{item.create_user_name}}</span>
+                                        <span>{{item.created_at.slice(5,16)}}</span>
+                                    </div>
+                                    <div class="list-score">
+                                        <span ng-if="((vm.permission.all_prms == 1 || vm.isCan) && item.scores == null)&& (item.status!=5 && item.status!=1)" ng-class="{'spanActive': (vm.permission.all_prms == 1 || vm.isCan) && item.scores == null}" class="showScore" ng-mouseenter="vm.showScore(item)" ng-mouseleave="vm.hideScore(item)">快速评分
+                                                
+                                                <div class="score" ng-class="{'score-show':item.statusShow,
+                                                'score-hide':!item.statusShow}">
+                                                    <div class="score-star">
+                                                        <div class="star"></div><div class="functions-hint" class="input hint"></div>
+                                                        <!-- <span>1.0</span> -->
+                                                    </div>
+                                                    <div class="score-states">
+                                                        <span class="btn-deter" ng-click="vm.setScore(item)">确定</span>
+                                                        <span class="btn-cancel" ng-click="vm.cancelScore(item)">取消</span>
+                                                    </div>
+                                                </div>
+                                               
+                                        </span>
+                                        <span ng-if="(vm.permission.all_prms == 0 && ! vm.isCan) || (item.status==5 || item.status==1)" class="noCan">暂无评分</span>
+                                        <span ng-if="((vm.permission.all_prms == 1 || vm.isCan) && item.scores != null)&& (item.status!=5 && item.status!=1)" class="showScore" ng-class="{'hasSpanActive': (vm.permission.all_prms == 1 || vm.isCan) && item.scores != null}" ng-mouseenter="vm.showScore(item)" ng-mouseleave="vm.hideScore(item)">
+                                            <img width="14px" height="14px" style="margin-bottom: 3px;margin-right: 3px;" src="/assets/images/mxu/workload/score/icon_star_manxing.png">
+                                            <span>{{item.scores.score}}</span>
+                                                <div class="score" ng-class="{'score-show':item.statusShow,
+                                                'score-hide':!item.statusShow}">
+                                                    <div class="score-star">
+                                                        <div class="star"></div><div class="functions-hint" class="input hint"></div>
+                                                        <!-- <span>1.0</span> -->
+                                                    </div>
+                                                    <div class="score-state" ng-if="vm.userMsg.id == item.scores.user_id">
+                                                        <div class="score-time">{{item.scores.updated_at}} 已评</div>
+                                                        <span class="btn-modify" ng-click="vm.changeScore(item)">修改</span>
+                                                    </div>
+                                                    <div class="score-stated" ng-if="vm.userMsg.id != item.scores.user_id">
+                                                        <div class="score-user">评分人：{{item.scores.user.username}}</div>
+                                                        <span class="score-time">评分时间：{{item.scores.updated_at}}</span>
+                                                    </div>
+                                                    <!-- <div class="score-states">
+                                                        <span class="btn-deter" ng-click="vm.setScore(item)">确定</span>
+                                                        <span class="btn-cancel">取消</span>
+                                                    </div> -->
+                                                </div>
+                                        </span>
+                                        
+                                    </div>
+                        </div>
+                        
+    
+                    </div>
+                </div>
+                <div class="list_bottom hoge-table-bottom" ng-show="vm.dataList.length>0">
+                    <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                </div>
+            </div>
+            <!-- / list -->
+        </div>
+        
+        <div class="workload-details white" ng-show="vm.isMember">
+                <div class="type-chose">
+                    <div class="btn-group dropdown btn-margin hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.typeBar}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="type1 in vm.typeArrBar track by $index" ng-click="vm.choseTypeBar(type1)">{{type1.name}}</a>
+                        </div>
+                    </div>
+                    <div class="btn-contain btn-group" ng-if="!vm.showList">
+                        <button class="btn btn-outline btn-sort" ng-click="vm.getCreate()" ng-class="{actived:vm.sortBar=='create'}" >
+                            产出量
+                            <i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.create_sort=='asc'}"></i> <!--升序-->
+                            <i class="fa fa-caret-down order-descend " ng-class="{'has-chose':vm.create_sort=='desc'}"></i> <!--降序-->
+        
+                        </button>
+                        <button class="btn btn-outline btn-sort" ng-click="vm.getPublish()" ng-class="{actived:vm.sortBar=='publish'}" >
+                            发布量
+                            <i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.publish_sort=='asc'}"></i>    <!--升序-->
+                            <i class="fa fa-caret-down order-descend" ng-class="{'has-chose':vm.publish_sort=='desc'}"></i> <!--降序-->
+                        </button>
+                    </div>
+                    <!--<button class="btn btn-outline btn-sort" ng-click="vm.getPass()" ng-class="{actived:vm.sortBar=='pass'}">通过率-->
+                    <!--<i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.pass_sort=='asc'}"></i>    &lt;!&ndash;升序&ndash;&gt;-->
+                    <!--<i class="fa fa-caret-down order-descend" ng-class="{'has-chose':vm.pass_sort=='desc'}"></i> &lt;!&ndash;降序&ndash;&gt;-->
+                    <!--</button>-->
+                    <div class="model" ng-if="">
+                        <a class="export" ng-click="vm.memberExport()" ng-href="{{vm.exportUrl}}">导出统计</a>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="details-main hoge-flex">
+                    <div class="details-line hoge-flex-one">
+                        <div class="showSelect" ng-if="vm.isMember">
+                            <div>
+                                <span class="showChart" ng-class="{'toggleActive':vm.showChart}" ng-click="vm.toggleMode('chart')">图表模式</span>
+                                |
+                                <span class="showList" ng-class="{'toggleActive':vm.showList}" ng-click="vm.toggleMode('form')">列表模式</span>
+                            </div>
+                            <a class="exList" ng-click="vm.exportList()" ng-href="{{vm.exportUrl}}">导出Excel</a>
+                        </div>
+                        <div class="chart-box"  ng-show="!vm.showList" id="myChart" ui-jp="chart" ui-refresh="vm.isRefreshBar" ui-options="{{vm.optionsBar}}" >
+                        </div>
+                        <div class="list-box" ng-show="vm.showList">
+                            <div class="list_header hoge-table-header">
+                                <div class="wrap">
+                                    <div class="list-ranking">排行</div>
+                                    <div class="list-name" ng-click="vm.getName()">名称</div>
+                                    <div class="list-output" ng-class="{'has-chose':vm.sortList=='create'}" ng-click="vm.getMake()">
+                                        内容产出量
+                                        <div class="icon_sort">
+                                            <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.make_sort=='asc'}"></i>
+                                            <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.make_sort=='desc'}"></i>
+                                        </div>
+                                    </div>
+                                    <div class="list-release"  ng-class="{'has-chose':vm.sortList=='publish'}" ng-click="vm.getAudit()">内容发布量
+                                        <div class="icon_sort">
+                                            <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.audit_sort=='asc'}"></i>
+                                            <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.audit_sort=='desc'}"></i>
+                                        </div>
+                                    </div>
+                                    <div class="list-reads"  ng-class="{'has-chose':vm.sortList=='click_num'}" ng-click="vm.getReading()">阅读总量
+                                        <div class="icon_sort">
+                                            <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.reading_sort=='asc'}"></i>
+                                            <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.reading_sort=='desc'}"></i>
+                                        </div>
+                                    </div>
+                                    <div class="list-comments"  ng-class="{'has-chose':vm.sortList=='comment_num'}" ng-click="vm.getComments()">评论总量
+                                        <div class="icon_sort">
+                                            <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.comment_sort=='asc'}"></i>
+                                            <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.comment_sort=='desc'}"></i>
+                                        </div>
+                                    </div>
+                                    <div class="list-i"></div>
+                                </div>
+                            </div>
+                            <hoge-error hight-num="'425px'" arr-length="vm.formList.length" load="vm.loading"></hoge-error>
+                            <div class="list hoge-item-border" ng-repeat="item in vm.formList track by $index">
+                                <!--列表-->
+                                <div class="list-item">
+                                    <div class="level-one">
+                                        <div class="list-ranking">
+                                            {{$index+1}}
+                                        </div>
+                                        <div class="list-name">
+                                            {{item.name}}
+                                        </div>
+                                        <div class="list-output">
+                                            {{item.create}}
+                                        </div>
+                                        <div class="list-release">
+                                            {{item.publish}}
+                                        </div>
+                                        <div class="list-reads">{{item.click_num}}</div>
+                                        <div class="list-comments">{{item.comment_num
+                                            }}</div>
+                                        <div class="list-i">
+                                            <span ng-click="vm.goDetail(item)">查看详情</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                                <page-nation  options="vm.pageOptions" turn-page="vm.memberPage()" ng-if="vm.formList.length > 0"></page-nation>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="details-list">
+                        <div class="list-header">
+                            编辑排名
+                            <span>点击查看详情</span>
+                        </div>
+                        <div class="list-body">
+                            <div class="list-item" ng-if="vm.showChart" ng-repeat="author in vm.rankingList track by $index" ng-mouseenter="vm.showOpera(author,$event)" ng-mouseleave="vm.hideOpera(author)" ng-click="vm.goDetail(author);">
+                                <span class="default-style" ng-class="{'number-one': $index == 0,'number-two': $index == 1,'number-three': $index == 2}">{{$index+1}}</span>
+                                <span class="item-img">
+                                    
+                                    <img ng-src="{{author.avatar}}" alt="">
+                                </span>
+                                <span class="item-name">
+                                     <span>{{author.name}}</span>
+                                </span>
+                            </div>
+                            <div class="list-item" ng-if="vm.showList" ng-repeat="author in vm.formList track by $index" ng-mouseenter="vm.showOpera(author,$event)" ng-mouseleave="vm.hideOpera(author)" ng-click="vm.goDetail(author);">
+                                <span class="default-style" ng-class="{'number-one': $index == 0,'number-two': $index == 1,'number-three': $index == 2}">{{$index+1}}</span>
+                                <span class="item-img">
+                                    
+                                    <img ng-src="{{author.avatar}}" alt="">
+                                </span>
+                                <span class="item-name">
+                                        <span>{{author.name}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="people-detials" ng-style="{'left':vm.needLeft,'top':vm.boxTop}">
+                            <div class="head-portrait">
+                                <div class="avatar-span">
+                                    <img class="avatar-img" ng-src='{{vm.avatar}}?imageView/0/h/162/w/216' ng-if="vm.avatar">
+                                    <img class="avatar-img" src='/assets/images/mxu/avatar-40.jpg' ng-if="!vm.avatar">
+                                </div>
+                                <div class="name">{{vm.userName}}</div>
+                                <div class="group" ng-repeat="fo in vm.departUser">{{fo.depart}}</div>
+                            </div>
+                            <div class="personal-information">
+                                <div class="lf-div">
+                                    <span>{{vm.create || 0}}</span>
+                                    <span>产出量</span>
+                                </div>
+                                <div class="rt-div">
+                                    <span>{{vm.publish || 0}}</span>
+                                    <span>发布量</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                </div>
+        </div>
+        <div ui-include="'../../views/mxu/common/footer.html'"></div>
+    </div>
+    

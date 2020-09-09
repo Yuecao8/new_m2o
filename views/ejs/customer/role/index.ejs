@@ -1,0 +1,89 @@
+
+<div class="mxu_role_warper" >
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">角色列表</div>
+
+        <div class="pull-right">
+            <button class="btn btn-purple" ng-click="vm.goForm()">
+                {{ 'role.add'| translate}}{{ 'role.role'| translate}}
+            </button>
+
+        </div>
+    </div>
+    <div class="mxu_role_warp padding">
+        <!--<div class="box-tip collapse in" id="reply" aria-expanded="true">-->
+            <!--<div>-->
+                <!--<i class="material-icons font-16">&#xe88f;</i>-->
+                <!--<% if (edition === 'basic') { %>-->
+                <!--{{'role.tipBasic' | translate}}-->
+                <!--<% } %>-->
+                <!--<% if (edition === 'std') { %>-->
+                <!--{{'role.tipStandard' | translate}}-->
+                <!--<% } %>-->
+                <!--<% if (edition === 'pro') { %>-->
+                <!--{{'role.tipProfession' | translate}}-->
+                <!--<% } %>-->
+                <!--<% if (edition === 'ult') { %>-->
+                <!--{{'role.tipUltimate' | translate}}-->
+                <!--<% } %>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="row m-b hoge-radius">
+            <div>
+                <div class="hoge-error hoge-error-hight" ng-if="!vm.roleList.length && !vm.roleLoading">
+                    <div>
+                        <div class="error-img"></div>
+                        <p>{{vm.error_msg}}</p>
+                    </div>
+                </div>
+                <!-- list -->
+                <div class="list_contain hoge-table-contain" ng-show="vm.roleList.length">
+                    <div class="list_header hoge-table-header border-top-radius">
+                        <div class="wrap">
+                            <div class="list-ctr"></div>
+                            <div class="list-role" translate="role.role"></div>
+                            <div class="list-other">更新时间</div>
+                            <div class="list-person">更新人</div>
+                            <div class="list-i"></div>
+                        </div>
+                    </div>
+
+                    <div class="list white border-bottom-radius">
+                        <div class="list-item hoge-item-border border-bottom-radius" ng-repeat="item in vm.roleList">
+                            <div class="list-ctr">
+                            </div>
+                            <div class="list-role">
+                                <div class="list-body">
+                                    <a href="">{{item.name}}</a>
+                                    <small class="block text-muted">{{item.description}}</small>
+                                </div>
+                            </div>
+                            <div class="list-other">
+                                <span>{{item.updated_at}}</span>
+                            </div>
+                            <div class="list-person">{{item.update_username}}</div>
+                            <div class="hoge-list-i" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)">
+                                <div class="icon-tool pull-right">
+                                    <i class="typeface-list_caozuo hoge-list_caozuo"></i>
+                                    <div class="pull-right list-icon-opera" ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                        <div class="btn-group">
+                                            <!--编辑-->
+                                            <button class="btn hoge-drop-icon" ng-if="item.default != 1" ng-click="vm.goEdit(item)">编辑</button>
+                                            <button class="btn hoge-drop-icon" ng-if="item.default != 1"  ng-click="vm.delete(item)">删除</button>
+                                            <button class="btn hoge-drop-icon" ng-click="vm.seeList(item)">查看人员列表</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_bottom hoge-table-bottom" ng-if="vm.pageOptions.total > 0">
+                        <page-nation options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                    </div>
+                </div>
+                <!-- / list -->
+            </div>
+        </div>
+    </div>
+
+</div>

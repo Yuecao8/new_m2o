@@ -1,0 +1,59 @@
+<div class="extendDetail-wrapper wrapper">
+    <div class="title-wrap" translate="extend.cloudForm"></div>
+    <div class="list" my-loading="vm.detail_loading">
+        <div class="list-title">
+            <div class="list-title-left">
+                <div class="img-box">
+                    <i class="icon-tuji1" ng-show="!vm.appDetail.img"></i>
+                    <img ng-src="{{vm.appDetail.img}}">
+                </div>
+            </div>
+            <div class="list-title-middle">
+                <h6>{{vm.appDetail.name}}</h6>
+                <span ng-if="vm.appDetail.status == 0" class="status-tip">
+                    <span translate="extend.open"></span>
+                </span>
+                <span ng-if="vm.appDetail.status == 2" class="status-tip">
+                    <span translate="extend.notUse"></span><br/>
+                    <span>{{'extend.effectiveTime' | translate}} {{vm.appDetail.due_time*1000 | date:'yyyy-MM-dd'}}</span>
+                </span>
+                <span ng-if="vm.appDetail.status == 3" class="status-tip">
+                    <span translate="extend.overdue"></span><br/>
+                    <span>{{'extend.effectiveTime' | translate}} {{vm.appDetail.due_time*1000 | date:'yyyy-MM-dd'}}</span>
+                </span>
+                <span ng-if="vm.appDetail.status == 1 && vm.outMouth" class="status-tip">
+                    <span translate="extend.renewal"></span><br/>
+                    <span>{{'extend.effectiveTime' | translate}} {{vm.appDetail.due_time*1000 | date:'yyyy-MM-dd'}}</span>
+                </span>
+                <span ng-if="vm.appDetail.status == 1 && !vm.outMouth" class="status-tip">
+                    <span translate="extend.normal"></span><br/>
+                    <span>{{'extend.effectiveTime' | translate}} {{vm.appDetail.due_time*1000 | date:'yyyy-MM-dd'}}</span>
+                </span>
+                <!--<span ng-if="vm.appDetail.status == 2">-->
+                    <!--<span translate="extend.renewal"></span><br/>-->
+                    <!--<span>{{'extend.effectiveTime' | translate}} {{vm.appDetail.due_time*1000 | date:'yyyy-MM-dd'}}</span>-->
+                <!--</span>-->
+            </div>
+            <div class="list-title-right" ng-show="vm.appDetail">
+                <a class="btn cancel-btn" ng-click="vm.validity()" ng-if="vm.appDetail.status == 1 && vm.outMouth" translate="extend.delay"></a>
+                <a ui-sref="app.extend.third({id:vm.param.id})" class="btn cancel-btn" ng-if="!vm.nouse"translate="extend.check" style="margin: 0 10px;"></a>
+                <a class="btn primary-btn" ng-class="{'del-btn':!vm.nouse}" ng-click="vm.stopApp()">
+                    <span class="hide" ng-class="{'show':!vm.nouse}" translate="extend.stop"></span>
+                    <span class="hide" ng-class="{'show': vm.nouse}" translate="extend.opening"></span>
+                </a>
+            </div>
+        </div>
+        <div class="list-content">
+            <h6 translate="extend.charge"></h6>
+            <p>{{vm.appDetail.charge_standard}}</p>
+        </div>
+        <div class="list-content">
+            <h6 translate="extend.function"></h6>
+            <p>{{vm.appDetail.introduction}}</p>
+        </div>
+        <div class="list-content">
+            <h6 translate="extend.statement"></h6>
+            <p>{{vm.appDetail.statement}}</p>
+        </div>
+    </div>
+</div>

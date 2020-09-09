@@ -1,0 +1,63 @@
+<div class="modal-content-publish box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">送稿内容: {{vm.param.params.title}}</h5>
+    </div>
+    <div class="modal-body" style="display: flex;">
+        <!--左边栏-->
+        <div class="column-wrap" style="flex: 1;">
+            <!--nav-->
+            <div class="site_nav">
+               请选择送稿到的位置
+            </div>
+            <!--column-->
+            <div class="column_content" ng-class="{'no-site-height':rootSiteItems.id!=0}" my-loading="vm.column_loading">
+                <div class="ErrorTip" ng-show="!vm.columnData[0].length">
+                    <p translate="content.noData"></p>
+                </div>
+                <ks-swiper-container  ng-if="vm.columnData[0].length"
+                                      swiper="vm.swiper"
+                                      class="swiper-container"
+                                      observer='true'
+                                      slides-per-view="4"
+                                      pagination-clickable='true'
+                                      space-between= '0'
+                                      override-parameters="{'grabCursor':'true','observeParents':'true','observer':'true',}">
+                    <ks-swiper-slide class="swiper-slide list_box" ng-repeat="column in vm.columnData track by $index" >
+                        <div class="list" ng-model="column">
+                            <div class="list_item" ng-click="vm.goNext(item,$parent.$index+1)" ng-repeat="item in column" ng-class="{'active':item.active}">
+                                <input type="checkbox" data="{{item.id}}" ng-class="{'input_checked': item.isCheck}" ng-checked="item.isCheck = vm.itemCheck(item)" ng-click="vm.addCheck(item)">
+                                <div class="column_title">{{item.name}}</div>
+                                <div class="pull-right next_icon">
+                                    <i class="icon-jinru" ng-show="item.is_last == 0"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ks-swiper-slide>
+                </ks-swiper-container>
+            </div>
+        </div>
+        <!--右边栏-->
+        <div class="right_site">
+            <div class="title-more">
+                <div class="more">
+                    <div class="has_publish">已送稿至{{vm.checkList.length}}分类</div>
+                    <div class="site_box" ng-repeat="list in vm.checkList">
+                        <div class="box_item">
+                            <span class="item_title" title="{{list.parents_name}}">
+                                {{list.name}}
+                                <i class="icon-guanbi" ng-click="vm.delItem(list)"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="position: relative;">   
+        <div style="position:absolute;">     
+            <label class="checkbox-inline ng-scope"><input id="cover" type="checkbox" name="delete" value="is_update" style="margin-right: 10px;">是否覆盖已送出稿件</label>
+        </div>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">送稿</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

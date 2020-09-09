@@ -1,0 +1,72 @@
+<div class="fast-editing">
+    <div class="hoge-table-add">
+      <div class="hoge-table-title">快编</div>
+    </div>
+    <div class="fast-editing-content flex-item">
+        <!-- 左侧 start-->
+        <div class="video-list-contain">
+            <video-list></video-list>
+        </div> 
+        <!-- 左侧 end -->
+
+        <!-- 中间 start-->
+        <div class="video-play-body flex-one">
+            <div class="video-body" id="video-body-pre" ng-if="vm.videoPreList.length" my-loading="vm.videoPreLoading">
+                <div class="index-pic-body flex-item hoge-flex-center hoge-flex-justify-center" ng-if="vm.videoPreList[0].index_pic && vm.showIndexPics">
+                    <img ng-if="vm.videoPreList[0].index_pic" ng-src="{{vm.getFirstIndexPic()}}" alt="">
+                </div>
+                <video-preview  current-index="vm.currentIndex" video-info="vm.videoPreList" order-change="vm.orderChange" show-index-pics="vm.showIndexPics" on-img-change="vm.changeIndex($event)" on-current-change="vm.handleCurrentChange($event)"></video-preview>
+            </div>
+            <div class="no-video-body" ng-if="!vm.videoPreList.length">
+                    <span>单击左侧视频列表进行快编操作</span>
+            </div>   
+            <div class="video-pre-box">
+                <span class="time-list">
+                    <span class="time-list-durtion" ng-style="{left:16+'px'}" ng-if="!vm.videoPreList.length && !vm.videoPreLoading">00:00</span>
+                    <span ng-repeat="(index,line) in vm.videoPreList track by $index" class="time-list-durtion" ng-class="{'itemActive':line.itemActive}" ng-style="{left:line.leftPosition+'%'}">{{line.durtionAdd}}</span>
+                </span>
+                <div class="time-bar">
+                    <div class="time-bar-body">
+                        <span ng-repeat="(index,line) in vm.lineArr track by $index" class="time-bar-break" ng-style="{left:30*(index+1)+'px'}"></span>
+                        <span ng-repeat="(index,line) in vm.videoPreList track by $index" class="time-bar-durtion" ng-style="{left:line.leftPosition+'%'}" ng-mouseenter="vm.overTimeBar(line)" ng-mouseleave="vm.leaveTimeBar(line)"></span>
+                    </div>   
+                </div>
+                <div class="video-pre-list" ui-sortable="vm.sortableOpt" ng-model="vm.videoPreList">
+                    <div class="video-list-item video-pre-item" ng-repeat="item in vm.videoPreList track by item.uid" ng-click="vm.playVideo(item)">
+                        <div class="video-item-img">
+                            <img ng-src="{{item.index_pics}}" alt="" ng-if="item.index_pic">
+                            <img ng-if="!item.index_pic" src="/assets/images/mxu/img_cover.png" alt="">
+                            <span class="show-time">{{vm.getDuration(item)}}</span>
+                            <span class="del-icon">
+                                <i class="fa icon-shanchu1" ng-click="vm.delPreList(item)"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="manage-contain">
+                    <div class="del-contain" ng-click="vm.delAll()" style="visibility: hidden">
+                        <i class="typeface-form_shanchu"></i>
+                        <span>一键清空</span>
+                    </div>
+                    <div class="tip-contain">
+                        <span>快捷键帮助</span>
+                        <i class="typeface-form_tishi"></i>
+                        <div class="cover-div" ng-mouseenter="vm.tipEnter()" ng-mouseleave="vm.tipLeave()"></div>
+                        <div class="tip-content" ng-show="vm.tipShow">
+                            <div>暂停/播放：空格</div>
+                            <div>播放前进/后退：← →</div>
+                            <div>跳转上一段/下一段：↑ ↓</div>
+                        </div>
+                        <div class="arrow" ng-show="vm.tipShow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>     
+        <!-- 中间 end-->
+
+        <!-- 右侧 start -->
+        <div class="video-info">
+            <save-conetent show-img="vm.showImg" screen-shot-url="vm.imgUrl" screen-shot-key="vm.imgKey"></save-conetent>   
+        </div>
+    </div>
+</div>

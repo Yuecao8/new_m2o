@@ -1,0 +1,79 @@
+<div class="waterList">
+        <div class="table_title">
+            <div class="page-title">水印设置</div>
+            <button class="btn btn-purple pull-right" ng-click="vm.stateGo(vm.url)">新增水印</button>
+        </div>
+        
+        <div class="box hoge-border">
+            <hoge-error hight-num="'277px'" arr-length="vm.listData.length" load="vm.loading"></hoge-error>
+            <div class="box-body p-v-md" ng-if="vm.listData.length">
+                <div class="waterList-title hoge-table-header">
+                    <div class="list-ctr">
+                    </div>
+                    <div class="list-name flex-one" >水印设置名称</div> 
+                    <div class="frame_rate">类型</div>                   
+                    <div class="output_format">水印位置</div>
+                    <div class="isDefault">是否默认</div>
+                    <div class="isDefault">是否启用</div>
+                    <div class="use_water">创建人/时间</div>
+                    <div class="list-i"></div>
+                </div>
+                <div class="waterList-list" ng-model="vm.listData">                
+                    <div class="item-list" ng-repeat="item in vm.listData track by $index">
+                        <div class="wrap">
+                            <div class="list-ctr">
+                                <input type="checkbox" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                            </div>
+                            <div class="list-name flex-one" >{{item.title}}</div>  
+                            <div class="frame_rate">{{item.water_type_name}}</div>                    
+                            <div class="output_format">{{item.water_position_name}}</div>
+                            <div class="isDefault">{{item.is_default==1 ? '默认' : ''}}</div>
+                            <div class="isDefault">
+                                <label class="ui-switch">
+                                    <span class="switch-open">开</span>
+                                    <span class="switch-close">关</span>
+                                    <input type="checkbox" ng-click="vm.toggleStatus(item)" ng-checked="item.is_use==1">
+                                    <i></i>
+                                </label>
+                            </div>
+                            <div class="use_water">
+                                <span>{{item.user_name}}</span>
+                                <span>{{item.updated_at}}</span>
+                            </div>
+                            <div class="list-i">
+                                
+                                <div class="icon-tool" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)">
+                                    <i class="typeface-list_caozuo hoge-list_caozuo"
+                                        ng-class="{'active-bg':item.searchShow}"></i>
+                                    <div class="pull-right list-icon-opera"
+                                            ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                        <div class="btn-group">
+                                            <button class="btn hoge-drop-icon" ng-click="vm.goEdit(item)">编辑</button>
+                                            <button class="btn hoge-drop-icon" ng-click="vm.goDel(item)">删除</button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footerCl" ng-if="vm.listData.length>0">
+                <div class="list_bottom hoge-list-bottom border-bottom-radius" ng-show="vm.listData">
+                    <div class="btn-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">全选
+                        </label>
+                    </div>
+                    <div class="btn-toolbar list_bar flex-one btn-box">
+                        <div class="btn-group">
+                            <button class="btn del-btn" ng-click="vm.moreDelete()">删除</button>
+                        </div>
+                    </div>
+                    <page-nation  options="vm.pageOptions" turn-page="vm.getWaterList()"></page-nation>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,62 @@
+<div class="details-wrapper ftpclass">
+    <div class="hoge-title">FTP文件</div>
+    <div class="white avatar-contain">
+        
+        <!-- 面包屑  start -->
+        <div class="breadcrumbs">   
+            <div class="show-title-item m-l-xs">
+                    <span class="show-title-name" ng-click="vm.jump(-1,{id:0})">全部文件</span>
+                    <span ng-if="vm.storageList.length>0" style="color:#788091"> > </span>
+            </div>
+            <div ng-repeat="(key,vv) in vm.storageList" class="show-title-item m-l-xs">
+                <span class="show-title-name" ng-click="vm.jump(key,vv)">{{vv.name}}</span>
+                <span ng-if="key<vm.storageList.length-1" style="color:#788091"> > </span>
+            </div>         
+            
+        </div>
+        <!-- 面包屑  end -->
+        
+        <div class="ftp-contain">
+            <div class="item-title table_header hoge-table-header">
+                <div class="wrap">
+                    <div class="list-ctr">
+                        <label class="checkbox-inline" ng-class="{'indeterminate': vm.Indeterminate()}">
+                            <input type="checkbox" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()" >
+                        </label>
+                    </div>
+                    <div class="list-name flex-one" >文件名称</div>                    
+                    <div class="list-size">大小</div>
+                    <div class="list-date">修改日期</div>
+                    <div class="list-state">文件状态</div>
+                    <div class="list-other"></div>
+                    <div class="list-i"></div>
+                </div>
+            </div>
+            <div class="item-contain">                
+                <div class="nodeItem" ng-repeat="node in vm.dataList">    
+                    <div class="wrap">                   
+                        <div class="list-ctr"><input type="checkbox" ng-class=" node.is_file==0? 'disabled':'undisabled'" ng-checked="vm.itemCheck(node)" ng-disabled="node.is_file==0" ng-click="vm.toggle(node)"></div>
+                        <div class="list-name flex-one" ng-if='node.is_file==1'><em class="dan"></em>{{node.name}}</div>
+                        <div class="list-name flex-one" ng-if='node.is_file==0' ng-click="vm.inFolder(node)" style="cursor: pointer;"><em class="jia"></em>{{node.name}}</div>
+                        <div class="list-size" ng-if='node.is_file==1'>{{node.size}}</div>
+                        <div class="list-size" ng-if='node.is_file==0'>-</div>
+                        <div class="list-date">{{node.time}}</div>
+                        <div class="list-state" ng-if='node.submitted==1&&node.is_file==1' ng-class="node.submitted==1&&node.is_file==1?'green-color':''">已提交</div>
+                        <div class="list-state" ng-if='node.is_file==0'>-</div>
+                        <div class="list-state" ng-if='node.submitted==0&&node.is_file==1'>未提交</div>
+                        <div class="list-other" ng-if='node.is_file==1&&node.submitted==0'><i  ng-click="vm.normalCommit(node)" class="fa typeface-list_shangchuan"></i></div>
+                        <div class="list-other" ng-if='node.is_file==0||node.submitted==1'> </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="setting-box"  ng-if="vm.loading">
+                    <button class="normalbtn" ng-click="vm.normalCommit()">普通提交</button>
+                    <button class="whitebtn" ng-click="vm.mergeCommit()">合并提交</button>
+                </div>
+        </div>
+        
+    </div>
+    
+</div>

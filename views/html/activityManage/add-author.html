@@ -1,0 +1,52 @@
+<div class="push-wrapper lif-headlines box-shadow-md download-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" style="margin-left:6px;">选择评委</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" style="height:32px;line-height:32px;margin-bottom: 2rem;">
+            <div class="author-label-box">
+                <label class="label-name" style="height:32px;line-height:32px;margin-bottom:0;">评委：
+                </label>
+            </div>
+            <div class="role-box">
+                <div class="author-search-box">
+                    <input type="text" class="author-input" placeholder="搜索..." ng-keypress="vm.keyPress($event)" ng-model="vm.authorKey" ng-change="vm.keyChange()">
+                    <div class="question-box">
+                        <i class="subtitle-i typeface-form_tishi"></i>
+                        <div class="question-hover">一次最多展示30位作者，可输入全名进行精准查询<span class="question-tip"></span></div>
+                    </div>
+                </div>
+                <div class="author-list-box">
+                    <a class="dropdown-item" ng-repeat="typeItem in vm.typeListArr  track by $index" ng-click="vm.chooseAuthor(typeItem)">{{typeItem.nick_name}}</a>
+                </div>
+                <!-- <div class="checkRole dropdown-toggle" ng-click="vm.roleFocus = true;" ng-blur="vm.roleFocus = false;"
+                        ng-class="{'focus-color':vm.roleFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                    <span class="check-item" ng-repeat="typeItem in vm.typeListArr  track by $index" ng-show="typeItem.check">
+                        {{typeItem.name}}
+                        <i class="fa icon-guanbi" ng-click="typeItem.check = false" style="cursor: pointer"></i>
+                    </span>
+                </div>
+                <div class="role-list dropdown-menu">
+                    <div class="item" ng-repeat="typeItem in vm.typeListArr  track by $index" ng-click="vm.chooseType(typeItem)">
+                        <label class="">{{typeItem.name}}</label>
+                        <span class="fa fa-check" ng-show="typeItem.check"></span>
+                    </div>
+                </div> -->
+            </div>
+            <div class="choose-box">
+              <div class="choose-num">已选择{{vm.choseArr.length}}个作者</div>
+              <ul>
+                  <li class="item" ng-if="vm.choseArr.length" ng-repeat="(index, item) in vm.choseArr track by $index">
+                      {{item.nick_name}}
+                      <i class="icon-guanbi" ng-click="vm.deleteCheck(index)"></i>
+                  </li>
+              </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading" ng-disabled="verifyForm.$invalid">确定</button>
+    </div>
+</div>

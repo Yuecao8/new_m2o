@@ -1,0 +1,102 @@
+<div class="batchUpload-modal">
+        <div class="modal-content">
+                <div class="push-wrapper box-shadow-md">
+                        <div class="modal-header">
+                            <h3 class="modal-title">传输列表<span class="title-tip">共选择{{vm.fileList.length}}个文件，正在上传{{vm.startNum}}个，上传成功{{vm.completeNum}}个，上传失败<span style="color:red">{{vm.failNum}}</span>个，等待上传{{vm.waitNum || 0}}个</span></h3>
+                            <!-- <i class="fa typeface-icon_zuixiaohua map-btn" ng-click="vm.narrow()" style="position: absolute;right: 35px;top: 16px;"></i> -->
+                            <i class="fa typeface-form_guanbi map-btn" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>
+                            <!-- <i class="fa typeface-form_guanbi map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 18px;cursor:pointer"></i> -->
+                        </div>
+                        <div class="modal-add">
+                            <div class="file-add">
+                                <i class="typeface-form_zengjia"></i>
+                                <input class="input-inner" id="input-inner" type="file" nv-file-select="" uploader="vm.uploade" multiple/>
+                                <span>继续添加</span>
+                            </div>
+                            <!-- <div class="video-trans">
+                                <label class="checkbox-inline">
+                                    <span class="replace-switch-name">视频转码</span>
+                                    <label class="ui-switch">
+                                        <span class="switch-open">开</span>
+                                        <span class="switch-close">关</span>
+                                        <input type="checkbox" ng-click="vm.toggleIsCode()" ng-checked="vm.is_transcode==1">
+                                        <i></i>
+                                    </label>
+                                </label>
+                                <div class="btn-group dropdown hoge-dropdown" ng-if="vm.is_transcode==1">
+                                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                        <span class="dropdown-label">{{vm.choseTranscode}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm">
+                                        <a class="dropdown-item" ng-repeat="type in vm.transcodeSet" ng-click="vm.chooseType(type)">{{type.name}}</a>
+                                    </div>
+                                </div>
+                                栏目：
+                                <div class="publish-box">
+                                    <content-publish publish-name="vm.publish_name" publish-array="vm.publish_column" dispose-arr="vm.disposeArr(d)" place-holder="vm.dColumnName"></content-publish>
+                                </div>
+                                
+                            </div> -->
+                        </div>
+                        <div class="modal-body">
+                            <div class="table_header hoge-table-header">
+                                <div class="wrap">
+                                    <div class="batch-body flex-one">文件名称</div>
+                                    <div class="batch-size">文件大小</div>
+                                    <div class="batch-status">状态</div>
+                                    <div class="batch-i"></div>
+                                    <div class="batch-oper">操作</div>
+                                </div>
+                            </div>
+                            <hoge-error hight-num="'277px'" arr-length="vm.fileList.length" load="vm.loading"></hoge-error>
+                            <div class="list white border-bottom-radius" ng-model="vm.fileList" ng-show="vm.fileList.length">
+                                <div class="list-item hoge-item-border"
+                                        ng-repeat="(idxs,nor) in vm.fileList track by $index">
+                                    <div class="batch-body flex-one">
+                                        <i class="icon icon-folder file-icon" ng-if="nor.file_type === 'directory'"></i>
+                                        <i class="icon icon-image file-icon" ng-if="nor.file_type === 'image'"></i>
+                                        <i class="icon icon-pdf file-icon" ng-if="nor.extension === 'pdf'"></i>
+                                        <i class="icon icon-doc file-icon" ng-if="nor.extension == 'doc' || nor.extension == 'docx'"></i>
+                                        <i class="icon icon-ppt file-icon" ng-if="nor.extension === 'ppt'"></i>
+                                        <i class="icon icon-psd file-icon" ng-if="nor.extension === 'psd'"></i>
+                                        <i class="icon icon-esp file-icon" ng-if="nor.extension === 'esp'"></i>
+                                        <i class="icon icon-music file-icon" ng-if="nor.file_type === 'audio'"></i>
+                                        <i class="icon icon-video file-icon" ng-if="nor.file_type === 'video'"></i>
+                                        <i class="icon icon-zip file-icon" ng-if="nor.extension === 'zip'||nor.extension === 'rar'"></i>
+                                        <i class="icon icon-xlsx file-icon" ng-if="nor.extension === 'xlsx' || nor.extension === 'xls'"></i>
+                                        <i class="icon icon-moren file-icon" 
+                                        ng-if="nor.extension !== 'xlsx'&& nor.extension !== 'xls'&&nor.extension !== 'zip'&&nor.extension !== 'rar'&&nor.extension !== 'pdf'
+                                        &&nor.extension !== 'ppt'&&nor.extension !== 'doc'&&nor.extension !== 'docx'&&nor.file_type === 'document' "></i>
+                                        <span class="name">{{nor.fileName}}</span>
+                                    </div>
+                                    <div class="batch-size">{{nor.size}}</div>
+                                    <div class="batch-status">
+                                        <div class="progress" ng-if="vm.showState">
+                                            <div class="progress-bar primary" ng-style="{width:vm.fileList[idxs].progress+'%'}"></div>
+                                        </div>
+                                        <span class="upload-tip" ng-if="vm.showState">
+                                            <span class="wait-tip" ng-if="vm.fileList[idxs].progress == 0">等待上传</span>
+                                            <span class="ok-tip" ng-if="vm.fileList[idxs].progress == 100&&vm.fileList[idxs].uploadTrue">上传完成</span>
+                                            <span class="error-tip" ng-if="vm.fileList[idxs].progress == null">上传失败</span>
+                                            <span class="ing-tip" ng-if="(vm.fileList[idxs].progress > 0)&&!vm.fileList[idxs].uploadTrue">上传{{vm.fileList[idxs].progress}}%</span>
+                                        </span>
+                                    </div>
+                                    <div class="batch-i">
+                                        <i class="typeface-icon_pipei" ng-click="vm.refreshSingle(nor)" ng-if="vm.fileList[idxs].progress == null"></i>
+                                    </div>
+                                    <div class="batch-oper">
+                                        <i class="typeface-form_shanchu" ng-click="vm.deleteSingle(nor)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" ng-if="vm.showBtn">
+                            <button class="btn btn-sure p-x-md upload-btn" ng-click="vm.startUpload()" >
+                                开始上传
+                            </button>
+                        </div>
+                    </div>
+                    
+        </div>
+</div>

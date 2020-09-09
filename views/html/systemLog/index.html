@@ -1,0 +1,165 @@
+<div class="dynamic-warpper">
+        <header class="hoge-table-add">
+            <div class="hoge-table-title">
+                系统日志
+            </div>
+        </header>
+        <div class="border-contian">
+            <nav class="filter-contain">
+                <div class="daterange">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                    <input date-range-picker options="vm.dateOptions" ng-model="vm.rangeDate" class="date-picker" type="text" />
+                </div>
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle user-screening">
+                        <span class="dropdown-label label-lf">{{vm.currentUserName}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm sidebar-drop" id="sidebar-drop">
+                       
+                        <!-- <div class="classify-sidebar"> -->
+                                <div class="list-list pull-left" id="sidebar-list" my-loading="vm.user_loading" ng-style="{width:vm.columnData.length * 142 + 'px', 
+                                    height:(vm.columnData[vm.storageList.length ].length)*38+12 + 'px'
+                                    }">
+                                    <div class="sidebar-list pull-left" style="width:142px;" ng-repeat="List in vm.columnData track by $index">
+                                        <div class="sidebar-item" ng-repeat="item in List track by $index">
+                                            <!-- <div class="sidebar-body"> -->
+                                                <span class="next-icon pull-left back" ng-if="item.is_back == 1" ng-click="vm.backLast(item,List)"> 
+                                                    <i class="typeface-cuobiezi_huanyuan"></i>
+                                                </span>
+                                                <!-- <span class=" item-name" ng-if="item.is_back == 1" ng-click="vm.backLast(item,List)" ng-class="{'item-active' : item.isChoose}">
+                                                    {{item.name}}
+                                                </span> -->
+                                                <span class=" item-name"  ng-click="vm.handerClick(item,List,$parent.$index+1)" ng-if="item.is_depart == 1" ng-class="{'item-active' : item.isChoose}">
+                                                    {{item.name}}
+                                                    <i class="fa fa-angle-right" ng-if="item.is_depart == 1&&item.is_back != 1"></i>
+                                                </span>
+                                                <span class=" items-name" ng-if="item.is_alluser == 2" ng-click="vm.choseUser(item,List,$parent.$index+1)" ng-class="{'item-active' : item.isChoose}">
+                                                        {{item.name}}
+                                                    </span>
+                                                <span class=" items-name" ng-if="item.is_user == 1" ng-click="vm.choseUser(item,List,$parent.$index+1)" ng-class="{'item-active' : item.isChoose,'back-lf':$index == 0}">
+                                                    {{item.name}}
+                                                </span>
+                                                
+                                                <!-- <span class="next-icon pull-right" ng-if="item.is_depart == 1&&item.is_back != 1" ng-click="vm.backLast(item,List)"> 
+                                                    <i class="fa fa-angle-right"></i>
+                                                </span> -->
+                                            <!-- </div> -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        <!-- end -->
+                    </div>
+                </div>
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.moduleName}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="module in vm.modules track by $index" ng-click="vm.chooseModule(module)">{{module.name}}</a>
+                    </div>
+                </div>
+                <div class="btn-group model">
+                    <a class="export" ng-click="vm.logExport()" ng-href="{{vm.exportUrl}}">导出日志</a>
+                </div>
+                <div class="pull-right">
+                    <search-Box key-Word="vm.key"
+                                search-Key="vm.search(Item)"
+                                key-Press="vm.keyPress(Event)"
+                                hide-Kind="vm.hideAccessKind"
+                                is-Focus="vm.isFocus"
+                                place-Holder="vm.placeHolder"
+                    >         
+                    </search-Box>
+                </div>
+                <!-- 搜索 -->
+                <!-- <div class="form-group hoge-input-search pull-right">
+                    <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                </div> -->
+            </nav>
+            <section class="main-contian">
+                <div class="white nodata-contain" ng-if="vm.dynamicList.length == 0">
+                    <hoge-error  arr-length="vm.dynamicList.length" load="vm.dynamicLoading"></hoge-error>
+                </div>
+    
+                <div class="date-list" ng-repeat="dateItem in vm.dynamicList track by $index">
+                    <div class="time-bar">
+                        <p class="time-line">{{dateItem.dateName}}</p>
+                    </div>
+                    <div class="dynamic-slip" ng-repeat="list in dateItem.list track by $index">
+                        <div class="slip-contian flex-item" >
+                            <div class="mark-box">
+                                <span class="time-mark">{{list.created_at}}</span>
+                            </div>
+                            <div class="slip-type">
+                                <!--图文应用-->
+                                <div class="icon-box" ng-if="list.application == 'graphics'">
+                                    <i class="typeface-dongtai_tuwenyingyong"></i>
+                                </div>
+                                <!--图文应用-->
+    
+                                <!--媒资应用-->
+                                <div class="icon-box" ng-if="list.application == 'media'">
+                                    <i class="typeface-dongtai_meiziyingyong"></i>
+                                </div>
+                                <!--媒资应用-->
+    
+                                <!--业务应用-->
+                                <div class="icon-box" ng-if="list.application == 'operation'">
+                                    <i class="typeface-dongtai_yewuyingyong"></i>
+                                </div>
+                                <!--业务应用-->
+    
+                                <!--互动应用-->
+                                <div class="icon-box" ng-if="list.application == 'interaction'">
+                                    <i class="typeface-dongtai_hudongyingyong"></i>
+                                </div>
+                                <!--互动应用-->
+    
+                                <!--发布应用-->
+                                <div class="icon-box" ng-if="list.application == 'release'">
+                                    <i class="typeface-dongtai_fabuyingyong"></i>
+                                </div>
+                                <!--发布应用-->
+    
+                                <!--系统应用-->
+                                <div class="icon-box" ng-if="list.application == 'system'">
+                                    <i class="typeface-dongtai_xitongyingyong"></i>
+                                </div>
+                                <!--系统应用-->
+                                
+                                <!-- common类型 -->
+                                <div class="icon-box" ng-if="list.application == 'common'">
+                                    <i class="typeface-dongtai_xitongyingyong"></i>
+                                </div>
+                                <!--拓展应用-->
+                                <div class="icon-box" ng-if="list.application == 'extension'">
+                                    <i class="typeface-dongtai_kuozhanyingyong"></i>
+                                </div>
+                                <!--拓展应用-->
+                            </div>
+                            <div class="dynamic-detail flex-item">
+                                <span class="detail-describe">{{list.create_user_name}}</span>
+                                <span class="detail-describe">{{list.operate_name}}</span>
+                                <span class="detail-content" ng-if="!list.canJump">{{list.title}}</span>
+                                <!--内容-->
+                                <span class="detail-to" ng-if="list.canJump" ng-click="vm.toJump(list)">{{list.title}} </span>
+                                <!--内容-->
+                                <span class="detail-content m-l-10" ng-if="list.extension">{{list.extension}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-list" ng-if="vm.addShow">
+                    <img src="../../../assets/images/mxu/home/new/icon_loading_2x.png" alt="" ng-if="vm.loadMsg=='正在加载'">
+                    <span ng-click="vm.loadMore()">{{vm.loadMsg}}</span>
+                </div>
+    
+            </section>
+        </div>
+    </div>
+    <m2o-footer ></m2o-footer>

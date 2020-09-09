@@ -1,0 +1,22 @@
+<div class="modal-header d-flex flex-v-center">
+        <h5 class="modal-title flex-one" >编辑人像信息</h5>
+        <i class="fa fa-remove close-icon" ng-click="vm.close()"></i>
+    </div>
+<div>
+<div class="modal-body" my-loading="vm.loading">
+    <img class="default-image" ng-src="{{vm.faceEditDetail.face_image.image.host}}{{vm.faceEditDetail.face_image.image.dir}}{{vm.faceEditDetail.face_image.image.filepath}}{{vm.faceEditDetail.face_image.image.filename}}">
+    <div class="d-flex flex-v-center item-info">
+        <label>姓名：</label>
+        <input class="name-input" ng-model="vm.faceEditDetail.title" placeholder="输入姓名..." type="text"  maxlength="15">
+    </div>
+    <div class="d-flex item-info">
+        <label>描述：</label>
+        <textarea class="desc-textarea" ng-model="vm.faceEditDetail.desc" placeholder="输入描述..." maxlength="200"  ng-keyup="vm.changeText()"></textarea>
+        <span class="person-textarea-len">{{vm.textLen}}/200</span>
+    </div>
+    <div class="desc-tip">人像信息修改后，搜索结果将会同步更新，请谨慎操作</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-disabled="vm.isSave">确认</button>
+</div>

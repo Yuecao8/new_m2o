@@ -1,0 +1,10 @@
+{
+    "columnSet" : "栏目模板设置",
+    "goColumn" : "进入栏目设置",
+    "viewColumn" : "查看栏目",
+    "choseColumn" : "栏目模板选择",
+    "save" : "保存",
+
+    "childTemplate" : "请选择子栏目模板",
+    "upDate" : "更新成功!"
+}

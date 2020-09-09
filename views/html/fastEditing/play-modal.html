@@ -1,0 +1,10 @@
+<!--play-modal-->
+<div class="modal-header">
+  <button type="button" class="close" ng-click="vm.closeModal()"><span>&times;</span></button>
+  <h3 class="modal-title">{{vm.info.title}}</h3>
+</div>
+<div class="modal-body">
+  <video-play options="vm.options" video-info="vm.info" 
+      on-start-change="vm.startTime = $event" on-end-change="vm.endTime = $event">
+  </video-play>
+</div>

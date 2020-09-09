@@ -1,0 +1,126 @@
+<div class="water wrapper-water">
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">水印设置</div>
+    </div>
+    <div class="box hoge-border">
+        <div class="p-v-md">
+            <div class="control-phone">
+                <div class="control-phone-d">
+                    <div class="b-l b-l-4x b-l-info p-l-sm control-header">
+                        <h3 translate="action_water.contentMark"></h3>
+                        <small class="tip">{{ 'action_water.contentMarkTip'| translate}}
+                        </small>
+                    </div>
+                    <div class="box-body p-v-md">
+                        <div class="row row-sm">
+                            <div class="col-xs-4">
+                                <img ng-src="{{vm.water.url}}" class="w-full">
+                            </div>
+                            <div class="col-xs-8">
+                                <form role="form" class="ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <!--<div class="btn-group dropdown m-r-15">-->
+                                            <!--<button class="btn white dropdown-toggle " data-toggle="dropdown">-->
+                                                <!--<span class="dropdown-label">{{vm.nowPosition.name}}</span>-->
+                                                <!--<span class="caret"></span>-->
+                                            <!--</button>-->
+                                            <!--<div class="dropdown-menu text-left text-sm font-12">-->
+                                                <!--<a class="dropdown-item" ng-repeat="pos in vm.positionArr" ng-click="vm.changePos(pos.value)">{{pos.name}}</a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="m-b">
+                                            <div class="position" translate="action_water.position"></div>
+                                            <select class="form-control c-select select_po" ng-model="vm.water_position" ng-change="vm.install('preview')">
+                                                <option value="1" translate="action_water.topLeft">左上</option>
+                                                <option value="2" translate="action_water.onMiddle">上中</option>
+                                                <option value="3" translate="action_water.upperRight">右上</option>
+                                                <option value="4" translate="action_water.leftMiddle">左中</option>
+                                                <option value="5" translate="action_water.centered">居中</option>
+                                                <option value="6" translate="action_water.rightMiddle">右中</option>
+                                                <option value="7" translate="action_water.leftLower">左下</option>
+                                                <option value="8" translate="action_water.underMiddle">下中</option>
+                                                <option value="9" translate="action_water.rightLower">右下</option>
+                                            </select>
+                                        </div>
+                                        <div style="position: relative;">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" ng-click="vm.imgValue()" ng-checked="vm.imgvalue">
+                                                {{ 'action_water.custom'| translate}}
+                                            </label>
+                                            <a href="">
+                                                <small class="load_img" ng-show="vm.imgvalue" translate="action_water.upload"> </small>
+                                            </a>
+                                            <input type="file" class="file" id="uploadImg" nv-file-select uploader="vm.img_upload" ng-show="vm.imgvalue">
+                                        </div>
+                                        <div class="option_line">
+                                            <label class="m-t-8">
+                                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" ng-click="vm.txtValue(trueunUse)" ng-checked="vm.txtvalue">
+                                               {{ 'action_water.character'| translate}}
+                                            </label>
+                                            <label ng-show="vm.txtvalue" class="m-b-0">
+                                                <input type="text" class="form-control comment_txt" ng-model="vm.water.water_text" ng-blur="vm.install('preview')" maxlength="9">
+                                            </label>
+                                            <span class="waterTip" translate="action_water.charTip"></span>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" ng-click="vm.unUse(true)" ng-checked="vm.unuse" >
+                                               {{ 'action_water.nonuse'| translate}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!--<button class="btn m-b cancel-btn" ng-click="vm.install('preview')" translate="action_water.preview" ng-disabled="vm.unuse"></button>-->
+                                    <button type="submit" class="btn m-b primary-btn" ng-click="vm.install('save')" translate="action_water.save"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="control-phone m-b comment_set">
+                <div class="control-phone-d ">
+                    <div class="b-l b-l-4x b-l-info p-l-sm control-header">
+                        <h3 translate="action_water.videoMark"></h3>
+                        <small class="tip">{{ 'action_water.videoMarkTip'| translate}}
+                        </small>
+                    </div>
+
+                    <div class="box-body p-v-md">
+                        <div class="row row-sm">
+                            <div class="col-xs-4">
+                                <img src="../assets/images/mxu/setting/bg_water_video.png" class="w-full">
+                                <img class="video_water" ng-src="{{vm.branchInfo.index_pic}}" alt="" ng-show="vm.videoinfo.open">
+                            </div>
+                            <div class="col-xs-8">
+                                <form role="form" class="ng-pristine ng-valid" name="videoWater">
+                                    <div class="form-group">
+                                        <div style="position: relative;">
+                                            <label>
+                                                <input type="radio" name="optionsRadios"  value="true" ng-checked="vm.videoinfo.open"
+                                                       ng-click="vm.videoinfo.open = true">
+                                               {{ 'action_water.custom'| translate}}
+                                            </label>
+                                            <a href="">
+                                                <small class="load_img" ng-show="vm.videoinfo.open" translate="action_water.upload"></small>
+                                            </a>
+                                            <input type="file" class="file" id="getImg" nv-file-select uploader="vm.uploader" ng-show="vm.videoinfo.open">
+                                        </div>
+                                        <div class="option_line">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="" ng-checked="vm.videoinfo.unopen"
+                                                       ng-click="vm.videoinfo.open = false">
+                                                {{ 'action_water.nonuse'| translate}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn m-b primary-btn" ng-disabled="videoWater.$invalid" ng-click="vm.saveVideoWater()"
+                                            translate="action_water.save"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

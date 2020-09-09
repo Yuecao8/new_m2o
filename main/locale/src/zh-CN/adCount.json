@@ -1,0 +1,12 @@
+{
+    "allStatus" : "全部状态",
+    "throwIn" : "投放中",
+    "soldOuted" : "已下架",
+    "wait" : "等待投放",
+    "name" : "名称",
+    "contains":"包含物料 (条)",
+    "state":"状态",
+    "view":"总浏览量",
+    "click":"总点击量",
+    "analysis":"详细分析"
+}

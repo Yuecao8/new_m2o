@@ -1,0 +1,19 @@
+{
+    "classify" : "分类",
+    "allClassify" : "全部分类",
+    "create" : "新建",
+    "classifyName" : "请填写分类的名称",
+    "successDelete" : "删除成功!",
+    "choose" : "请先选择一个选项",
+
+    "interaction":"互动",
+    "comment":"评论",
+    "contribute":"报料",
+    "vote":"投票",
+    "description":"在此可以发起投票，查看和管理来自终端会员的评论和报料",
+    "success" : "操作成功",
+    "whether" : "您确定要删除么?",
+    "commentClassify":"评论分类",
+    "commentTip":"在此可以查看和管理来自终端会员的评论",
+    "contributeTip":"在此可以查看和管理来自终端会员的报料"
+}

@@ -1,0 +1,25 @@
+<div class="push-wrapper box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title">设置节目主播</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body" ng-click='vm.selectAnchor()'> 
+        <span class="anchor-title">节目主播：</span>  
+        <div class="anchor-box" ng-class="{'anchor-box-active': vm.anchorContentShow}">
+            <span class="anchor-name" ng-repeat = "(index,item) in vm.checkAnchorList track by index">{{item.name}} 
+                <i class="fa fa-remove map-close" style="cursor: pointer;" ng-click='vm.delAnchor(index)'></i>
+            </span>
+        </div>
+        <div class="anchor-content" ng-if='vm.anchorContentShow'>
+            <div class="anchor-content-inner" ng-click="vm.checkAnchor(n)" ng-repeat="n in vm.anchorList">
+                <img ng-if="n.indexpic" class="anchor-img" src="{{n.indexpic}}" alt="">
+                <img ng-if="!n.indexpic" class="anchor-img" src="../../../assets/images/mxu/avatar-50.jpg" alt="">
+                <span>{{n.name}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sure p-x-md ng-binding" ng-click="vm.save()"> 确认 </button>
+        <button type="button" class="btn cancel-btn p-x-md ng-binding" ng-click="vm.close()"> 取消</button>
+    </div>
+</div>

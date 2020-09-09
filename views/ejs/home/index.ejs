@@ -1,0 +1,157 @@
+<!--<hoge-error  arr-length="vm.commentsList.length" load="vm.commentsLoading"></hoge-error>-->
+
+<div class="home-wrapper">
+<!--总编默认-->
+    <div class="flex-item ">
+        <div class="flex-three ">
+            <div class="flex-item">
+                <div style="height:258px;" class="flex-two bg-white  m-r-1 m-b-1">
+                    <!--数据统计-->
+                    <cloud-statistic character="vm.character"></cloud-statistic>
+                    <!--新闻线索-->
+                    <home-news-clues character="vm.character"></home-news-clues>
+                    <!--服务器概况-->
+                    <home-server-overview character="vm.character"></home-server-overview>
+                </div>
+                <div class="flex-one m-r-1 m-b-1">
+                    <!--我的待办-->
+                    <home-my-upcoming></home-my-upcoming>
+                </div>
+            </div>
+
+
+            <div class="flex-item" >
+                <div style="height:270px;" class=" bg-white m-r-1" ng-class="{'flex-one': vm.character.id == -1 ||vm.character.id == 1 ||vm.character.id == 3,'flex-two': vm.character.id == 2}">
+
+                    <!--会员统计-->
+                    <home-member-statistics ng-if="vm.character.id == 1"></home-member-statistics>
+
+                    <!--最新评论-->
+                    <home-latest-comments ng-if="vm.character.id == 2"></home-latest-comments>
+
+                    <!--短信使用进度-->
+                    <home-sms-progress ng-if="vm.character.id == 3"></home-sms-progress>
+
+                </div>
+
+                <div style="height:270px;" class="bg-white m-r-1" ng-class="{'flex-two': vm.character.id == -1 ||vm.character.id == 1 ||vm.character.id == 3,'flex-one': vm.character.id == 2}">
+
+                     <!--平台工作量统计-->
+                    <home-platform-workload ng-if="vm.character.id == 1"></home-platform-workload>
+
+                    <!--个人工作量统计-->
+                    <home-personal-workload ng-if="vm.character.id == 2"></home-personal-workload>
+
+                    <!--任务进度-->
+                    <home-task-progress ng-if="vm.character.id == 3"></home-task-progress>
+
+                </div>
+            </div>
+            
+        </div>
+        <div class="flex-one ">
+            <!--我的日历-->
+            <home-my-calendar character="vm.character"></home-my-calendar>
+        </div>
+    </div>
+
+    <div class="flex-item">
+        <div class="flex-three" ng-class="{'hideModule': vm.hideInfluenceModule};">
+            <div class="platform-influence  traffic-trends div-radius white m-r-1 m-t-1" >
+                <!--平台内容影响力-->
+                <home-platform-influence character="vm.character"></home-platform-influence>
+                <!--流量趋势-->
+                <home-traffic-trends character="vm.character"></home-traffic-trends>
+            </div>
+        </div>
+        <div class="flex-one">
+            <!--我的动态-->
+            <home-my-dynamic character="vm.character"></home-my-dynamic>
+        </div>
+    </div>
+
+    <footer class="toggle-character">
+        <div class="toggle-tool">
+            <span>当前首页模式为:</span>
+            <span class="">{{vm.character.name}}</span>
+            <div class="toggle-box">
+                <span class="toggle-btn" ng-click="vm.showChose()" ng-if="vm.characterList.length > 1">切换</span>
+                <div class="toggle-utils" ng-show="vm.isshowChose">
+                    <div class="character-box flex-item">
+                        <div class="character-item"
+                             ng-repeat="character in vm.characterList"
+                             ng-if="vm.character.id != character.id"
+                             ng-click="vm.toggleCharacter(character)">
+                            <div class="bg-contain">
+                                <div class="bg-cricle" ng-class="{'chosed': vm.choseCharacter.id == character.id }"></div>
+                                <img  class="img-bg" ng-if="character.id == 1" ng-src="../../../assets/images/mxu/home/new/zongbian_2x.png" alt="">
+                                <img  class="img-bg" ng-if="character.id == 2" ng-src="../../../assets/images/mxu/home/new/bianji_2x.png" alt="">
+                                <img  class="img-bg" ng-if="character.id == 3" ng-src="../../../assets/images/mxu/home/new/jishu_2x.png" alt="">
+                                <div class="character-name" ng-class="{'chosed': vm.choseCharacter.id == character.id }">
+                                    <span>{{character.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+</div>
+
+<div class="guide-wrapper flex-item" ng-if="vm.showGuide">
+    <!--ng-if="vm.showGuide"-->
+    <main class="guide-main flex-item">
+        <!--左箭头-->
+        <div class="left-arrow flex-item">
+            <div class="arrow-contain" >
+                <div class="arrow-default" ng-click="vm.preCarousel()"><i class="typeface-pagination_shangyiye"></i></div>
+            </div>
+        </div>
+        <!--左箭头-->
+        <!--中间-->
+        <div class="mid-contain flex-item">
+            <div class="carousel-ul flex-item" id="carousel-ul">
+                <div class="carousel-item flex-item show-animation carouselchild-{{carousel.id}}" data-order="{{carousel.order}}" data-id="{{carousel.id}}" ng-repeat="carousel in vm.carouselList">
+                    <div class="mid-head">
+                        <div class="close-contain">
+                            <span ng-click="vm.closeCarousel()"><i class="typeface-form_guanbi"></i></span>
+                        </div>
+                        <div class="title-contain">{{carousel.title}}</div>
+                        <div class="subtitle-contain">{{carousel.subtitle}}</div>
+                    </div>
+                    <div class="mid-box">
+                        <div class="side-bar"></div>
+                        <div class="main-bar">
+                            <div class="img-defalut img-{{carousel.id}}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--轮播按钮-->
+            <div class="carousel-slider" id="carousel-slider">
+                <!--<i class="carousel-btn" ng-click="vm.toCarousel()" ng-class="{'active': vm.carouselOptions.moved == 0}"></i>-->
+                <!--<i class="carousel-btn" ng-click="vm.toCarousel()" ng-class="{'active': vm.carouselOptions.moved == 1}"></i>-->
+                <!--<i class="carousel-btn" ng-click="vm.toCarousel()" ng-class="{'active': vm.carouselOptions.moved == 2}"></i>-->
+                <!--<i class="carousel-btn" ng-click="vm.toCarousel()" ng-class="{'active': vm.carouselOptions.moved == 3}"></i>-->
+                <!--<i class="carousel-btn" ng-click="vm.toCarousel()" ng-class="{'active': vm.carouselOptions.moved == 4}"></i>-->
+
+                <i class="carousel-btn" ng-repeat="num in [0,1,2,3,4]" ng-click="vm.toCarousel(num)" ng-class="{'active': vm.carouselOptions.moved == num}"></i>
+
+            </div>
+            <!--轮播按钮-->
+        </div>
+        <!--中间-->
+        <!--右箭头-->
+        <div class="right-arrow flex-item">
+            <div class="arrow-contain">
+                <div class="arrow-default" ng-click="vm.nextCarousel()"><i class="typeface-pagination_xiayiye"></i></div>
+            </div>
+        </div>
+        <!--右箭头-->
+    </main>
+</div>
+

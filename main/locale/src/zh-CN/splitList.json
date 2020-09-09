@@ -1,0 +1,28 @@
+    {
+    "allTime" : "全部时间段",
+    "today" : "今天",
+    "latelySev" : "过去7天",
+    "latelyThirty" : "过去30天",
+    "latelyNinety" : "过去90天",
+    "custom" : "自定义时间",
+    "already" : "已拆",
+    "tiao" : "条",
+    "total" : "共",
+    "record" : "记录",
+    "di" : "第",
+    "ye" : "页",
+    "allVedio" : "全部视频",
+    "alreadySpl" : "已拆条",
+    "notSpl" : "未拆条",
+    "confirm" : "确认",
+    "cancel" : "取消",
+    "monday" : "一",
+    "tuesday" : "二",
+    "wednesday" : "三",
+    "thursday" : "四",
+    "friday" : "五",
+    "saturday" : "六",
+    "sunday" : "日",
+    "search" : "搜索..."
+
+}

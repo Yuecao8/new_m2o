@@ -1,0 +1,83 @@
+<div class="navbar">
+    <a class="navbar-brand" ui-sref="app.home.index"></a>
+</div>
+<div class="hide-scroll" flex>
+    <div class="nav-stacked nav-active-{{app.setting.theme.primary}}" style="width: 90px;">
+        <ul class="nav" ui-nav>
+            <li ng-class="{active:$state.includes('app.content')}">
+                <a class="content" ui-sref="app.content.menu.list({type:'article',column_id:null,page:null,per_num:null})" ui-sref-opts="{reload: true}">
+                    <i></i>
+                    <span class="nav-text" translate="layout.content"></span>
+                </a>
+            </li>
+            <li ng-class="{active:$state.includes('app.publish')}">
+                <a class="publish" ui-sref="app.publish.menu.list({column_id:null,page:null,per_num:null})" ui-sref-opts="{reload: true}">
+                    <i></i>
+                    <span class="nav-text" translate="layout.publish"></span>
+                </a>
+            </li>
+            <li ng-class="{active:$state.includes('app.live')}">
+                <a class="nav_zhibo" ng-click="vm.goNavLive()">
+                    <i></i>
+                    <span class="nav-text" translate="layout.live"></span>
+                </a>
+            </li>
+            <li ng-class="{active:$state.includes('app.interact')}">
+                <a class="nav_hudong" ng-click="vm.goNavInteract()">
+                    <i></i>
+                    <span class="nav-text" translate="layout.interact"></span>
+                </a>
+            </li>
+            <li ng-class="{active:$state.includes('app.member')}">
+                <a class="nav_mem" ui-sref="app.member" ui-sref-opts="{reload: true}">
+                    <i></i>
+                    <span class="nav-text" translate="layout.member"></span>
+                </a>
+            </li>
+            <li ng-class="{active:$state.includes('app.statistic')}">
+                <a class="nav_stat" ui-sref="app.statistic.detail" ui-sref-opts="{reload: true}">
+                    <i></i>
+                    <span class="nav-text" translate="layout.data"></span>
+                </a>
+            </li>
+            <!--运营-->
+            <% if (edition !== 'basic') { %>
+            <li ng-class="{active:$state.includes('app.operate') || $state.includes('app.m2o')||$state.includes('app.split')}">
+                <a class="nav_operate" ui-sref="app.operate.menu.marketing" ui-sref-opts="{reload: true}">
+                    <i></i>
+                    <span class="nav-text" translate="layout.operation"></span>
+                </a>
+            </li>
+            <% } %>
+
+            <li ng-class="{active:$state.includes('app.extend')}">
+                <a class="nav_expand" ui-sref="app.extend.menu.list" ui-sref-opts="{reload: true}">
+                    <i></i>
+                    <span class="nav-text" translate="layout.extend"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="bottom-aside" flex-no-shrink>
+    <ul class="nav" ui-nav>
+        <li  ng-class="{active:$state.includes('app.terminal')}">
+            <a class="nav_term" ui-sref="app.terminal.menu" ui-sref-opts="{reload: true}">
+                <i></i>
+                <span class="nav-text" translate="layout.terminal"></span>
+            </a>
+        </li>
+        <li class="m-b-7" ng-class="{active:$state.includes('app.customer')}">
+            <a class="nav_auth" ng-click="vm.goNavAuth()">
+                <i></i>
+                <span class="nav-text" translate="layout.authority"></span>
+            </a>
+        </li>
+        <li class="set-item" ng-class="{active:$state.includes('app.setting')}">
+            <a class="nav_set" ui-sref="app.setting.menu" ui-sref-opts="{reload: true}">
+                <i></i>
+                <span class="nav-text" translate="layout.setting"></span>
+            </a>
+        </li>
+    </ul>
+</div>

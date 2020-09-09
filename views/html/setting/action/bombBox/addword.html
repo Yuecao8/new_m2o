@@ -1,0 +1,18 @@
+<form class="modal-content box-shadow-md" name="wordForm" id="wordForm">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="action_word.createWord"></h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <div class="m-b">
+            <label translate="action_word.shield"></label>
+            <p><small translate="action_word.shieldTip"></small></p>
+            <textarea class="form-control" rows="6" placeholder="" name="create_word" ng-disabled="vm.disable"
+                      ng-model="vm.add_create" required></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save(wordForm)" ng-disabled="wordForm.$invalid" translate="action_word.submit"></button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()" translate="action_word.cancel"></button>
+    </div>
+</form>

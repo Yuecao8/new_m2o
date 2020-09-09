@@ -1,0 +1,213 @@
+<div class="edit-review-wrap">
+    <div class="editDate-section" >
+        <div class="hoge-edit-head">
+            <div class="hoge-return-body" onclick="history.back(-1)">
+                <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                <span class="return-tip">返回列表</span>
+            </div>
+            <em>{{vm.id ? '编辑':'新建'}}流程</em>
+        </div>
+        <div class="edit-form">
+
+            <div class="edit-form-header">
+                <span class="header-img"></span>
+                <span ng-class="{'has-name':vm.name,'no-name':!vm.name}" ng-if="!vm.editName">
+                   {{vm.name?vm.name: '流程名称'}}
+                </span>
+                <i class="fa typeface-form_edit" ng-if="!vm.editName" ng-click="vm.changeName()"></i>
+                <input type="text" class="edit-text" ng-if='vm.editName' ng-model="vm.name" ng-focus="vm.nameFoucus=true"
+                       ng-class="{'focus-color':vm.nameFoucus}" ng-blur="vm.titleBlur()" maxlength="20"
+                >
+                <label class="ui-switch">
+                    <span style="color:white" class="switch-open" ng-class="{'none': !vm.status}">启用</span>
+                    <span style="color:white" class="switch-close" ng-class="{'none': vm.status}">关闭</span>
+                    <input type="checkbox" ng-checked="vm.status" ng-click="vm.changeStatus()">
+                    <i></i>
+                </label>
+            </div>
+
+            <div class="edit-form-box " my-loading="vm.detailLoading">
+
+                <div class="edit-form-box-left">
+                   <div class="left-tip">
+                       <span>串签模式</span>
+                       <span>请选择节点定义审批过程</span>
+                   </div>
+
+
+                    <div class="examine-list-box">
+                        <div class="list-item-box" ng-repeat="(index,item) in vm.nodes track by $index">
+                            <div class="list-item-list" ng-click="vm.chosePoint(item,index)" ng-class="{'active-item':item.isEdit}">
+                                <span class="arraigned-icon" ng-if="item.type==1"></span>
+                                <span class="list-title">{{item.type==1?'提审':index+'级审核' }}</span>
+
+                                <span class="no-nodes" ng-if="!item.range">
+                                    未添加
+                                </span>
+                                <span class="list-user" ng-if="item.range">
+                                    <span ng-if="item.range==1">全体用户</span>
+                                    <span ng-if="item.range==2">已添加{{item.users.length}}个用户</span>
+                                    <span ng-if="item.range==3">已添加{{item.role_departments.length}}个部门角色</span>
+                                </span>
+
+                                <span class="list-img" ng-if="item.range">
+                                    <img class="usual-img" ng-src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="item.range==1">
+                                    <span ng-if="item.range==2" class="user-img-box">
+                                       <img class="usual-img user-img" ng-if="item.users.length<5" ng-repeat="(idx,user) in item.users | limitTo:4" ng-src="{{user.avatar?user.avatar:'/assets/images/mxu/avatar-40.jpg'}}" ng-style="{'left':idx*25+'px'}" alt="">
+                                        <img class="usual-img user-img" ng-if="item.users.length>=5" ng-repeat="(idx,user) in item.users | limitTo:3" ng-src="{{user.avatar?user.avatar:'/assets/images/mxu/avatar-40.jpg'}}" ng-style="{'left':idx*25+'px'}" alt="">
+                                        <span class="overflow-user"ng-if="item.users.length>=5">
+                                           <i class="typeface-form_zengjia fa"></i>
+                                            <span class="overflow-num">{{item.users.length-3}}</span>
+                                        </span>
+                                    </span>
+                                    <span ng-if="item.range==3" class="user-img-box">
+                                       <img class="usual-img no-border" ng-if="item.role_departments.length<5" ng-repeat="(idx,user) in item.role_departments | limitTo:4" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png" ng-style="{'left':idx*25+'px'}" alt="">
+                                        <img class="usual-img no-border" ng-if="item.role_departments.length>=5" ng-repeat="(idx,user) in item.role_departments | limitTo:3" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png" ng-style="{'left':idx*25+'px'}" alt="">
+                                        <span class="overflow-user"ng-if="item.role_departments.length>=5">
+                                           <i class="typeface-form_zengjia fa"></i>
+                                            <span class="overflow-num">{{item.role_departments.length-3}}</span>
+                                        </span>
+                                    </span>
+
+                                    <!--<img class="usual-img" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png" -->
+                                         <!--alt="" ng-repeat="(idx,user) in item.role_departments" -->
+                                         <!--ng-if="item.range==3" ng-style="{'left':idx*25+'px'}">-->
+                                </span>
+                                <span class="list-icon">
+                                    <i class="fa typeface-pagination_xiayiye"></i>
+                                </span>
+                            </div>
+                            <div class="list-add">
+                                <span class="list-add-icon hoge-tip-arrow" ng-click="vm.addPoint(index)">
+                                   <i class="fa typeface-form_zengjia"></i>
+                                   <div class="box-color text-color pos-rlt">
+                                        <span class="arrow bottom b-white"></span>
+                                        <div class="box-body">添加审核环节</div>
+                                   </div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-end">
+                            <span>审核结束</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="edit-form-box-right">
+                    <div class="right-head header-before">
+                        <span>{{vm.editItem.type==1?'提审':vm.editItem.idx+'级审核' }}</span>
+                        <button class="btn hoge-white-btn" ng-click="vm.delEditItem()" ng-if="vm.editItem.type==2">删除节点</button>
+                    </div>
+                    <div class="right-body">
+                        <div class="switch-range">
+                            <span class="range-title">提交人员</span>
+                            <div class="btn-contain btn-group">
+                                <button class="btn btn-outline btn-comment" ng-click="vm.chosePersonnel(1)" ng-if="vm.editItem && vm.editItem.type==1" ng-class="{actived:vm.editItem.range==1}">全体用户</button>
+                                <button class="btn btn-outline btn-comment" ng-click="vm.chosePersonnel(2)" ng-class="{actived:vm.editItem.range==2}">指定用户</button>
+                                <button class="btn btn-outline btn-comment" ng-click="vm.chosePersonnel(3)" ng-class="{actived:vm.editItem.range==3}">指定部门角色</button>
+                            </div>
+
+                        </div>
+                        <div class="user-list" ng-if="vm.editItem.range==2">
+                            <div class="user-list-box">
+                                <div class="add-user" ng-click="vm.showUserModal()">
+                                    <span class="add-user-tip">添加用户</span>
+                                    <span class="add-icon">
+                                        <i class="fa typeface-form_zengjia"></i>
+                                    </span>
+                                </div>
+                                <div class="users-list" ng-repeat="item in vm.editItem.users">
+                                    <span>{{item.name}}</span>
+                                    <img ng-src="{{item.avatar?item.avatar:'/assets/images/mxu/avatar-40.jpg'}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role-list" ng-if="vm.editItem.range==3">
+                            <div class="role-list-box">
+                                <div class="roles-list" ng-repeat="(index,item) in vm.editItem.role_departments">
+                                    <span class="roles-title">部门角色{{index+1}}</span>
+                                    <div class="list-role-drop hoge-dropdown role-drop">
+                                        <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <span class="dropdown-label" ng-if="item.role.name">{{item.role.name}}</span>
+                                            <span class="dropdown-label" ng-if="!item.role.name" style="color: #D8E2F0;">选择角色</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu text-left text-sm drop-down-list">
+                                            <a class="dropdown-item"
+                                               ng-repeat="vv in vm.roleList" ng-click="vm.roleSelect(vv,index)">{{vv.name}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="list-role-user-drop list-role-drop" ng-click="vm.showColumn(item)">
+                                        <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <span class="dropdown-label" ng-if="vm.editItem.role_departments[index].department[0].name">{{vm.editItem.role_departments[index].department[0].name}}</span>
+                                            <span class="dropdown-label" ng-if="!vm.editItem.role_departments[index].department[0].name" style="color:#d8e2f0;">选择部门</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div class="column-top-box" ng-if="item.departments">
+                                            <classify-preview classify-data="vm.radioList"
+                                                              classify-name="''" box-name="'选择部门'"
+                                                              classify-check="vm.editItem.role_departments[index].department" radio-style="'all'"
+                                                              classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)"
+                                                              classify-focus="false"
+                                                              box-status="true"
+                                                              choose-function="vm.chooseColumns(Item, index)"
+                                            ></classify-preview>
+                                        </div>
+                                    </div>
+                                    <span class="del-tip" ng-click="vm.delRoleList(index)">删除</span>
+                                </div>
+                                <div class="add-role">
+                                    <i class="fa typeface-form_zengjia" ng-click="vm.addRoleList()"></i>
+                                    <span ng-click="vm.addRoleList()">增加部门角色</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="terminal" ng-show="vm.editItem.type==1">
+                            <label class="label-name">
+                                允许修改
+                                <i class="typeface-form_tishi material-tip" ng-mouseenter="vm.tipEnter()" ng-mouseleave="vm.tipLeave()"></i>
+                            </label>
+                            <div class="tip-con" ng-if="vm.tipShow">
+                                提审后用户是否可以修改自己的内容
+                                <div class="tip-arr"></div>
+                            </div>
+                            <div class="terminal-content">
+                                <label class="radio-inline">
+                                    <input class="radio-input" ng-model="vm.canModifier" name="'group'" type="radio" value="1">是
+                                </label>
+                                <label class="radio-inline">
+                                    <input class="radio-input" ng-model="vm.canModifier" name="'group'" type="radio" value="2">否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="terminal" ng-show="vm.editItem.type==1">
+                            <label class="label-name">
+                                审后即发
+                                <i class="typeface-form_tishi material-tip" ng-mouseenter="vm.pTipEnter()" ng-mouseleave="vm.pTipLeave()"></i>
+                            </label>
+                            <div class="tip-con" ng-if="vm.pTipShow">
+                                已选择栏目的内容过审后是否立即发布
+                                <div class="tip-arr"></div>
+                            </div>
+                            <div class="terminal-content">
+                                <label class="radio-inline">
+                                    <input class="radio-input" ng-model="vm.autoPublish" name="'groupPublish'" type="radio" value="1">是
+                                </label>
+                                <label class="radio-inline">
+                                    <input class="radio-input" ng-model="vm.autoPublish" name="'groupPublish'" type="radio" value="2">否
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="edit-form-footer">
+        <button class="btn primary-btn" my-loading="vm.saveReviewLoading" class="" ng-click="vm.saveReview()">保存</button>
+        <button class="btn cancel-btn" ng-click="vm.cancleReview()">取消</button>
+    </div>
+</div>

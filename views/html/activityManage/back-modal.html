@@ -1,0 +1,20 @@
+<div class="push-wrapper lif-headlines box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title" style="margin-left:6px;">打回</h3>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+        <div class="msg-body">
+            <textarea type="text" maxlength="200" class="form-control reason-text" placeholder="请输入打回理由" ng-model="vm.repulse_reason"></textarea>
+            <!-- <div class="col-md-1" style="margin-top:2px;"><span ng-if="!vm.repulse_reason || vm.repulse_reason.length==0">0</span><span ng-if="vm.repulse_reason.length>0">{{vm.repulse_reason.length}}</span>/200</div> -->
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="submit" style="background-color:#3598dc;color: #fff" class="push-btn push-submit" ng-disabled="verifyForm.$invalid" ng-click="vm.save()">确定</button>
+        <button class="push-btn push-cancel" ng-click="vm.close()">取消</button>
+    </div> -->
+    <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading" ng-disabled="verifyForm.$invalid">确定</button>
+    </div>
+</div>

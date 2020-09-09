@@ -1,0 +1,17 @@
+<div class="modal-setStyle box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title">轮播背景色设置</h3>
+    </div>
+    <div class="modal-body">
+        <div class="example-content well">
+            <div class="example-content-widget">
+                <input id="cp9" type="text" class="form-control" ng-model="vm.colors"/>
+            </div>
+        </div>
+        <div ng-style="{'background-color':vm.colors}" class="show-colors"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn primary-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.save()" translate="publish.sure"></button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()" translate="publish.cancel"></button>
+    </div>
+</div>

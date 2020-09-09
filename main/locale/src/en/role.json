@@ -1,0 +1,19 @@
+{
+    "tipBasic":"The current MXU system version is MXU Basic Edition, which supports the creation of two roles",
+    "tipStandard":"The current MXU system version is MXU Standard Edition, which supports the creation of five roles",
+    "tipProfession":"The current MXU system version is MXU Professional Edition, which supports the creation of 10 roles",
+    "tipUltimate":"The current MXU system version is MXU Ultimate, which supports creating unlimited roles",
+
+    "add":"Add",
+    "operateTime":"Operating time",
+    "edit":"Edit",
+    "delete":"Delete",
+    "whether" : "Are you sure you want to delete the selected data?",
+    "choose" : "Please select an option first",
+
+    "jurisdiction":"Authority",
+    "description":"You can manage background users, roles, and the authorities of roles",
+    "user":"User",
+    "role":"Role",
+    "allRoe":"All roles"
+}

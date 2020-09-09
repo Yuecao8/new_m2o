@@ -1,0 +1,107 @@
+<form class="modal-materiel box-shadow-md" name="materielForm">
+    <div class="modal-header">
+        <h5 class="modal-title"  translate="addAdvertise.material"></h5>
+    </div>
+    <div class="modal-body">
+        <div class="m-b m-t pos_dropdown-menu">
+            <label class="label-title" translate="addAdvertise.materialPlace"></label>
+            <div class="dropdown">
+                <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.chosedPos.name}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" ng-repeat="pos in vm.info.pos" ng-click="vm.choosePos(pos)">
+                        <span>{{pos.name}}</span>
+                    </a>
+                </div>
+            </div>
+            —
+            <div class="dropdown">
+                <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.chosedPos.zh_name}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" ng-repeat="item in vm.Pos" ng-click="vm.chooseNextpos(item)">
+                        <span>{{item.zh_name}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="m-b m-t">
+            <label class="label-title materiel-label"  translate="addAdvertise.upMaterial"></label>
+            <label class="label-title materiel-label lower_name">{{ 'addAdvertise.materialType' | translate }}:</label>
+            <button type="button" class="btn btn-outline btn-comment"
+                    ng-if="vm.style.indexOf('image')>-1"
+                    ng-class="{'btn-focus':vm.midType == 'image'}"
+                    ng-click="vm.select_type('image')">{{ 'addAdvertise.img' | translate }}</button>
+
+            <button type="button" class="btn btn-outline btn-comment"
+                    ng-if="vm.style.indexOf('video')>-1"
+                    ng-class="{'btn-focus':vm.midType == 'video'}"
+                    ng-click="vm.select_type('video')">{{ 'addAdvertise.video' | translate }}</button>
+
+            <button type="button" class="btn btn-outline btn-comment"
+                    ng-if="vm.style.indexOf('flash')>-1"
+                    ng-class="{'btn-focus':vm.midType == 'flash'}"
+                    ng-click="vm.select_type('flash')">flash</button>
+
+            <button type="button" class="btn btn-outline btn-comment"
+                    ng-if="vm.style.indexOf('js')>-1"
+                    ng-class="{'btn-focus':vm.midType == 'js'}"
+                    ng-click="vm.select_type('js')">js{{ 'addAdvertise.code' | translate }}</button>
+        </div>
+        <div class="m-b m-t">
+            <label class="label-title materiel-label"></label>
+            <label class="label-title materiel-label lower_name">{{ 'addAdvertise.uploadMed' | translate }}:</label>
+            <span class="m-y-sm p-l upload_local" ng-if="vm.midType != 'js' || vm.style.indexOf('js')<0">
+                {{ 'addAdvertise.locality' | translate }}
+                <small ng-if="vm.style.indexOf('flash')>-1 && vm.midType == 'flash'">({{ 'addAdvertise.flashTip' | translate }})</small>
+                <input class="btn-input" type="file" id="localFile"
+                       nv-file-select="" uploader="vm.localUploader"
+                       my-loading="vm.local_loading"
+                       accept="{{vm.file_accept}}">
+            </span>
+        </div>
+        <div style="display: inline-block;" ng-if="vm.midType !='js' && vm.viewData.filename">
+            <label class="label-title materiel-label"></label>
+            <div class="materiel">
+                <a herf="" class="pull-left m-r">
+                <span class="material_img">
+                    <img ng-src="{{vm.viewData.url}}" ng-if="vm.type=='image'" class="w-full h-full">
+                    <img src="../../../../../assets/images/mxu/advertise/video.png" ng-if="vm.type=='video'" class="w-full h-full">
+                    <img src="../../../../../assets/images/mxu/advertise/flash.png" ng-if="vm.type=='flash'" class="w-full h-full">
+                </span>
+                </a>
+                <div class="clear" style="width: 230px;">
+                    <a href="" class="_500 text-ellipsis">{{vm.viewData.filename}}</a>
+                    <small class="text-muted">{{vm.viewData.filesize}}</small>
+                </div>
+            </div>
+        </div>
+        <div class="material_js" ng-show="vm.midType =='js' && vm.style.indexOf('js')>-1">
+            <textarea class="form-control" rows="6" ng-model="vm.storageData.js" ng-change="vm.import()"></textarea>
+        </div>
+        <div class="m-b" style="margin-top: 2rem;">
+            <label class="label-title"  translate="addAdvertise.interlinkage"></label>
+            <input class="input-control" ng-model="vm.saveMaterial.adv_link">
+        </div>
+        <div class="m-b priority_dropdown">
+            <label class="label-title"  translate="addAdvertise.priority"></label>
+            <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                <span class="dropdown-label">{{vm.priorityName}}</span>
+                <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" ng-repeat="cha in vm.priority" ng-click="vm.selectPriority(cha)">
+                    <span class="priority_item">{{cha.name}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{ 'addAdvertise.save' | translate }}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'addAdvertise.cancel' | translate }}</button>
+    </div>
+</form>

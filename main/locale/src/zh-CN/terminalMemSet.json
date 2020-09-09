@@ -1,0 +1,30 @@
+{
+    "memberSet" : "会员设置",
+    "memberIntroduce" : "在这里可以修改会员注册、会员登录、会员中心的相关配置",
+    "phoneRegister" : "开启手机注册",
+    "phoneIntroduce" : "通过开关此项，可以管理网站是否开放手机注册。当选择开时，可以直接使用手机获取短信验证码注册网站；当选择关时，无法通过手机注册会员",
+    "thirdLanded" : "第三方登录",
+    "thirdLandedIntroduce" : "可以在此管理第三方会员登录的相关设置，注意，如需使用第三方会员登录，需要网站管理员申请相关平台的接入许可",
+    "memberNav" : "会员中心导航",
+    "setNav" : "设置导航条",
+    "navIntroduce" : "可以在此添加修改会员中心顶部导航信息",
+    "centerDisplay" : "会员中心展示信息",
+    "centerLogo" : "会员中心LOGO",
+    "logoIntroduce" : "* 请使用PNG / JPEG格式图片，建议图片高度为63px",
+    "centerTitle" : "会员中心标题",
+    "copyRight" : "版权信息:",
+    "record" : "备案号",
+    "contact" : "联系方式",
+    "contactIntroduce" : "* 联系可以根据自身需要填写电话，QQ，微信，邮箱等，例如：邮箱：hogesoft@hoge.cn",
+    "save" : "保存",
+
+    "accessConfig" : "接入配置",
+    "noConfig" : "暂无配置信息",
+    "cancel" : "取消",
+
+    "successModify" : "修改成功!",
+    "successSave" : "保存成功!",
+
+    "qqLogin" : "QQ登录",
+    "blogLogin" : "微博登录"
+}

@@ -1,0 +1,7 @@
+{
+    "title" : "Comment settings",
+    "tip" : "You can check the review mechanism here",
+    "afterReview" : "Review post review",
+    "afterTip" : "When the review post-audit is turned on, all comments made by the user will be automatically reviewed by the system and displayed in the foreground. When the review is closed, all comments will need to be manually reviewed by the administrator.",
+    "message" : "Successfully modified"
+}

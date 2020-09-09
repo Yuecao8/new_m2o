@@ -1,0 +1,242 @@
+
+<div class="mxu_activityManageNew_list">
+    <div class="p-v-md">
+        <div class="hoge-edit-head">
+            <div class="hoge-return-body" onclick="history.back(-1)">
+                <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                <span class="return-tip">返回列表</span>
+            </div>
+            <!-- <em class="title-w">新建活动</em> -->
+            <em class="title-w">{{ vm.isAddActivity ? '新建活动' :'编辑活动'}}</em>
+        </div>
+    </div>
+    <div class="white">
+        <div class="form-box">
+            <div class="form-group">
+                <label class="label-name"><span class="must-option">*</span>活动名称：</label>
+                <input type="text" maxlength="60" ng-model="vm.dataDetail.title" style="position: relative;left:-3px">
+                <div class="count" style="position: absolute;top:14px;">
+                    <div num-count="vm.dataDetail.title" count-top="0" count-max="60" count-position="right"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label-name"><span class="must-option">*</span>活动类型：</label>
+                <label class="m-r-40">
+                    <input ng-model="vm.dataDetail.type" type="radio" value="1">投稿活动
+                </label>
+                <label class="m-r-40">
+                    <input ng-model="vm.dataDetail.type" type="radio" value="2">展示活动
+                </label>
+            </div>
+            <div class="form-group img-box">
+                <label class="label-name label-position"><span class="must-option">*</span>活动封面：</label>
+                <div class="proveImg-box">
+                    <div class="up-box">
+                        <i class="typeface-form_zengjia" ng-if="!vm.imgIndex.src"></i>
+                        <p class="up-text" ng-if="!vm.imgIndex.src">上传封面</p>
+                        <img src="{{vm.imgIndex.src}}" alt="">
+                        <input ng-if="!vm.cover_loading" type="file" class="up-pic" ng-class="{'small-up-pic': vm.imgIndex.src}" nv-file-select="" uploader="vm.LogoUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                        <!-- 进度条 开始 -->
+                        <div class="file-boxs" ng-if="vm.cover_loading"></div>
+                        <div class="file-progress" ng-if="vm.cover_loading">
+                            <span ng-style="{width: (vm.progress/100)* 128 +'px'}"></span>    
+                        </div>
+                        <!-- 进度条 结束 -->
+                    </div>
+                </div>
+            </div> 
+            <div class="form-group">
+                <label class="label-name label-position"><span class="must-option">*</span>内容简介：</label>
+                <textarea maxlength="2000" name="" id="" cols="30" rows="10" ng-model="vm.dataDetail.brief" ng-focus="vm.introFocus = true"
+                ng-class="{'focus-color':vm.introFocus}" ng-blur="vm.introFocus = false"></textarea>
+                <div class="count text-a" style="position: absolute;top:80px;">
+                    <div num-count="vm.dataDetail.brief" count-top="0" count-right="-25" count-max="2000" count-position="right"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-name"><span class="must-option">*</span>活动时间：</label>
+                <div class="data-container">
+                    <div class="daterange">
+                        <input date-range-picker ng-model="vm.dataDetail.rangeDate" id="servecb0" class="date-picker" type="text" placeholder="选择日期" options="vm.option" autocomplete="off"/>&nbsp;
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                    </div>
+                </div>
+            </div> 
+
+
+
+            <div class="form-group department-group">
+                <div class="group-inline">
+                    <label class="label-name ver-top">活动栏目：</label>
+                    <div class="group-box calc-width">
+                        <div class="box-body">
+                            <div class="form-pop" ng-repeat="item in vm.columnObjList">
+                                {{item.name}}
+                                <i class="icon-guanbi" ng-click="vm.removeColumn(item)"></i>
+                            </div>
+                            <div class="form-pop add-pop" ng-click="vm.choseColumn()">
+                                <i class="fa fa-plus"></i>
+                                <span>网站栏目</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="btn-group dropdown hoge-dropdown  select-type">
+                    <button class="btn btn-sm dropdown-toggle" style="padding-right: 24px !important;" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.dataDetail.column.name}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm" ng-class="{'disOpen':true}">
+                        <a class="dropdown-item" ng-repeat="column in vm.columnList track by $index" ng-click="vm.chooseColumn(column)">
+                            {{column.name}}
+                            <input id="datepicker" ng-if="vm.timeArr.length - 1 === $index" date-range-picker ng-model="vm.dataDetail.column.id" class="date-picker opacity-0"
+                                    type="text" options="vm.options"/>
+                        </a>
+                    </div>
+                </div> -->
+            </div>
+
+
+            <div class="form-group">
+                <label class="label-name">主办单位：</label>
+                <input type="text" ng-model="vm.dataDetail.organizer" style="position: relative;left:-3px">
+            </div>
+            <div class="form-group department-group">
+                <div class="group-inline">
+                    <label class="label-name ver-top">活动评委：</label>
+                    <div class="group-box calc-width">
+                        <div class="box-body">
+                            <div class="form-pop" ng-repeat="(index, item) in vm.chooseAuthorList">
+                                {{item.name}}
+                                <i class="icon-guanbi" ng-click="vm.removeAuthor(index)"></i>
+                            </div>
+                            <div class="form-pop add-pop" ng-click="vm.addAuthor()">
+                                <i class="fa fa-plus"></i>
+                                <span>添加评委</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-group judge" style="height:32px;line-height:32px;margin-bottom: 2rem;">
+                <label class="label-name" style="position: absolute;height:32px;line-height:32px;margin-bottom:0;">活动评委：</label>
+                <div class="role-box"  style="position: absolute;left: 128px;">
+                    <div class="checkRole dropdown-toggle" ng-click="vm.roleFocus = true;" ng-blur="vm.roleFocus = false;"
+                            ng-class="{'focus-color':vm.roleFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                        <span class="check-item" ng-repeat="typeItem in vm.judgeListArr  track by $index" ng-show="typeItem.check">
+                            {{typeItem.name}}
+                            <i class="fa icon-guanbi" ng-click="typeItem.check = false" style="cursor: pointer"></i>
+                        </span>
+                    </div>
+                    <div class="role-list dropdown-menu">
+                        <div class="item" ng-repeat="typeItem in vm.judgeListArr  track by $index" ng-click="vm.chooseJudge(typeItem)">
+                            <label class="">{{typeItem.name}}</label>
+                            <span class="fa fa-check" ng-show="typeItem.check"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hover-box">
+                    <i class="subtitle-i typeface-form_tishi"></i>
+                    <div class="results-info">
+                        <div class="info-box">可到会员管理中创建评委</div>
+                        <span class="question-tip"></span>
+                    </div>
+                </div>
+                
+            </div> -->
+
+            <div class="form-group img-box">
+                <input ng-if="!vm.f_loading" type="file" class="up-pic" id="proveImgId" nv-file-select="" uploader="vm.replacePublicizeUploader" accept="image/gif,image/jpeg,image/png,image/bmp" style="display: none">
+                <label class="label-name label-position"><span class="must-option">*</span>宣传图片：</label>
+                <div class="img-list proveImg-box flex-item">
+                    <!-- 活动图列表 -->
+                    <div ng-repeat="(index,item) in vm.publicizeImg" ng-show="index < 5" class="img-item" >
+                        <div class="add-img" ng-show="!item.src">
+                            <i class="typeface-talking_tupian"></i>
+                        </div>
+                        <img src="{{item.src}}" ng-show="item.src" alt="" ng-click="vm.replaceProveImg($index)">
+                        <span class="keywords-icon-del typeface-alert_cuowu" ng-show="item.src" ng-click="vm.deletebgImg(item)"></span>
+                        <!-- 进度条 开始 -->
+                        <div class="file-boxs" ng-if="item.isLoad"></div>
+                        <div class="file-progress" ng-if="item.isLoad">
+                            <span ng-style="{width: (item.progress/100)* 128 +'px'}"></span>    
+                        </div>
+                        <!-- 进度条 结束 -->
+                    </div>
+                    <!-- 添加活动图 -->
+                    <div class="">
+                        <div class="up-box" @click="addProveImg()">
+                            <i class="typeface-form_zengjia" ng-if="vm.publicizeImg.length<10"></i>
+                            <p class="up-text" ng-if="vm.publicizeImg.length<10">上传图片</p>
+                            <!-- 多图上传 -->
+                            <input ng-if="!vm.f_loading" type="file" multiple="" class="up-pic" nv-file-select="" uploader="vm.publicizeUploader" accept="image/gif,image/jpeg,image/png,image/bmp" multiple>
+                        </div>
+                    </div>
+                </div>
+                
+            </div> 
+
+
+            <div class="form-group showAudit " ng-show="vm.isAddActivity || vm.dataDetail.workAudit.id">
+                <label class="label-name">活动流程：</label>
+                <div class="process-nodes flex-item" ng-if="vm.dataDetail.workAudit.id">
+                    <div class="node-item" ng-repeat="(ndx,node) in vm.dataDetail.workAudit.showNodes">
+                            <div class="other-audits">
+                                <div class="node-name">{{node.rangeName}}</div>
+                                <div class="node-role flex-item">
+                                    <div class="role-img" ng-style="{'min-width': node.range != 0 && 50+'px' ,'width': (node.users.length > 0 && node.users.length *30+'px') || (node.role_departments.length > 0 && node.role_departments.length *30+'px')}">
+                                        <img class="avatar-34 usual-img" src="/assets/images/mxu/review/shengao_head_quanbuyonghu@2x.png" alt="" ng-if="node.range==1">
+                                        <div class="user-img-box" ng-if="node.range==2" >
+                                            <div class="hoge-tip-arrow avatar-34 usual-img" ng-repeat="(idx,user) in node.users | limitTo:3"
+                                                    ng-style="{'left':idx*25+'px'}">
+                                                <img class="avatar-34" ng-src="{{user.avatar}}" ng-if="user.avatar">
+                                                <span class="avatar-34 no-avatar no-avatar-bg{{user.bgColor}}"  ng-if="!user.avatar">{{user.avatarName}}</span>
+                                                <div class="box-color text-color pos-rlt" ng-style="{'width': user.name.length * 13+'px','left': user.name.length> 3 && (-(user.name.length -3)*4) -2 + 'px'}">
+                                                    <span class="arrow bottom b-white"></span>
+                                                    <div class="box-body">{{user.name}}</div>
+                                                </div>
+                                            </div>
+                                            <span class="overflow-user" ng-if="node.users.length >= 4">
+                                                <i class="typeface-form_zengjia fa"></i>
+                                                <span class="overflow-num">{{node.users.length-3}}</span>
+                                            </span>
+                                        </div>
+                                        <div class="hoge-tip-arrow avatar-34 usual-img" ng-style="{'left':idx*25+'px'}" ng-if="node.range==3" ng-repeat="(idx,user) in node.role_departments">
+                                            <img class="avatar-34" src="/assets/images/mxu/review/shengao_head_bumenjuese@2x.png">
+                                            <div class="box-color text-color pos-rlt" ng-style="{'width': user.role.name.length * 13+'px','left': user.role.name.length> 3 && (-(user.role.name.length -3)*4) -2 + 'px' }">
+                                                <span class="arrow bottom b-white"></span>
+                                                <div class="box-body">{{user.role.name}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="avatar-34 ellipsis-box" ng-if=" node.range == 0">
+                                            <i class="typeface-list_caozuo"></i>
+                                        </div>
+                                    </div>
+                                    <div class="role-arrow" ng-if="ndx != vm.dataDetail.workAudit.showNodes.length - 1">
+                                        <i class="typeface-shengao_xiayige"></i>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="process-nodes flex-item" ng-if="!vm.dataDetail.workAudit.id">
+                    <span>暂无流程</span>
+                </div>
+                
+                <span ng-click="vm.audit('work')" ng-show="vm.isAddActivity " class="chose-other">选择其它流程</span>
+            </div> 
+        </div>
+        <div class="md-form-group" style="text-align: center;">
+            <button type="submit" class="btn primary-btn right-primary" my-loading="vm.loading" ng-click="vm.activitySave()">{{ 'user.save'| translate}}</button>
+            <button class="btn cancel-btn right-cancel" onclick="history.back(-1)">取消</button>
+        </div>
+        
+
+        
+        
+  
+    </div>
+    
+  
+</div>

@@ -1,0 +1,50 @@
+<div class="shot-modal box-shadow-md">
+        <div class="modal-header">
+            <!--translate="tuji.preview"-->
+            <h5 class="modal-title" >裁切图片</h5>
+            <i class="fa fa-remove close-icon" ng-click="vm.close()" style=""></i>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="img-contain col-sm-8">
+                    <img src="{{vm.imageItem.photo_url}}" id="image">
+                </div>
+                <div class="col-sm-4 clearfix">
+                    <div class="img-preview"></div>
+                    <div class="proportion-box switch-box">
+                        <p class="title">{{'common.cutRatio'|translate}}</p>
+                        <label class="proportion-match m-r">
+                            <input name="proportion" ng-model="vm.cutType"  type="radio" value="1" ng-click="vm.choseCustomize()">
+                            <span>{{'common.singleThree'|translate}}&nbsp;&nbsp;( 4:3 )</span>
+                        </label>
+                        <label class="proportion-match m-r">
+                            <input name="proportion" ng-model="vm.cutType"  type="radio" value="2" ng-click="vm.choseCustomize()">
+                            <span>{{'common.singleThree'|translate}}&nbsp;&nbsp;( 16:9 )</span>
+                        </label>
+                        <!--<label class="proportion-match  m-r">-->
+                            <!--<input name="proportion" ng-model="vm.cutType" type="radio" value="2" ng-click="vm.choseCustomize()">-->
+                            <!--<span>{{'common.bigCarousel'|translate}}  ( 2:1 )</span>-->
+                        <!--</label>-->
+                        <label class="proportion-match  m-r" >
+                            <input name="proportion" ng-model="vm.cutType" type="radio" value="3" ng-click="vm.choseCustomize()">
+                            <span>{{'common.customize'|translate}}</span>
+                            <input class="customize-num form-control" ng-model="vm.customNum.width" type="number" min="1" max="100" >
+                            :
+                            <input class="customize-num form-control" ng-model="vm.customNum.height" type="number" min="1" max="100">
+                            <div class="question-box">
+                                <i class="fa fa-question-circle"></i>
+                                <div class="question-hover">
+                                    {{'common.cutNote'|translate}}
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{ 'common.confirm'| translate}}</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'common.cancel'| translate}}</button>
+        </div>
+    </div>

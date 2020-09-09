@@ -1,0 +1,38 @@
+<div class="modal-cover-img box-shadow-md">
+    <div class="modal-header">
+        <div class="logo">
+            <span class="menu-logo" ng-class="{'mux-logo':vm.mxuLogo}"></span>
+        </div>
+        <div class='title'>
+            <span>{{vm.info.title}}</span>
+            <span>预览</span>
+        </div>
+        <!-- <div class="select">
+            <p ng-class="{ 'active' : vm.showPC }" ng-click="vm.select('PC')">PC</p>
+            <p ng-class="{ 'active' : !vm.showPC }" ng-click="vm.select('APP')">APP</p>
+        </div> -->
+        <div class="close" ng-click="vm.close()">
+            <i class="fa fa-removes typeface-list_zhuanfa"></i>
+            <span>退出版本预览</span>
+        </div>
+    </div>
+    <div class="modal-body" id="votePreview">
+        <div class="iframe_load_box" id="iframe_load_box" ng-show="vm.loading">
+            <img src="../../../../assets/images/mxu/loading.gif">
+        </div>
+        <div class="appVote">
+            <div class="headerImg">
+                <img src="../assets/images/mxu/votePre/app_bg_topnav_default@2x.png" width="380px">
+            </div>
+            <h5 class="title">引用投票的文稿标题</h5>
+            <span class="adress">文章来源：M2O  Plus</span>
+            <span class="timeShow">2018-12-12 09:00</span>
+            <!-- <div class="lifei"> -->
+                <vote-select opt-votedata="vm.voteList" opt-title="vm.optTitle" is-senior="vm.isSenior" preview-group-list="vm.groupList"></vote-select>
+            <!-- </div> -->
+            <div class="divFooter">
+                <img src="../assets/images/mxu/votePre/app_bg_bottom_default@2x.png" width="380px">
+            </div>
+        </div>
+    </div>
+</div>

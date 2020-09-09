@@ -1,0 +1,36 @@
+<form class="edit-column box-shadow-md" name="editColumnForm">
+    <div class="modal-header">
+        <h5 class="modal-title" ng-if="vm.param.type === 'move'">移动到</h5>
+        <h5 class="modal-title" ng-if="vm.param.type === 'copy'">复制到</h5>
+        <h5 class="modal-title" ng-if="vm.param.type === 'shared'">共享到</h5>
+    </div>
+    <div class="modal-body" my-loading="vm.loading" style="height: 400px;">
+      <div class="bread-crumb">
+          <span ng-repeat="(index, item) in vm.sideBar" ng-click="vm.backDetail(item, index)" class="bread-crumb-item" ng-class="{'is-last': index + 1 == vm.sideBar.length}">
+            {{item.name}}<span ng-hide="index + 1 == vm.sideBar.length" class="fa fa-angle-right right-icon"></span>
+          </span>
+        </div>
+        <div class="form-group p-l-150 d-flex" style="position: relative;margin-bottom: 0">
+          <ul class="item-wrap">
+            <li class="item" ng-if="vm.showInput">
+              <i class="folder-icon"></i>
+              <input type="text" ng-model="vm.folderName" class="folder-input">
+              <img src="/assets/images/mxu/resourceLibrary/queren-2x.png" class="new-operate-icon" ng-class="{'disabled': vm.isSave}" ng-click="vm.saveFolder()">
+              <img src="/assets/images/mxu/resourceLibrary/quxiao-2x.png" class="new-operate-icon" ng-click="vm.cancelFolder()">
+            </li>
+            <li class="item" ng-repeat="(key, value) in vm.fileData" ng-click="vm.showDetail(value)">
+              <i class="folder-icon"></i>
+              <span class="item-name">{{value.name}}</span>
+            </li>
+          </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span class="operate-btn" ng-click="vm.showInput = !vm.showInput">
+          <i class="new-icon"></i>
+          <span>新建文件夹</span>
+        </span>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{'column.save' | translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'column.cancel' | translate}}</button>
+    </div>
+</form>

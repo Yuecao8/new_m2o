@@ -1,0 +1,304 @@
+<div class="workload-wrap">
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">平台统计</div>
+    </div>
+    <main class="workload-main">
+         <!--  -->
+        <div class="time-chose hoge-border">
+            <div class="btn-contain btn-group">
+                <button class="btn btn-outline btn-blue" ng-click="vm.getWeek()" ng-class="{actived:vm.timeType=='w'}">本周</button>
+                <button class="btn btn-outline btn-blue" ng-click="vm.getMonth()" ng-class="{actived:vm.timeType=='m'}">本月</button>
+                <button class="btn btn-outline btn-blue" ng-click="vm.getYear()" ng-class="{actived:vm.timeType=='y'}">本年</button>
+                <button class="btn btn-outline btn-blue btn-custom" ng-click="vm.getCustom()" ng-show="vm.timeType!='d'">自定义时间</button>
+                <div class="daterange" ng-show="vm.timeType=='d'">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                    <input date-range-picker  ng-model="vm.rangeDate" class="date-picker" type="text" options="vm.option"/>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="hoge-flex default-height">
+            <div class="hoge-flex-one white hoge-border content-statistic">
+               
+                <div class="hoge-flex">
+                    <div class="workload-content hoge-flex-one">
+                        <div class="content-contain">
+                            <p>{{vm.content_create}}</p>
+                            <span>内容产出量</span>
+                        </div>
+                        <div class="content-contain">
+                            <p>{{vm.content_publish}}</p>
+                            <span>内容发布量</span>
+                        </div>
+                        <div class="content-contain">
+                            <p>{{vm.content_recall}}</p>
+                            <span>内容打回量</span>
+                        </div>
+                    </div>
+                    
+                    <div class="content-pie">
+                        <div class="inline">
+                            <div ui-jp="easyPieChart" class="easyPieChart" ui-refresh="vm.isChartRefresh" data-redraw="true" data-percent="{{vm.percent}}"
+                                ui-options="{{vm.chartPiePass}}">
+                                <div>
+                                    <span class="percent-percent">{{vm.percent}}</span>
+                                    <span class="percent-word">稿件通过率</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+            <div class="hoge-flex-two white hoge-border chart-contain">
+               
+                <div class="btn-group dropdown hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.typeLine}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="type in vm.typeArrLine" ng-click="vm.choseTypeLine(type)">{{type.name}}</a>
+                    </div>
+                </div>
+                <div class="chart-boxer">
+                    <div class="chart-style">
+                        <div class="chart-box"  id="linechart1" ui-jp="chart" ui-refresh="vm.isRefresh" ui-options="{{vm.optionsLine}}" >
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+        <!--  -->
+        <div class="toggle">
+            <span class="personal" ng-class="{'active':vm.isPerson}" ng-click='vm.toggleChange("personal")'>个人统计</span>
+            <span class="department" ng-class="{'active':vm.isdepart}" ng-click='vm.toggleChange("department")'>部门统计</span>
+            <span class="department" ng-class="{'active':vm.isColumn}" ng-click='vm.toggleChange("column")'>栏目统计</span>
+        </div>
+        <div class="workload-details white">
+            <div class="type-chose" ng-if="!vm.isColumn">
+                <div class="btn-group dropdown btn-margin hoge-dropdown" ng-if="!vm.isColumn">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.typeBar}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm">
+                        <a class="dropdown-item" ng-repeat="type1 in vm.typeArrBar" ng-click="vm.choseTypeBar(type1)">{{type1.name}}</a>
+                    </div>
+                </div>
+                <div class="btn-contain btn-group" ng-if="!vm.showList&&!vm.isColumn">
+                    <button class="btn btn-outline btn-sort" ng-click="vm.getCreate()" ng-class="{actived:vm.sortBar=='create'}" >
+                        产出量
+                        <i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.create_sort=='asc'}"></i> <!--升序-->
+                        <i class="fa fa-caret-down order-descend " ng-class="{'has-chose':vm.create_sort=='desc'}"></i> <!--降序-->
+    
+                    </button>
+                    <button class="btn btn-outline btn-sort" ng-click="vm.getPublish()" ng-class="{actived:vm.sortBar=='publish'}" >
+                        发布量
+                        <i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.publish_sort=='asc'}"></i>    <!--升序-->
+                        <i class="fa fa-caret-down order-descend" ng-class="{'has-chose':vm.publish_sort=='desc'}"></i> <!--降序-->
+                    </button>
+                </div>
+                <!--<button class="btn btn-outline btn-sort" ng-click="vm.getPass()" ng-class="{actived:vm.sortBar=='pass'}">通过率-->
+                <!--<i class="fa fa-caret-up order-ascend" ng-class="{'has-chose':vm.pass_sort=='asc'}"></i>    &lt;!&ndash;升序&ndash;&gt;-->
+                <!--<i class="fa fa-caret-down order-descend" ng-class="{'has-chose':vm.pass_sort=='desc'}"></i> &lt;!&ndash;降序&ndash;&gt;-->
+                <!--</button>-->
+                <div class="model" ng-if="vm.isdepart">
+                    当前对比模式：<span class="choose-model"><span ng-if="vm.selParam=='1'">最小单位对比</span><span ng-if="vm.selParam=='2'">最大单位对比</span><span ng-if="vm.selParam=='3'">自定义单位对比</span><span ng-if="vm.selParam==vm.mode">（默认）</span></span><span class="setting" ng-click="vm.contrast()">设置</span>
+                </div>
+            </div>
+            <div class="type-chose-col" ng-if="vm.isColumn">
+                <div style="line-height: 30px;float: left;">
+                    <span class="showChart" ng-class="{'toggleActive':vm.showChart}" ng-click="vm.toggleMode('chart')">图表模式</span>
+                    |
+                    <span class="showList" ng-class="{'toggleActive':vm.showList}" ng-click="vm.toggleMode('form')">列表模式</span>
+                </div>
+                <div class="colModel">
+                    当前对比模式：<span class="choose-model"><span ng-if="vm.selParam=='1'">最小单位对比</span><span ng-if="vm.selParam=='2'">最大单位对比</span><span ng-if="vm.selParam=='3'">自定义单位对比</span><span ng-if="vm.selParam==vm.mode">（默认）</span></span><span class="setting" ng-click="vm.colContrast()">设置</span>
+                </div>
+                <a class="colExport" ng-click="vm.exportList()" ng-href="{{vm.exportUrl}}">导出Excel</a>
+            </div>
+            <!--  -->
+            <div class="details-main hoge-flex">
+                <div class="details-line hoge-flex-one">
+                    <div class="showSelect" ng-if="vm.isdepart">
+                        <div>
+                            <span class="showChart" ng-class="{'toggleActive':vm.showChart}" ng-click="vm.toggleMode('chart')">图表模式</span>
+                            |
+                            <span class="showList" ng-class="{'toggleActive':vm.showList}" ng-click="vm.toggleMode('form')">列表模式</span>
+                        </div>
+                        <a class="exList" ng-click="vm.exportList()" ng-href="{{vm.exportUrl}}">导出Excel</a>
+                    </div>
+                    <div class="chart-box" ng-show="!vm.showList" id="myChart" ui-jp="chart" ui-refresh="vm.isRefreshBar" ui-options="{{vm.optionsBar}}" >
+                    </div>
+                    <div class="list-box" ng-show="vm.showList">
+                        <div class="list_header hoge-table-header">
+                            <div class="wrap">
+                                <div class="list-ranking">排行</div>
+                                <div class="list-name" ng-click="vm.getName()">名称</div>
+                                <div class="list-output" ng-if="!vm.isColumn" ng-class="{'has-chose':vm.sortLists=='create'}" ng-click="vm.getMake()">
+                                    内容产出量
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.make_sort=='asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.make_sort=='desc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-release"  ng-class="{'has-chose':vm.sortLists=='publish'}" ng-click="vm.getAudit()">内容发布量
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.audit_sort=='asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.audit_sort=='desc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-reads"  ng-class="{'has-chose':vm.sortLists=='click_num'}" ng-click="vm.getReading()">阅读总量
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.reading_sort=='asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.reading_sort=='desc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-comments"  ng-class="{'has-chose':vm.sortLists=='comment_num'}" ng-click="vm.getComments()">评论总量
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.comment_sort=='asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.comment_sort=='desc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-shares" ng-if="vm.isColumn"  ng-class="{'has-chose':vm.sortLists=='share_num'}" ng-click="vm.getShares()">
+                                    分享总量
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.share_sort=='asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.sharet_sort=='desc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-praise" ng-if="vm.isColumn"  ng-class="{'has-chose':vm.sortLists=='praise_num'}" ng-click="vm.getPraise()">
+                                    点赞总量
+                                    <div class="icon_sort">
+                                        <i  class="fa fa-sort-asc" ng-class="{'has-chose':vm.praise_sort=='asc'}"></i>
+                                        <i  class="fa fa-sort-desc" ng-class="{'has-chose':vm.praise_sort=='desc'}"></i>
+                                    </div>
+                                </div>
+                                <div class="list-i"></div>
+                            </div>
+                        </div>
+                        <!-- <div class="ErrorTip" ng-show="!vm.formList.length">
+                            <p>暂无数据</p>
+                        </div> -->
+                        <hoge-error hight-num="'425px'" arr-length="vm.formList.length" load="vm.loading"></hoge-error>
+                        <div class="list hoge-item-border" ng-repeat="item in vm.formList track by $index">
+                            <!--列表-->
+                            <div class="list-item">
+                                <div class="level-one">
+                                    <div class="list-ranking">
+                                        {{$index+1}}
+                                    </div>
+                                    <div class="list-name">
+                                       {{item.name}}
+                                    </div>
+                                    <div class="list-output" ng-if="!vm.isColumn">
+                                        {{item.create}}
+                                    </div>
+                                    <div class="list-release">
+                                        {{item.publish}}
+                                    </div>
+                                    <div class="list-reads">{{item.click_num}}</div>
+                                    <div class="list-comments">{{item.comment_num
+                                        }}</div>
+                                    <div class="list-shares" ng-if="vm.isColumn">{{item.share_num
+                                        }}</div>
+                                    <div class="list-praise" ng-if="vm.isColumn">{{item.praise_num
+                                        }}</div>
+                                    <div class="list-i">
+                                        <span ng-click="vm.goDetail(item)">查看详情</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                            <page-nation  options="vm.pageOptions" turn-page="vm.changePage()" ng-if="vm.formList.length > 0"></page-nation>
+                        </div>
+                    </div>
+                       
+                </div>
+                <div class="details-list">
+                    <div class="list-header">
+                        <span ng-if="vm.isPerson">编辑排名</span>
+                        <span ng-if="vm.isdepart">部门排名</span>
+                        <span>点击查看详情</span>
+                    </div>
+                    <div class="list-body">
+                        <div class="list-item" ng-if="vm.showList" ng-repeat="author in vm.formList track by $index" ng-mouseenter="vm.showOpera(author,$event)" ng-mouseleave="vm.hideOpera(author)" ng-click="vm.goDetail(author);">
+                            <span class="default-style" ng-class="{'number-one': $index == 0,'number-two': $index == 1,'number-three': $index == 2}">{{$index+1}}</span>
+                            <span class="item-img" ng-if="vm.isPerson">
+                                
+                                <img ng-src="{{author.avatar}}" alt="" ng-if="vm.isPerson&&author.avatar">
+                                <!-- <img alt="" ng-if="vm.isdepart"> -->
+                            </span>
+                            <span class="item-name">
+                                 <span class="textoverflow">{{author.name}}</span>
+                                 <span ng-if="vm.isdepart">{{author.user_num}}人</span>
+                            </span>
+                        </div>
+                        <div class="list-item" ng-if="vm.showChart||vm.isPerson" ng-repeat="author in vm.rankingList track by $index" ng-mouseenter="vm.showOpera(author,$event)" ng-mouseleave="vm.hideOpera(author)" ng-click="vm.goDetail(author);">
+                            <span class="default-style" ng-class="{'number-one': $index == 0,'number-two': $index == 1,'number-three': $index == 2}">{{$index+1}}</span>
+                            <span class="item-img" ng-if="vm.isPerson">
+                                
+                                <img ng-src="{{author.avatar}}" alt="" ng-if="vm.isPerson&&author.avatar">
+                                <!-- <img alt="" ng-if="vm.isdepart"> -->
+                            </span>
+                            <span class="item-name">
+                                <span class="textoverflow">{{author.name}}</span>
+                                <span ng-if="vm.isdepart">{{author.user_num}}人</span>
+                            </span>
+                        </div>
+                        <!-- <div class="list-item" ng-if="vm.showChart&&vm.isColumn" ng-repeat="author in vm.columnChart track by $index" ng-mouseenter="vm.showOpera(author,$event)" ng-mouseleave="vm.hideOpera(author)" ng-click="vm.goDetail(author);">
+                            <span class="default-style" ng-class="{'number-one': $index == 0,'number-two': $index == 1,'number-three': $index == 2}">{{$index+1}}</span>
+                            
+                            <span class="item-name">
+                                <span class="textoverflow">{{author.name}}</span>
+                            </span>
+                        </div> -->
+                        <!-- <div class="list-item" ng-if="vm.showList&&vm.isColumn" ng-repeat="author in vm.columnList track by $index" ng-mouseenter="vm.showOpera(author,$event)" ng-mouseleave="vm.hideOpera(author)" ng-click="vm.goDetail(author);">
+                            <span class="default-style" ng-class="{'number-one': $index == 0,'number-two': $index == 1,'number-three': $index == 2}">{{$index+1}}</span>
+                            
+                            <span class="item-name">
+                                <span class="textoverflow">{{author.name}}</span>
+                            </span>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="people-detial" ng-style="{'left':vm.needLeft,'top':vm.boxTop}">
+                    <div class="head-portrait" ng-show="vm.isPerson">
+                        <div class="avatar-span">
+                            <img class="avatar-img" ng-src='{{vm.avatar}}?imageView/0/h/162/w/216' ng-if="vm.avatar">
+                            <img class="avatar-img" src='/assets/images/mxu/avatar-40.jpg' ng-if="!vm.avatar">
+                        </div>
+                        <div class="name">{{vm.userName}}</div>
+                        <div class="group" ng-repeat="fo in vm.departUser">{{fo.depart}}</div>
+                    </div>
+                    <div class="head-portrait" ng-show="vm.isdepart">
+                        <p class="name">{{vm.departName}}</p>
+                        <p class="group">{{vm.departCount}}人</p>
+                    </div>
+                    <div class="personal-information">
+                        <div class="lf-div" ng-if="!vm.isColumn">
+                            <span>{{vm.create || 0}}</span>
+                            <span>产出量</span>
+                        </div>
+                        <div class="lf-div" ng-if="vm.isColumn">
+                            <span>{{vm.click_num || 0}}</span>
+                            <span>浏览量</span>
+                        </div>
+                        <div class="rt-div">
+                            <span>{{vm.publish || 0}}</span>
+                            <span>发布量</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <m2o-footer ></m2o-footer>
+</div>
+

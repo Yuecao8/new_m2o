@@ -1,0 +1,89 @@
+<div class="links">
+    <div class="box">
+        <div class="main_body">
+            <div class=" hoge-table-add" style="overflow:unset">
+                <div class="hoge-table-title">{{vm.DOC.link}}</div>
+                 <!-- 站点 -->
+                <m2o-site-chose handler-site="vm.initSite(site_id,site_name)" clear-state-param="vm.clearStateParam()" change-site="vm.changeSite(site)"></m2o-site-chose>
+                <button class="btn btn-purple pull-right" ng-click="vm.doAdd()">新增链接</button>
+            </div>
+            <div class="hoge-table-contain white" ng-show="!vm.linkList.length" my-loading="vm.loadding">
+
+                <hoge-error arr-length="vm.linkList.length" load="vm.loadding"></hoge-error>
+            </div>                 
+            <div class="hoge-position" ng-show="vm.linkList.length">
+                <div class="hoge-selected">
+                    
+                    <div class="btn-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">
+                            <span class="all-checked">{{'content.select' | translate}}</span>
+                        </label>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn del-btn hoge-common-btn" ng-disabled="vm.linkList.length == 0" ng-click="vm.moreDelete()">{{'terminalLinks.delete' | translate}}</button>
+                    </div>
+                    
+                    <div class="kind-sorting" ng-click="vm.sort()">
+                        <i class="typeface-form_paixu"></i>
+                        <label>排序</label>                  
+                    </div>
+                </div>
+                <div class="sort-board red-50" ng-show="vm.isSort">
+                    <i class="fa typeface-login_tishi"></i><span class="paixu_setting">拖拽排序</span>
+                    <button class="btn btn-sm white pull-right btn-cancel" ng-click="vm.cancelSort()">取消</button>
+                    <button class="btn btn-sm hoge-btn-blue pull-right m-r" ng-click="vm.outSort()">保存</button>
+                </div>
+            </div>
+            <div class="box-body p-v-md">
+
+                <div>
+                    <div class="box">
+                        <!-- 列表 -->
+                        <div ui-sortable="vm.sortableOpt" ng-model="vm.linkList">
+                            <div class="data-list col-xs-6 col-sm-4 col-md-4 col-lg-4" ng-repeat="item in vm.linkList track by $index">
+                                <!--checkbox-->
+                                <div class="split-item">
+                                    <div class="list-ctr">
+                                        <label class="checkbox-inline" ng-if="!vm.isSort">
+                                            <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                                        </label>
+                                        <i class="fa fa-bars" ng-if="vm.isSort"></i>
+                                    </div>
+                                    <!--详情信息-->
+                                    <div class="list-body">
+                                        <div class="list_img">
+                                            <span class="img-square">
+                                                <img src="{{item.logo_display}}" alt="">
+                                            </span>                                            
+                                        </div>
+                                        <div class="list_info">
+                                            <div class="part_one">                                    
+                                                <a href class="list_title"  ng-click="vm.goEdit(item)">
+                                                    <span>{{item.name}}</span>
+                                                </a>                                        
+                                            </div> 
+                                            <div class="part_two">
+                                                <span>{{item.link}}</span>
+                                            </div>
+                                        </div>                                        
+                                        <div class="icon_box">
+                                            <i class="fa typeface-form_edit" ng-click="vm.singleEdit(item);" ng-show="!vm.isSort"></i>
+                                            <i class="fa typeface-form_shanchu" ng-click="vm.singleDelete(item);" ng-show="!vm.isSort"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--bottom-->
+
+            <div class="list_bottom hoge-table-bottom" ng-show="vm.pageOptions.total > 15">
+                <page-nation  options="vm.pageOptions" turn-page="vm.changePages()"></page-nation>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{
+    "newsN" : "The range contains the manuscript, the atlas, the video, the subject content",
+    "liveL" : "The range contains regular comments for live content",
+    "contru" : "The range contains the terminal of the contents of the contribute, the contribute comments",
+    "roadR" : "The range contains the terminal of the traffic content, traffic comments",
+    "information" : "Information",
+    "live" : "Live",
+    "contribute" : "Contribute",
+    "road" : "Traffic conditions",
+    "auditControl" : "UGC audit control",
+    "ugcTip" : "You can review and manage applications that have functionality in systems with UGC (registered and anonymous user-generated content)",
+    "application" : "Application",
+    "description" : "Description",
+    "review" : "Content post review",
+    "postReview" : "Comments / reply post review",
+    "successOperate" : "Operate successfully!"
+}

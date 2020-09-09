@@ -1,0 +1,24 @@
+{
+    "addSplit" : "New Trim",
+    "alreadySpl" : "Trimed",
+    "title" : "Title",
+    "classify" : "Classify",
+    "user" : "Creator",
+    "time" : "Time",
+    "delete" : "Delete",
+    "reSplit" : "Retrim",
+    "download" : "Download",
+    "triming": "Transcoding...",
+    "waiting": "Waiting for transcoding",
+    "failed": "Transcoding failure",
+    "allSelected" : "Select all",
+    "confirmDel" : "Are you sure to delete the selected data?",
+    "choseSplit" : "Please select the data you want to delete!",
+
+    "sure":"Sure",
+    "cancel":"Cancel",
+    "choseDown":"You have chosen to download:",
+    "reName":"Rename:",
+    "placeHolder":"Please rename the download file!"
+
+}

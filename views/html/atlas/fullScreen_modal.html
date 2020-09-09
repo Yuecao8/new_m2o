@@ -1,0 +1,79 @@
+
+<div class="full-screen-modal">
+        <div class="modal-header">
+            <h5 class="modal-title" >全屏</h5>
+            <!--{{vm.typeTitle}}-->
+            <i class="fa fa-remove close-icon" ng-click="vm.close()"></i>
+        </div>
+        <div class="modal-body">
+            <div class="img-info">
+                <div class="img">
+                    <img ng-src="{{vm.currentItem.photo_url}}" alt="">
+                    <div class="cover-box">
+                            <!-- <span>{{vm.currentItem}}</span> -->
+                        <div class="pre-img" ng-click="vm.preImg()">
+                            <i class="fa typeface-pagination_shangyiye"></i>
+                        </div>
+                        <div class="next-img" ng-click="vm.nextImg()">
+                            <i class="fa typeface-pagination_xiayiye"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-info">
+                    <div class="info-title-box">
+                        <span class="info-title-btn base-btn" ng-class="{'active': vm.currentIndex == 0}" ng-click="vm.toggleBox('0')">基本信息</span>
+                        <span class="info-title-btn EXIF-btn" ng-class="{'active': vm.currentIndex == 1}" ng-click="vm.toggleBox('1')">EXIF信息</span>
+                    </div>
+                    <div class="base-info-box" ng-if="vm.currentIndex == 0">
+                        <!-- <div class="base-title">宠物到底是什么</div> -->
+                        <div class="base-brief">
+                            <span ng-show="!vm.editable" ng-click="vm.goEditBrief()">
+                                    {{vm.currentItem.photo_name}}
+                            </span>
+                            <textarea class="edit-box" type="text" ng-model="vm.currentItem.photo_name" maxlength="255" ng-blur="vm.editBrief(1)" ng-keyup="vm.editBrief($event)" autofocus ng-show="vm.editable">
+                        </div>
+                        <div class="base-sign-box">
+                            <span>标签</span>
+                            <span class="ele-sign" ng-repeat="signItem in vm.currentItem.tags track by $index" ng-click="vm.delSign($index)">
+                                {{signItem}}<i class="keywords-icon-del typeface-alert_cuowu"></i>
+                                <span ng-show="$index !== vm.currentItem.tags.length-1">,</span> 
+                            </span>
+                            <input class="sign-box" type="text" ng-model="vm.editSignContent" maxlength="5" ng-blur="vm.editSign(1)" ng-keyup="vm.editSign($event)" autofocus ng-show="vm.signEditable">
+                            <div class="add-group" ng-click="vm.getFocus()" ng-show="vm.currentItem.tags.length < 5">
+                                <i class="fa typeface-form_zengjia"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="EXI-info-box" ng-if="vm.currentIndex == 1">
+                        <div class="strip" ng-repeat="exifItem in vm.currentItem.exif track by $index">
+                            <span class="strip-name">{{exifItem.name}}：</span>
+                            <span class="strip-content">{{exifItem.value}}</span>
+                        </div>
+                        <div class="hoge-error hoge-error-hight" ng-if="!vm.currentItem.exif.length" >
+                            <div>
+                                <div class="error-img"></div>
+                                <p>暂无内容</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rolling-box">
+                <div class="all-img-box">
+                    <div class="img-box" ng-repeat="item in vm.picList track by $index">
+                        <div>
+                                <img class="pic" ng-src="{{item.photo_url}}" alt="" ng-class="{'chooseImg': vm.chooseImgIndex == $index}" ng-click="vm.getCurrentImg($index)">
+                                <!-- <span>{{item}}</span> -->
+                        </div>     
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-class="{'disabled':!vm.chosed[0].id}">确认</button>
+        </div> -->
+    </div>
+    
+    
+    

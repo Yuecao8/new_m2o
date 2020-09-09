@@ -1,0 +1,28 @@
+{
+    "leave" : "Did the page you edited have not been saved yet. Are you sure you want to leave this page?",
+    "chooseColumn" : "Column",
+    "mainColumn" : "The main part can not be empty",
+    "linkMust" : "The link can not be empty",
+    "titleMust" : "The title can not be empty",
+    "saveSuccess" : "Save successfully",
+    "updateSuccess" : "update successfully",
+    "contentLink" : "Content link to",
+    "contentLinkTip" : "Please enter the URL to which the content is linked",
+    "abstract" : "Summary",
+    "abstractTip" : "Please fill in the abstract here",
+    "addCover" : "Click to add the cover",
+    "coverALL" : "Global cover settings",
+    "coverDefault" : "Will use the first picture as the cover map of the atlas by default",
+    "open" : "Opened",
+    "time" : "Time",
+    "release" : "Publish immediately",
+
+    "publish" : "Publish",
+    "forwarding" : "Forwarding",
+    "source" : "Source",
+    "originalLink" : "The original link",
+    "save" : "Save",
+    "savePublish" : "Save and publish",
+
+    "pushTitle" : "Please enter the title here"
+}

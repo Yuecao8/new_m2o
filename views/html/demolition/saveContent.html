@@ -1,0 +1,184 @@
+<div class="save-content" style="height: 100%;">
+    <div class="multi-split">
+        <div class="flex-item hoge-flex-justify-between">
+            <span class="split-title">分段列表</span>
+            <button class="inverse-btn btn primary-btn" ng-click="vm.invertSelect()">片段反选</button>
+        </div>
+        <div class="split-wrapper" ng-if="vm.multiList.length > 0">
+            <div class="split-item" ng-click="vm.selectCurSplit($index)" ng-repeat="item in vm.multiList track by $index">
+                <div class="line" ng-show="vm.curSplitIndex == $index"></div>
+                <div>
+                    <input style="display: none;" id="{{'sub-name' + $index}}" type="checkbox" class="" name="split-item" ng-checked="vm.splitSelected.indexOf(item.subName) !== -1" ng-click="vm.selectItem(item.subName)">
+                    <!-- <label for="{{'sub-name' + $index}}" class="split-item-index" style="color:#fff;">{{item.subName}} </label> -->
+                    <span class="split-item-index" style="color:#fff;cursor: pointer;word-break: break-all;">{{item.subName}} </span>
+                    <span>| {{item.duration}}</span>
+                </div>
+                <!-- <div class="split-sub-title">{{item.title ? item.title : vm.mediaType === 'video' ? '未命名视频' : '未命名音频'}}</div> -->
+                <input type="text" class="split-sub-title" ng-model="item.title" style="background: none;border: none;    cursor: pointer;outline: none;">
+                <img class="split-item-icon" ng-show="item.index_pic && vm.mediaType === 'video'" src="{{item.index_pic}}" alt="">
+                <!-- <div class="split-item-time">
+                    <span>入点{{item.start_time_text}}</span>
+                    <span>出点{{item.end_time_text}}</span>
+                </div> -->
+                <div class="flex-item hoge-flex-justify-between">
+                    <!-- <span>{{item.index_pic ? '已设封面' : '未设封面'}}</span> -->
+                    <span></span>
+                    <div class="split-item-btn">
+                        <span ng-click="vm.splitDetail(item, $index, $event)">编辑属性</span>
+                        <span ng-click="vm.delItem(item.subName)">删除</span>
+                    </div>
+                </div>
+            </div>
+            <div class="add-split-item" ng-click="vm.addSplitItemClick()">+</div>
+        </div>
+        <div ng-if="vm.multiList.length == 0" class="split-wrapper">
+            暂无拆条
+        </div>
+        <div class="flex-item hoge-flex-justify-between split-wrapper-footer">
+            <div>
+                <!-- <input type="checkbox" id="split-select-all" ng-checked="vm.multiList.length > 0 && vm.splitSelected.length >= vm.multiList.length" ng-click="vm.selectAllSplit()">
+                <label for="split-select-all" class="split-item-index" style="color:#fff;">全选</label>
+                <span class="split-multi-del" style="cursor: pointer;" ng-click="vm.multiDel()">删除</span> -->
+            </div>
+            <span>共计{{vm.multiList.length}}个片段</span>
+        </div>
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name">分类</label>
+        <div class="column-box">
+            <div class="label-title m-t-column" ng-if="!vm.category.length">选择分类</div>
+            <div class="classify-father">
+                <classify-preview classify-data="vm.radioList"
+                                    classify-name="''" box-name="'选择分类'"
+                                    classify-check="vm.category" radio-style="'all'"
+                                    classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)"
+                                    classify-focus="false"
+                                    box-status="false"
+                                    choose-function="vm.chooseColumns(Item)"
+                                    show-class="vm.stateBox = $event"
+                ></classify-preview>
+            </div>
+        </div>
+        <i class="fa fa-caret-down column-box-down"></i>
+    </div>
+    <div class="content-box">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-name">栏目</label>
+            <div class="publish-father" style="width:141px;" ng-style="{'width': vm.dColumnName.length > 2 ? '130px' : '130px'}">
+                <content-publish  publish-array="vm.publish_column" dispose-arr="vm.disposeArr(d)" publish-title="vm.title" place-holder="'栏目'"></content-publish>
+                <!-- <span>{{vm.creCloumnName}}</span> -->
+            </div>
+            <i class="fa fa-caret-down column-box-down"></i>
+        </div>
+    </div>
+    <div class="content-box flex-item" ng-if="vm.mediaType === 'video'">
+        <label for="" class="label-name">转码</label>
+        <div class="transCode-box" style="width: 130px;">
+            <span class="set-transCode-span" style="color: #9ba5bb;font-size: 12px;cursor: pointer;" ng-click="vm.chooseSet()">{{vm.selectedTrans.id ? vm.selectedTrans.name : '请选择转码'}}</span>
+        </div>
+        <i class="fa fa-caret-down column-box-down"></i>
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name">作者</label>
+        <input class="split-detail-input" ng-model="vm.userInfo.name" type="text">
+    </div>
+    <div class="content-box flex-item">
+        <label for="" class="label-name">来源</label>
+        <input class="split-detail-input" type="text" ng-model="vm.originSource">
+    </div>
+    <div class="save-body flex-item">
+        <button class="btn primary-btn" ng-click="vm.mergeSaveVideo()" ng-disabled="vm.isSave">合并保存</button>
+        <button class="btn primary-btn" ng-click="vm.saveVideos()" ng-disabled="vm.isSave">保存</button>
+        <button class="btn cancel-btn" ng-click="vm.cancelData($event)">清空</button>
+    </div>
+</div>
+<div class="editVideo save-content" style="display: none;padding-top: 10px;height: 100%;z-index: 999">
+    <div style="margin-bottom: 10px;font-size: 18px;color: #fff;padding-left: 10px">
+        <span class="split-title" style="margin-right: 10px">编辑片段:</span>
+        <span>{{vm.splitItem.subName}}</span>
+    </div>
+    <div style="height: calc(100% - 108px); overflow-y: auto;background-color: #333;">
+        <div class="multi-split" style="padding-left: 10px">
+            <div class="split-item">
+                <div>
+                    <input style="display: none;" type="checkbox" class="" name="split-item" >
+                    <span class="split-item-index" style="color:#fff;cursor: pointer;">{{vm.splitItem.subName}} </span>
+                    <span>| {{vm.splitItem.duration}}</span>
+                </div>
+                <div class="split-sub-title" style="height: 30px">{{vm.splitItem.title}}</div>
+                <img class="split-item-icon" src="{{vm.splitItem.index_pic}}" alt="">
+            </div>
+        </div>
+        <ul class="flex-item hoge-flex-justify-between" id="watchDom" style="padding: 0px 10px 0 10px">
+            <li>
+                <div class="imgBox">
+                    <img src="{{vm.splitItem.start_pic}}" alt="">
+                </div>
+                <div class="editTime" ng-click="vm.getWatchDom('up')">
+                    <i class="startIcon"></i>
+                    入点
+                </div>
+            </li>
+            <li>
+                <div class="imgBox">
+                    <img src="{{vm.splitItem.end_pic}}" alt="">
+                </div>
+                <div class="editTime" ng-click="vm.getWatchDom('down')">
+                    <i class="endIcon"></i>
+                    出点
+                </div>
+            </li>
+        </ul>
+        <div class="modal-body detail-save-content" style="color:#fff;padding: 0 15px">
+            <div class="content-box flex-item img-box" style="margin-bottom: 0.7rem;" ng-if="vm.mediaType === 'video'">
+                <label for="indexPic" class="label-name" style="color: #fff">封面图</label>
+                <input  id="indexPic" style="display: none;" type="file" nv-file-select="" uploader="vm.uploader"  accept="image/gif,image/jpeg,image/png,image/bmp"/>
+                <div class="upload-box-content" my-loading="vm.img_loading" style="height: 80px;margin-top: 10px">
+                    <div class="upload-box" ng-click="vm.uploadIndexPic()" ng-class="{'has-img-cover':vm.splitItem.index_pic}" style="width: 100px;max-height: 100%">
+                        <i class="fa typeface-form_zengjia"></i>
+                        <span>设置封面图</span>
+                    </div>
+                    <div class="upload-cover" ng-click="vm.uploadIndexPic()" ng-class="{'upload-cover-show':vm.splitItem.index_pic}" style="width: 100px;max-height: 100%">
+                        <span>点击替换封面</span>
+                    </div>
+                    <img class="img-cover" ng-if="vm.splitItem.index_pic" ng-src="{{vm.splitItem.index_pic}}" style="width: 100px;max-height: 100%">
+                </div>
+            </div>
+            <div class="content-box flex-item" style="margin-bottom: 0.7rem;">
+                    <label for="" class="label-name" style="color: #fff">标题</label>
+                    <input type="text" class="content-box-input" ng-model="vm.splitItem.title" ng-blur="vm.getKey()">
+                </div>
+            <div class="content-box flex-item" style="margin-bottom: 0.7rem;">
+                <label for="" class="label-name  m-t-label" style="color: #fff">描述</label>
+                <textarea type="text" class="content-box-textarea" rows="3" maxlength=500 ng-model="vm.splitItem.brief">
+            </div>
+            <div class="content-box  key-word-content clearfix" style="margin-bottom: 0rem;">
+                <label for="" class="label-name" style="color: #fff">关键词</label>   
+                <div class="keywords-box side-keyword" style="max-width: 160px; width: unset">
+                    <div class="keyword-body" scroll-limited style="background-color: #333;">
+                        <div class="key-list-body is-choose cur-pointer"
+                        ng-repeat="(idx,item) in vm.keyList track by idx">
+                            <span>{{item}}</span>
+                            <i class="keywords-icon-del typeface-alert_cuowu" ng-click="vm.del(idx)">
+                            </i>
+                        </div>
+                        <div class="key-list-body cur-pointer add-key-icon" ng-class="{'add-active': vm.add}" ng-click="vm.getFocus()">
+                            <span class="add-icon" ng-if="!vm.add" >
+                                <i class="fa typeface-form_zengjia cur-pointer"></i>
+                            </span>
+                            <input id="input-keyword-add" maxlength="10"  class="input-keyword-add" type="text" ng-model="vm.key" ng-if="vm.add"
+                            ng-blur="vm.createKey(1)" 
+                            ng-keyup="vm.createKey($event)" ng-style="{'width':vm.width+ 'px','maxWidth':'120px','minWidth':'60px'}"
+                            >
+                        </div> 
+                    </div>
+                    <div id="hidden-span" class="hidden-span">{{vm.key}}</div>  
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="background-color: #333;">
+        <button class="btn primary-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.save()" translate="editList.sure"></button>
+        <button class="btn btn-outline cancel-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.close()" translate="editList.cancel"></button>
+    </div>
+</div>

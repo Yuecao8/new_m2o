@@ -1,0 +1,9 @@
+{
+    "memName" : "所属会员",
+    "expChan" : "经验变动",
+    "pointChan" : "积分变动",
+    "changeRe" : "积分变动原因",
+    "remark" : "备注",
+    "user" : "操作人",
+    "time" : "操作时间"
+}

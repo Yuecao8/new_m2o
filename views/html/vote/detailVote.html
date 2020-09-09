@@ -1,0 +1,178 @@
+<main class="main-form-wrap vote-detail-form-wrap" my-loading="vm.info_loading">
+        <nav class="hoge-nav">
+            <div class="hoge-table-add">
+                <div class="hoge-edit-head">
+                    
+                    <!-- <em>{{vm.asideInfo.title}}</em> -->
+                    <div class="detail-title">
+                        <span class="back-list" ng-click="vm.goBackList()">投票</span>&nbsp;&nbsp;>&nbsp;&nbsp;
+                        <!-- <div class="hoge-return-body" onclick="history.back(-1)">
+                            <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                            <span class="return-tip">返回列表</span>
+                        </div> -->
+                        <span class="vote-title">{{vm.asideInfo.title}}</span>
+                        <span class="voteState voteClose" ng-if="vm.asideInfo.is_use==0">投票已关闭</span>
+                        <span class="voteState voted" ng-if="vm.asideInfo.is_use==1&&vm.is_overdue ==0">投票已过期</span>
+                        <span class="voteState voteing" ng-if="vm.asideInfo.is_use==1&&(vm.asideInfo.closing_date=='' || vm.is_overdue ==1)">投票进行中</span>
+                        <a class="export-vote" ng-click="vm.voteExport()" ng-href="{{vm.exportUrl}}">导出记录</a>
+                    </div>             
+                    <!-- <em ng-if="vm.hotFlag">阅读模式</em> -->
+                    <span ng-show="vm.draftLoading" style="color:  #a5a5a5;">
+                        <img src="../assets/images/mxu/news/loading.gif" alt="">
+                        正在保存
+                    </span>
+                    <span ng-show="vm.draftLoadingOn" style="color:  #a5a5a5;">
+                        <i class="typeface-alert_wancheng2"> </i>
+                        已保存
+                    </span>
+                    <div class="edit-width-status" ng-show="vm.param.id">
+                        <span class="content-pendingAudit" ng-if="vm.editStatus==1">待审核</span>
+                        <span class="content-audited" ng-if="vm.editStatus==2">已审核</span>
+                        <!--<span class="label primary m-l-sm light-green-200" ng-if="nor.status==3" translate="content.release">已发布</span>-->
+                        <span class="content-repulsed" ng-if="vm.editStatus==4">已打回</span>
+                        <span class="content-repulsed" ng-if="vm.editStatus==5">审核中</span>
+                        <!-- <span class="triangle-btn" ng-if="vm.audit.id" ng-class="{'audited-green': vm.editStatus==2}"></span> -->
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="form-content hoge-flex detail-content-box">
+            <div class="detail-aside">
+                <div class="nav-header-box">
+                    <span>投票信息</span>
+                </div>
+                <div class="nav-item-box">
+                    <div class="nav-item item-position">
+                        <span class="item-name">描述：</span>
+                        <span class="item-content item-describe">{{vm.asideInfo.brief}}</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">模式：</span>
+                        <span class="item-content">{{vm.asideInfo.option_type == "1" ?'单选':'多选'}}</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">开始日期：</span>
+                        <span class="item-content">{{vm.asideInfo.start_time}}</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">截止日期：</span>
+                        <span class="item-content">{{vm.asideInfo.closing_date ? vm.asideInfo.closing_date : '永久有效'}}</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">登录限制：</span>
+                        <span class="item-content">{{vm.asideInfo.login_limit == 0 ?'关':'开'}}{{vm.asideInfo.certification == 0 ?'':'（实名认证）'}}</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">设备限制：</span>
+                        <span class="item-content">{{vm.asideInfo.device_limit == 0 ?'关':'间隔' + vm.asideInfo.device_limit_time/3600 + '小时 / ' + vm.asideInfo.device_limit_num + '次'}}</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">IP限制：</span>
+                        <span class="item-content">{{vm.asideInfo.ip_limit_num}}票</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="item-name">结果隐藏：</span>
+                        <span class="item-content">{{vm.asideInfo.hide_result == 0 ?'关':'开'}}</span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="detail-content">
+                <div class="content-header">
+                    <span class="content-title" ng-class="{'active':vm.currentTitle == 'detail'}" ng-click="vm.toggleContent('detail')">投票详情</span>
+                    <span class="content-title" ng-class="{'active':vm.currentTitle == 'record'}" ng-click="vm.toggleContent('record')">投票记录</span>
+                </div>
+                <div class="vote-detail-box" my-loading="vm.detail_loading" ng-show="vm.currentTitle == 'detail'">
+                    <div class="btns-box">
+                        <span class="toggle-sort-btn default-sort-btn" ng-class="{'active-sort-btn':vm.currentSortBtn == 'default'}" ng-click="vm.toggleSortBtn('default')">默认排序</span>
+                        <span class="toggle-sort-btn num-sort-btn" ng-class="{'active-sort-btn':vm.currentSortBtn == 'num'}" ng-click="vm.toggleSortBtn('num')">
+                            得票数
+                            <i class="fa fa-sort-asc" ng-class="{'active-i':vm.currentSort == 'desc'}"></i>
+                            <i class="fa fa-sort-desc desc-icon" ng-class="{'active-i':vm.currentSort == 'asc'}"></i>
+                        </span>
+                        <div class="base-value">
+                            <input type="checkbox" ng-model="vm.hideNum" ng-click="vm.hideBaseNum()">隐藏投票基数
+                        </div>
+                        <div class="base-info-box">
+                            <i class="fa typeface-talking_bianjixinxi"></i>
+                            <span>参与投票人数：</span><span class="base-num">{{vm.resultsInfo.total_voter}}</span>
+                            <i class="fa typeface-talking_toupiao"></i>
+                            <span>总票数：</span><span class="base-num">{{vm.hideNum ? vm.resultsInfo.votes:vm.resultsInfo.total_votes}}</span>
+                        </div>
+                        
+                    </div>
+                    <div class="group-box" ng-show="vm.isOpenGroup">
+                        <div class="pre-icon" ng-click="vm.preItem()">
+                            <i class="fa typeface-pagination_shangyiye"></i>
+                        </div> 
+                        <div class="group-list-box">
+                            <div class="visual-box">
+                                <div class="all-list-box" style="display: flex;">
+                                    <div class="group-item" ng-repeat="(index,item) in vm.groupList track by $index">
+                                        <span class="item-text" ng-class="{'choose': vm.currentGroupIndex == index}" ng-click="vm.chooseGroup(item,index)" title="{{item.name}}">{{item.name}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="next-icon" ng-click="vm.nextItem()">
+                            <i class="fa typeface-pagination_xiayiye"></i>
+                        </div>
+                    </div>
+                    <div class="list-box">
+                        <div class="list-item" ng-repeat = "optionItem in vm.resultsInfo.options track by $index">
+                            <img class="option-img" ng-show="optionItem.index_pic" ng-src="{{optionItem.index_pic}}" alt="">
+                            <img class="option-img" ng-show="!optionItem.index_pic" src="/assets/images/mxu/img_morentu@2x.png" alt="">
+                            <div class="info-box">
+                                <p class="option-title" title="{{optionItem.title}}">{{optionItem.title}}</p>
+                                <p class="option-brief" ng-if="vm.mode==1" title="{{optionItem.brief}}">{{optionItem.brief}}</p>
+                                <div class="vote-num">
+                                    <span>总票数：{{vm.hideNum ? optionItem.num : optionItem.base_total_votes}}</span>
+                                    <span>实际票数：{{optionItem.num}}</span>
+                                    <span ng-if="!vm.hideNum">票数基数：{{optionItem.base_num}}</span>
+                                </div>
+                                
+                            </div>
+                            <div class="progress-box">
+                                <span class="progress-value">{{vm.hideNum ? optionItem.real_percent : optionItem.base_percent}}%</span>
+                                <div class="progress-style">
+                                    <span class="blue-style" ng-show="!vm.hideNum" ng-style="{width:2*optionItem.base_percent}"></span>
+                                    <span class="blue-style" ng-show="vm.hideNum" ng-style="{width:2*optionItem.real_percent}"></span>
+                                </div>
+                                <!-- <progress class="progress-style" value="22" max="100"></progress> -->
+                                <!-- <span>票</span>   -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vote-record-box" my-loading="vm.record_loading" ng-show="vm.currentTitle == 'record'">
+                    <div class="box-body p-v-md">
+                        <div class="vote-title hoge-table-header">
+                            <div class="min-w-200 serial-num flex-one" >时间</div> 
+                            <div class="min-w-200 apply-people">用户名</div>                   
+                            <div class="min-w-200 apply-type">IP地址</div>
+                            <div class="min-w-200 apply-codeInfo">投票项目</div>       
+                        </div>
+                        <div class="vote-list" my-loading="vm.apply_loading">                
+                            <div class="item-list" ng-repeat="(index,item) in vm.voteRecordList track by $index">
+                                <div class="wrap">    
+                                        <div class="min-w-200 flex-one" >{{item.created_at}}</div> 
+                                        <div class="min-w-200">{{item.user_name ? item.user_name : '匿名'}}</div>                   
+                                        <div class="min-w-200">{{item.ip}}</div>
+                                        <div class="min-w-200">投票给 
+                                            <span class="option-color" ng-repeat="opt in item.options">" {{opt.title}} "</span>
+                                        </div>             
+                                </div>
+                            </div>
+                        <hoge-error class="error-hight" hight-num="'600px'" arr-length="vm.voteRecordList.length" load="vm.record_loading"></hoge-error>
+                        <!-- <page-nation class="sub-page" options="vm.pageOptions" turn-page="vm.changePage()"></page-nation> -->
+                        </div>
+                        <page-nation class="sub-page" options="vm.pageOptions" ng-show="vm.voteRecordList.length" turn-page="vm.changePage()"></page-nation>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+</main>

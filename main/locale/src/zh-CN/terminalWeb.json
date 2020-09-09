@@ -1,0 +1,10 @@
+{
+    "siteManage" : "网站管理",
+    "siteIntroduce" : "在此可以对MXU生成的网站进行管理和配置",
+    "siteConfig" : "站点配置",
+    "appConfig" : "会员配置",
+    "indexConfig" : "首页配置",
+    "templateSetting" : "栏目模板设置",
+
+    "allColumn" : "全部栏目"
+}

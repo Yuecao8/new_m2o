@@ -1,0 +1,83 @@
+<div class="modal-cover-img box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title" >插入视频</h5>
+        <i class="fa fa-remove close-icon" ng-click="vm.close()"></i>
+    </div>
+    <div class="modal-body">
+        <div class="">
+            <ul class="tab-ul nav nav-pills">
+                <li class="tab-item nav-item ">
+                    <span class="nav-link active" data-toggle="tab" data-target="#tab1">手动上传</span>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane animated fadeIn text-muted active upload-tab1" id="tab1">
+                <div class="upload-cover" ng-if="!vm.showList[0]">
+                    <img src="../../../../assets/images/mxu/content/videoUp_2x.png" alt="">
+                    <div class="upload-contain">
+                        <input type="file" nv-file-select="" uploader="vm.newsVideoloader"/>
+                        <button class="btn btn-purple">
+                            <!--{{ 'common.clickToUpload'| translate}}-->
+                            点击上传视频
+                        </button>
+                    </div>
+                    <p class="upload-tip">
+                        <!--{{ 'common.clickToUploadTip'| translate}}-->
+                        为了获取更高的推荐量和点击量，建议上传720p(1280x720)或更高分辨率的视频，大小不超过2G
+                    </p>
+                </div>
+                <div class="content-imgs" ng-if="vm.showList[0]">
+                    <div class="gallery-body">
+                        <div class="gallery-body-flex" ng-if="vm.showList[0]">
+                            <div class="gallery-contain newsup-box">
+                                <div class="image-contain" style="border: none">
+                                    <div class="add-img">
+                                        <i class="icon-tianjia"></i>
+                                    </div>
+                                    <input type="file" class="newsup-input" nv-file-select="" uploader="vm.newsImgloader" accept=""/>
+                                </div>
+                            </div>
+                            <div class="gallery-contain" ng-repeat="show in vm.showList">
+                                <div class="image-contain">
+                                    <img  class="gallery-url" src="{{show.url}}" alt="">
+                                </div>
+                                <div class="chose-box" ng-if="!show.chosed" ng-click="vm.uploadChose(show,true)">
+                                    <div class="change-tip" >{{ 'common.clickChoseCover'| translate}}</div>
+                                </div>
+                                <div class="has-chosed" ng-if="show.chosed" ng-click="vm.uploadChose(show,false)">
+                                    <div class="chosed"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--图片上传进度弹框-->
+                <!--<div class="modal modal-picUp newsup-progress" id="picUp" data-backdrop="true"  class="">-->
+                    <!--<div class="modal-dialog">-->
+                        <!--<div class="modal-content">-->
+                            <!--<div class="modal-body">-->
+                                <!--<div class="content">-->
+                                    <!--<p class="file-tip">{{'common.fileBeUp'| translate}}</p>-->
+                                    <!--&lt;!&ndash;<p class="">{{'tuji.source'| translate}} : &nbsp;{{vm.upName}}</p>&ndash;&gt;-->
+                                    <!--<uib-progressbar class="progress-striped progress-bar-success active m-b-sm " value="vm.proValue" type="success" max="100" >-->
+                                    <!--</uib-progressbar>-->
+                                    <!--<p class="up-progress" ng-hide="vm.picSuccess">{{'common.hasUp'| translate}}{{vm.proValue}}%</p>-->
+                                    <!--<p class="up-progress" ng-show="vm.picSuccess" >{{'common.UpSuccess'| translate}}</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="modal-footer" >-->
+        <!--ng-if="vm.chosed.origin_url"-->
+        <!--<button type="button" class="btn primary-btn" ng-click="vm.save()" my-loading="vm.save_loading">{{ 'common.confirm'| translate}}</button>-->
+        <!--<button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'common.cancel'| translate}}</button>-->
+    <!--</div>-->
+</div>

@@ -1,0 +1,20 @@
+<div class="hoge_side_wrapper terminalSide">
+    <div class="menu-wrap">
+        <div class="title">全部</div>
+        <!--<div class="tip" translate="inclusion.manualInclude"></div>-->
+        <ul class="menu-content">
+            <li ng-class="{active:vm.terminal == item.id}" ng-repeat="item in vm.terminalList">
+                    <a ng-click="vm.changeTerminal(item.id)">
+                   {{item.name}}
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <div class="second-view">
+        <div ui-view></div>
+    </div>
+    <m2o-footer ></m2o-footer>
+</div>

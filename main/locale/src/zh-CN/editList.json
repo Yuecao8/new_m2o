@@ -1,0 +1,23 @@
+{
+    "addSplit" : "新增拆条",
+    "alreadySpl" : "已拆条",
+    "title" : "标题",
+    "classify" : "分类",
+    "user" : "创建人",
+    "time" : "时间",
+    "delete" : "删除",
+    "reSplit" : "重拆",
+    "download" : "下载",
+    "triming": "转码中...",
+    "waiting": "等待转码中",
+    "failed": "转码失败",
+    "allSelected" : "全选",
+    "confirmDel" : "确定删除选中数据?",
+    "choseSplit" : "请选择需要删除的数据！",
+
+    "sure":"确认",
+    "cancel":"取消",
+    "choseDown":"您选择了下载:",
+    "reName":"重命名:",
+    "placeHolder":"请重命名下载文件!"
+}

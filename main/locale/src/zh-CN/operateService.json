@@ -1,0 +1,18 @@
+{
+    "community" : "社区",
+    "communityIntroduce" : "用于扩展终端社交功能的互动交流平台",
+    "road" : "路况",
+    "roadIntroduce" : "用于实时发布当地交通信息",
+    "side" : "身边LBS",
+    "sideIntroduce" : "用于发布本地的生活服务分类信息",
+    "inform" : "客户端版本通知",
+    "informIntroduce" : "用于管理手机客户端版本，推送版本升级信息",
+    "push" : "云推送",
+    "pushIntroduce" : "可以在此向手机客户端推送通知栏消息",
+    "weather" : "云天气",
+    "weatherIntroduce" : "用于管理手机客户端天气模块",
+    "feedback" : "意见反馈",
+    "feedbackIntroduce" : "可以在此查看和管理来自客户端用户的意见反馈",
+    "apply" : "报名",
+    "applyIntroduce" : "可以在此制作手机客户端报名表单"
+}

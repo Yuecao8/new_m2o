@@ -1,0 +1,22 @@
+{
+    "siteSet" : "Site settings",
+    "siteIntroduce" : "You can set the basic properties of the site",
+    "memberSet" : "Membership settings",
+    "memberntroduce" : "Manage the registration and login settings of front desk members",
+    "indexSet" : "Home settings",
+    "indexIntroduce" : "Set the template here to determine its performance style",
+    "columnSet" : "Column setting",
+    "columnIntroduce" : "To select the appropriate template to determine its performance style",
+    "styleManage" : "Style management",
+    "styleIntroduce" : "To select the appropriate template to determine its performance style",
+    "templateManage" : "Template management",
+    "templateIntroduce" : "Provide template management",
+    "dataManage" : "Data source management",
+    "dataIntroduce" : "Provide the source of the template display data",
+    "layout" : "Topic layout",
+    "layoutIntroduce" : "View, update theme page preset layout",
+    "links" : "Links",
+    "linksIntroduce" : "Here you can add links to your site and manage your existing links",
+    "tempSet": "Template settings",
+    "tempintroduce":"Manage the templates for each page of the site"
+}

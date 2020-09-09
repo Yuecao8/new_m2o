@@ -1,0 +1,95 @@
+<div class="cloudPush">
+    <div>
+        <div class="box-body p-v-md">
+            <div class="hoge-table-add">
+                <div class="hoge-table-title">推送内容列表</div>
+                <div class="pull-right">
+                    <button class="btn btn-purple font-12" ng-click="vm.export()" >导出Excel</button>
+                </div>
+            </div>
+                <!-- list -->
+            <div class="list_contain white hoge-table-contain">
+                <div class="btn-toolbar hoge-table-search m-l-0 ">
+                     <!--状态下拉-->
+                     <div class="btn-group dropdown hoge-dropdown">
+                        <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.status.name || vm.status}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="state in vm.stateArr" ng-click="vm.chooseStatus(state)">{{state.name}}</a>
+                        </div>
+                    </div>
+                     <!--时间下拉-->
+                    <div class="btn-group data-search pull-left hoge-dropdown" uib-dropdown>
+                        <button class="btn btn-sm" uib-dropdown-toggle ng-class="{'long-width': !vm.currentDate.id}">
+                            <span class="dropdown-label">{{vm.time}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu text-left text-sm" uib-dropdown-menu ng-class="{'disOpen':vm.open}">
+                            <li class="dropdown-item" ng-repeat="date in vm.dateSearch" ng-click="vm.chooseDate(date)">
+                                <a>{{date.label}}</a>
+                                <input id="datepicker" class="date-picker" ng-if="vm.dateSearch.length - 1 === $index" date-range-picker ng-model="vm.rangeDate" class="opacity-0"
+                                        type="text" options="vm.rangeOptions"/>
+                            </li>
+                        </ul>
+                    </div>
+                    <search-Box key-Word="vm.key"
+                        search-Key="vm.search(Item)"
+                        key-Press="vm.keyPress(Event)"
+                        hide-Kind="vm.hideAccessKind"
+                        is-Focus="vm.isFocus"
+                        place-Holder="vm.placeHolder"
+                    >         
+                    </search-Box>
+                    <!-- <div class="form-group hoge-input-search pull-right" >
+                        <input type="text" placeholder="{{ 'user.search'| translate}}" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                    </div> -->
+                </div>
+                <!-- <div class="errorTip" ng-show="!vm.cloudPushList.length">
+                   {{vm.error_msg}}
+                </div> -->
+                <hoge-error hight-num="'350px'" arr-length="vm.cloudPushList.length"></hoge-error>
+                <div class="list_header hoge-table-header" ng-show="vm.cloudPushList.length">
+                    <div class="wrap">
+                        <div class="list-ctr"></div>
+                        <div class="list-title">通知内容</div>
+                        <div class="list-status">发送状态</div>
+                        <div class="send-time">发送时间</div>
+                        <div class="list-username">添加人</div>
+                        <div class="create-time">添加时间</div>
+                    </div>
+                </div>
+                <!--列表-->
+                <div class="list hoge-item-border" ng-repeat="item in vm.cloudPushList track by $index" ng-show="vm.cloudPushList.length">
+                    <div class="list-item">
+                        <div class="level-one">
+                            <!-- <div class="list-ctr">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" value="option1" ng-checked="vm.itemCheck(item)" ng-click="vm.toggle(item)">
+                                </label>
+                            </div> -->
+                            <div class="list-title">{{item.content_title}}</div>
+                            <div class="list-status">{{item.errmsg}}</div>
+                            <div class="send-time">{{item.send_time}}</div>
+                            <div class="list-username">{{item.user_name}}</div>
+                            <div class="create_time">{{item.create_time}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!--bottom-->
+              <div class="list_bottom" ng-if="vm.cloudPushList.length">
+                  <div class="btn-toolbar list_bar flex-one btn-box">
+                      <div class="btn-group">
+                          <button class="btn del-btn" ng-disabled="vm.cloudPushList.length == 0" ng-click="vm.moreDelete()" translate="action_word.delete"></button>
+                      </div>
+                  </div>
+                  <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+              </div>
+                <!--bottom-->
+            </div>
+            <!-- / list -->
+        </div>
+    </div>
+</div>

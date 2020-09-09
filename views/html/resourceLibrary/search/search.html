@@ -1,0 +1,38 @@
+<div class="search-content">
+  <div class="search-header flex-h-center flex-v-center">
+    <img src="/assets/images/mxu/resourceLibrary/search/pic@2x.png" class="search-logo">
+    <span class="search-title">智能检索</span>
+  </div>
+  <div class="search-factor">
+    <div class="btn-group dropdown hoge-dropdown">
+      <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="dropdown-label">{{vm.chooseType}}</span>
+        <span class="caret"></span>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" ng-repeat="item in vm.searchType" ng-click="vm.changeType(item)">{{item.name}}</a>
+      </div>
+    </div>
+    <div class="search-input">
+      <input class="search-keyword" type="text" placeholder="请输入搜索内容" ng-model="vm.keyword" accept="image/*">
+      <i class="search-camera"></i>
+      <input class="input-upload" type="file" nv-file-select  uploader="vm.localUploader">
+    </div>
+    <span class="search-btn" ng-click="vm.search()" ng-class="{'dis-btn': vm.clickUpload}">搜索</span>
+    <span class="more-search" ng-click="vm.showTime = !vm.showTime">{{vm.showTime ? '收起' : '展开'}}高级搜索</span>
+    <div class="time-search" ng-if="vm.showTime">
+      <div class="time-wrap">
+        <span class="title">入库时间：</span>
+        <input id="datepicker" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+          type="text" options="vm.options"/>
+          <i class="time-icon"></i>
+      </div>
+      <div class="time-wrap">
+        <span class="title">更改时间：</span>
+        <input date-range-picker ng-model="vm.updateDate" class="date-picker opacity-0"
+          type="text" options="vm.updateOptions"/>
+        <i class="time-icon"></i>
+      </div>
+    </div>
+  </div>
+</div>

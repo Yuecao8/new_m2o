@@ -1,0 +1,89 @@
+<div class="integral_task_wrap new-wrapper b-t">
+    <!-- / header -->
+    <div class="hoge-table-add">
+        <div class="hoge-table-title">任务管理</div>
+    </div>
+    <!-- / header -->
+
+    <div class="row-col">
+        <div class="col-md-12 col-md-push-12 comment_list">
+            <!-- list -->
+            <div class="comment-list">
+                <!-- list -->
+                <div class="list_contain m-b-20 hoge-table-contain">
+                    <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                        <button class="btn dropdown-toggle " data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.rule_type}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm font-12">
+                            <a class="dropdown-item" ng-repeat="type in vm.typeArr" ng-click="vm.changeType(type.state)">{{type.name}}</a>
+                        </div>
+                    </div>
+                    <div class="ErrorTip hide" ng-class="{'show': !vm.taskList.length}">
+                        <p>{{vm.errorMessage}}</p>
+                    </div>
+                    <div class="list_header hoge-table-header " ng-show="vm.taskList.length">
+                        <div class="wrap">
+                            <div class="list-ctr"></div>
+                            <div class="list-name" translate="task.taskName"></div>
+                            <div class="list-task" translate="task.taskType"></div>
+                            <div class="list-times" translate="task.taskTimes"></div>
+                            <div class="list-gold" translate="task.achExp"></div>
+                            <div class="list-point" translate="task.achPoint"></div>
+                            <div class="list-use" translate="task.isUse"></div>
+                            <div class="list-i"></div>
+                        </div>
+                    </div>
+
+                    <div class="list hoge-item-border" ng-show="vm.taskList.length" ng-repeat="item in vm.taskList" >
+                        <!--列表-->
+                        <div class="list-item">
+                            <div class="list-ctr">
+                            </div>
+                            <div class="list-name">
+                                {{item.rule_name}}
+                            </div>
+                            <div class="list-task">
+                                <span ng-if="item.rule_type==1" class="label primary m-r-1 blue-300" translate="task.eveTask"></span>
+                                <span ng-if="item.rule_type==4" class="label primary m-r-1 orange-200" translate="task.achiTask"></span>
+                            </div>
+                            <div class="list-times" >
+                                <span ng-if="item.rule_num!=0">{{item.rule_num}}</span>
+                                <span ng-if="item.rule_num==0" translate="task.infinite"></span>
+                            </div>
+                            <div class="list-gold" >
+                                <span>{{item.exp_points}}</span>
+                            </div>
+                            <div class="list-point" >
+                                <span>{{item.credits}}</span>
+                            </div>
+                            <div class="list-use" >
+                                <span ng-if="item.status==0" class="label primary m-r-1 grey-300" translate="task.close" ng-click="vm.changeStatus(item, 1)"></span>
+                                <span ng-if="item.status==1" class="label light-green-200  primary m-r-1" translate="task.use" ng-click="vm.changeStatus(item, 0)"></span>
+                            </div>
+                            <div class="list-i" ng-click="vm.goEdit(item)">
+                                <div class="icon-tool pull-right">
+                                    <i class="fa icon-bianji" aria-expanded="false"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list_bottom m-b-20" ng-show="vm.pageOptions.total >10">
+                        <page-nation options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                    </div>
+                </div>
+                <!--bottom-->
+
+
+                <!--bottom-->
+
+            </div>
+            <!-- / list -->
+        </div>
+            <!-- list -->
+        </div>
+    </div>
+    <div ui-include="'../views/mxu/common/footer.html'"></div>
+</div>

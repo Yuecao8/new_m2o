@@ -1,0 +1,17 @@
+{
+    "newsN" : "范围包含文稿、图集、视频、主题内容",
+    "liveL" : "范围包含直播内容的普通评论",
+    "contru" : "范围包含来自终端的报料内容，报料的评论",
+    "roadR" : "范围包含来自终端的路况内容，路况的评论",
+    "information" : "资讯",
+    "live" : "直播",
+    "contribute" : "报料",
+    "road" : "路况",
+    "auditControl" : "UGC审核管控",
+    "ugcTip" : "可以在对系统中具有UGC（注册会员和匿名用户产生的内容）功能的应用进行审核管理",
+    "application" : "应用",
+    "description" : "描述",
+    "review" : "内容后置审核",
+    "postReview" : "评论/回复后置审核",
+    "successOperate" : "操作成功!"
+}

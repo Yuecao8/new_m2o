@@ -1,0 +1,42 @@
+<div class="modal-addGift-publish box-shadow-md">
+        <div class="modal-header">
+            <h5 class="modal-title">新建套餐<img ng-click="vm.close()" style="float: right;width: 23px;margin-top: 12px"></h5>
+        </div>
+        <div class="modal-body" my-loading="vm.detailLoading">
+           <div class="form-item">
+               <label for="">
+                   套餐名称：
+                   <input class="comboName" type="text" ng-model="vm.comboName" maxlength="15" placeholder="请输入套餐名">
+               </label>
+           </div>
+           <div class="form-item">
+               <label for="">
+                   等价关系：
+                   <span>人民币：</span>
+                   <input class="equal" type="text" ng-model="vm.comboCost" placeholder="请输入">
+                   <span>元</span>
+               </label>
+           </div>
+           <div class="form-item">
+               <label for="">
+                   货币类型：
+                   <div class="btn-group dropdown hoge-dropdown giftType" style="margin-left: 3px;
+                  margin-right: 8px;margin-left:2px !important;">
+                        <button style="width:100px;font-size:14px;" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.virtual}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div style="width:100px" ng-show="vm.virtualArr.length" class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item" ng-repeat="virtual in vm.virtualArr" ng-click="vm.chooseVirtual(virtual)">{{virtual.name}}</a>
+                        </div>
+                    </div>
+                    <input class="num" type="text" ng-model="vm.comboValue">
+                    <span>个</span>
+               </label>
+           </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+            <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-disabled="vm.saveDisabled" my-loading="vm.saveLoading">确定</button>
+        </div>
+</div>

@@ -1,0 +1,8 @@
+{
+    "jurisdiction":"权限",
+    "description":"在此可以管理后台用户、角色以及角色拥有的权限",
+    "user":"用户",
+    "role":"角色",
+    "allRole":"所有角色",
+    "roles":"全部角色"
+}

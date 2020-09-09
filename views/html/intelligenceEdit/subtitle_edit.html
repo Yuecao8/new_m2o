@@ -1,0 +1,37 @@
+<div class="subtitle-wrap">
+  <div class="list-header flex-v-center">
+    <div class="start-time">开始时间</div>
+    <div class="end-time">结束时间</div>
+    <div class="content">字幕内容</div>
+    <div class="btn-wrap">
+      <div class="add-btn btn" ng-click="vm.addSubtitle(false)">添加字幕</div>
+      <div class="btn" ng-click="vm.getList()">智能识别</div>
+    </div>
+  </div>
+  <div class="list-body">
+    <div ng-repeat="(key, val) in vm.subtitleList track by $index">
+      <div class="item-wrap flex-v-center" 
+      ng-repeat="(index, item) in val" 
+      ng-click="vm.checkSubtitle(key, index, item)"
+      ng-class="{'is-selected': vm.selectedSubtitle.key === key && vm.selectedSubtitle.index === index}">
+        <div class="start-time">{{item.start_format}}</div>
+        <div class="end-time">{{item.end_format}}</div>
+        <textarea class="content flex-one content-input time-input" type="text" ng-model="item.caption" rows="2" ng-blur="vm.updateSubtitle(item, key, index)"></textarea>
+        <div>
+          <i class="add-icon" ng-click="vm.addSubtitle(key, index)"></i>
+          <i class="delete-icon" ng-click="vm.deleteSubtitle(item, key, index)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sel-labels" ng-if="vm.isEmpty(vm.subtitleList)">
+    <div class="no-data" ng-if="!vm.loadingSubtitle">
+      <img src="/assets/images/mxu/edit-video/img_zimukong@2x.png" class="img-tip">
+      <div class="text-tip">点击上方按钮即可开始编辑</div>
+    </div>
+    <div class="no-data" ng-if="vm.loadingSubtitle">
+      <img src="/assets/images/mxu/edit-video/icon_dengdai@2x.png" class="img-tip-loading">
+      <div class="text-tip">智能识别中…</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="mxu_side_wrapper">
+    <div class="col-md w_list menu-wrap">
+        <div class="title" translate="terminalWeb.siteManage"></div>
+        <div class="tip" translate="terminalWeb.siteIntroduce"></div>
+        <ul class="menu-content">
+            <li ng-class="{active:$state.includes('app.terminal.web.siteSet')}">
+                <a ui-sref="app.terminal.web.siteSet">
+                    <i class="fa icon-zhandianpeizhi"></i>
+                    <span translate="terminalWeb.siteConfig"></span>
+                </a>
+            </li>
+        	<!--<li ng-class="{active:$state.includes('app.terminal.web.memSet' ) || $state.includes('app.terminal.web.memGuide')}">-->
+                <!--<a ui-sref="app.terminal.web.memSet">-->
+                    <!--<i class="fa icon-huiyuanpeizhi"></i>-->
+                    <!--<span translate="terminalWeb.appConfig"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li ng-class="{active:$state.includes('app.terminal.menu.tempSet' ) || $state.includes('app.terminal.menu.columnTemp')}">
+                <a ui-sref="app.terminal.menu.tempSet">
+                    <i class="fa icon-new－mubanshezhi"></i>
+                    <span translate="terminalAnchor.tempSet"></span>
+                </a>
+            </li>
+            <!--<li ng-class="{active:$state.includes('app.terminal.web.homeSet')}">-->
+                <!--<a ui-sref="app.terminal.web.homeSet">-->
+                    <!--<i class="fa icon-shouyepeizhi"></i>-->
+                    <!--<span translate="terminalWeb.indexConfig"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{active:$state.includes('app.terminal.web.columnSet')}">-->
+                <!--<a ui-sref="app.terminal.web.columnSet">-->
+                    <!--<i class="fa icon-mubanpeizhi"></i>-->
+                    <!--<span translate="terminalWeb.templateSetting"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+
+        <div class="nav_classify pos-rlt" ng-if="$state.includes('app.terminal.menu.columnSet')">
+            <nav class="navside m-b">
+                <div class="nav-border b-primary" ng-if="vm.navList.length" flex >
+
+                    <abn-tree
+                            tree-data         = "vm.navList"
+                            on-select         = "vm.treeHandler(branch)"
+                            expand-level      = "1"
+                    >
+                    </abn-tree>
+
+                </div>
+            </nav>
+        </div>
+
+    </div>
+    <div class="second-view white">
+        <div ui-view></div>
+    </div>
+    <div ui-include="'../views/mxu/common/footer.html'"></div>
+</div>

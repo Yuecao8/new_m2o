@@ -1,0 +1,121 @@
+<div class="mxu_side_wrapper">
+    <div class="menu-wrap" ng-if="$state.current.name !=='app.interact.voteForm'">
+        <div class="title" translate="interact.interaction"></div>
+        <div class="tip" translate="interact.description"></div>
+        <!--<ul class="menu-content">-->
+            <!--<li ng-class="{active:$state.current.name =='app.interact.comment'}">-->
+                <!--<a ng-click="vm.commentGo()">-->
+                    <!--<i class="fa icon-pinglun2"></i>-->
+                    <!--<span translate="interact.comment"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{active:$state.current.name =='app.interact.contribute'}">-->
+                <!--<a ng-click="vm.contributeGo()">-->
+                    <!--<i class="fa icon-baoliao2"></i>-->
+                    <!--<span translate="interact.contribute"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--&lt;!&ndash;<% if (edition === 'pro' || edition === 'ult') { %>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li ng-class="{active:$state.current.name =='app.interact.vote'}">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a ng-click="vm.voteGo()">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<i class="fa icon-toupiao2"></i>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span translate="interact.vote"></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<% } %>&ndash;&gt;-->
+        <!--</ul>-->
+
+        <!--评论分类-->
+        <div class="nav_classify pos-rlt" ng-if="$state.current.name =='app.interact.comment'">
+            <nav class="navside m-b">
+                <div class="nav-border b-primary" flex>
+                    <span class="nav-text" translate="interact.commentClassify"></span>
+                    <li class="pos-rlt">
+                        <a class="nav-1" ng-class="{'active': vm.choseComment == 'all'}"
+                           ng-click="vm.toComment('all')">
+                              <span class="title-txt" translate="interact.allClassify">
+                              </span>
+                        </a>
+                    </li>
+                    <li ng-repeat="item in vm.comment track by $index" class="pos-rlt" ng-click="vm.toComment(item)">
+                        <a class="nav-1" ng-class="{'active': vm.choseComment == item.type}" ng-if="!item.edit">
+                            <span class="title-txt">
+                              {{item.name}}
+                            </span>
+                        </a>
+                    </li>
+                </div>
+            </nav>
+        </div>
+        <!--报料分类-->
+        <div class="nav_classify pos-rlt" ng-if="$state.current.name =='app.interact.contribute'">
+            <nav class="navside m-b">
+                <div class="nav-border b-primary" flex>
+                    <span class="nav-text">{{ 'interact.contribute'| translate}}{{ 'interact.classify'| translate}}</span>
+                    <class-tree class="classify-tree" tree-data= "vm.contributeClass" sort-id="vm.storageSort"
+                                add-class="vm.addClassify(newItem)"
+                                get-child="vm.getChilds(item)"
+                                edit-classify="vm.editClassify(param)"
+                                del-classify="vm.deleteClass(delItem)"
+                                select-class="vm.selectClass(param)"
+                                tree-level="4"
+                    ></class-tree>
+                </div>
+            </nav>
+        </div>
+        <% if (edition === 'pro' || edition === 'ult') { %>
+        <!--投票分类-->
+        <div class="nav_classify pos-rlt" ng-if="$state.current.name =='app.interact.vote'">
+            <nav class="navside m-b">
+                <div class="nav-border b-primary" flex>
+                    <span class="nav-text">{{ 'interact.vote'| translate}}{{ 'interact.classify'| translate}}</span>
+                    <li class="pos-rlt">
+                        <a class="nav-1" ng-class="{'active': vm.choseVote == 'all'}"
+                           ng-click="vm.toVote('all')">
+                              <span class="title-txt" translate="interact.allClassify">
+                              </span>
+                        </a>
+                    </li>
+                    <li ng-repeat="item in vm.voteList track by $index" class="pos-rlt" ng-click="vm.toVote(item)">
+                        <a class="nav-1" ng-class="{'active': vm.choseVote == item.id}" ng-if="!item.edit">
+                            <span class="title-txt">
+                              {{item.name}}
+                            </span>
+                            <div class="operat-wrap">
+                                <div class="edit-item" ng-click="vm.editVote(item)"><i class="icon-bianji"></i></div>
+                                <div class="edit-item del-icon" ng-click="vm.delVote( item )"><i
+                                            class="icon-shanchu1"></i></div>
+                            </div>
+                        </a>
+                        <!--主栏目编辑-->
+                        <div ng-show="item.edit" ng-if="item.edit" class="fshowInput edit">
+                            <input type="text" get-focus focus-tag="item.edit"
+                                   ng-keypress="vm.editVotePress($event,item)" ng-blur="vm.editVoteSave(item)"
+                                   ng-model="item.name" class="editInp">
+                        </div>
+                    </li>
+                    <!--主栏目-->
+
+                    <li class="add-lanmu">
+                        <a ng-if="!vm.showInput">
+							<span class="nav-icon" ng-click="vm.addVote()">
+							<span class="add-icon add-20"><i class="icon-tianjia"></i>{{ 'interact.create'| translate}}{{ 'interact.classify'| translate}}</span></span>
+                        </a>
+                        <a ng-if="vm.showInput">
+                            <div class="edit-box fshowInput">
+                                <input type="text" get-focus focus-tag="vm.showInput" ng-model="vm.addName"
+                                       ng-blur="vm.closeVote()" ng-keypress="vm.VotePress($event)" class="increase">
+                            </div>
+                        </a>
+                    </li>
+                </div>
+            </nav>
+        </div>
+        <% } %>
+    </div>
+    <div class="second-view white" ng-if="$state.current.name !=='app.interact.voteForm'">
+        <div ui-view></div>
+    </div>
+    <div ui-view ng-if="$state.current.name =='app.interact.voteForm'"></div>
+    <!--<div ui-include="'../views/mxu/common/footer.html'"></div>-->
+</div>

@@ -1,0 +1,9 @@
+{
+    "planName" : "计划名称",
+    "channel" : "频道",
+    "state" : "收录状态",
+    "allState" : "全部状态",
+    "success" : "成功",
+    "fail" : "失败",
+    "allChannel" : "全部频道"
+}

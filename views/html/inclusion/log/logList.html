@@ -1,0 +1,93 @@
+<div class="log pos-rlt" my-loading="vm.loading">
+    <div>
+        <!-- header -->
+        <div class="content_list_head hoge-table-add">
+            <div class="hoge-table-title">收录日志</div>
+        </div>
+        <!-- / header -->
+        <!-- list -->
+
+        <div class="list_contain hoge-table-contain white">
+            <div class="btn-toolbar list_bar hoge-table-search m-l-0">
+                <div class="btn-group dropdown m-l-0">
+                    <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                        <button class="btn dropdown-toggle " data-toggle="dropdown">
+                            <span class="dropdown-label">{{vm.channel_name}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm font-13">
+                            <a class="dropdown-item" ng-repeat="cha in vm.channel_list" ng-click="vm.goChannel(cha.id)">{{cha.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                <!--状态下拉-->
+                <div class="btn-group dropdown m-r-15 hoge-dropdown">
+                    <button class="btn dropdown-toggle " data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.status}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm font-13">
+                        <a class="dropdown-item" ng-repeat="item in vm.statusArr" ng-click="vm.changeStatus(item)">{{item.name}}</a>
+                    </div>
+                </div>
+                <!--时间下拉-->
+                <div class="btn-group dropdown hoge-dropdown iclude" style="width:200p">
+                    <input id="datepicker iclude-input" style="width:200px;height:32px;text-align:center;border:1px solid #d9e2f1" date-range-picker ng-model="vm.rangeDate" class="date-picker opacity-0"
+                        type="text" options="vm.options"/>
+                </div>
+                <!--<div class="btn-group dropdown m-r-15">-->
+                <!--<button class="btn white dropdown-toggle " data-toggle="dropdown">-->
+                <!--<span class="dropdown-label">{{vm.state}}</span>-->
+                <!--<span class="caret"></span>-->
+                <!--</button>-->
+                <!--<div class="dropdown-menu text-left text-sm font-13">-->
+                <!--<a class="dropdown-item" ng-repeat="state in vm.stateArr" ng-click="vm.stateActive(state)">{{state.name}}</a>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="form-group hoge-input-search pull-right" >
+                    <input type="text" placeholder="搜索" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                    <i class="fa typeface-searchbar_sousuo" ng-click="vm.search(vm.key)"></i>
+                </div>
+            </div>
+            <hoge-error hight-num="'277px'" arr-length="vm.NormalList.length" load="vm.loading"></hoge-error>
+            <div class="table_header hoge-table-header" ng-show="vm.NormalList.length">
+                <div class="wrap b-l b-white">
+                    <div class="list-name flex-one" translate="includedList.planName"></div>
+                    <div class="list-column" translate="includedList.channel"></div>
+                    <div class="list-status" translate="includedList.state"></div>
+                </div>
+            </div>
+            <!--list-->
+            <div class="list white" ng-model="vm.NormalList" ng-show="vm.NormalList.length">
+                <div class="list-item hoge-item-border"
+                     ng-repeat="nor in vm.NormalList track by $index"
+                     ng-mouseenter=""
+                     ng-class="{'border-blue':vm.itemCheck(nor)}">
+                    <div class="list-name flex-one" title="收录ID:{{nor.id}}">
+                       <span>{{nor.title}}</span>
+                       <!-- <div class="question-hover">收录ID：xxx<span class="question-tip"></span>
+                       </div> -->
+                    </div>
+                    <div class="list-column" >
+                        <span>{{nor.channel_name}}</span>
+                    </div>
+                    <div class="list-status" >
+                        <span class="" >{{nor.text}}</span>
+                    </div>
+                </div>
+            </div>
+            <!--bottom-->
+             <div class="list_bottom hoge-table-bottom" ng-show="vm.NormalList.length">
+                 <page-nation  options="vm.pageOptions" turn-page="vm.changePage()"></page-nation>
+                <!--<div class="btn-toolbar list_bar">-->
+                    <!--<div class="btn-group">-->
+                        <!--<label class="checkbox-inline">-->
+                            <!--<input type="checkbox"  value="option1" ng-checked="vm.allChecked()" ng-click="vm.toggleAll()">全选-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+	        </div>
+        </div>
+        <!-- / list -->
+    </div>
+</div>

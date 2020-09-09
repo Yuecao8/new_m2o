@@ -1,0 +1,14 @@
+<div class="app-body-inner mxu_m2o_wrap">
+    <div class="iframe_load_box" ng-show="vm.loading">
+        <img src="../../../../assets/images/mxu/iframe_loading.gif">
+    </div>
+    <div class="btn-toolbar" ng-show="!vm.loading">
+        <div class="special-entry pull-right">
+            <button class="btn btn-purple" ng-click="vm.goSpecial()">
+                新增布局
+            </button>
+        </div>
+    </div>
+    <iframe id="frame" ng-show="!vm.loading" frameborder="0"
+            third-iframe="" width="100%" height="100%" style="padding-bottom: 50px;"></iframe>
+</div>

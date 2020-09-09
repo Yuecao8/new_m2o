@@ -1,0 +1,32 @@
+{
+    "siteSet" : "Site settings",
+    "reBuild" : "Regenerate",
+    "domainName" : "Domain name*",
+    "domainPrefix" : "Domain prefix*",
+    "prefixIntroduce" : "*Please make sure that the domain name prefix is correct, for example: 'www'.",
+    "domainIntroduce" : "* Please make sure the domain name is filled in correctly, for example: 'hoge.cn'.",
+    "siteName" : "Site name*",
+    "siteIntroduce" : "* The site name is displayed on the browser's title bar and on the Microsoft Windows taskbar",
+    "siteLogo" : "Website LOGO",
+    "logoIntroduce" : "* It is recommended to use PNG / JPEG format picture, size 140 * 100 px",
+    "keyWord" : "Keywords",
+    "wordIntroduce" : "* Can contain multiple keywords separated by commas",
+    "describe" : "Description",
+    "save" : "Save",
+
+    "genSuccess" : "Generate successfully!",
+    "upDate" : "Update completed!",
+
+    "versionMsg":" The current MXU system version for the MXU Ultimate, support the creation of 10 sites.",
+    "siteList":"Site list",
+    "newSite":"New site",
+    "siteName1":"Site name",
+    "keywords":"Keywords",
+    "domainName1":"Domain name",
+    "creatorOrDate":"Creator/Creation date",
+    "creator":"Creator",
+    "createTime":"Creation date",
+    "cancel":"Cancel",
+    "sortTip" : "The sort function is turned on",
+    "sortSuccess" : "Sort successfully"
+}

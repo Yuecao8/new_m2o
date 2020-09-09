@@ -1,0 +1,127 @@
+<div class="mxu_side_wrapper mxu_content_wrapper chamberOfCommerce">
+
+    <div class="member-cont" ng-class="{'hideMenu': vm.hideAccessKind}">
+        <div class="pos-rlt">
+            <div class="content_list_head clearfix hoge-table-add">
+                <div class="pull-left hoge-table-title">
+                    商会成员信息
+                </div>
+            </div>
+            <div class="flex-item">
+                <div class="menu-wrap">
+                    <div class="item-kinds" ng-click="vm.changeType()">
+                        <span class="nor-name-member icon-kinds" ng-class="{'active-item':!vm.status}"
+                            >成员列表</span>
+                    </div>
+                    <div class="item-kinds" ng-click="vm.changeType(1)">
+                        <span class="nor-name-sq icon-kinds" ng-class="{'active-item':vm.status ==1}"
+                            >申请列表</span>
+                    </div>
+                </div>
+                <div class="hoge-flex content-padding flex-one">
+
+                    <div class="list_contain hoge-table-contain white" my-loading="vm.loading">
+                        <div class="list_bar hoge-table-search flex-item">
+                            <!--状态下拉-->
+                            <!-- <div class="btn-group dropdown hoge-dropdown">
+                                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="dropdown-label">{{vm.statusName}}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu text-left text-sm">
+                                    <a class="dropdown-item" ng-repeat="state in vm.statusArr"
+                                        ng-click="vm.chooseStatus(state.id)">{{state.name}}</a>
+                                </div>
+                            </div> -->
+                            <!-- 搜索 -->
+                            <search-Box key-Word="vm.key" search-Key="vm.search(Item)" place-Holder="'请输入账号/手机号/姓名/身份证号'"
+                                key-Press="vm.keyPress(Event)">
+                            </search-Box>
+                            <div>
+                                <div class="pull-right">
+                                    <div class="create-buttons" ng-click="vm.goEdit()">
+                                        <!-- <i class="left-icon typeface-list_tonggao"></i> -->
+                                        <span>添加成员</span>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+
+                            <!-- <div class="form-group hoge-input-search black-input-search" ng-class="{'pull-right':!vm.hideAccessKind,'pull-left':vm.hideAccessKind}">
+                                <input type="text" placeholder="{{'content.search' | translate }}" ng-keypress="vm.keyPress($event)" ng-model="vm.key">
+                                <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                            </div> -->
+                        </div>
+                        <div class="table_header hoge-table-header flex-item">
+                            <div class="list-ctr"></div>
+                            <div class="list-title" style="padding-left:60px;">
+                                账号
+                            </div>
+                            <div class="list-phone">手机号</div>
+                            <div class="list-others">姓名</div>
+                            <div class="list-publish">商会职务</div>
+                            <div class="list-status">申请状态</div>
+                            <div class="list-operate">
+                                操作
+                            </div>
+                        </div>
+                        <hoge-error hight-num="'277px'" arr-length="vm.originalNews.length" load="vm.loading">
+                        </hoge-error>
+                        <div class="list white border-bottom-radius" ng-show="vm.originalNews.length">
+                            <div class="list-item hoge-item-border flex-item"
+                                ng-repeat="nor in vm.originalNews track by $index">
+                                <div class="list-ctr">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option1" ng-checked="vm.itemCheck(nor)"
+                                            ng-click="vm.toggle(nor)">
+                                    </label>
+                                </div>
+                                <div class="list-title">
+                                    <img ng-if="item.member.avatar" ng-src="{{item.member.avatar}}?imageView/0/h/40/w/40" alt="" >
+                                    <img ng-if="!item.member.avatar" src="/assets/images/mxu/avatar-40.jpg" alt="" >
+                                    <span>{{nor.member.nick_name}}</span>
+                                </div>
+                                <div class="list-phone">{{nor.mobile?nor.mobile.substr(0, 3)+'****'+nor.mobile.substr(7):''}}</div>
+                                <div class="list-others">{{nor.name}}</div>
+                                <div class="list-publish">{{nor.title}}</div>
+                                <div class="list-status">
+                                    <span class="green-status" ng-if="nor.status == 2">已通过</span>
+                                    <span class="red-status" ng-if="nor.status == 3">已拒绝</span>
+                                    <span class="grey-status" ng-if="nor.status == 1">待审核</span>
+                                </div>
+                                <div class="list-operate">
+                                    <span ng-click="vm.agree(nor,2)" ng-if="nor.status !=2">通过</span>
+                                    <span ng-click="vm.agree(nor,3)" ng-if="nor.status !=3">拒绝</span>
+                                    <span ng-click="vm.goEdit(nor)">编辑</span>
+                                </div>
+
+                            </div>
+                            <!--bottom-->
+                            <div class="list_bottom hoge-table-bottom border-bottom-radius">
+                                <div class="btn-group">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="option1" ng-checked="vm.allChecked()"
+                                            ng-click="vm.toggleAll()">
+                                        <span class="all-checked">全选</span>
+                                    </label>
+                                </div>
+                                <div class="btn-toolbar list_bar flex-one btn-box">
+                                    <div class="btn-group">
+                                        <button class="btn btn-comment" ng-click="vm.agreeAll(2)">通过</button>
+                                        <button class="btn btn-comment" ng-click="vm.agreeAll(3)">拒绝</button>
+                                        <!-- <button  class="btn del-btn" ng-click="vm.deleteAll()">删除</button> -->
+                                        <!-- <button  class="btn del-btn" ng-click="vm.deleteAll()" ng-if="vm.isListKind == 3 && vm.isPublicDelete">删除</button> -->
+                                    </div>
+                                </div>
+                                <page-nation options="vm.pageOptions" turn-page="vm.changePage()"
+                                    ng-show="vm.pageOptions.total > 0"></page-nation>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<form class="modal-memSet box-shadow-md" name="SetForm" id="SetForm">
+    <div class="modal-header">
+        <h5 class="modal-title"><span>{{vm.name}}</span>{{'terminalMemSet.accessConfig' | translate}}</h5>
+    </div>
+    <div class="modal-body" my-loading="vm.infoList_loading">
+        <div class="ErrorTip" ng-if="!vm.infoList" translate="terminalMemSet.noConfig"></div>
+        <div class="row" ng-if="vm.infoList" ng-repeat="item in vm.infoList">
+            <label class="col-sm-3 mem-name">{{item.settitle}}</label>
+            <input class="col-sm-9" type="text" ng-model="item.value">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-if="vm.infoList" ng-disabled="SetForm.$invalid">{{'terminalMemSet.save' | translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'terminalMemSet.cancel' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,58 @@
+<div class="modal-wrap" id="addNewProgram"  >
+	<div class="programAdd">
+		<div >
+			<div class="modal-header text-left">
+				<h5 class="modal-title">
+					<span class="pull-left m-r" translate="programDetail.editProgram"></span>
+				</h5>
+			</div>
+			<div class="modal-body">
+				<div class="programInfo-box">
+					<div class="form-group" >
+						<label class="m-b-0 label-right" translate="programDetail.programName"></label>
+						<div class="form-control form-control-left">
+							<input type="text" ng-model="vm.item.theme">
+						</div>
+					</div>
+					<div class="form-group m-b-40">
+						<label class=" m-b-0 label-right" translate="programDetail.startTime"></label>
+						<div class="form-control form-control-left">
+							<input ng-model="vm.item.time " data-icon-left="fa fa-chevron-left"  data-icon-right="fa fa-chevron-right"  data-time-format="HH:mm" data-time-type="number"  placement="bottom-left" name="time" bs-timepicker="">
+
+						</div>
+					</div>
+					<div class="form-group m-b-40 " ng-show="vm.item.id">
+						<label class=" m-b-0 label-right" translate="programDetail.duration"></label>
+						<div class="form-control form-control-left">
+							<span class="pro_time">{{vm.long}}</span>
+						</div>
+					</div>
+					<div class="form-group m-b-40 " ng-show="vm.item.id">
+						<label class="m-b-0 label-right" translate="programDetail.endTime"></label>
+						<div class="form-control form-control-left">
+							<span class="pro_time">{{vm.endTime}}</span>
+						</div>
+					</div>
+					<div class="form-group m-b-80">
+						<label class=" m-b-0 label-right" translate="programDetail.programIcon"></label>
+						<div class="img-info" ng-class="{'pos-right':vm.item.id}">
+							<div class="form-file" my-loading="vm.img_loading">
+								<input type="file" nv-file-select="" uploader="vm.uploader" accept="image/gif,image/jpeg,image/png,image/bmp"/>
+								<div class="img-tips" ng-if="!vm.pic_src" translate="programDetail.uploadImage"></div>
+								<div class="img-tip" ng-if="vm.pic_src" translate="programDetail.uploadImage"></div>
+								<div class="img-box" style="background:url({{vm.pic_src}}) center center no-repeat">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer p-a">
+				<div class="pull-right">
+					<button class="btn btn-success btn-sm primary-btn" data-dismiss="modal" ng-click="vm.save()">{{'programDetail.save'| translate}}</button>
+					<button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{'programDetail.cancel'| translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

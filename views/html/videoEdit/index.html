@@ -1,0 +1,163 @@
+<div class="wrapper-video-edit">
+    <div class="bread-crumb">
+        <a ui-sref="app.content.menu.list({type: 'video'})">稿件库</a>
+        <i class="fa fa-angle-right"></i>
+        <span style="color:#333">快速编辑</span>
+    </div>
+    <div class="main-content">
+        <main class="body flex-item">
+            <div class="left" my-loading="vm.loadingTemplate">
+                <ul class="edit-list">
+                    <li class="edit-item" ng-repeat="item in vm.templateList track by item.id" ng-click="vm.addTemplate(item)">
+                        <div class="sample-label"><i ng-class="$index === 0 || $index === 5 ? 'icon-film' : 'icon-add'"></i>{{item.name}}</div>
+                        <div class="sample-box">
+                            <img src="{{item.index_pic}}" alt="">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="middle">
+                <div class="video-box" ref="videoBox" my-loading="vm.loadingVideo">
+                    <div style="width: 100%;height: 100%;" ref="videoContainer"></div>
+                    <div class="template-box" ng-repeat="item in vm.editTemplateList track by item.id"
+                        ng-hide="item.hide"
+                        ng-style="{
+                            zIndex: item.zIndex,
+                            top: item.top + 'px',
+                            left: item.left + 'px',
+                            transform: 'scale(' + item.scale + ')',
+                            outlineWidth: 1 / item.scale + 'px'
+                        }"
+                        ng-mousedown="vm.dragStart($event, item)"
+                        >
+                        <video-tag-tmpl config="item.config" texts="item.data.texts" tag="item.data.template_id === 5 ? 'textarea' : 'input'" on-update="vm.updateTemplate(item)"></video-tag-tmpl>
+                        <img src="/assets/images/mxu/video-edit/biaoqianicon_close.png" alt="" class="template-close"
+                            ng-style="{ transform: 'scale(' + 1 / item.scale + ')' }"
+                            ng-click="vm.deleteTemplate(item.id)"
+                        >
+                    </div>
+                    <div ng-style="vm.subtitleStyle" class="subtitle" ng-if="vm.captionOpen">{{vm.curSubtitle}}</div>
+                </div>
+                <div class="video-control">
+                    <div class="time-point">
+                        <span>00:00</span>
+                        <span class="pull-right">{{vm.transformTime(vm.duration)}}</span>
+                    </div>
+                    <div class="slider-box">
+                        <rzslider
+                            rz-slider-model="vm.timePercent"
+                            rz-slider-options="{ floor: 0, ceil: 100, onChange: vm.handleSliderChange }"
+                            rz-slider-tpl-url="../views/mxu/videoEdit/slider-template.html">
+                        </rzslider>
+                    </div>
+                    <div class="control-icon">
+                        <img src="/assets/images/mxu/video-edit/play_back.png" alt="" class="back-icon">
+                        <span class="play-pause" ng-click="vm.toggleVideoStatus()">
+                            <img src="/assets/images/mxu/video-edit/playicon.png" alt="" class="play-icon" ng-show="vm.videoStatus === 'pause'">
+                            <img src="/assets/images/mxu/video-edit/zhantingicon.png" alt="" class="cause-icon" ng-show="vm.videoStatus === 'play'">
+                        </span>
+                        <img src="/assets/images/mxu/video-edit/play_forward.png" alt="" class="forward-icon">
+                    </div>
+                    <div class="caption-status flex-item pull-right">
+                        <label class="ui-switch">
+                            <input type="checkbox" ng-click="vm.updateCaptionStatus($event)"  ng-checked="vm.captionOpen" >
+                            <i></i>
+                        </label>
+                        <span class="caption-status-title">题词</span>
+                    </div>
+                </div>
+                <div class="video-caption clearfix" my-loading="vm.loadingVideoInfo">
+                    <div class="caption-list-box" ng-if="vm.captions.length">
+                        <ul class="caption-list" ng-style="{ top: (-vm.curCaptionIndex + 1) * 28 + 'px' }">
+                            <li ng-repeat="item in vm.captions track by item.id" class="textoverflow caption-item"
+                                ng-class="{ current: vm.curCaptionIndex === $index }">
+                                <span class="time">{{vm.transformTime(item.start_time)}}</span>
+                                <span class="content">{{item.caption}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="current-mask" ng-if="vm.captions.length"></div>
+                    <div class="no-data" ng-if="!vm.captions.length && !vm.loadingVideoInfo">
+                        <img src="/assets/images/mxu/video-edit/no_data_icon.png" alt="">
+                        <div class="text">暂无数据</div>
+                    </div>
+                    <div class="view-full-caption" tooltip-placement="top" uib-tooltip="查看完整字幕" tooltip-append-to-body="true" ng-click="vm.showFullCaption = true"></div>
+                </div>
+            </div>
+            <div class="right">
+                <!-- 识别结果 -->
+                <div ng-show="!vm.showFullCaption" my-loading="vm.loadingVideoInfo">
+                    <div class="recognition-label">识别结果</div>
+                    <div class="recognition-box">
+                        <div class="time-location" ng-repeat="item in vm.locations track by item.id">
+                            <div ng-repeat="key in ['time', 'location']" ng-class="key" class="flex-item">
+                                <span>{{key === 'time' ? '时间' : '地点'}}：</span>
+                                <input ref="{{key}}" type="text" ng-if="item['_editing_' + key]" ng-blur="vm.handleTimeOrPlaceBlur(item, key)"
+                                    ng-model="item[key]">
+                                <span ng-if="!item['_editing_' + key]" ng-class="{fill: item[key]}" class="flex-item">{{item[key] || '未填写'}}
+                                    <i class="icon-edit" ng-click="vm.editTimeOrPlace(item, key)">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="figure" ng-if="!vm.loadingVideoInfo">
+                            <div class="figure-label">人物：</div>
+                            <ul class="figure-list">
+                                <li class="figure-item flex-item" ng-repeat="item in vm.faces track by item.id">
+                                    <img src="{{item.face_path}}" alt="" class="avatar">
+                                    <div class="flex-item flex-one figure-content">
+                                        <span class="name flex-one flex-item">
+                                            <input ref="face" autofocus="autofocus" type="text" ng-if="item._editing" ng-blur="vm.handleNameBlur(item)" ng-model="item.name" maxlength="8">
+                                            <span ng-if="!item._editing" ng-class="{fill: item.name}" class="flex-item">{{item.name || '未识别出'}}
+                                                <i class="icon-edit" ng-click="vm.editName(item)">
+                                            </span>
+                                        </span>
+                                        <span class="location" ng-click="vm.locateFrame(item.time[0].start)">
+                                            <i class="icon-location"></i>定位帧</span>
+                                        <span class="time">{{vm.transformTime(item.time[0].start)}}</span>
+                                        <span class="num">出现次数：{{item.times}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="no-data" ng-if="!vm.faces.length">
+                                <img src="/assets/images/mxu/video-edit/no_data_icon.png" alt="">
+                                <div class="text">暂无数据</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 完整字幕 -->
+                <div class="caption-box" ng-show="vm.showFullCaption">
+                    <div class="caption-label">查看字幕<img src="/assets/images/mxu/video-edit/zimucloseicon.png" class="pull-right caption-close" ng-click="vm.showFullCaption = false"></img></div>
+                    <ul class="caption-list">
+                        <li class="caption-item" ng-repeat="item in vm.captions track by item.id" ng-class="{active: vm.curCaptionIndex === $index}">
+                            <div class="time-period flex-item">
+                                <span class="flex-one">{{vm.transformTime(item.start_time)}}-{{vm.transformTime(item.end_time)}}</span>
+                                <i class="icon-location" uib-tooltip="定位帧" tooltip-append-to-body="true" ng-click="vm.locateFrame(item.start_time)"></i>
+                                <i class="icon-edit" uib-tooltip="编辑" tooltip-append-to-body="true" ng-click="vm.editCaption(item)"></i>
+                            </div>
+                            <div ng-if="!item._editing" class="caption-content">{{item.caption}}</div>
+                            <textarea
+                                textarea-adapt
+                                rows="1"
+                                val="item.caption"
+                                ng-if="item._editing"
+                                ref="caption"
+                                autofocus="autofocus"
+                                ng-blur="vm.handleCaptionBlur(item)"
+                                ng-model="item.caption">
+                            </textarea>
+                        </li>
+                    </ul>
+                    <div class="no-data" ng-if="!vm.captions.length">
+                        <img src="/assets/images/mxu/video-edit/no_data_icon.png" alt="">
+                        <div class="text">暂无数据</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <button class="btn-next" ng-click="vm.next()">下一步</button>
+            <button class="btn-cancel" ng-click="vm.cancel()">取消</button>
+        </footer>
+    </div>
+</div>

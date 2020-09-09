@@ -1,0 +1,105 @@
+<form class="member-edit box-shadow-md form-validation" name="adjustForm" id="editForm" my-loading="vm.edit_loading">
+        <div class="modal-header">
+            <h5 class="modal-title">{{vm.modalTitle}}会员</h5>
+        </div>
+        <div class="modal-body">
+            <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title"><span class="must-option">*</span>账号：</label>
+                    <input type="text"  class="content input-control input-len name-input" maxlength="15" ng-model="vm.memberInfo.member_name">
+                    <!-- <div class="count">
+                        <div num-count="vm.memberInfo.member_name" count-top="44" count-right="60" count-max="15" count-position="right"></div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title"><span class="must-option" ng-show="vm.modalTitle == '新建'">*</span>密码：</label>
+                    <input type="text"  class="content input-control input-len name-input" maxlength="15" ng-model="vm.memberInfo.password" ng-change="vm.changePassword()">
+                </div>
+            </div>
+            <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title">昵称：</label>
+                    <input type="text"  class="content input-control input-len name-input" maxlength="15" ng-model="vm.memberInfo.nick_name">
+                    <!-- <div class="count">
+                        <div num-count="vm.memberInfo.nick_name" count-top="140" count-right="60" count-max="15" count-position="right"></div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="m-b m-t member-headPortrait">
+                <label class="label-title">头像：</label>
+                <div class="head-portrait-box">
+                    <div class="up-img-box">
+                        <i class="typeface-form_zengjia" ng-if="!vm.headPortrait.src"></i>
+                        <p class="up-text" ng-if="!vm.headPortrait.src">上传头像</p>
+                        <img class="head-portrait-img" src="{{vm.headPortrait.src}}" alt="">
+                        <input type="file" class="up-img" nv-file-select="" uploader="vm.iconUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                    </div>
+    
+                </div>
+            </div>
+            <!-- <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title">职业：</label>
+                    <div class="btn-group dropdown hoge-dropdown professional">
+                        <button class="btn btn-sm dropdown-toggle too-long-style" data-toggle="dropdown">
+                            <span class="dropdown-label ng-binding">{{vm.professional}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm">
+                            <a class="dropdown-item ng-binding ng-scope" ng-repeat="nor in vm.professionalList" ng-click="vm.proSelect(nor)">{{nor.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="m-b m-t">
+                <div class="m-b m-t-10">
+                    <label class="label-title">邮箱：</label>
+                    <input type="text"  class="content input-control input-len name-input" ng-model="vm.memberInfo.email">
+                </div>
+            </div>
+            <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title"><span class="must-option">*</span>手机号：</label>
+                    <input type="text"  class="content input-control input-len name-input" ng-model="vm.memberInfo.mobile">
+                </div>
+            </div>
+            <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title">真实姓名：</label>
+                    <input type="text"  class="content input-control input-len name-input" ng-model="vm.memberInfo.name">
+                </div>
+            </div>
+            <div class="m-b m-t">
+                <div class="m-b m-t">
+                    <label class="label-title">身份证号：</label>
+                    <input type="text"  class="content input-control input-len name-input" ng-model="vm.memberInfo.ID">
+                </div>
+            </div>
+            <div class="m-b">
+                <label class="label-title state"> 简介：</label>
+                <textarea class="ng-pristine ng-untouched ng-valid ng-binding "
+                            maxlength="30" ng-model="vm.memberInfo.signature"></textarea>
+    
+            </div>
+            <!-- <div class="m-b m-t">
+                <label class="label-title">状态：</label>
+                <label class="md-check m-r-1" style="width:125px;">
+                    <input type="radio" name="use"   ng-checked="vm.memberInfo.status" ng-click="vm.setMemberStatus('1')">
+                    <i class="blue"></i>
+                    正常
+                </label>
+                <label class="md-check">
+                    <input type="radio" name="use"  ng-checked="!vm.memberInfo.status" ng-click="vm.setMemberStatus('0')">
+                    <i class="blue"></i>
+                    锁定
+                </label>
+            </div> -->
+    
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn primary-btn" ng-click="vm.save()"> {{ 'task.save' | translate }}</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.cancel()"> {{ 'task.cancel' | translate }}</button>
+        </div>
+    </form>

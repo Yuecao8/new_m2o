@@ -1,0 +1,5 @@
+<div style="display: flex;justify-content: center">
+    <img src="{{vm.photo_url}}" alt="" ng-if="vm.type === 'image'">
+    <!-- <video controls="" preload="true" ng-poster="{{vm.video_img}}" src="http://vod.dev.hoge.cn/video/2018/09/28/8b39da2499c1a7b051a150e08eec0ae7.mp4" ng-if="vm.type === 'video'"></video> -->
+    <video controls="" preload="true" style="width:600px;height:450px" ng-poster="{{vm.video_img}}" src="{{vm.video}}" ng-show="vm.type === 'video'"></video>
+</div>

@@ -1,0 +1,122 @@
+<div class="putInDetail-wrapper">
+    <div class="white wrapper-title">
+        <span class="_500 m-r">{{vm.list.adv_title}}</span>
+        <span class="state-adv state-putIn" ng-if="vm.list.adv_status == 1">{{"adCountDetail.throwIn" | translate}}</span>
+        <span class="state-adv state-wait" ng-if="vm.list.adv_status == 0">{{"adCountDetail.wait" | translate}}</span>
+        <span class="state-adv state-off" ng-if="vm.list.adv_status == 2">{{"adCountDetail.soldOuted" | translate}}</span>
+    </div>
+
+    <div class="white detail-contain">
+        <div class="time-chose">
+            <!--自定义时间-->
+            <div class="daterange">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                <input date-range-picker ng-model="vm.rangeDate" class="date-picker" type="text" options="vm.options"/>
+            </div>
+
+            <!--全部类型-->
+            <div class="btn-group dropdown hoge-dropdown">
+                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{vm.type}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm font-13">
+                    <a class="dropdown-item" ng-click="vm.stateActive()">{{"adCountDetail.allClient" | translate}}</a>
+                    <a class="dropdown-item" ng-repeat="type in vm.ad_posGroup" ng-click="vm.stateActive(type)">{{type.name}}</a>
+                </div>
+            </div>
+
+            <!--<button class="btn btn-purple pull-right">导出图表</button>-->
+        </div>
+
+        <div class="data-detail">
+            <div class="sort-name">
+                <span  class="name-border"></span>
+                <p  class="name-title">{{"adCountDetail.trend" | translate}}</p>
+                <span class="name-detail">{{"adCountDetail.trendBrief" | translate}}</span>
+            </div>
+            <div class="chart-contain">
+                <div class="chart-boxer">
+                    <div class="chart-style">
+                        <div class="chart-box" id="linechart1" ui-jp="chart" ui-refresh="vm.isRefresh" ui-options="{{vm.optionsLine}}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-list white">
+        <div class="sort-name">
+            <span class="name-border border-other"></span>
+            <p class="name-title">{{"adCountDetail.distribution" | translate}}</p>
+            <span class="name-detail">{{"adCountDetail.distributionBrief" | translate}}</span>
+        </div>
+        <!-- list -->
+
+        <div class="list_contain">
+            <div class="ErrorTip" ng-show="!vm.material_list.length">
+                <p>{{vm.errorMessage}}</p>
+            </div>
+            <div class="list white" ng-show="vm.material_list.length">
+                <div class="list_header">
+                    <div class="wrap">
+                        <div class="list-body flex-one">{{"adCountDetail.materiel" | translate}}</div>
+                        <div class="list-name">{{"adCountDetail.pos" | translate}}</div>
+                        <div class="list-browse">{{"adCountDetail.view" | translate}}</div>
+                        <div class="list-proportion">
+                            {{"adCountDetail.proportion" | translate}}
+                            <i class="fa fa-question-circle">
+                                <div class="tips">{{"adCountDetail.viewProportion" | translate}}</div>
+                            </i>
+                        </div>
+                        <div class="list-browse">{{"adCountDetail.viewDay" | translate}}</div>
+                        <div class="list-click">{{"adCountDetail.click" | translate}}</div>
+                        <div class="list-proportion">
+                            {{"adCountDetail.proportion" | translate}}
+                            <i class="fa fa-question-circle">
+                                <div class="tips">{{"adCountDetail.clickProportion" | translate}}</div>
+                            </i>
+                        </div>
+                        <div class="list-click">{{"adCountDetail.clickDay" | translate}}</div>
+                        <div class="list-transform">
+                            {{"adCountDetail.conversion" | translate}}
+                            <i class="fa fa-question-circle">
+                                <div class="tips">{{"adCountDetail.ratio" | translate}}</div>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item" ng-repeat="item in vm.material_list">
+                    <div class="list-body flex-one materiel">
+                        <div>
+                            <div class="pull-left m-r">
+                                <span class="w-40">
+                                    <img ng-src="{{item.material_info.img_url}}" ng-if="item.material_info.material_type=='image'" class="w-full h-full">
+                                    <img src="../../../../../assets/images/mxu/advertise/video.png" ng-if="item.material_info.material_type=='video'" class="w-full h-full">
+                                    <img src="../../../../../assets/images/mxu/advertise/js.png" ng-if="item.material_type=='js'"  class="w-full h-full">
+                                    <img src="../../../../../assets/images/mxu/advertise/flash.png" ng-if="item.material_info.material_type=='flash'" class="w-full h-full">
+                                </span>
+                            </div>
+                            <div class="clear">
+                                <a href="" class="_500 text-ellipsis" ng-if="item.material_type!='js'" style="text-align: left">{{item.material_info.filename}}</a>
+                                <small class="text-muted pull-left" ng-if="item.material_type!='js'">{{item.material_info.filesize}}</small>
+                                <a href="" class="_500 text-ellipsis" ng-if="item.material_type=='js'" style="text-align: left">JS{{ 'addAdvertise.code' | translate }}</a>
+                                <small class="text-muted pull-left" ng-if="item.material_type=='js'">{{item.material_info.length}}{{ 'addAdvertise.character' | translate }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-name">{{item.position_name}}</div>
+                    <div class="list-browse">{{item.views}}</div>
+                    <div class="list-proportion">{{item.view_percent}}</div>
+                    <div class="list-browse">{{item.daily_view}}</div>
+                    <div class="list-click">{{item.clicks}}</div>
+                    <div class="list-proportion">{{item.click_percent}}</div>
+                    <div class="list-click">{{item.daily_click}}</div>
+                    <div class="list-transform">{{item.conversion_rate}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- / list -->
+    </div>
+    <m2o-footer ></m2o-footer>
+</div>

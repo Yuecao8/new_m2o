@@ -1,0 +1,24 @@
+<div class="modal-content box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title" translate="user.changePassword"></h5>
+        <!--<i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+    </div>
+    <div class="modal-body">
+        <p translate="user.tip">
+        </p>
+        <div class="radio-box">
+            <label class="md-check">
+                <input type="radio" ng-model="vm.setBoole" value="1" name="radio">
+                <i class="blue">{{ 'user.yes'| translate}}</i>
+            </label>
+            <label class="md-check">
+                <input type="radio" ng-model="vm.setBoole" value="0" name="radio" checked>
+                <i class="blue" >{{ 'user.no'| translate}}</i>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn  primary-btn" ng-click="vm.save()">{{ 'user.sure'| translate}}</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{ 'user.cancel'| translate}}</button>
+    </div>
+</div>

@@ -1,0 +1,417 @@
+<div class="editColumn-wrap" ng-class="{'fade': vm.editShow, 'in': !vm.editShow}" my-loading="vm.editLoading">
+    <div class="editColumn-section">
+        <i class="fa typeface-alert_cuowu2 icon-close"  ng-click="vm.cancel()"></i>
+        <div class="edit-form">
+            <div class="form-card">
+                <div class="header">基本信息</div>
+                <div class="content">
+                    <div class="form-group" style="position: relative;">
+                        <label class="label-name">栏目名称</label>
+                        <input type="text" ng-model="vm.column_detail.name" maxlength="40">
+                        <!-- <input class="unit-input" id="unitValue" type="text" placeholder="{{vm.unitName}}" maxlength="5" ng-model="vm.unitName" value="{{vm.unitName}}"> -->
+                        <div class="count" style="position: absolute;left: 550px;top: -40px;">
+                            <div num-count="vm.column_detail.name" count-max="40"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="label-name">终端类型</label>
+                            <div style="position: relative;display: inline-block;">
+                                <div class="selectCheck dropdown-toggle" ng-click="vm.typeFocus = true;" ng-blur="vm.typeFocus = false;"
+                                        ng-class="{'focus-color':vm.typeFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                    <span class="check-item">{{vm.client}}</span>
+                                </div>
+                                <div class="select-list dropdown-menu">
+                                    <div class="item" ng-repeat="item in vm.pushKind track by $index" ng-click="vm.chooseClient(item)">
+                                        <label ng-class="{'item-focus': item.value == vm.column_detail.generate_type_id}">{{item.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.columnFather"></label>
+                        <div class="fill-contian switch-box classify-father">
+                            <div class="chose-btn" ng-if="!vm.mainColumn[0]" translate="site_editColumn.chooseClass"></div>
+                            <classify-preview classify-data="vm.radioList"
+                                              classify-name="''" box-name="'选择分类'"
+                                              classify-check="vm.mainColumn" radio-style="'all'"
+                                              classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)"
+                                              classify-focus="false"
+                                              box-status="false"
+                            ></classify-preview>
+                        </div>
+                    </div>
+                    <div class="form-group Identification">
+                        <label class="label-name text-top" translate="site_editColumn.columnLogo"></label>
+                        <div class="img-list">
+                            <div class="form-file" my-loading="vm.img_loading">
+                                <input type="file" id="columnFile" nv-file-select uploader="vm.localUploader" accept="image/gif,image/jpeg,image/png,image/bmp" style="cursor: pointer;" multiple>
+                                <div class="file_form">
+                                    <i class="icon-tianjia"></i>
+                                    <span>点击上传</span>
+                                </div>
+                            </div>
+                            <div class="img-box" ng-repeat="pic in vm.imgList track by $index">
+                                <img ng-src="{{pic.url}}" alt="">
+                                <i class="fa icon-shanchu1" ng-click="vm.delImg($index)"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group Identification">
+                        <label class="label-name text-top">封面</label>
+                        <div class="img-list">
+                            <div class="form-file" my-loading="vm.cover_loading">
+                                <input type="file" id="columnFile" nv-file-select uploader="vm.coverUploader" accept="image/gif,image/jpeg,image/png,image/bmp" style="cursor: pointer;">
+                                <div class="file_form">
+                                    <i class="icon-tianjia"></i>
+                                    <span>点击上传</span>
+                                </div>
+                            </div>
+                            <div class="img-box" ng-if="vm.coverImg.length">
+                                <img ng-src="{{vm.coverImg[0].url}}" alt="">
+                                <i class="fa icon-shanchu1" ng-click="vm.delCover()"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.type"></label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="vm.column_detail.is_link" type="radio" value="0">普通栏目
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="vm.column_detail.is_link" type="radio" value="1">外链栏目
+                        </label>
+                    </div>
+                    <div class="form-group" ng-if="vm.column_detail.is_last == 1 && vm.siteId == 0">
+                        <label class="label-name">设为头条栏目</label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="vm.column_detail.is_headline" type="radio" value="0">否
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="vm.column_detail.is_headline" type="radio" value="1">是
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name">设为直播间栏目</label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="vm.column_detail.is_live" type="radio" value="0">否
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="vm.column_detail.is_live" type="radio" value="1">是
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name">直播间是否显示</label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="vm.column_detail.is_show" type="radio" value="0">否
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="vm.column_detail.is_show" type="radio" value="1">是
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name">是否设置默认栏目</label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="vm.column_detail.is_default" type="radio" value="0">否
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="vm.column_detail.is_default" type="radio" value="1">是
+                        </label>
+                    </div>
+                    <div class="form-group" ng-if="vm.styleList[0]">
+                            <label class="label-name">样式设置</label>
+                            <div style="position: relative;display: inline-block;">
+                                <div class="selectCheck dropdown-toggle" ng-click="vm.styleFocus = true;" ng-blur="vm.styleFocus = false;"
+                                        ng-class="{'focus-color': vm.styleFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                    <span class="check-item">{{vm.currentStyle.name}}</span>
+                                </div>
+                                <div class="select-list dropdown-menu style-list">
+                                    <div class="item" ng-repeat="style in vm.styleList track by $index" ng-click="vm.chooseStyle(style)">
+                                        <label ng-class="{'item-focus': style.id == vm.currentStyle.id }">{{style.name}}</label>
+                                    </div>
+                                </div>
+                            </div> 
+                        
+                        </div>
+                </div>
+            </div>
+            
+            <!-- <div class="form-card" ng-show="vm.column_detail.is_link == 0"> -->
+            <div class="form-card">
+                <div class="header">信息设置</div>
+                <div class="content">
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.name"></label>
+                        <input type="text" ng-model="vm.column_detail.meta_title">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.keywords"></label>
+                        <input type="text" ng-model="vm.column_detail.keywords">
+                        <div class="keyTip">用,号分隔每个关键字</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.description"></label>
+                        <textarea class="text-top" cols="30" rows="4" ng-model="vm.column_detail.brief" maxlength="200"></textarea>
+                        <div num-count="vm.column_detail.brief" count-top="-16" count-max="200" style="position: absolute;left: 628px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name">其他</label>
+                        <textarea class="text-top" cols="30" rows="4" ng-model="vm.column_detail.info" maxlength="200"></textarea>
+                        <div num-count="vm.column_detail.info" count-top="-16" count-max="200" style="position: absolute;left: 628px;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-card" ng-show="vm.column_detail.is_link == 0"> -->
+            <div class="form-card">
+                <div class="header">
+                    {{'site_editColumn.publishSet' | translate}}
+                    <div class="question-box">
+                        <i class="fa fa-question-circle"></i>
+                        <div class="question-hover" translate="site_editColumn.publishDes"></div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.columnLogo"></label>
+                        <input type="text" ng-model="vm.column_detail.unique_sign">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.openDomain"></label>
+                        <label class="radio-inline m-r">
+                            <input ng-model="vm.column_detail.is_independent" type="radio" value="0">不启用
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="vm.column_detail.is_independent" type="radio" value="1">启用
+                        </label>
+                        <div class="input-group">
+                            <input type="text" ng-model="vm.column_detail.sub_domain" ng-disabled="vm.column_detail.is_independent == 0" ng-class="{'dis': vm.column_detail.is_independent == 0}">
+                            <span class="tip">.{{vm.column_detail.domain}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.generateWay"></label>
+                        <div style="position: relative;display: inline-block;">
+                            <div class="selectCheck dropdown-toggle" ng-click="vm.typeFocus = true;" ng-blur="vm.typeFocus = false;"
+                                 ng-class="{'focus-color':vm.typeFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                <span class="check-item">{{vm.column_detail.generate_type}}</span>
+                            </div>
+                            <div class="select-list dropdown-menu">
+                                <div class="item" ng-repeat="way in vm.generateWay track by $index" ng-click="vm.chooseWay(way)">
+                                    <label ng-class="{'item-focus': way.value == vm.column_detail.generate_type_id}">{{way.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="vm.column_detail.generate_type_id == 2">
+                        <label class="label-name" translate="site_editColumn.cycle"></label>
+                        <div class="input-group" style="display: inline-flex;margin: 0;">
+                            <input type="text" ng-model="vm.column_detail.generate_time" style="width: 147px!important;">
+                            <span class="tip">{{'site_editColumn.minute' | translate}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.contentWay"></label>
+                        <div style="position: relative;display: inline-block;">
+                            <div class="selectCheck dropdown-toggle" ng-click="vm.contentFocus = true;" ng-blur="vm.contentFocus = false;"
+                                 ng-class="{'focus-color':vm.contentFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                <span class="check-item">{{vm.column_detail.content_generate_type}}</span>
+                            </div>
+                            <div class="select-list dropdown-menu">
+                                <div class="item" ng-repeat="way in vm.generateWay track by $index" ng-click="vm.chooseContent(way)">
+                                    <label ng-class="{'item-focus': way.value == vm.column_detail.content_generate_type_id}">{{way.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.pathFormat"></label>
+                        <div style="position: relative;display: inline-block;">
+                            <div class="selectCheck dropdown-toggle" ng-click="vm.formatFocus = true;" ng-blur="vm.formatFocus = false;"
+                                 ng-class="{'focus-color':vm.formatFocus}" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                <span class="check-item">{{vm.column_detail.content_path_format}}</span>
+                            </div>
+                            <div class="select-list dropdown-menu">
+                                <div class="item" ng-repeat="cat in vm.catalogList track by $index" ng-click="vm.chooseFormat(cat)">
+                                    <label ng-class="{'item-focus': cat.format == vm.column_detail.content_path_format_id}">{{cat.trans}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 外链 -->
+            <div class="form-card" ng-show="vm.column_detail.is_link == 1">
+                <div class="header" translate="site_editColumn.linkSet"></div>
+                <div class="content">
+                    <div class="form-group">
+                        <label class="label-name" translate="site_editColumn.linkAdr"></label>
+                        <input type="text" ng-model="vm.column_detail.link">
+                    </div>
+                </div>
+            </div>
+            <!-- 内容设置 -->
+            <!-- <div class="form-card" ng-show="vm.column_detail.is_link == 0"> -->
+            <div class="form-card">
+                    <div class="header">内容设置</div>
+                    <div class="content">
+                        <div class="form-group">
+                            <label class="label-name">内容源</label>
+                            <span class="put-ash">选择非自建的内容源需要补全相关的配置信息才能生效；选择复数的内容来源需要对混合规则进行配置</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name"></label>
+                            <input ng-checked="vm.builtChecked" ng-model="vm.column_detail.built" ng-click="vm.toggle('self-built')" type="checkbox">自建内容（M2O PLUS后台数据）
+                        </div>
+                        <div class="form-group">
+                            <label class="label-name"></label>
+                            <input ng-checked="vm.neteaseChecked" ng-model="vm.column_detail.netease" ng-click="vm.toggle('netease')" type="checkbox">网易有料
+                        </div>
+                        <div class="form-group" ng-if='vm.allShow || vm.onlyNet'>
+                            <label class="label-name"></label>
+                            <div class="tag-class">
+                                <label  class="label-name">频道tag</label>
+                                <input type="text" ng-model="vm.column_detail.tagText">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if='vm.allShow'>
+                            <label class="label-name">混合规则</label>
+                            <!-- <div class="mix-box" ng-repeat="item in vm.mixRules">
+                                    <input type="radio" ng-model="vm.column_detail.isMix"  value="item.value">{{item.name}}
+                                    <i class="fa typeface-form_tishi" ng-mouseenter="vm.showOpera(item)" ng-mouseleave="vm.hideOpera(item)"></i>
+                                    <div class="tipMsg" ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}">
+                                        随机混合：自建内容和非自建内容随机混合展示
+                                        <br>
+                                        穿插混合：来自不同内容源的内容交替穿插展示
+                                        <br>
+                                        追加混合：非自建内容在每次刷新时接在自建内容之后展示
+                                        <br>
+                                        前置混合：非自建内容在每次刷新时在自建内容之前展示
+                                        
+                                    </div>
+                                    <span class="question-tip" ng-class="{'opera-show':item.searchShow,'opera-hide':!item.searchShow}"></span>
+                                    
+                            </div> -->
+                            <div class="rule" style="position: relative;">
+                                    <input type="radio" ng-model="vm.column_detail.isMix"  value="0">随机混合
+                                    <i class="fa typeface-form_tishi" ng-mouseenter="vm.showOpera(1)" ng-mouseleave="vm.hideOpera(1)"></i>
+                                    <div class="tipMsg" ng-class="{'opera-show':vm.searchShow,'opera-hide':!vm.searchShow}">
+                                        随机混合：自建内容和非自建内容随机混合展示
+                                        <br>
+                                        穿插混合：来自不同内容源的内容交替穿插展示
+                                        <br>
+                                        追加混合：非自建内容在每次刷新时接在自建内容之后展示
+                                        <br>
+                                        前置混合：非自建内容在每次刷新时在自建内容之前展示
+                                        
+                                    </div>
+                                    <span class="question-tip" ng-class="{'opera-show':vm.searchShow,'opera-hide':!vm.searchShow}"></span>
+                            </div>
+                            <div class="rule">
+                                    <input type="radio" ng-model="vm.column_detail.isMix"  value="1">穿插混合
+                                    <i class="fa typeface-form_tishi" ng-mouseenter="vm.showOpera(2)" ng-mouseleave="vm.hideOpera(2)"></i>
+                                    <div class="tipMsg" ng-class="{'opera-show':vm.searchShow1,'opera-hide':!vm.searchShow1}">
+                                        随机混合：自建内容和非自建内容随机混合展示
+                                        <br>
+                                        穿插混合：来自不同内容源的内容交替穿插展示
+                                        <br>
+                                        追加混合：非自建内容在每次刷新时接在自建内容之后展示
+                                        <br>
+                                        前置混合：非自建内容在每次刷新时在自建内容之前展示
+                                        
+                                    </div>
+                                    <span class="question-tip" ng-class="{'opera-show':vm.searchShow1,'opera-hide':!vm.searchShow1}"></span>
+                            </div>
+                            <div class="rule">
+                                    <input type="radio" ng-model="vm.column_detail.isMix"  value="2">追加混合
+                                    <i class="fa typeface-form_tishi" ng-mouseenter="vm.showOpera(3)" ng-mouseleave="vm.hideOpera(3)"></i>
+                                    <div class="tipMsg" ng-class="{'opera-show':vm.searchShow2,'opera-hide':!vm.searchShow2}">
+                                        随机混合：自建内容和非自建内容随机混合展示
+                                        <br>
+                                        穿插混合：来自不同内容源的内容交替穿插展示
+                                        <br>
+                                        追加混合：非自建内容在每次刷新时接在自建内容之后展示
+                                        <br>
+                                        前置混合：非自建内容在每次刷新时在自建内容之前展示
+                                        
+                                    </div>
+                                    <span class="question-tip" ng-class="{'opera-show':vm.searchShow2,'opera-hide':!vm.searchShow2}"></span>
+                            </div>
+                            <div class="rule">
+                                    <input type="radio" ng-model="vm.column_detail.isMix"  value="3">前置混合
+                                    <i class="fa typeface-form_tishi" ng-mouseenter="vm.showOpera(4)" ng-mouseleave="vm.hideOpera(4)"></i>
+                                    <div class="tipMsg" ng-class="{'opera-show':vm.searchShow3,'opera-hide':!vm.searchShow3}">
+                                        随机混合：自建内容和非自建内容随机混合展示
+                                        <br>
+                                        穿插混合：来自不同内容源的内容交替穿插展示
+                                        <br>
+                                        追加混合：非自建内容在每次刷新时接在自建内容之后展示
+                                        <br>
+                                        前置混合：非自建内容在每次刷新时在自建内容之前展示
+                                        
+                                    </div>
+                                    <span class="question-tip" ng-class="{'opera-show':vm.searchShow3,'opera-hide':!vm.searchShow3}"></span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            <div class="form-card" ng-if="vm.extendList[0]">
+                <div class="header">扩展属性</div>
+                <div class="content">
+                    <div class="form-group" ng-repeat="extend in vm.extendList track by $index">
+                        <label class="label-name" ng-if = "extend.type !== 'file'">{{extend.display}}</label>
+                        <!-- select -->
+                        <div ng-if="extend.type == 'select'" style="position: relative;display: inline-block;">
+                            <div class="selectCheck dropdown-toggle" ng-click="vm[extend.name] = true;" ng-blur="vm[extend.name] = false;"
+                                    ng-class="{'focus-color':vm[extend.name] }" data-toggle="dropdown" aria-expanded="true" tabindex="1">
+                                <span class="check-item">{{extend.value.name}}</span>
+                            </div>
+                            <div class="select-list dropdown-menu">
+                                <div class="item" ng-repeat="option in extend.options track by $index" ng-click="vm.chooseOption(extend, option)">
+                                    <label ng-class="{'item-focus': option.value == extend.value.value}">{{option.name}}</label>
+                                </div>
+                            </div>
+                        </div> 
+                        <!--  text-->
+                        <input  ng-if="extend.type == 'text'" type="text" ng-model="extend.value" ng-required="extend.required == 1"> 
+                         <!-- 时间日期 -->
+                        <div class="btn-group dropup hoge-dropdown" ng-if="extend.type == 'timestamp'">
+                                <!-- <input class="xr-text" ng-if="extend.type == 'timestamp'" type="text" ng-model="extend.default" disabled class="flex-one"  id="{{extend.name}}" name="{{extend.name}}" ng-required="extend.required == 1"> -->
+                            <div class="time-box">
+                                <input class="date-input" placeholder="选择日期" class="form-control"
+                                        ng-model="extend.value"
+                                        data-date-format="yyyy-MM-dd"
+                                        data-date-type="number"
+                                        data-autoclose="1"
+                                        data-icon-left="fa fa-chevron-left"
+                                        data-icon-right="fa fa-chevron-right"
+                                        name="date" autocomplete='off'
+                                        data-min-date="today"
+                                        bs-datepicker>
+                                <i class="icon-biaodan"></i>
+                            </div>
+                        </div>
+                        <!-- 单选 -->
+                        <div class="xr-audio-style" ng-if="extend.type == 'audio'">
+                            <label class="radio-inline m-r option-style" ng-repeat="option in extend.options">
+                                <input name="radioName" type="radio" value="{{option.value}}" ng-checked="extend.value.value == option.value" ng-click="vm.chooseAudioOption(extend, option)">{{option.name}}
+                            </label>
+                        </div>
+                        <!-- 多选 -->
+                        <div class="xr-audio-style" ng-if="extend.type == 'checkbox'">
+                            <label class="radio-inline m-r option-style padding-l-0" ng-repeat="option in extend.options">
+                                <input name="checkboxName" type="checkbox" value="{{option.value}}" ng-checked="option.isChecked" ng-click="vm.chooseCheckboxOption(extend, option)">{{option.name}}
+                            </label>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+            
+            <div class="md-form-group" >
+                <button class="btn primary-btn m-r ng-binding ng-isolate-scope" ng-click="vm.update()" my-loading="vm.save_loading">{{'site_editColumn.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

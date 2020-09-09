@@ -1,0 +1,16 @@
+{
+    "adSystem" : "广告系统",
+    "adIntroduce" : "用于管理各终端的广告投放",
+    "drawModule" : "抽奖模块",
+    "drawIntroduce" : "可以在此新建手机端的抽奖活动",
+    "register" : "邀请注册",
+    "registerIntroduce" : "可以在此查看邀请注册的数据统计和配置邀请规则",
+    "bulk" : "团购",
+    "bulkIntroduce" : "提供在线商品销售功能,用于在手机端发布团购商品",
+    "integral" : "积分",
+    "integralIntroduce" : "用于管理网站、APP端积分任务及注册会员积分",
+    "mall" : "积分商城",
+    "mallIntroduce" : "用户管理客户端积分兑换的商品",
+    "payment" : "支付平台",
+    "paymentIntroduce" : "用于接入支付宝,微信支付等第三方支付平台"
+}

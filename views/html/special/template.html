@@ -1,0 +1,33 @@
+<div class="pw-box">
+    <div class="box-header">
+        <em translate="special.templatePreview"></em>
+    </div>
+    <div class="temp_contain">
+        <img src="{{vm.tmpPic.pic.host}}{{vm.tmpPic.pic.dir}}{{vm.tmpPic.pic.filepath}}{{vm.tmpPic.pic.filename}}"/>
+    </div>
+    <div class="fast_zt" ng-if="vm.tmpPic.pic">
+        <button class="btn btn-purple" ng-click="vm.fastMagic()">
+            {{ 'special.fastTopics'| translate}}
+        </button>
+    </div>
+</div>
+
+<div class="tp-box">
+    <div class="box-header">
+        <em translate="special.templateChoose"></em>
+    </div>
+    <div class="row" my-loading="vm.tepList.length">
+        <div class="col-xs-6 col-sm-4 col-md-3" ng-repeat="item in vm.tepList">
+            <div class="box p-a-xs">
+                <a class="pos-rlt img-b" href="#">
+                    <span class="m-c" ng-if="vm.tmpPic.template_id==item.id" translate="special.templateCurrent"></span>
+                    <span class="m-u" ng-if="vm.tmpPic.template_id!=item.id" ng-click="vm.useTmp(item)" translate="special.templateUse"></span>
+                    <img src="{{item.pic.host}}{{item.pic.dir}}{{item.pic.filepath}}{{item.pic.filename}}" alt="" class="img-responsive">
+                </a>
+                <div class="p-a-sm">
+                    <div class="text-ellipsis">{{item.file_name}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

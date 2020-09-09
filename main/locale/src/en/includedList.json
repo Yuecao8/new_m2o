@@ -1,0 +1,9 @@
+{
+    "planName" : "Plan name",
+    "channel" : "Channel",
+    "state" : "Status",
+    "allState" : "All status",
+    "success" : "Success",
+    "fail" : "Fail",
+    "allChannel" : "All channels"
+}

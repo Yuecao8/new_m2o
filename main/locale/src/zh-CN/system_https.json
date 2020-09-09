@@ -1,0 +1,36 @@
+{
+    "title" : "HTTPS支持",
+    "tip" : "开启HTTPS服务后，用户访问后台将通过证书和秘钥加密，上传证书时请注意，存在问题的证书和秘钥，可能会导致系统致命性错误",
+    "recover" : "恢复HTTPS初始证书秘钥",
+    "recoverTip" : "存在问题的证书和秘钥，可能会导致系统致命性错误，开启HTTPS支持后如发现问题，可以尝试", 
+    "certificate" : "PEM证书",
+    "choseFile" : "选择文件",
+    "upload" : "上传",
+    "privateKey" : "私钥",
+    "keyTip" : "*仅支持无密码私钥",
+    "verify" : "验证",
+    "certificateTip" : "证书上传成功!",
+    "keyUpload" : "秘钥上传成功!",
+
+    "recoverTitle" : "恢复初始证书秘钥",
+    "titleTip" : "恢复操作会覆盖当前您上传的证书和私钥，是否确定恢复初始证书秘钥?",
+    "recoverSuccess" : "已恢复初始证书和私钥，请前往服务器重启nginx服务",
+    "restart" : "重启命令",
+    "sure" : "确定",
+    "cancel" : "取消",
+    "result" : "验证结果",
+    "passMessage" : "证书与秘钥验证通过，请前往服务器重启nginx服务",
+    "matchError" : "证书与秘钥不匹配，请检查证书或秘钥",
+    "reset" : "重置",
+
+    "publish" : "发布",
+    "forwarding" : "转发",
+    "source" : "来源",
+    "originalLink" : "原文链接",
+    "save" : "保存",
+    "savePublish" : "保存并发布",
+
+    "pushTitle" : "请在这里输入标题",
+    "errReset":"恢复初始证书秘钥失败"
+
+}

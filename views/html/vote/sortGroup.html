@@ -1,0 +1,15 @@
+<form class="edit-column box-shadow-md" name="editColumnForm">
+        <div class="modal-header">
+            <h5 class="modal-title">移动排序</h5>
+        </div>
+        <div class="modal-body">
+            <div class="group-name-box" ui-sortable="vm.groupSortableOpt" ng-model="vm.groupList">
+                <div class="group-name" ng-repeat="group in vm.groupList track by $index">{{group.name}}</div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn primary-btn" ng-click="vm.sortSave()" my-loading="vm.save_loading">{{'column.save' | translate}}</button>
+            <button type="button" class="btn cancel-btn" ng-click="vm.close()">{{'column.cancel' | translate}}</button>
+        </div>
+    </form>

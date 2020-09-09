@@ -1,0 +1,27 @@
+<div class="delete-wrapper box-shadow-md">
+    <div class="modal-header">
+        <h3 class="modal-title" ng-if="!vm.multiple">
+            {{vm.info.actionType === 'return' ? '打回' : '删除'}}素材
+            <span style="margin-left: 10px;">{{vm.materialName}}</span>
+        </h3>
+    </div>
+    <div class="modal-body" style="min-height:100px">
+        <div class="p-l-sm data-show" >
+                该素材涉及<span>{{vm.serveDetail.displaying}}个投放中的广告，</span><span>{{vm.serveDetail.expired}}个过期广告，</span><span>{{vm.serveDetail.abandoned}}个已下架广告，</span>打回后以上广告都会被删除。
+                <br>
+                <div style="margin: 20px 0">
+                    是否仍要{{vm.info.actionType === 'return' ? '打回' : '删除'}}素材 {{vm.materialName}}？
+                </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn primary-btn" ng-click="vm.save()">
+            确定
+        </button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">
+            取消
+        </button>
+
+    </div>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="modal-content-synchronize box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">敏感词提示</h5>
+        <i class="fa fa-remove map-close" ng-click="vm.close()" style="position: absolute;right: 15px;top: 16px;cursor: pointer;"></i>
+    </div>
+    <div class="modal-body">
+
+        <div class="m-b platform-box">
+            <label for="" class="label-name">含有敏感词：</label>
+            <div class="sensitive-box">
+                <div ng-repeat="(idx,nor) in vm.checkBanWord track by $index" class="sensitive-item">
+                    <span>{{nor}}</span>
+                </div>
+            </div>        
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn primary-btn" ng-click="vm.save()">继续提交</button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+    </div>
+</div>

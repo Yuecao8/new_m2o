@@ -1,0 +1,29 @@
+{
+    "title" : "Watermark settings",
+    "tip" : "You can turn on/ off the watermarks for articles, photos, and  transcoding video, and  adjust the parameters",
+    "contentMark" : "Content watermark settings",
+    "contentMarkTip" : "Switch and set this item will affect the watermark of the pictures contained in the articles and photos",
+
+    "position" : "Position",
+    "topLeft" : "Top left",
+    "onMiddle" : "On the middle",
+    "upperRight" : "Upper right",
+    "leftMiddle" : "Left middle",
+    "centered" : "Centered",
+    "rightMiddle" : "Right middle",
+    "leftLower" : "Left lower",
+    "underMiddle" : "Under the middle",
+    "rightLower" : "Right lower",
+
+    "custom" : "Use custom images",
+    "upload" : "Upload image",
+    "character" : "Use text watermarks",
+    "charTip" : "*Text watermark maximum length of 8 characters",
+    "nonuse" : "Don't use",
+    "preview" : "review",
+    "save" : "Save",
+    "videoMark" : "Video watermark settings",
+    "videoMarkTip" : "Switch and set this item will affect the uploaded watermark of the video",
+    "saveSuccess" : "Saved successfully!",
+    "imgNecessary" : "Please upload pictures!"
+}

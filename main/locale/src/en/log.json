@@ -1,0 +1,9 @@
+{
+    "memName" : "Member name",
+    "expChan" : "Experience change",
+    "pointChan" : "Points change",
+    "changeRe" : "Cause of points change",
+    "remark" : "Remarks",
+    "user" : "Operator",
+    "time" : "Operating time"
+}

@@ -1,0 +1,25 @@
+<div class="mxu_col_wrap">
+    <div class="box">
+        <div class="control-phone control-member">
+            <div class="control-phone-d">
+                <em translate="terminalColumnSet.columnSet"></em>
+                <button class="btn btn-purple magic pull-right" ng-click="vm.goMagic()">{{'terminalColumnSet.viewColumn' | translate}}</button>
+                <button class="btn btn-comment magic pull-right m-r-1" ng-click="vm.goMagic()">{{'terminalColumnSet.goColumn' | translate}}</button>
+            </div>
+        </div>
+        <div class="box-body">
+            <p translate="terminalColumnSet.choseColumn"></p>
+            <form role="form" name="form">
+                <!--<div class="form_box" my-loading="vm.loading">-->
+                <div class="form_box">
+                    <div class="col-item" ng-class="{'active':item.active}" ng-repeat="item in vm.colList" ng-click="vm.chose(item)">
+                        <a class="img-box"   style="background:url({{item.img}}) center center no-repeat"></a>
+                        <small>{{item.title}}</small>
+                    </div>
+                </div>
+                <!--<button type="submit" class="btn primary-btn m-t" ng-disabled="" ng-click="vm.save()">保存</button>-->
+                <button type="submit" class="btn primary-btn m-t" ng-disabled="" ng-click="vm.save()"  my-loading="vm.save_loading">{{'terminalColumnSet.save' | translate}}</button>
+            </form>
+        </div>
+    </div>
+</div>

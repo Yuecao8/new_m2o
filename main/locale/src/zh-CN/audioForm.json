@@ -1,0 +1,21 @@
+{
+  "clickCover": "点击添加封面",
+  "subtitle": "副标题",
+  "digest": "摘要",
+  "author": "作者",
+  "keyWord": "关键字",
+  "time": "时间",
+  "closeComment": "关闭评论",
+  "publish": "发布",
+  "forwarding": "转发",
+  "source": "来源",
+  "originalLink": "原文链接",
+  "save": "保存",
+  "savePublish": "保存并发布",
+  "pushTitle": "请在这里输入标题",
+  "sureLeave": "您编辑的页面尚未保存，确定要离开该页面吗？",
+  "choseColumn": "选取转发栏目",
+  "noColumnEmpty": "主栏目不能为空",
+  "saveSuccess": "保存成功",
+  "noClassify" : "分类不能为空!"
+}

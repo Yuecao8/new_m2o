@@ -1,0 +1,12 @@
+{
+    "commentSet" : "评论设置",
+    "comDescribe" : "可以在这里开关全局的评论功能和评论审核机制",
+    "waterMark" : "水印设置",
+    "markDescribe" : "可以对文稿、图集、视频的水印进行配置",
+    "transcoding" : "转码设置",
+    "transDescribe" : "在此修改视频转码服务器的参数",
+    "words" : "屏蔽词设置",
+    "wordsDescribe" : "所有评论都会经过关键词检测处理，并触发相应操作",
+    "ugc" : "UGC审核管控",
+    "ugcDescribe" : "可以在对系统中具有UGC功能的应用进行审核管理"
+}

@@ -1,0 +1,103 @@
+<div>
+    <div class="content">
+        <ul class="nav">
+            <li>
+                <a href="#">全部</a>
+                <li><a href="#">全部分类</a></li>
+                <li><a href="#">热点话题</a></li>
+                <li><a href="#">活动报名</a></li>
+                <li><a href="#">街头调查</a></li>
+            </li>
+        </ul>
+        <div class="img_content">
+            <div class="title_content">
+                <h3>反馈表单列表</h3>
+                <div class="add">
+                    <div class="ctn">
+                        <span class="icon">+</span>
+                        <div class="text">
+                            <span>新建</span>
+                        </div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="square"></div>
+                </div>
+            </div>
+        </div>
+        <div class="list_content">
+            <div class="search">
+                    <select-com selectdata="vm.listtype.data" index="vm.listtype.result"></select-com>
+                    <select-com selectdata="vm.liststate.data" index="vm.liststate.result"></select-com>
+                    <select-com selectdata="vm.listtime.data" index="vm.listtime.result"></select-com>
+                    <div class="search_input">
+                        <input type="text">
+                        <i class="fa typeface-searchbar_sousuo glass"></i>
+                    </div>
+            </div>
+            <div class="area">
+                <div>标题</div>
+                <div>分类</div>
+                <div>回复量</div>
+                <div>状态</div>
+                <div>链接</div>
+                <div>截止时间</div>
+                <div>创建人/时间</div>
+            </div>
+            <ul class="list_show">
+                <li class="item" ng-repeat="(index,item) in vm.maindata">
+                    <ul>
+                        <li style="width:36%;overflow: hidden;">
+                            <radio-com selectflag="vm.maindata[index].selectflag"></radio-com>
+                            <div style="float: left;" class="template">
+                                <div class="img_content">
+                                    <img src="{{item.imgsrc?item.imgsrc:'../assets/images/mxu/img_cover.png'}}">
+                                </div>
+                                <div class="text_ctn">{{item.title}}</div>
+                            </div>
+                        </li>
+                        <li style="width:10%;overflow: hidden;">
+                            <div style="text-indent:15px;color:#95959f;line-height: 54px;height: 100%;">{{item.type}}</div>
+                        </li>
+                        <li style="width:10%;overflow: hidden;">
+                            <div style="text-indent:15px;line-height: 54px;height: 100%;">{{item.num}}</div>
+                        </li>
+                        <li style="width:10%;overflow: hidden;">
+                            <div style="text-indent:15px;text-align: center;line-height: 54px;height: 100%;" ng-style="item.state.color">{{item.state.text}}</div>
+                        </li>
+                        <li style="width:10%;overflow: hidden;">
+                            <div style="text-indent:15px;text-align: center;line-height: 54px;height: 100%;color:#95959f;">查看链接</div>
+                        </li>
+                        <li style="width:10%;overflow: hidden;">
+                            <div style="text-indent:15px;text-align: center;line-height: 54px;height: 100%;color:#95959f;">{{item.ent_time}}</div>
+                        </li>
+                        <li style="width:10%;overflow: hidden;">
+                            <div style="text-indent:15px;text-align: left;line-height: 25.5px;height: 50%;color:#95959f;">{{item.personname}}</div>
+                            <div style="text-indent:15px;text-align: left;line-height: 25.5px;height: 50%;color:#95959f;">{{item.time}}</div>
+                        </li>
+                        <li style="width:3%;height: 0px;line-height: 58px;position: relative;top:-23px;">
+                            <i class="typeface-list_caozuo hoge-list_caozuo" style="cursor:pointer;width:30px;height: 30px;" ng-mouseover="vm.show($event)"></i>
+                            <div class="hover_show">
+                                <div>审核</div>
+                                <div>预览</div>
+                                <div>复制</div>
+                                <div>置顶</div>
+                                <div>删除</div>
+                                <div>编辑</div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="btn_area">
+                <radio-com selectflag='vm.$scope.allflag'></radio-com>
+                <div style="display:inline-block;color:#95959f;margin-left: 10px;">全选</div>
+                <div class="sh">审核</div>
+                <div class="del">删除</div>
+                <div class="fb">发布</div>
+                <div class="list_bottom m-b-20 hoge-table-bottom" style="display:inline-block;float: right;">
+                        <page-nation options="vm.pageOptions" turn-page="vm.changePage()" ng-show="vm.pageOptions.total > 10"></page-nation>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

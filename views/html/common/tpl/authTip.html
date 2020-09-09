@@ -1,0 +1,13 @@
+<div class="modal-content box-shadow-md">
+	<div class="modal-header">
+	    <h5 class="modal-title" translate="authTip.authReminder" ></h5>
+		<!--<i class="fa fa-remove map-close" ng-click="vm.cancel()" style="position: absolute;right: 15px;top: 16px;"></i>-->
+	</div>
+	<div class="modal-body">
+		<div class="auth-tip" translate="authTip.reminderTip"></div>
+	</div>
+	<div class="modal-footer">
+	    <button class="btn primary-btn" my-loading="vm.img_loading" ng-click="vm.save()">{{ 'authTip.confirm'| translate}}</button>
+		<button type="button" class="btn cancel-btn" ng-click="vm.cancel()">{{ 'authTip.cancel'| translate}}</button>
+	</div>
+</div>

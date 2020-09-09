@@ -1,0 +1,12 @@
+{
+    "latelyThree" : "过去30天",
+    "latelySeven" : "过去7天",
+    "customize" : "自定义时间段",
+    "latelyN" : "过去90天",
+    "allClient" : "全部终端",
+    "sort":"默认排序",
+    "name" : "名称",
+    "client":"所属终端",
+    "pv":"日均PV",
+    "click":"日均点击量"
+}

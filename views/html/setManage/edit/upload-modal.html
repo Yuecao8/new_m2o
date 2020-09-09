@@ -1,0 +1,45 @@
+<div class="modal-upload box-shadow-md">
+    <div class="modal-header">
+        <h5 class="modal-title">上传模板</h5>
+        <i class="fa typeface-form_guanbi map-close" ng-click="vm.cancel()" style="position: absolute;right: 15px;top: 18px;"></i>
+    </div>
+    <input  class="input-upload" type="file" id="localFile" nv-file-select  uploader="vm.localUploader" accept=".php,text/html,.tpl" multiple>
+    <div class="modal-body" ng-class="{'bg-color':!vm.hasUpload}">
+        <div class="content-no-upload" ng-if="!vm.hasUpload">
+            <div class="content-img" ng-click="vm.handerClick()"></div>
+            <div class="content-txt">
+                <span class="content-txt-span" ng-click="vm.handerClick()">
+                    点击这里上传文件
+                </span>
+
+            </div>
+        </div>
+        <div class="content-upload" ng-if="vm.hasUpload">
+            <div class="upload-btn">
+                <span class="upload-btn-span" ng-click="vm.handerClick()">
+                    更换文件
+                </span>
+            </div>
+            <div class="upload-btn-tip">已选模板：{{vm.name}}</div>
+            <div class="form-group">
+                <label class="label-name">模板类型</label>
+                <div class="btn-group dropdown select-drop hoge-dropdown">
+                    <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <span class="dropdown-label">{{vm.typeName}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu text-left text-sm drop-down-list">
+                        <a class="dropdown-item" ng-repeat="item in vm.typeList"
+                           ng-class="{'active-color':vm.type == item.type}"
+                           ng-click="vm.typeSelect(item)">{{item.name}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.cancel()">取消</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.confirm()">确定</button>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+{
+    "title" : "HTTPS support",
+    "tip" : "After opening the HTTPS service, the user access the background will be encrypted by certificate and secret key. When uploading the certificate, please note that the certificate and the secret key of the problem may cause the system fatal error",
+    "recover" : "Restore the HTTPS initial certificate key",
+    "recoverTip" : "Problems with the certificate and the secret key, may lead to system fatal error, open the HTTPS support if the problem, you can try",
+    "certificate" : "PEM certificate",
+    "choseFile" : "Select a document",
+    "upload" : "Upload",
+    "privateKey" : "Private key",
+    "keyTip" : "*Only password-free private keys are supported",
+    "verify" : "Verify",
+    "certificateTip" : "Certificate upload successful!",
+    "keyUpload" : "The key was uploaded successfully!",
+
+    "recoverTitle" : "Restore the initial certificate key",
+    "titleTip" : "The restore operation overwrites the current certificate and private key that you are uploading. Are you sure you want to restore the initial certificate key?",
+    "recoverSuccess" : "The initial certificate and private key have been restored. Please go back to the server to restart the nginx service",
+    "restart" : "Restart command",
+    "sure" : "Confirm",
+    "cancel" : "Cancel",
+    "result" : "Validation results",
+    "passMessage" : "Certificate and key authentication through, please go to the server to restart the nginx service",
+    "matchError" : "The certificate does not match the key. Please check the certificate or key",
+    "reset" : "Reset",
+
+    "publish" : "Publish",
+    "forwarding" : "Forwarding",
+    "source" : "Source",
+    "originalLink" : "The original link",
+    "save" : "Save",
+    "savePublish" : "Save and publish",
+
+    "pushTitle" : "Please enter the title here",
+    "errReset":"Recovery of initial certificate key failed"
+
+}

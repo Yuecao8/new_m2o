@@ -1,0 +1,473 @@
+<div class="content-form-attr hoge-border" ng-style="{'height': vm.platform? 'calc(100vh - 115px)' : ''}">
+    <div style="height: 12px;width:100%;"></div>
+    <div class="default-contain contain-default height-45 img-no-border">
+        <div class="hoge-flex">
+            <label class="label-title title-length-3">封面图:</label>
+            <div class="fill-contian switch-box ">
+                <label class="cover-match m-r">
+                    <input name="cover" ng-model="vm.contentParam.cover_type"  type="radio" value="1" ng-click="vm._changeSize()">单图
+                </label>
+                <label class="cover-match  m-r" ng-if="(vm.articleType !== 'wbarticle' && vm.articleType !== 'tvarticle') && vm.voteType !=='voteEdit'">
+                    <input name="cover" ng-model="vm.contentParam.cover_type" type="radio" value="2" ng-click="vm._changeSize()">三图
+                </label>
+                <!--<label class="cover-match  m-r" ng-if="vm.contentParam.urlType != 'gallery'">-->
+                    <!--<input name="cover" ng-model="vm.contentParam.cover_type" type="radio" value="3" ng-click="vm._changeSize()">{{ 'common.bigImage'| translate}}-->
+                <!--</label>-->
+                <!--<label class="cover-match  m-r" ng-if="vm.contentParam.urlType== 'article' || 'link'">-->
+                    <!--<input name="cover" ng-model="vm.contentParam.cover_type" type="radio" value="0" >{{ 'common.noImage'| translate}}-->
+                <!--</label>-->
+            </div>
+        </div>
+        <div class="default-contain img-contain new-upload-img" id="coverImgs">
+            <div class="fill-contian  ">
+                <!--上传优化-->
+                <div class="upload-type-default ">
+                    <div class="upload-img hoge-flex hoge-flex-one" ng-class="{'border-solid':vm.contentParam.cover_keys[0]}">
+                        <div class="add-img" ng-show="!vm.contentParam.cover_keys[0]" ng-click="vm.typeJudgment(0)">
+                            <i class="typeface-form_zengjia"></i>
+                            <span class="zengjia-font">设置封面图</span>
+                        </div>
+                        <div class="img-box" ng-show="vm.contentParam.cover_keys[0]">
+                            <img src="{{vm.contentParam.cover_keys[0].cut_url}}" class="img_size" data-id="{{vm.contentParam.cover_keys[0].id}}" ng-style="{'object-fit':vm.coverStyle ? 'contain' : 'initial'}">
+                        </div>
+                        <div class="img-over suspension-layer" ng-if="vm.contentParam.cover_keys[0]" ng-click="vm.typeJudgment(0,vm.contentParam.cover_keys[0])">
+                            <span class="change-tip">{{ 'common.changeImage'| translate}}</span>
+                        </div>
+                         <!-- 下载  视频模块-->
+                         <div class="btn-shot Editwater" style="display: block;right:90px" ng-if="vm.contentParam.cover_keys[0] && vm.contentParam.urlType == 'video'" ng-click="vm._downloadPic(0, vm.contentParam.cover_keys[0])">
+                            <i class="icon-shot typeface-form_xiazaidizhi"></i>
+                         </div>
+                        <!-- 去除水印 -->
+                        <div class="btn-shot Editwater" style="right:45px" ng-if="vm.contentParam.cover_keys[0]" ng-click="vm._changeWater(0,vm.contentParam.cover_keys[0])">
+                            <i class="icon-shot typeface-form_edit"></i>
+                        </div>
+                        <div class="btn-shot" ng-if="vm.contentParam.cover_keys[0]" ng-click="vm._screenShot(0,vm.contentParam.cover_keys[0])">
+                            <i class="icon-shot typeface-bianjiqi_caijian"></i>
+                        </div>
+                        <div class="cover-bg suspension-layer" ng-show="vm.newsParam.one"></div>
+                    </div>
+                    <div class="upload-img hoge-flex hoge-flex-one" ng-if="vm.contentParam.cover_type == 2" ng-class="{'border-solid':vm.contentParam.cover_keys[1]}">
+                        <div class="add-img" ng-show="!vm.contentParam.cover_keys[1]" ng-click="vm.typeJudgment(1)">
+                            <i class="typeface-form_zengjia"></i>
+                            <span class="zengjia-font">设置封面图</span>
+                        </div>
+                        <div class="img-box" ng-show="vm.contentParam.cover_keys[1]">
+                            <img ng-src="{{vm.contentParam.cover_keys[1].cut_url}}" class="img_size">
+                        </div>
+                        <div class="img-over suspension-layer" ng-if="vm.contentParam.cover_keys[1]" ng-click="vm.typeJudgment(1,vm.contentParam.cover_keys[1])">
+                            <div class="change-tip">{{ 'common.changeCover'| translate}}</div>
+                        </div>
+                         <!-- 下载 视频模块-->
+                         <div class="btn-shot Editwater" style="right:90px" ng-if="vm.contentParam.cover_keys[1] && vm.contentParam.urlType == 'video'" ng-click="vm._downloadPic(1,vm.contentParam.cover_keys[1])">
+                            <i class="icon-shot typeface-form_xiazaidizhi"></i>
+                        </div>
+                        <!-- 去除水印 -->
+                        <div class="btn-shot" style="right:45px" ng-if="vm.contentParam.cover_keys[1]" ng-click="vm._changeWater(1,vm.contentParam.cover_keys[1])">
+                            <i class="icon-shot typeface-form_edit"></i>
+                            <!-- <i class="typeface-form_edit edit-icon"></i> -->
+                        </div>
+                        <div class="btn-shot" ng-if="vm.contentParam.cover_keys[1]" ng-click="vm._screenShot(1,vm.contentParam.cover_keys[1])">
+                            <i class="icon-shot typeface-bianjiqi_caijian"></i>
+                        </div>
+                        <div class="cover-bg suspension-layer" ng-show="vm.newsParam.two"></div>
+                    </div>
+                    <div class="upload-img hoge-flex hoge-flex-one" ng-class="{'border-solid':vm.contentParam.cover_keys[2]}" ng-if="vm.contentParam.cover_type == 2">
+                        <div class="add-img" ng-show="!vm.contentParam.cover_keys[2]" ng-click="vm.typeJudgment(2)">
+                            <i class="typeface-form_zengjia"></i>
+                            <span class="zengjia-font">设置封面图</span>
+                        </div>
+                        <div class="img-box" ng-show="vm.contentParam.cover_keys[2]">
+                            <img ng-src="{{vm.contentParam.cover_keys[2].cut_url}}" class="img_size">
+                        </div>
+                        <div class="img-over suspension-layer" ng-if="vm.contentParam.cover_keys[2]" ng-click="vm.typeJudgment(2,vm.contentParam.cover_keys[2])">
+                            <div class="change-tip" >{{ 'common.changeCover'| translate}}</div>
+                        </div>
+                         <!-- 下载 视频模块-->
+                         <div class="btn-shot Editwater" style="right:90px" ng-if="vm.contentParam.cover_keys[2] && vm.contentParam.urlType == 'video' " ng-click="vm._downloadPic(2,vm.contentParam.cover_keys[2])">
+                            <i class="icon-shot typeface-form_xiazaidizhi"></i>
+                        </div>
+                        <!-- 去除水印 -->
+                        <div class="btn-shot" style="right:45px" ng-if="vm.contentParam.cover_keys[2]" ng-click="vm._changeWater(2,vm.contentParam.cover_keys[2])">
+                            <i class="icon-shot typeface-form_edit"></i>
+                        </div>
+                        <div class="btn-shot" ng-if="vm.contentParam.cover_keys[2]" ng-click="vm._screenShot(2,vm.contentParam.cover_keys[2])">
+                            <i class="icon-shot typeface-bianjiqi_caijian"></i>
+                        </div>
+                        <div class="cover-bg suspension-layer" ng-show="vm.newsParam.three"></div>
+                    </div>
+                </div>
+                <!--上传优化-->
+            </div>
+            <div class="img-dropdown-contain white flex-item" ng-show="vm.dropdownShow" ng-if="vm.contentParam.urlType =='article'">
+                <!--prev-page-->
+                <div class="page-icon preview-page" ng-class="{'no-page': vm.imgListPage.prev != true}" ng-click="vm.prevPage()">
+                    <i class="typeface-pagination_shangyiye"></i>
+                </div>
+                <!--prev-page-->
+
+                <div class="flex-item img-list">
+                    <div class="dropdown-default dropdown-upload" ng-show="vm.imgListPage.page == 1">
+                        <i class="upload-bg img-bg"></i>
+                        <span class="describe">本地图片</span>
+                        <input type="file" nv-file-select="" uploader="vm.newcoverloader" accept="image/gif,image/jpeg,image/png,image/jpg"/>
+                    </div>
+                    <div class="dropdown-default dropdown-webimg" ng-show="vm.imgListPage.page == 1" ng-click="vm.toWebImg()">
+                        <i class="webimg-bg img-bg"></i>
+                        <span class="describe">网络图片</span>
+                    </div>
+                    <!--pageImg-->
+                    <!--<div class="repeat-imgList flex-item">-->
+                    <div class="dropdown-default dropdown-contentimg" my-loading="vm.imgLoading"  ng-class="{'cover-img' : img.isCover == true}" ng-repeat="img in vm.pageImg track by $index">
+                        
+                        <img  class="content-img" src="{{img.origin_url?img.origin_url:img.url}}" ng-click="vm.setCover(img, $index)">
+                        <div class="preview-contain">
+                            <img class="" src="{{img.origin_url?img.origin_url:img.url}}" alt="">
+                        </div>
+                    </div>
+                    <!--</div>-->
+
+
+                </div>
+
+                <!--next-page-->
+                <div  class="page-icon next-page" ng-class="{'no-page': vm.imgListPage.next != true}" ng-click="vm.nextPage()">
+                    <i class="typeface-pagination_xiayiye"></i>
+                </div>
+                <!--next-page-->
+            </div>
+
+        </div>
+    </div>
+    <!-- 分类 -->
+    <div class="contain-default" ng-if="!vm.isOriginal">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-title" ng-click="vm.consoleClick()">{{vm.dCategoryName}}:</label>
+            <div class="fill-contian switch-box classify-father">
+                <!--<div class="chose-btn btn">选择分类</div>-->
+                <classify-preview classify-data="vm.radioList"
+                                  classify-name="''" box-name="vm.dAllCategoryName"
+                                  classify-check="vm.contentParam.mainColumn" radio-style="'all'"
+                                  classify-type="'radio'" classify-next="vm.nextColumn(Id,Level+1,Type)"
+                                  classify-focus="false"
+                                  box-status="false"
+                ></classify-preview>
+            </div>
+            <i class="fa fa-caret-down" style="line-height: 23px;position: absolute;right:0;color:#9BA5BB;"></i> 
+        </div>
+
+    </div>
+    <!-- 甘肃的分类 -->
+    <div class="contain-default" ng-style="{'position': vm.detailFenleiName ? 'relative' : 'static', 'z-index': vm.detailFenleiName ? '10' : '1'}" ng-if="vm.detailFenleiName&&!vm.isOriginal">
+        <div class="form-contain hoge-flex" style="position: relative;" ng-click="vm.gsToggle()">
+            <label class="label-title">{{vm.detailFenleiName}}:</label>
+            <div class="fill-contian switch-box classify-father" style="font-size: 12px;margin-left: 8px;line-height: 23px;color: #9ba5bb;cursor: pointer">
+                <span ng-if="!vm.gsCategoryName">选择{{vm.detailFenleiName}}</span>
+                <span ng-if="vm.gsCategoryName" style="color: #333; margin-left: 5px">{{vm.gsCategoryName}}</span>
+            </div>
+            <i class="fa fa-caret-down" style="line-height: 23px;position: absolute;right:0;color:#9BA5BB;"></i> 
+        </div>
+        <div class="gschose-container" ng-show="vm.gsCateShow">
+            <div class="chose-body" ng-repeat="item in vm.gsCategoryArr track by $index" ng-click="vm.choseGsCate(item)">
+                <a class="chose-item">{{item.name}}</a>
+            </div>
+        </div>
+    </div>
+    <!-- 标签 start-->
+    <div class="contain-default" ng-if="(vm.voteType !=='voteEdit')&&!vm.isOriginal">
+        <div class="form-contain hoge-flex" style="position: relative;" 
+        >
+            <label class="label-title">标签:</label>
+            <div class="label-box-common" ng-blur="vm.labelShow = false;" tabindex="1"
+                ng-click="vm.labelShow = true;"
+            >
+                <div class="checkRole" ng-click="vm.roleFocus = true;">
+                        <span ng-if="!vm.labelsIds.length" class="placeholder-span">选择标签</span>
+                        <span class="check-item"  ng-repeat="modules in vm.labelListArr  track by $index" ng-show="modules.check">
+                        {{modules.name}}
+                        <i class="fa icon-guanbi" ng-click="vm.delCheck($event,modules)" style="cursor: pointer"></i>
+                    </span>
+                </div>
+                <div class="role-list" ng-if="vm.labelShow">
+                    <div ng-if="vm.labelListArr.length" class="item" ng-repeat="modules in vm.labelListArr  track by $index" ng-click="vm.chooseLabel(modules)">
+                        <label class="">{{modules.name}}</label>
+                        <span class="fa fa-check" ng-show="modules.check"></span>
+                    </div>
+                    <div ng-if="!vm.labelListArr.length" class="no-drop-label">暂无</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 标签 end -->
+    <!-- 栏目 -->
+    <div class="contain-default" ng-if="(vm.voteType !=='voteEdit')&&!vm.isOriginal">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-title">{{vm.dColumnName}}:</label>
+            <div class="publish-father" style="width:141px;" ng-style="{'width': vm.dColumnName.length > 2 ? '130px' : '130px'}">
+                    <content-publish ng-if="!vm.isPreviewcre" publish-array="vm.contentParam.publish_column" publish-weight="vm.contentParam.weight" publish-hot="vm.contentParam.is_hot" publish-top="vm.contentParam.is_top" publish-slide="vm.contentParam.is_slide" dispose-arr="vm.disposeArr(d)" publish-title="vm.title" dispose-data="vm.disposeData(d)" place-holder="vm.dColumnName"></content-publish>
+                    <span ng-if="vm.isPreviewcre">{{vm.creCloumnName}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="contain-default" ng-if="vm.contentParam.urlType!='topic' && !vm.isOriginal && !vm.platform">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-title">{{vm.topic_columnName}}:</label>
+            <div class="publish-father" style="width:141px;" ng-style="{'width': vm.topic_columnName.length > 2 ? '130px' : '130px'}">
+                <div class="publish-content item-repeat"  ng-repeat="item in vm.topicArr track by $index" ng-if="vm.topicArr.length != 0">
+                    <div class="item-title" title="{{item.category_name}} > {{item.title}} > {{item.topic_column_name}}" ng-class="{'mengyu-font': vm.resMengyu(vm.topic_column_name)}" ng-click="vm.addSpecial()">
+                        {{item.topic_column_name}}
+                    </div>
+                </div>
+                <div class="publish-content item-repeat" ng-if="vm.topicArr.length == 0">
+                    <div class="item-title" title="点击添加到专题" ng-class="{'mengyu-font': vm.resMengyu(vm.topic_column_name)}" ng-click="vm.addSpecial()">
+                        点击添加到专题
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 定时发布 -->
+    <!-- <div class="contain-default">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-title">定时发布:</label>
+            <label class="ui-switch">
+                <span class="switch-open">开</span>
+                <span class="switch-close">关</span>
+                <input type="checkbox" ng-click="vm.toggleRelease()" ng-checked="vm.release" >
+                <i></i>
+            </label>
+        </div>
+    </div>
+    <!-- 定时发布栏目 -->
+    <!--<div class="contain-default" ng-if="vm.release">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-title">定时发布栏目:</label>
+            
+        </div>
+    </div>
+    <!-- 发布时间 -->
+    <!--<div class="contain-default" ng-if="vm.release">
+        <div class="form-contain hoge-flex" style="position: relative;">
+            <label class="label-title">发布时间:</label>
+            <div class="time-father" style="width:100px;">
+                    <publish-time time-array="55" publish-id="vm.topicId"></publish-time>
+            </div>
+        </div>
+
+    </div> -->
+    <!-- 摘要 -->
+    <div class="contain-default" ng-if="vm.articleType !== 'wbarticle' && vm.articleType !== 'tvarticle'">
+        <div class="form-contain hoge-flex position-abstract" ng-click="vm.getFocus('brief')" style="position: relative;padding-bottom: 0px">
+            <label class="label-title title-length-2">摘要
+                <div class="question-box" ng-if="vm.articleType == 'commonarticle'">
+                    <i class="subtitle-i typeface-form_tishi"></i>
+                    <div class="question-hover">开启时，自动取正文前30字作为摘要，支持修改。<span class="question-tip"></span></div>
+                </div>
+                :</label>
+            <label class="ui-switch abstract-switch" ng-if="vm.articleType == 'commonarticle'">
+                <span class="switch-open">开</span>
+                <span class="switch-close">关</span>
+                <input type="checkbox" ng-click="vm.toggleAbstract()" ng-checked="vm.abstract" >
+                <i></i>
+            </label>
+            <textarea textarea-adapt val="vm.contentParam.brief" id="brief" class="flex-one form-textarea" ng-class="{'auto-abstract-color': vm.abstract, 'auto-abstract':vm.articleType == 'commonarticle', 'mengyu-font': vm.resMengyu(vm.contentParam.brief)}" ng-change="vm.changeAbstract()" name="brief" placeholder="请输入摘要内容..." ng-model="vm.contentParam.brief" rows="1"></textarea>
+            <div class="mengyu-title" ng-if="vm.resMengyu(vm.contentParam.brief)">
+                <span class="hideTitle">{{vm.contentParam.brief}}</span>
+            </div>
+        </div>
+        <span class="label-title num-total" style="display: block;width: 100%;text-align: right;" ng-if="vm.isZyshow">{{vm.briefLen}}字</span>
+        <span class="label-title num-total" style="display: block;width: 100%;text-align: right;" ng-if="!vm.isZyshow">{{vm.contentParam.brief.length}}字</span>
+    </div>
+    <div class="contain-default height-45" ng-show="vm.commentsShow" ng-if="vm.articleType !== 'wbarticle' && vm.articleType !== 'tvarticle' && vm.voteType !=='voteEdit' && !vm.isOriginal">
+        <div class="hoge-flex form-contain">
+            <label class="label-title title-length-2">评论:</label>
+            <label class="ui-switch">
+                <span class="switch-open">开</span>
+                <span class="switch-close">关</span>
+                <input type="checkbox" ng-click="vm.toggleComment()" ng-checked="vm.comments" >
+                <i></i>
+            </label>
+        </div>
+    </div>
+    <div class="contain-default height-45" ng-if="!vm.isOriginal">
+        <div class="hoge-flex form-contain">
+            <label class="label-title title-length-2">原创:</label>
+            <label class="ui-switch">
+                <span class="switch-open">开</span>
+                <span class="switch-close">关</span>
+                <input type="checkbox" ng-click="vm.toggleOriginal()" ng-checked="vm.original" >
+                <i></i>
+            </label>
+        </div>
+    </div>
+    <div class="contain-default" ng-if="vm.contentParam.urlType != 'topic' && vm.articleType !== 'wbarticle' && vm.articleType !== 'tvarticle' && vm.voteType !=='voteEdit'">
+        <div class="hoge-flex form-contain" ng-click="vm.getFocus('subtitle')" style="position: relative;">
+            <div class="label-title title-length-5 ">
+                精选标题
+                <div class="question-box">
+                    <i class="subtitle-i typeface-form_tishi"></i>
+                    <div class="question-hover">填写精编标题后，终端内容列表中将显示精编标题。<span class="question-tip"></span></div>
+                </div>
+            :</div>
+            <textarea textarea-adapt val="vm.contentParam.subtitle" id="subtitle" class="flex-one form-textarea" name="subtitle" ng-model="vm.contentParam.subtitle" maxlength="50" rows="1"></textarea>
+            <span class="label-title num-total" ng-if="vm.isZyshow">{{vm.subtitleLen}}字</span>
+            <span class="label-title num-total" ng-if="!vm.isZyshow">{{vm.contentParam.subtitle.length}}字</span>
+            <div class="mengyu-title" ng-if="vm.resMengyu(vm.contentParam.subtitle)">
+                <span class="hideTitle">{{vm.contentParam.subtitle}}123</span>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="contain-default" ng-if="vm.contentParam.urlType == 'article'">
+        <div class="hoge-flex form-contain">
+            <div class="label-title title-length-5 ">
+                选择视频:</div>
+            <div class="chose-video-box">
+                    <span>{{vm.contentParam.cover_video_obj.file.name ? vm.contentParam.cover_video_obj.file.name : '选择文件'}}</span>
+                    <input type="file" class="chose-video-input" id="hasVideoFile"  nv-file-select="" uploader="vm.uploader" accept=".wmv,.avi,.dat,.asf,.rm,.rmvb,.mpg,.mpeg,.3gp,.mov,.mp4,.m4v,.
+                        dvix,.dv,.dat,.mkv,.flv,.vob,.qt,.divx,.cpk,.fli,.flc,.mod,.m4a,.f4v,.3ga,.caf,.vob,.ts"/>
+            </div>
+        </div>
+    </div> -->
+    <div class="contain-default" ng-if="vm.articleType === 'tvarticle'">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('reporter')">
+            <label class="label-title title-length-2">记者:</label>
+            <input class="flex-one"  id="reporter" maxlength="10" name="reporter" ng-model="vm.contentParam.reporter" type="text">
+        </div>
+    </div>
+    <div class="contain-default" ng-if="vm.articleType === 'tvarticle'">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('photographer')">
+            <label class="label-title title-length-2">摄像员:</label>
+            <input class="flex-one"  id="photographer" maxlength="10" name="photographer" ng-model="vm.contentParam.photographer" type="text">
+        </div>
+    </div>
+    <div class="contain-default" ng-if="vm.articleType === 'tvarticle'">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('film_editor')">
+            <label class="label-title title-length-2">剪辑员:</label>
+            <input class="flex-one"  id="film_editor" maxlength="10" name="film_editor" ng-model="vm.contentParam.film_editor" type="text">
+        </div>
+    </div>
+    <!-- 作者 -->
+    <div class="contain-default" ng-if="!vm.is_editor && vm.articleType !== 'wbarticle' && vm.voteType !=='voteEdit'">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('author')" style="position: relative;">
+            <label class="label-title title-length-2">作者:</label>
+            <textarea textarea-adapt val="vm.contentParam.author" id="author" class="flex-one form-textarea" name="author" ng-model="vm.contentParam.author" maxlength="30" rows="1"></textarea>
+            <!-- <input class="flex-one"  id="author" maxlength="10" name="author" autocomplete="false" ng-model="vm.contentParam.author" type="text"> -->
+            <div class="mengyu-title" ng-if="vm.resMengyu(vm.contentParam.author)">
+                <span class="hideTitle">{{vm.contentParam.author}}</span>
+            </div>
+        </div>
+    </div>
+    <!-- 徐州作者字段 -->
+    <div class="contain-default" ng-if="vm.is_editor && vm.articleType !== 'wbarticle' && vm.voteType !=='voteEdit' && (vm.articleType == 'commonarticle' || vm.articleType == 'atlas' || vm.articleType == 'video')">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('author')" style="position: relative;height: 64px;">
+            <label class="label-title title-length-2">作者:</label>
+            <textarea textarea-adapt val="vm.contentParam.author" id="author" class="flex-one form-textarea" name="author" ng-model="vm.authors" maxlength="30" rows="1" ng-readonly="true"></textarea>
+            <!-- <input class="flex-one"  id="author" maxlength="10" name="author" autocomplete="false" ng-model="vm.contentParam.author" type="text"> -->
+            <div class="mengyu-title" ng-if="vm.resMengyu(vm.authors)">
+                <span class="hideTitle">{{vm.authors}}</span>
+            </div>
+        </div>
+    </div>
+    <!-- 徐州新增编辑者字段(编辑就是原先的作者) --> 
+    <div class="contain-default" ng-if="(vm.is_editor || vm.editor_in_charge) && vm.articleType !== 'wbarticle' && vm.voteType !=='voteEdit'">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('editor')" style="position: relative;">
+            <label class="label-title title-length-2">{{vm.editor_in_charge ? '责任' : ''}}编辑:</label>
+            <textarea textarea-adapt val="vm.contentParam.editor" id="editor" class="flex-one form-textarea" name="editor" ng-model="vm.contentParam.editor" maxlength="30" rows="1"></textarea>
+            <!-- <input class="flex-one"  id="author" maxlength="10" name="author" autocomplete="false" ng-model="vm.contentParam.author" type="text"> -->
+            <div class="mengyu-title" ng-if="vm.resMengyu(vm.contentParam.editor)">
+                <span class="hideTitle">{{vm.contentParam.editor}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="contain-default" ng-if="vm.voteType !=='voteEdit'" >
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('source')" style="position: relative;">
+            <label class="label-title title-length-2">来源:</label>
+            <textarea textarea-adapt val="vm.contentParam.source" id="source" class="flex-one form-textarea" name="source" ng-model="vm.contentParam.source" maxlength="50" rows="1" ng-class="{'mengyu-font': vm.resMengyu(vm.contentParam.source)}"></textarea>
+            <div class="mengyu-title" ng-if="vm.resMengyu(vm.contentParam.source)">
+                <span class="hideTitle">{{vm.contentParam.source}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="contain-default" ng-if="vm.articleType !== 'wbarticle' && vm.voteType !=='voteEdit'">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('originalLink')">
+            <label class="label-title title-length-4">原文链接:</label>
+            <textarea textarea-adapt val="vm.contentParam.source_link" placeholder="http://" id="originalLink" ng-model="vm.contentParam.source_link" class="flex-one form-textarea" name="source_link"  rows="1"></textarea>
+        </div>
+    </div>
+    <div class="contain-default" ng-if="(vm.voteType !=='voteEdit') && !vm.isOriginal && vm.openBase && !vm.hideBaseClick && !vm.hiddenBaseNum">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus('base')">
+            <label class="label-title title-length-2">点击量基数:</label>
+            <input class="flex-one"  id="base" maxlength="10" name="base" onkeyup="value=value.replace(/\D/g,'')" autocomplete="false" ng-model="vm.contentParam.base" type="text">
+        </div>
+    </div>
+    <div class="contain-default" ng-class="{'video-contain-default' : extend.type == 'file' && extend.value.url}" ng-repeat="extend in vm.contentParam.extend track by $index" ng-if="vm.articleType !== 'wbarticle' && vm.articleType !== 'tvarticle' &&!vm.isOriginal">
+        <div class="form-contain hoge-flex" ng-click="vm.getFocus(extend.name, $index)"> 
+            <!-- <label class="label-title title-length-{{extend.display.length}}">{{extend.display}}:</label> -->
+            <label class="label-title title-length-3 title-ellipsis" title="{{extend.display}}">{{extend.display}}:</label>
+             <!-- 文件上传 -->
+             <div class="btn-group dropup hoge-dropdown file-input-box" ng-if="extend.type == 'file'">
+                    <div class="chose-video-box video-info-box">
+                            <span style=" width: 120px;display: inline-block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{extend.value.name ? extend.value.name: '选择文件'}}</span>
+                            <input type="file" class="chose-video-input" id="hasVideoFile"  nv-file-select="" uploader="vm.uploader" accept="image/*,video/*,audio/*"/>
+                    </div>
+                    <div class="video-operation-btn" ng-show="extend.value.url">
+                        <span class="btn-pre" ng-click="vm.preVideo($index)">预览</span>
+                        <span class="btn-delete" ng-click="vm.delVideo($index)">删除</span>
+                    </div> 
+                      
+            </div>
+            <!--下拉-->
+            <div class="btn-group dropup hoge-dropdown" ng-if="extend.type == 'select'">
+                <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">{{extend.value.name}}</span>
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu text-left text-sm">
+                    <a class="dropdown-item" ng-repeat="option in extend.options track by $index" ng-click="vm.chooseOption(extend, option)">{{option.name}}</a>
+                </div>
+            </div>
+            <!-- 文本输入 -->
+            <div class="btn-group dropup hoge-dropdown" ng-if="extend.type == 'text'">
+                <input class="xr-text" ng-if="extend.type == 'text'" type="text" maxlength="{{extend.max_words?extend.max_words:9999}}" ng-model="extend.value" class="flex-one"  id="{{extend.name}}" name="{{extend.name}}" ng-required="extend.required == 1" autocomplete="off">
+            </div>
+            <!-- 时间日期 -->
+            <div class="btn-group dropup hoge-dropdown" ng-if="extend.type == 'timestamp'">
+                <!-- <input class="xr-text" ng-if="extend.type == 'timestamp'" type="text" ng-model="extend.default" disabled class="flex-one"  id="{{extend.name}}" name="{{extend.name}}" ng-required="extend.required == 1"> -->
+                <div class="time-box">
+                    <input class="date-input" placeholder="选择日期" class="form-control"
+                            ng-model="extend.value"
+                            data-date-format="yyyy-MM-dd"
+                            data-date-type="number"
+                            data-autoclose="1"
+                            data-icon-left="fa fa-chevron-left"
+                            data-icon-right="fa fa-chevron-right"
+                            name="date" autocomplete='off'
+                            bs-datepicker>
+                    <i class="icon-biaodan"></i>
+                </div>
+            </div>
+            <!-- 单选 -->
+            <div class="xr-audio-style" ng-if="extend.type == 'audio'">
+                <label class="radio-inline m-r option-style" ng-repeat="option in extend.options">
+                    <input name="radioName" type="radio" value="{{option.value}}" ng-checked="extend.value.value == option.value" ng-click="vm.chooseAudioOption(extend, option)">{{option.name}}
+                </label>
+            </div>
+            <!-- 多选 -->
+            <div ng-if="extend.type == 'checkbox'">
+                <label class="radio-inline m-r option-style" ng-repeat="option in extend.options">
+                    <input name="checkboxName" type="checkbox" value="{{option.value}}" ng-checked="option.isChecked" ng-click="vm.chooseCheckboxOption(extend, option)">{{option.name}}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="contain-default hoge-flex">-->
+    <!--<label class="label-title">分类:</label>-->
+    <!--<input class="md-input" ng-class="{'ng-dirty': vm.contentParam.subtitle }"  maxlength="20" name="subtitle" ng-model="vm.contentParam.subtitle" type="text">-->
+<!--</div>-->
+<!--<div class="contain-default form-group m-b">-->
+    <!--<div class="md-form-group float-label">-->
+        <!--<input type="text" class="md-input" ng-class="{'ng-dirty' : vm.newsInfo.author }" ng-model="vm.newsInfo.author" maxlength="30">-->
+        <!--<label class="label-title">作者</label>-->
+    <!--</div>-->
+<!--</div>-->

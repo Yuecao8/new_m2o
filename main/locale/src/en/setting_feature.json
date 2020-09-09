@@ -1,0 +1,13 @@
+{
+    "commentSet" : "Comment Settings",
+    "comDescribe" : "Control the overall review function and comment review mechanism",
+    "waterMark" : "Watermark Settings",
+    "markDescribe" : "You can configure the watermark for documents, atlas, and videos",
+    "transcoding" : "Transcoding Settings",
+    "transDescribe" : "Modify the parameters of the video transcoding server here",
+    "words" : "Mask Words Set",
+    "wordsDescribe" : "All comments will be detected and processed by keywords",
+    "ugc" : "UGC Audit Control",
+    "ugcDescribe" : "You can in the system with UGC function of the application audit management"
+}
+

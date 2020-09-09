@@ -1,0 +1,21 @@
+<% if (edition === 'ult') { %>
+<div class="app-body-inner mxu_payment_wrap">
+    <div class="iframe_load_box" ng-show="vm.loading">
+        <img src="../../../../assets/images/mxu/iframe_loading.gif">
+    </div>
+    <div class="btn-toolbar" ng-show="!vm.loading">
+        <!--<div class="special-entry pull-right">-->
+            <!--<button class="btn btn-purple" ng-click="vm.goShift('pay')">-->
+                <!--新增支付方式-->
+            <!--</button>-->
+            <!--<button class="btn btn-purple" ng-click="vm.goShift('set')">-->
+                <!--新增设置-->
+            <!--</button>-->
+            <!--<button class="btn btn-purple" ng-click="vm.goShift('fee')">-->
+                <!--新增费用-->
+            <!--</button>-->
+        <!--</div>-->
+    </div>
+    <iframe id="frame" width="100%" height="100%" frameborder="0" src=""></iframe>
+</div>
+<% } %>

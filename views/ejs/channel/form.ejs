@@ -1,0 +1,209 @@
+<div class="channel-wrapper">
+  <form name="channel" role="form" class="hoge-border form-validation ">
+    <!--border_eee-->
+    <div class="flex-item">
+      <div class="side_form p-20 border-left-radius">
+        <div class="form-group m-t-0">
+          <div class="side_box text-center">
+            <div class=" pos-rlt">
+              <div class="form-file  formMark">
+                <div class="img-item">
+                  <div class="pos-abt fileUpTip" translate="news.replaceCover"></div>
+                </div>
+                <input type="file" id="file" nv-file-select  uploader="vm.localUploader" accept="image/jpeg,image/png" class="cursor_pointer"/>
+                <div class="changeMark" ng-hide="vm.channel.logo_rectangle_url"></div>
+                <div class="img-box" ng-show="vm.channel.logo_rectangle_url" style="background:url({{vm.channel.logo_rectangle_url}}) center center no-repeat"></div>
+              </div>
+            </div>
+            <div class="text-left code_text m-t-xs m-l-1">
+              {{"channelForm.markTip"| translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex-one">
+        <div class="channel-box p-20 m-b-0 border-right-radius">
+          <div class="channel-box">
+            <span class="b-l b-l-2x b-l-info p-l-sm direct">{{'channelForm.basicInformation' | translate}}</span>
+            <div class="form-group row Highlight">
+              <div class="col-sm-12 col-md-12">
+                <div class="md-form-group">
+                  <label ng-class="{'active': vm.channelName}" translate="channelForm.channelName" class="cursor_text"></label>
+                  <input type="text" ng-blur="vm.channelName = false" ng-focus="vm.channelName = true" ng-model="vm.channel.name" class="md-input form-control" placeholder="" ng-class="{'ng-dirty' : vm.channel.name }" maxlength="15"/>
+                  <div num-count="vm.channel.name" count-top="68" count-max="15"count-position="right" class="m-b"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4 col-md-4">
+                <label class="form_name cursor_text" translate="channelForm.channelType"></label>
+                <div class="form-control">
+                  <label class="radio-inline">
+                    <input type="radio" name="chaType" ng-checked="!vm.audio1" ng-click="vm.audio1 = 0"> {{'channelForm.tv' | translate}}
+                  </label>
+                  <label class="radio-inline pull-right m-r">
+                    <input type="radio" name="chaType" ng-checked="vm.audio1" ng-click="vm.audio1 = 1"> {{'channelForm.broadcast' | translate}}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4 col-md-4">
+                <label class="form_name cursor_text" translate="channelForm.scale"></label>
+                <div class="form-control">
+                  <label class="radio-inline">
+                    <input type="radio" name="aspect" ng-checked="vm.aspect" ng-click="vm.aspect = 1"> 4:3
+                  </label>
+                  <label class="radio-inline pull-right m-r">
+                    <input type="radio" name="aspect" ng-checked="!vm.aspect" ng-click="vm.aspect = 0"> 16:9
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label class="col-sm-2 col-md-2 text-left switch-label cursor_text" translate="channelForm.publishState"></label>
+                <div class="col-sm-2 col-md-2">
+                  <label class="ui-switch m-t-xs m-r  pull-right">
+                    <span class="switch-open">开</span>
+                    <span class="switch-close">关</span>
+                    <input type="checkbox" ng-click="!vm.status1" ng-checked="vm.status1 == 1" ng-model="vm.status1">
+                    <i></i>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-md-12 p-t-sm flowTip cursor_text" translate="channelForm.stateTip"></label>
+              </div>
+            </div>
+            <div class="form-group output_url row" ng-show="vm.channel_stream.m3u8">
+              <div class="col-sm-12 col-md-12">
+                <label class="form_name cursor_text" translate="channelForm.broStream"></label>
+                <div class="form-control" >
+                  <div class="info_box col-sm-8 p-l-0 p-r-0">
+                    <input ng-model="vm.channel_stream.m3u8" type="text" readonly="readonly" onclick="this.select()"/>
+                  </div>
+                  <div class="copy-btn col-sm-3" id="copyLink_opt" ng-click="vm.broadcast()">
+                    <span class="copy-link ng-isolate-scope">
+						{{'channelForm.play' | translate}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-header p-l-0">
+                <button class="btn cols pull-right" data-toggle="collapse" data-target="#reply_1" aria-expanded="false" ng-click="vm.changeCol()" ng-if="vm.col">
+                  {{'channelForm.close' | translate}}
+                </button>
+                <button class="btn cols pull-right" data-toggle="collapse" data-target="#reply_1" aria-expanded="false" ng-click="vm.changeCol()" ng-if="!vm.col">
+                  {{'channelForm.show' | translate}}
+                </button>
+                <span class="b-l b-l-2x b-l-info p-l-sm direct">{{'channelForm.directConfiguration' | translate}}</span>
+              </div>
+              <div class="collapse m-a-0 p-20 p-l-0 " id="reply_1">
+                <div class="form-group row Highlight">
+                  <div class="col-sm-12 col-md-12">
+                    <div class="md-form-group">
+                      <label ng-class="{'active': vm.channelCode}" translate="channelForm.code" class="cursor_text"></label>
+                      <input type="text" name="channelNum" ng-keyup="vm.limitedCode(vm.channel.code)"  ng-blur="vm.channelCode = false" ng-focus="vm.channelCode = true" ng-pattern="[A-Za-z][0-9]/g" ng-model="vm.channel.code" class="md-input form-control" placeholder="" ng-class="{'ng-dirty' : vm.channel.code }" maxlength="15" readonly/>
+                      <div num-count="vm.channel.code" count-top="68" count-max="15" count-position="right" class="m-b"></div>
+                      <span class="limit_valide" ng-show="vm.limitValide" translate="channelForm.limitValide"></span>
+                    </div>
+                  </div>
+                </div>
+                <!--直播流-->
+                <div class="stream">
+                  <div class="form-group signal-flow row m-b-0">
+                    <div class="col-sm-12 col-md-12">
+                      <label class="form_name cursor_text" translate="channelForm.liveStreaming"></label>
+                      <div class="form-control signal-flow-box p-b-0">
+                        <div class="form-control channel-liu">
+                          <button class="btn cancel-btn" ng-if = "vm.channel.is_push == '1'">{{'channelForm.intranetAddress' | translate}}</button>
+                          <button class="btn cancel-btn" ng-if = "vm.channel.is_push == '0'">{{'channelForm.pull' | translate}}</button>
+                          <div class="info_box">
+                            <input class="signUrl" type="text" ng-if = "vm.channel.is_push == '1'" readonly="readonly" ng-model="vm.intranetFlow">
+                            <input class="signUrl" type="text" ng-if = "vm.channel.is_push == '0'" readonly="readonly" ng-model="vm.channel.pullUrl">
+                          </div>
+                        </div>
+                        <div class="form-control channel-liu" ng-if = "vm.channel.is_push == '1'">
+                          <button class="btn cancel-btn" >{{'channelForm.outerNetAdress' | translate}}</button>
+                          <div class="info_box">
+                            <input class="signUrl" type="text"  readonly="readonly" ng-model="vm.out_pull">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-purple m-b-16" ng-click="vm.goRevise(vm.channel)">{{'channelForm.modificationStream' | translate}}</button>
+                </div>
+                <!--时移时间-->
+                <% if (edition === 'pro' || edition === 'ult' || edition === 'std') { %>
+                <div class="m-b-2">
+                  <div class="form-group row Highlight timeShifting">
+                    <label ng-class="{'active': vm.channelTime_shift}" class="cursor_text form_name col-sm-3 pull-left ng-scope label_timeshift" translate="channelForm.channelTimeShift"></label>
+                    <div class="col-sm-9 col-md-9">
+                      <!--<div class="md-form-group">-->
+                      <div class="col-sm-3 p-r-0">
+                        <input type="text" class="content input-control input-len form-control text-center" ng-keyup="vm.limitedShift(vm.channel.time_shift)"
+                               ng-pattern="/^(0|[1-9]\d{0,3})$/"  ng-model="vm.channel.time_shift" maxlength="3" ng-blur="vm.channelTime_shift = false"
+                               ng-focus="vm.channelTime_shift = true" ng-class="{'ng-dirty' : vm.channel.time_shift }">
+
+                      </div>
+                      <div class="col-sm-9 col-md-9 p-l-0" >
+                        <span class="hour line-height-34 m-t-xs" style="display: inline-block;" translate="channelForm.hours"></span>
+                        <span class="limit_valide  line-height-34 m-t-xs  m-l-2" style="display: inline-block;" ng-show="vm.limitValide1" translate="channelForm.limitValide1"></span>
+                      </div>
+
+                      <!--</div>-->
+
+                    </div>
+                  </div>
+                  <div class="ts-p flowTip">
+											<span>{{'channelForm.timeShiftTip1' | translate}}{{'channelForm.timeShiftTip2' | translate}}
+												<span class="l-2">
+													<a class="calculator" ng-click="vm.goCal(vm.channel.time_shift)" translate="channelForm.timeShiftTip3"></a>
+													{{'channelForm.timeShiftTip4' | translate}}
+												</span>
+											</span>
+                  </div>
+
+                </div>
+                <% } %>
+                <!--虚拟直播-->
+                <!--<% if (edition === 'pro' || edition === 'ult') { %>-->
+                <!--<div class="form-group">-->
+                  <!--<div class="row">-->
+                    <!--<label class="col-sm-3 col-md-3 text-left switch-label form_name"-->
+                           <!--translate="channelForm.supportVirtual"></label>-->
+
+                    <!--<div class="col-sm-2 col-md-2">-->
+                      <!--<label class="ui-switch m-t-xs m-r  pull-right">-->
+                        <!--<input type="checkbox" ng-click="!vm.control" ng-checked=" vm.control " ng-model="vm.control">-->
+                        <!--<i></i>-->
+                      <!--</label>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="row">-->
+                    <!--<label class="col-md-12 p-t-sm flowTip" translate="channelForm.virtualTip"></label>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<% } %>-->
+                <!--虚拟结束-->
+
+              </div>
+            </div>
+          </div>
+          <div class="row p-r-sm">
+            <div class="pull-right">
+              <button class="btn primary-btn m-r-1"  ng-click="vm.save()"  my-loading="vm.save_loading">{{'channelForm.saveMod' | translate}}</button>
+              <button class="btn cancel-btn m-r-20" ui-sref="app.channel.channel_list">{{'channelForm.cancel' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<!-- <div ui-include="'../views/mxu/common/footer.html'"></div> -->

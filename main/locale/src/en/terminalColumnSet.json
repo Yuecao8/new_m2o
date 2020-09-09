@@ -1,0 +1,10 @@
+{
+    "columnSet" : "Column template settings",
+    "goColumn" : "Enter the column settings",
+    "viewColumn" : "View section",
+    "choseColumn" : "Column template selection",
+    "save" : "Save",
+
+    "childTemplate" : "Please select the sub-column template",
+    "upDate" : "Update completed!"
+}

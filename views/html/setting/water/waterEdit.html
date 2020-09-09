@@ -1,0 +1,178 @@
+<div class="add_water">
+        <div class="p-v-md">
+            <div class="hoge-edit-head">
+                <div class="hoge-return-body" ui-sref="app.setting.waterList({page:vm.pageCount,per_num:vm.pageSize})">
+                    <i class="fa typeface-menu_fanhuiliebiao" ></i>
+                    <span class="return-tip">返回列表</span>
+                </div>
+                <em>{{vm.whatSetting}}水印</em>
+            </div>
+        </div>
+        <div class="box" style="box-shadow: none;">
+            <div class="box-body hoge-border">
+                <form role="form" name="form">
+                    <!--基本信息-->
+                    <div class="form-card">
+                        <!-- <div class="header">基本信息</div> -->
+                        <div class="content">
+                            <div class="form-group">
+                                <label class="label-name">设置名称:</label>
+                                <input type="text" ng-model="vm.listData.title" maxLength="15" ng-focus="vm.titleFocus = true"
+                                       ng-class="{'focus-color':vm.titleFocus}" ng-blur="vm.titleFocus = false">
+                            </div>
+                            
+                            <div class="form-group change-margin">
+                                <label class="label-name">操作类型:</label>
+                                <label class="radio-inline m-r">
+                                    <input ng-model="vm.listData.water_type" type="radio" value="2" ng-check="vm.txtvalue" ng-click="vm.choseDigital()">文字水印
+                                </label>
+                                <label class="radio-inline">
+                                    <input ng-model="vm.listData.water_type" type="radio" value="1" ng-check="vm.imgvalue" ng-click="vm.choseImg()">图片水印
+                                </label>
+                                <!-- <label class="radio-inline">
+                                    <input ng-model="vm.listData.water_type" type="radio" value="0" ng-check="vm.imgvalue" ng-click="vm.notUse()">不使用
+                                </label> -->
+                            </div>
+                            <div class="txt-class" ng-show="vm.txtvalue">
+                                    <div class="form-group">
+                                        <label class="label-name">文字内容:</label>
+                                        <input type="text" class="txt-input" ng-model="vm.listData.water_text" maxLength="10" ng-focus="vm.txtFocus = true"
+                                                ng-class="{'focus-color':vm.txtFocus}" ng-blur="vm.txtFocus = false">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-name">字体:</label>
+                                        <div class="group-box">
+                                            <input type="text" class="txt-input" ng-model="vm.listData.water_font" autocomplete="off" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+                                            ng-class="{'focus-color':vm.vpreFocus}" ng-blur="vm.vpreFocus = false" ng-click="vm.vpreFocus = !vm.vpreFocus">
+                                            <div class="group dropdown-menu">
+                                                <a class="dropdown-item" ng-repeat="type in vm.fontKind" ng-click="vm.stateVpre(type)">{{type.name}}</a>
+                                            </div>
+                                            <i class="fa fa-sort-desc i-desc"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-name">字号:</label>
+                                        <input type="text" class="font-change" ng-model="vm.listData.water_size" ng-focus="vm.fontFocus = true"
+                                                ng-class="{'focus-color':vm.fontFocus}" ng-blur="vm.fontFocus = false" ng-keyup="vm.limitedFont(vm.listData.water_size)">
+                                        <div class="font-size">
+                                            <span class="increase" ng-click="vm.add()">
+        
+                                            </span>
+                                            <span class="reduce" ng-click="vm.reduce()">
+                                               
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-name">透明度:</label>
+                                        <div id="transparency"></div>
+                                        <input type="text" ng-model="vm.txtTransparency" id="amount" ng-keyup="vm.limitedTxt(vm.txtTransparency)">&nbsp;&nbsp;%
+                                        <!-- <input type="text" ng-model="vm.listData.width" ng-focus="vm.transFocus = true"
+                                                ng-class="{'focus-color':vm.transFocus}" ng-blur="vm.transFocus = false"> -->
+                                    </div>
+                            </div>
+                            <div class="img-class" ng-show="vm.imgvalue">
+                                <div class="form-group">
+                                    <label class="label-name img">图片:</label>
+                                    <div class="tuji-fileUp pos-rlt">
+                                        <div class="img-item form-file" ng-if="vm.logo.src">
+                                            <input name="logo_change" type="file" nv-file-select="" uploader="vm.LogoUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                                            <div class="pos-abt fileUpTip change" translate="terminalLinks.logoChange"></div>
+                                        </div>
+                                        <input ng-if="!vm.logo.src" name="logo_add" type="file"  nv-file-select="" uploader="vm.LogoUploader" accept="image/gif,image/jpeg,image/png,image/psd,image/tiff,image/bmp"/>
+                                        <div class="pos-abt fileUpTip" ng-if="!vm.logo.src">
+                                            <i class="typeface-form_zengjia"></i>
+                                            <span class="zengjia-font">添加图标</span>
+                                        </div>
+                                        <div class="i-s-b" style="background:url({{vm.logo.src}}) center center no-repeat"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-name img">透明度:</label>
+                                    <div id="transparencyImg"></div>
+                                    <input type="text"  ng-model="vm.imgTransparency" id="digital" ng-keyup="vm.limitedImg(vm.imgTransparency)">&nbsp;&nbsp;%
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-name img">大小缩放:</label>
+                                    <input type="range" name="range" ng-model="vm.imgSize" ng-change="vm.changeSize(vm.imgSize)" class="gradient-range" value="1" min="1" max="8" step="1"/>
+                                    <input type="text"  ng-model="vm.imgRange" id="digital" ng-keyup="vm.limitedImgSize(vm.imgRange)">&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            
+                            <div class="form-group change-margin">
+                                <label class="label-name">水印位置:</label>
+                                <div class="group-box water-position">
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="1" ng-click="vm.changePos(1)">顶部居左
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="2" ng-click="vm.changePos(2)">顶部居中
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="3" ng-click="vm.changePos(3)">顶部居右
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="4" ng-click="vm.changePos(4)">左边居中
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="5" ng-click="vm.changePos(5)">图片中心
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="6" ng-click="vm.changePos(6)">右边居中
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="7" ng-click="vm.changePos(7)">底部居左
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="8" ng-click="vm.changePos(8)">底部居中
+                                    </label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.water_position" type="radio" value="9" ng-click="vm.changePos(9)">底部居右
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="img-position">
+                                <!-- <div id="poshange"></div> -->
+                                <span id="txtSet" ng-model="vm.listData.water_text" class="font-txt" ng-show="vm.listData.water_text&&(vm.listData.water_type==2)" ng-style="{'left':vm.left+'px','top':vm.top+'px','bottom':vm.bottom+'px','right':vm.right+'px','font-size':vm.listData.water_size+'px'}">{{vm.listData.water_text}}</span>
+                                <img id="shuiyinImg" ng-src="{{vm.logo.src}}" ng-show="vm.logo.src&&(vm.listData.water_type==1)" ng-style="{'left':vm.left+'px','top':vm.top+'px','bottom':vm.bottom+'px','right':vm.right+'px','opacity':vm.opacity}" />
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="label-name">是否启用开启封面图水印:</label>
+                                <label class="radio-inline m-r">
+                                    <input ng-model="vm.listData.is_open" type="radio" value="1">是
+                                </label>
+                                <label class="radio-inline">
+                                    <input ng-model="vm.listData.is_open" type="radio" value="0">否
+                                </label>
+                            </div> -->
+                            <div class="form-group">
+                                <label class="label-name">是否启用:</label>
+                                <label class="radio-inline m-r">
+                                    <input ng-model="vm.listData.is_use" type="radio" value="1">是
+                                </label>
+                                <label class="radio-inline">
+                                    <input ng-model="vm.listData.is_use" type="radio" value="0">否
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                    <label class="label-name">是否设为默认配置:</label>
+                                    <label class="radio-inline m-r">
+                                        <input ng-model="vm.listData.is_default" type="radio" value="1">是
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input ng-model="vm.listData.is_default" type="radio" value="0">否
+                                    </label>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="md-form-group">
+                        <button type="submit" class="btn primary-btn right-primary" my-loading="vm.loading" ng-click="vm.save()">保存</button>
+                        <button class="btn cancel-btn right-cancel" ng-click="vm.waterCancel()">取消</button>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+    </div>

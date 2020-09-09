@@ -1,0 +1,10 @@
+{
+    "siteManage" : "Website management",
+    "siteIntroduce" : "You can manage and configure the MXU-generated sites here",
+    "siteConfig" : "Site configuration",
+    "appConfig" : "Member configuration",
+    "indexConfig" : "Home configuration",
+    "templateSetting" : "Column template settings",
+
+    "allColumn" : "All columns"
+}

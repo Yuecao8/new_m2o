@@ -1,0 +1,48 @@
+{
+  "file":"文件",
+  "channel":"频道",
+  "edit":"编辑",
+  "delete":"删除",
+  "allChannels":"全部频道",
+  "startingTime":"开始时间：",
+  "view":"查看已生成节目单",
+  "save":"保存",
+  "generate":"生成节目单",
+
+
+  "editProgram":"编辑串联节目",
+  "programName":"节目名称:",
+  "programDuration":"节目时长:",
+  "durationTip":"*若缩短时间，从节目开始计时，自动剪去多出时间",
+  "sure":"确定",
+
+
+  "confirm" : "确认",
+  "cancel" : "取消",
+  "allTime" : "全部时间段",
+  "yesterday" : "昨天",
+  "today" : "今天",
+  "lastThreeDays" : "最近三天",
+  "lastSevenDays" : "最近七天",
+  "customTime" : "自定义时间段",
+
+  "startNoToday" : "单个节目开始时间不能超过今天！",
+  "endNoToday" : "单个节目结束时间超过了今天！",
+  "startMoreTen" : "编辑开始时间不得小于今天当前时间后10分钟！",
+  "startNoOver" : "编辑开始时间不得大于当前节目单中未加入计划节目的开始时间！",
+  "noDelEdit" : "当天的已生成串联单不允许编辑删除！",
+  "sureDel" : "确认删除当前节目？",
+  "todayNoUpdate" : "当天的已生成串联单不允许更新保存！",
+  "dragToRight" : "请从右拖拽视频至串联单！",
+  "saveSuccess" : "串联单保存成功！",
+  "genSuccess" : "串联单生成成功！",
+  "delSuccess" : "删除成功！",
+
+  "startLessMin" : "节目开始时间不能小于节目最小开始时间！",
+  "lengthNotGrow" : "视频或节目时长只能缩短不能增长！",
+  "durationMin" : "视频或节目时长不能为0！",
+  "fillName" : "请填写节目名称！",
+  "errorMessage":"暂无数据！"
+
+
+}

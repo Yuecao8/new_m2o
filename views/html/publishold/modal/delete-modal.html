@@ -1,0 +1,39 @@
+<div class="delete-wrapper box-shadow-md">
+    <div class="modal-header">
+        <!--translate="publish.listStyle"-->
+        <h3 class="modal-title" ng-if="!vm.multiple">
+            {{ 'publish.delContent'| translate}}
+            <span style="margin-left: 10px;">{{vm.singleTitle}}</span>
+        </h3>
+        <h3 class="modal-title" ng-if="vm.multiple">
+            {{ 'publish.bulkDelContent'| translate}}
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="p-l-sm data-show" >
+            {{ 'publish.wheDel'| translate}}
+            {{vm.site.name}}
+            <div class="data-repeat" ng-repeat="item in vm.showArr">
+                <span ng-if="$index < 3">{{item.template}}</span>
+            </div>
+        </div>
+
+        <span class="del-tip p-l-sm" translate>{{vm.multiple?'publish.delMultiple':'publish.delSingle'}}</span>
+        <label class="checkbox-inline p-l-sm" style="margin-left: 20px;">
+            <input type="checkbox" value="1" ng-checked="vm.chosed" ng-click="vm.toggle()">
+            <span translate>{{vm.multiple?'publish.delOthers':'publish.delOther'}}</span>
+        </label>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn primary-btn" ng-disabled="verifyForm.$invalid" ng-click="vm.save()">
+            确定
+        </button>
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">
+            取消
+        </button>
+
+    </div>
+</div>
+

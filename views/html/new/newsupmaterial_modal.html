@@ -1,0 +1,353 @@
+
+<div class="material-modal">
+    <div class="modal-header">
+        <h5 class="modal-title" >素材引用</h5>
+        <!--{{vm.typeTitle}}-->
+        <i class="fa fa-remove close-icon" ng-click="vm.close()"></i>
+    </div>
+    <div class="time-chose" ng-if="vm.type !== 'moduleImg'">
+        <div class="btn-contain btn-group" ng-show="vm.type !== 'moduleImg'">
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('gallery')" ng-class="{actived:vm.stateType=='gallery'}">图集</button>
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('video')" ng-class="{actived:vm.stateType=='video'}">视频</button>
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('audio')" ng-class="{actived:vm.stateType=='audio'}" ng-if="!vm.systemSet && !vm.systemSet">音频</button>
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('vote')" ng-class="{actived:vm.stateType=='vote'}" ng-if="!vm.isHideSource && !vm.systemSet">投票</button>
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('sources')" ng-class="{actived:vm.stateType=='sources'}" ng-if="!vm.isHideSource && !vm.systemSet">资源库</button>
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('CREsources', 'common')" ng-class="{actived:vm.cre_type=='common'}" ng-if="vm.showCre">CRE资源库</button>
+            <button class="btn btn-outline btn-blue" ng-click="vm.typeChange('CREsources', 'strip')" ng-class="{actived:vm.cre_type=='strip'}" ng-if="vm.showCre && vm.show_cre_demolition">拆条资源库</button>
+        </div>
+        <button class="refresh-icon" ng-click="vm.refresh()" ng-if="vm.isVote">
+            <i class="icon-tubiao typeface-icon_shuaxin"></i>
+            <span>刷新</span>
+        </button>
+        <search-Box key-Word="vm.title"
+                    search-Key="vm.search(Item)"
+                    key-Press="vm.keyPress(Event)"
+                    hide-Kind="vm.hideAccessKind"
+                    is-Focus="vm.isFocus"
+                    place-Holder="vm.placeHolder"
+        >         
+        </search-Box>
+        <!-- <div class="form-group hoge-input-search pull-right black-input-search">
+            <input type="text" placeholder="{{'content.search' | translate }}" ng-keypress="vm.keyPress($event)" ng-model="vm.title">
+            <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+        </div> -->
+    </div>
+    <div class="modal-body">
+        <!--标题-->
+
+
+        <div class="material-body" ng-if="!vm.isSource && !vm.isCRE">
+            <!--栏目分类-->
+            <div class="load-class"  my-loading="vm.loading">
+                    <div class="nav_classify pos-rlt" data="$state" ng-hide="vm.loading">
+                            <div class="classify-list">
+                                <nav class="navside m-b">
+                                    <div class="nav-border b-primary" flex>
+                                        <class-tree class="classify-tree"
+                                                    no-add = "true"
+                                                    no-edit ="true"
+                                                    no-del ="true"
+                                                    tree-data="vm.navList"
+                                                    sort-id="vm.storage"
+                                                    get-child="vm.getChilds(item)"
+                                                    select-class="vm.selectClass(param)"
+                                                    tree-level="10"
+                                                    is-show-item="-1"
+                                        ></class-tree>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <!--素材列表-->
+                        <div class="material-list">
+                            <div class="list-body">
+                                <hoge-error  arr-length="vm.materialList.length" load="vm.loading"></hoge-error>
+                                <div class="list-contain" ng-if="vm.materialList[0]">
+                                    <div class="each-item" ng-repeat="item in vm.materialList track by $index">
+                                        <!--图片没写-->
+                                        <!-- 投票   start -->
+                                        <div class="item-img" ng-if="item.is_voteDefault">
+                                            <div class="voteLink">
+                                                <span class="vote-icon">+</span>
+                                                <span class="vote-breif">新建投票</span>
+                                                <a class="jumpVote" ui-sref="app.editVote({id: 0})" target="_black"></a>
+                                            </div>
+                                        </div>
+                                        <!-- 投票   end -->
+                                        <div class="item-img" ng-click="vm.choseItem(item)" ng-class="{'chos-item':item.is_chosed}" ng-click="vm.cancelChose(item)" ng-if="!item.is_voteDefault">
+                                            <span class="img-square" ng-if="item.index_pic">
+                                                <img ng-src="{{item.index_pic}}" ng-if="!vm.isVote">
+                                                <img ng-src="{{item.index_pic[0].origin_url}}?imageView/0/h/150/w/200" ng-if="vm.isVote">
+                                            </span>
+                                            <div class="img-square" ng-if="!item.index_pic">
+                                                <img src="../assets/images/mxu/img_cover.png">
+                                            </div>
+                                            <!--<div class="item-msg">-->
+                                                <!--<span ng-if="vm.params.type != 'gallery'">{{item.duration_format}}</span>-->
+                                                <!--<span ng-if="vm.params.type == 'gallery'">{{item.photo_count}}P</span>-->
+                                            <!--</div>-->
+                                            <div class="hover-floor" ng-if="!vm.isVote">
+                                                <span ng-if="vm.params.type != 'gallery'">{{item.duration_format}}</span>
+                                                <span ng-if="vm.params.type == 'gallery'">{{item.photo_count}}P</span>
+                                                <span class="hoge-tip-arrow pull-right" ng-click="vm.newsMaterialPreview(item)">
+                                                    <i class="fa typeface-form_yulan"></i>
+                                                    <div class="box-color text-color pos-rlt">
+                                                         <span class="arrow bottom b-white"></span>
+                                                        <div class="box-body">预览</div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="item-title">
+                                            {{item.title}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hoge-table-bottom" ng-if="vm.materialList.length!=0">
+                                    <page-nation  options="vm.pageOptions" turn-page="vm.getList()" ng-if="!vm.isVote"></page-nation>
+                                    <page-nation  options="vm.pageOptions" turn-page="vm.getVoteList()" ng-if="vm.isVote"></page-nation>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+
+
+        </div>
+        <!-- 资源库 start -->
+        <div class="sources" ng-if="vm.isSource">
+            <div class="srcTitle">
+                <div class="item-click" ng-class="{'module-item': vm.type=='moduleImg'}">
+                    <span ng-click="vm.changeType('public')" ng-class="{actived:vm.srcType=='public'}">公共资源</span>
+                    <span ng-click="vm.changeType('personal')" ng-class="{actived:vm.srcType=='personal'}">个人资源</span>
+                    <span ng-if="vm.projectId && vm.projectId > -1" ng-click="vm.changeType('project')" ng-class="{actived:vm.srcType=='project'}">当前选题</span>
+                    <em ng-if="vm.type !== 'moduleImg'"></em>
+                    <span ng-if="vm.srcType == 'project'">
+                      <span ng-click="vm.changeType('project_product')" ng-class="{actived:vm.detialType=='project_product'}">成果</span>
+                      <span ng-click="vm.changeType('project_file')" ng-class="{actived:vm.detialType=='project_file'}">附件</span>
+                    </span>
+                    <span ng-if="vm.srcType != 'project'">
+                      <span ng-click="vm.changeType('all')" ng-class="{actived:vm.detialType=='all'}" ng-show="vm.type !== 'moduleImg'">全部文件</span>
+                      <span ng-click="vm.changeType('image')" ng-class="{actived:vm.detialType=='image'}" ng-show="vm.type !== 'moduleImg'">图片</span>
+                      <span ng-click="vm.changeType('video')" ng-class="{actived:vm.detialType=='video'}" ng-show="vm.type !== 'moduleImg'">视频</span>
+                      <span ng-click="vm.changeType('audio')" ng-class="{actived:vm.detialType=='audio'}" ng-show="vm.type !== 'moduleImg'">音频</span>
+                      <span ng-click="vm.changeType('document')" ng-class="{actived:vm.detialType=='document'}" ng-show="vm.type !== 'moduleImg'">文档</span>
+                    </span>
+                     <span class="form-group hoge-input-search pull-right black-input-search" ng-if="vm.type === 'moduleImg'">
+                        <input type="text" placeholder="{{'content.search' | translate }}" ng-keypress="vm.keyPress($event)" ng-model="vm.title">
+                        <i class="fa typeface-searchbar_sousuo" ng-click="vm.search()"></i>
+                    </span>
+                </div>
+                <div class="back-click" ng-show="vm.isshowcrumbs">
+                    <span class="backLast" ng-click="vm.backLast()">返回上一级</span>
+                    <em></em>
+                    <span class="backRoot" ng-click="vm.backRoot()">返回根目录</span>
+
+                </div>
+
+            </div>
+            <div class="srcList" my-loading="vm.loading">
+                <hoge-error  arr-length="vm.srcList.length"></hoge-error>
+                <div class="each_list" ng-repeat="list in vm.srcList track by $index" ng-if="vm.srcList.length>0">
+                    <div class="srcItems" >
+                        <div class="imgClass">
+                            <!-- <span class="img-square" ng-if="list.index_pic">
+                                <img ng-src="{{list.index_pic}}">
+                            </span> -->
+                            <div class="img-onlyimg" ng-if="list.file_type=='image'" ng-click="vm.choseList(list)"  ng-class="{'chos-item':list.is_chosed}">
+                                    <img ng-src="{{list.path_info.cut_url}}" width="28px" height="30px;">
+                                </div>
+                            <div class="img-square" ng-if="list.file_type=='document'" ng-click="vm.choseList(list)"  ng-class="{'chos-item':list.is_chosed}">
+                                <img src="../assets/images/mxu/sources/icon_qita.png" width="28px" height="30px;">
+                            </div>
+                            <div class="img-square infolder-class" ng-if="list.file_type=='directory'" ng-click="vm.infolder(list)">
+                                <img src="../assets/images/mxu/sources/icon_wenjianjia.png" width="48px" height="48px;">
+                            </div>
+                            <div class="img-square" ng-if="list.file_type=='video'" ng-click="vm.choseList(list)" ng-class="{'chos-item':list.is_chosed}">
+                                <img src="../assets/images/mxu/sources/icon_shipin.png" width="32px" height="20px;">
+                            </div>
+                            <div class="img-square" ng-if="list.file_type=='audio'" ng-click="vm.choseList(list)" ng-class="{'chos-item':list.is_chosed}">
+                                <img src="../assets/images/mxu/sources/icon_yinpin.png" width="32px" height="32px;">
+                            </div>
+                            <div class="hover-floor" ng-if="list.file_type!='directory'">
+                                <span class="hoge-tip-arrow pull-right" ng-click="vm.repositoryPreview(list)">
+                                    <i class="fa typeface-form_yulan"></i>
+                                    <div class="box-color text-color pos-rlt">
+                                            <span class="arrow bottom b-white"></span>
+                                        <div class="box-body">预览</div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="item-title">
+                            {{list.name}}
+                        </div>
+                    </div>
+                    <!-- <a href="{{vm.docuemnt_url}}"></a> -->
+                </div>
+            </div>
+
+            <!-- //<div>{{}}</div> -->
+            <div class="hoge-table-bottom" ng-if="vm.srcList.length>0">
+                <page-nation  options="vm.srcPageOptions" turn-page="vm.getSources()"></page-nation>
+            </div>
+        </div>
+        <!-- 资源库 end -->
+        <!-- CRE资源库  start -->
+        <div class="CREsources" ng-if="vm.isCRE">
+                <div class="srcTitle">
+                    <div class="item-click">
+                        <span ng-click="vm.changeType('public')" ng-class="{actived:vm.srcType=='public'}">公共资源</span>
+                        <span ng-click="vm.changeType('personal')" ng-class="{actived:vm.srcType=='personal'}">个人资源</span>
+                        <em></em>
+                        <span ng-click="vm.changeType('all')" ng-class="{actived:vm.detialType=='all'}">全部</span>
+                        <span ng-click="vm.changeType('creVideo')" ng-class="{actived:vm.detialType=='creVideo'}">视频</span>
+                        <span ng-click="vm.changeType('creFolder')" ng-class="{actived:vm.detialType=='creFolder'}">文件夹</span>
+                        <span ng-click="vm.changeType('creAudio')" ng-class="{actived:vm.detialType=='creAudio'}">音频</span>
+                        <span ng-click="vm.changeType('creImage')" ng-class="{actived:vm.detialType=='creImage'}">图片</span>
+                        <!-- <span ng-click="vm.changeType('creNewsClues')" ng-class="{actived:vm.detialType=='creNewsClues'}">新闻线索</span> -->
+                    </div>
+                    <div class="back-click" ng-show="vm.isshowcrumbs">
+                        <span class="backLast" ng-click="vm.backLast()">返回上一级</span>
+                        <em></em>
+                        <span class="backRoot" ng-click="vm.backRoot()">返回根目录</span>
+
+                    </div>
+
+                </div>
+                <div class="srcList" my-loading="vm.loading">
+                    <hoge-error  arr-length="vm.srcList.length"></hoge-error>
+                    <div class="each_list" ng-repeat="list in vm.srcList track by $index" ng-if="vm.srcList.length>0">
+                        <div class="srcItems" >
+                            <div class="imgClass">
+                                <!-- <span class="img-square" ng-if="list.index_pic">
+                                    <img ng-src="{{list.index_pic}}">
+                                </span> -->
+                                <div class="img-onlyimg" ng-if="list.type=='3'" ng-click="vm.choseList(list)"  ng-class="{'chos-item':list.is_chosed}">
+                                        <img ng-src="{{list.iconUrl}}" width="28px" height="30px;">
+                                    </div>
+                                <div class="img-square" ng-if="list.type== 16" ng-click="vm.choseList(list)"  ng-class="{'chos-item':list.is_chosed}">
+                                    <img src="../assets/images/mxu/sources/icon_qita.png" width="28px" height="30px;">
+                                </div>
+                                <div class="img-square infolder-class" ng-if="list.type=='7'" ng-click="vm.infolder(list)">
+                                    <img src="../assets/images/mxu/sources/icon_wenjianjia.png" width="48px" height="48px;">
+                                </div>
+                                <div class="img-square" ng-if="list.type== 0" ng-click="vm.choseList(list)" ng-class="{'chos-item':list.is_chosed}">
+                                    <img ng-src="{{list.iconUrl}}" width="102px" height="89px;">
+                                    <!-- <img src="../assets/images/mxu/sources/icon_shipin.png" width="32px" height="20px;"> -->
+                                </div>
+                                <div class="img-square" ng-if="list.type== 1" ng-click="vm.choseList(list)" ng-class="{'chos-item':list.is_chosed}">
+                                    <img src="../assets/images/mxu/sources/icon_yinpin.png" width="32px" height="32px;">
+                                </div>
+                                <div class="hover-floor" ng-if="list.type!= 7">
+                                    <span class="hoge-tip-arrow pull-right" ng-click="vm.repositoryPreview(list)">
+                                        <i class="fa typeface-form_yulan"></i>
+                                        <div class="box-color text-color pos-rlt">
+                                                <span class="arrow bottom b-white"></span>
+                                            <div class="box-body">预览</div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="item-title">
+                                {{list.originalName}}
+                            </div>
+                        </div>
+                        <!-- <a href="{{vm.docuemnt_url}}"></a> -->
+                    </div>
+                </div>
+
+                <!-- //<div>{{}}</div> -->
+                <div class="hoge-table-bottom" ng-if="vm.srcList.length>0">
+                    <page-nation  options="vm.srcPageOptions" turn-page="vm.creList()"></page-nation>
+                </div>
+            </div>
+        <!-- CRE资源库  end -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn cancel-btn" ng-click="vm.close()">取消</button>
+        <button type="button" class="btn primary-btn" ng-click="vm.save()" ng-class="{'disabled':!vm.chosed[0].id}">确认</button>
+    </div>
+</div>
+<!-- 预览 -->
+<div ng-if="vm.newsMaterialPre">
+    <atlas-pre state-type="vm.stateType" atlas-loading="vm.atlasLoading"
+              pre-title="vm.preTitle" atlas="vm.atlas" active-index="vm.activeIndex"
+               news-material-pre="vm.newsMaterialPre" pre-close="vm.preClose()"
+    ></atlas-pre>
+    <video-pre state-type="vm.stateType" atlas-loading="vm.atlasLoading"  news-material-pre="vm.newsMaterialPre"
+               pre-title="vm.preTitle" video="vm.video" pre-close="vm.preClose()"  video-img="vm.video_img"></video-pre>
+
+    <div class="audio-pre new-material-pre" ng-cloak ng-if="vm.stateType == 'audio'">
+        <div class="pre-body">
+            <div class="media-body" >
+                <div class="auido-style" my-loading="vm.audioLoading">
+                    <i class="fa fa-remove close-icon" ng-click="vm.preClose()"></i>
+                    <div class="control-icon">
+                        <i class="fa btn-audio typeface-menu_bofang"
+                        ></i>
+                    </div>
+                    <div class="controll-body">
+                        <div class="body-title">{{vm.preTitle}}</div>
+                        <div class="body-progress progress" id="progress">
+                            <div class="progress-bar info" id="progress-bar"></div>
+                        </div>
+                        <div class="body-time">
+                            <span class="current-time" id="current-time"></span>
+                            <span id="durtion-time">{{vm.duration}}</span>
+                        </div>
+                    </div>
+                </div>
+                <audio id="audioTag" preload="true" ng-poster="{{vm.audioImg}}" src="{{vm.audio}}" style="width: 100%;"></audio>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <iframe name="myiframe" id="myrame" src="{{vm.docuemnt_url}}" frameborder="0" align="left" width="200" height="200" scrolling="no">
+    <p>你的浏览器不支持iframe标签</p>
+</iframe> -->
+<div ng-if="vm.newsrepositoryPre">
+        <atlas-pre state-type="vm.file_type" atlas-loading="vm.atlasLoading"
+                  pre-title="vm.preTitle" atlas="vm.images" active-index="vm.activeIndex"
+                   news-material-pre="vm.newsrepositoryPre" pre-close="vm.repositoryClose()"
+        ></atlas-pre>
+        <video-pre state-type="vm.file_type" atlas-loading="vm.atlasLoading"  news-material-pre="vm.newsrepositoryPre"
+                   pre-title="vm.preTitle" video="vm.videos" pre-close="vm.repositoryClose()"  video-img="vm.video_imgs"></video-pre>
+
+        <div class="audio-pre new-material-pre" ng-cloak ng-if="vm.file_type == 'audio'">
+            <div class="pre-body">
+                <div class="media-body" >
+                    <div class="auido-style" my-loading="vm.audioLoading">
+                        <i class="fa fa-remove close-icon" ng-click="vm.repositoryClose()"></i>
+                        <div class="control-icon">
+                            <i class="fa btn-audio typeface-menu_bofang"
+                            ></i>
+                        </div>
+                        <div class="controll-body">
+                            <div class="body-title">{{vm.preTitle}}</div>
+                            <div class="body-progress progress" id="progress">
+                                <div class="progress-bar info" id="progress-bar"></div>
+                            </div>
+                            <div class="body-time">
+                                <span class="current-time" id="current-time"></span>
+                                <span id="durtion-time">{{vm.duration}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <audio id="audioTag" preload="true" ng-poster="{{vm.audioImg}}" src="{{vm.audio}}" style="width: 100%;"></audio>
+                </div>
+            </div>
+        </div>
+        <div class="document-pre new-material-pre" ng-cloak ng-if="vm.file_type == 'document'">
+                <div class="pre-body">
+                    <div class="header">
+                        <span class="title">{{vm.preTitle}}</span>
+                        <i class="fa fa-remove close-icon" ng-click="vm.repositoryClose()"></i>
+                    </div>
+                    <div class="media-body" >
+                        <iframe name="myiframe" id="myrame" style="display: none" frameborder="0" align="left" width="815" height="470" scrolling="no">
+                            <p>你的浏览器不支持iframe标签</p>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+    </div>

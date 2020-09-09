@@ -1,0 +1,408 @@
+<div class="add-channel"  my-loading="vm.addLoading">
+   <div class="section-box">
+        <i class="fa typeface-alert_cuowu2 icon-close"  ng-click="vm.cancelChannel()"></i>
+        <div class="section-main">
+            <header>{{vm.dataDetail.name ? '编辑' : '新增'}}频道</header>
+            <div class="form-card">
+                <div class="header">基本信息</div>
+                <div class="content">
+                    <div class="form-group">
+                        <label class="label-name required">频道名称</label>
+                        <input type="text" ng-model="vm.dataDetail.name" ng-focus="vm.nameFocus = true"
+                               ng-class="{'focus-color':vm.nameFocus}" ng-blur="vm.nameFocus = false" maxlength="15"
+                        >
+                        <div class="channel-count">
+                            <div num-count="vm.dataDetail.name"  count-top="-22" count-max="15" count-position="right"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-name required">台号</label>
+                        <input type="text" ng-model="vm.dataDetail.code" ng-change="vm.keyUpCode()"  ng-class="{'disabled-item':vm.dataDetail.id}" ng-focus="vm.codeFocus = true"
+                               ng-class="{'focus-color':vm.codeFocus}" ng-disabled="vm.dataDetail.id" ng-blur="vm.codeFocus = false" maxlength="16"
+                        >
+                        <div class="channel-count">
+                            <div num-count="vm.dataDetail.code"  count-top="-22" count-max="16" count-position="right"></div>
+                        </div>
+                    </div>
+                    <!-- 类型 -->
+                    <div class="form-group">
+                        <label class="label-name">类型</label>
+                        <div class="btn-contain btn-group">
+                            <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_audio == 0}" ng-click="vm.dataDetail.is_audio = 0">电视</button>
+                            <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_audio == 1}" ng-click="vm.dataDetail.is_audio = 1">广播</button>
+                        </div>
+                    </div>
+                    <div class="form-group flex-item server hoge-flex-center">
+                        <label class="label-name">分类
+                        </label>
+                        <div class="list-client hoge-dropdown">
+                            <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="dropdown-label">{{vm.category_name}}</span>
+                                    <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm drop-down-list">
+                                <a class="dropdown-item"
+                                ng-repeat="vv in vm.choseCategoryList" ng-click="vm.categorySelect(vv)">{{vv.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 封面图 start -->
+                    <div class="form-group Identification">
+                        <label class="label-name text-top required">封面图</label>
+                        <div class="img-list" my-loading="vm.img_loading">
+                            <div class="form-file">
+                                <input type="file" style="height: 100%;" nv-file-select uploader="vm.localUploader" accept=".png,.jpeg" style="cursor: pointer;" multiple>
+                                <div class="file_form" >
+                                    <i class="icon-tianjia"></i>
+                                    <span>设置封面图</span>
+                                </div>
+                                <div class="repalce-logo" ng-if="vm.index_pic">点击更换封面</div>
+                                <img ng-src="{{vm.index_pic}}" ng-if="vm.index_pic">
+                            </div>
+                            <div class="Identification-tip">请上传PNG／JPEG格式图片</div>
+
+                        </div>
+                    </div>
+                    <!-- 封面图 end -->
+                    
+                    <!-- 台标 start -->
+                    <div class="form-group img-logo">
+                        <label class="label-name">台标</label>
+                        <div class="img-logo-list">
+                            <input type="file" id="img-logo-input" nv-file-select uploader="vm.imgUploader" accept=".png,.jpeg" style="cursor: pointer;" multiple>
+                            <div  ng-repeat="(index,item) in vm.dataDetail.icons" class="flex-item repeat-img-logo">
+                                <div class="img-logo-item" >
+                                    <div class="uoload-img-logo" ng-if="!vm.icons[index]" ng-click="vm.handlerUpload(index)">
+                                        <i class="icon-tianjia fa"></i>
+                                        <span>上传台标</span>
+                                    </div>
+                                    <div class="repalce-logo" ng-if="vm.icons[index]" ng-click="vm.handlerUpload(index)" >点击更换台标</div>
+                                    <img ng-src="{{vm.icons[index]}}" ng-if="vm.icons[index]">
+                                </div>
+                               
+                                <div class="list-client hoge-dropdown">
+                                    <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <span class="dropdown-label" ng-class="{'no-clinet': !vm.applicationName[index]}">{{vm.applicationName[index] ? vm.applicationName[index]:'选择终端'}}</span>
+                                            <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu text-left text-sm drop-down-list">
+                                        <a class="dropdown-item"
+                                        ng-repeat="vv in vm.clientList" ng-click="vm.clientSelect(vv,index)">{{vv.name}}</a>
+                                    </div>
+                                </div>
+                                <button class="hoge-white-btn btn" ng-click="vm.delClient(index)" ng-if="vm.dataDetail.icons.length>1 && vm.icons[index]">删除</button>
+                                
+                            </div>
+                            <div class="Identification-tip">请上传PNG／JPEG格式图片</div>
+                        </div>
+                    </div>
+                     <!-- 台标 end -->
+                     <div class="form-group">
+                        <label class="label-name required">显示比例</label>
+                        <input type="text" class="scale-input" ng-change="vm.keyUpBeforeScale()"  ng-model="vm.beforeScale" ng-focus="vm.beforeScaleFocus = true"
+                                ng-class="{'focus-color':vm.beforeScaleFocus}" ng-blur="vm.beforeScaleFocus = false"
+                        >
+                        <span class="scale-span">:</span>
+                        <input type="text" class="scale-input" ng-change="vm.keyUpAfterScale()"  ng-model="vm.afterScale" ng-focus="vm.afterScaleFocus = true"
+                                ng-class="{'focus-color':vm.afterScaleFocus}" ng-blur="vm.afterScaleFocus = false"
+                        >
+                    </div>
+                    
+                    <!-- 播放地址 start -->
+                    <div class="form-group" ng-if="vm.dataDetail.id">
+                        <label class="label-name">播放地址</label>
+                        <input type="text" readonly ng-model="vm.dataDetail.m3u8" ng-click="vm.select()"
+                        >
+                        <button class="hoge-white-btn btn" ng-click="vm.broadcast()" style="position:relative;top: -1px;left: 4px;">播放</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-name">时移时间</label>
+                        <input-number number='vm.dataDetail.time_shift_time'  min="0" max="168" step="1" width='100' change-num="vm.changeNum(num)"></input-number>
+                            <span class="number-tip m-l-sm">
+                                小时
+                        </span>
+                        <div class="time-shift-tip">
+                            时移时间范围：0-168，不填则默认为24，时移时间设置越长，所占用的磁盘空间越大。
+                            您还可以使用 <span class="time-shift-tip-modal" ng-click="vm.calcTime()">时移存储空间计算器</span> 快速计算出时移占用的存储空间大小
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-card">
+                <div class="header" style="margin-bottom: 24px;">直播参数</div>
+                <!-- 直播来源-start -->
+                <div class="form-group">
+                    <label class="label-name required">直播来源</label>
+                    <div class="btn-contain btn-group">
+                        <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.channel_type == 'live'}" ng-click="vm.setStreaming()">直播流</button>
+                        <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.channel_type == 'outlink'}" ng-click="vm.setOutside()">外链</button>
+                    </div>
+                </div>
+                <div ng-show="vm.dataDetail.channel_type == 'live'">
+                    <div class="form-group">
+                        <label class="label-name required">直播流类型</label>
+                        <div class="btn-contain btn-group">
+                            <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_push == 0}" ng-click="vm.setPull()">拉取</button>
+                            <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_push == 1}" ng-click="vm.setPush()">推送</button>
+                        </div>
+                    </div>
+                    <div class="form-group flex-item server hoge-flex-center">
+                        <label class="label-name required">服务器
+                            <i class="fa fa-question-circle">
+                                <div class="msg">通过频道配置设置</div>
+                            </i>
+                        </label>
+                        <div class="list-client hoge-dropdown">
+                            <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    <span class="dropdown-label">{{vm.configName}}</span>
+                                    <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu text-left text-sm drop-down-list">
+                                <a class="dropdown-item"
+                                ng-repeat="vv in vm.configList" ng-click="vm.configSelect(vv)">{{vv.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="virtual-live">
+                            <span class="label-name switch-span">直播流</span>
+                            <label class="ui-switch switch-r switch-position">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-checked="vm.dataDetail.is_stopped == 0" ng-click="vm.toggleLive()">
+                                <i></i>
+                            </label>
+                        </div>    
+                    </div>
+                    <div class="form-group" ng-show="vm.dataDetail.is_push == 1">
+                        <div class="AuthenticationKey">
+                            <span class="label-name switch-span">推流鉴权</span>
+                            <label class="ui-switch switch-r switch-position">
+                                <span class="switch-open">开</span>
+                                <span class="switch-close">关</span>
+                                <input type="checkbox" ng-checked="vm.dataDetail.is_auth == 1" ng-click="vm.toggleAuthentication()">
+                                <i></i>
+                            </label>
+                        </div>    
+                    </div>              
+                    <div class="form-group" ng-show="vm.dataDetail.is_push == 1">
+                        <div class="AuthenticationKey">
+                            <span class="label-name switch-span  required">推流鉴权码</span>
+                            <span class="mask" ng-click="vm.CopyAuthenticationKey()"></span>
+                            <input type="text"  class="input-list"   id="AuthenticationKey" ng-class="{'focus-color':nor.focusDefaults,'disabled-item':vm.dataDetail.is_push == 1}" disabled="disabled" ng-model="vm.dataDetail.auth">
+                            <button class="btn common-btn btn-outline btn-blue"  ng-click="vm.CreateAuthenticationKey()">重新生成</button>
+                        </div>
+                    </div>
+                    <div class="dataConditions">
+                        <div class="list_contain hoge-table-contain white" my-loading="vm.parameterListLoading">
+                            <div class="hoge-error hoge-error-hight" ng-if="!vm.parameterList.length" >
+                                <div>
+                                    <div class="error-img" ng-if="!vm.parameterListLoading"></div>
+                                    <p>暂无内容</p>
+                                </div>
+                            </div>
+                            <div class="table_header hoge-table-header" ng-show="vm.parameterList.length">
+                                <div class="b-l b-white flex-item">
+                                    <div class="list-title">信号流名称</div>
+                                    <div class="list-input">输出标识</div>
+                                    <div class="list-source  flex-one">来源地址</div>
+                                    <div class="list-stream">码流</div>
+                                    <div class="list-default">设为默认</div> 
+                                    <div class="list-i"></div>
+                                </div>
+                            </div>
+
+                            <div class="list white" ng-show="vm.parameterList.length">
+                                <div class="list-item hoge-item-border flex-item"
+                                    ng-repeat=" (idx,nor) in vm.parameterList track by $index"
+                                >
+                                    <div class="list-title">
+                                        <input type="text"  class="input-list" ng-model="nor.name" ng-focus="nor.focusTitle = true"
+                                            ng-class="{'focus-color':nor.focusTitle}" ng-blur="nor.focusTitle = false"
+                                        >
+                                    </div>
+
+                                    <div class="list-input">
+                                        <input  type="text"  class="input-list" ng-change="vm.keyUpStreamName(nor)" ng-model="nor.stream_name" ng-focus="nor.focusInput = true"
+                                            ng-class="{'focus-color':nor.focusInput}" ng-blur="nor.focusInput =false"
+                                        >
+                                    </div>
+                                    <div class="list-source flex-one">
+                                        <input type="text"  class="input-list" ng-model="nor.stream_url" ng-focus="nor.focusDefaults = true"
+                                            ng-class="{'focus-color':nor.focusDefaults,'disabled-item':vm.dataDetail.is_push == 1}" ng-readonly="vm.dataDetail.is_push == 1"
+                                            ng-blur="nor.focusDefaults = false"
+                                        >
+                                    </div>
+                                    <div class="list-stream">
+                                        <input type="text"  class="input-list" ng-change="vm.keyUpBitrate(nor)"  ng-model="nor.bitrate" ng-focus="nor.focusStream = true"
+                                            ng-class="{'focus-color':nor.focusStream}" ng-blur="nor.focusStream = false"
+                                        >
+                                    </div>
+                                    <div class="list-default">
+                                        <span>
+                                            <input type="radio"  class="input-list"  value="idx" ng-checked="vm.is_main==idx" ng-click="vm.setMain(idx)" name="mainDefault"
+                                            >
+                                        </span>
+                                    </div>
+
+                                    <div class="list-i">
+                                        <span ng-click="vm.delParamList(nor)">删除</span>
+                                    </div>
+
+                                </div>
+                    
+                            </div>
+                            <div class="list-bottom">
+                                <div class="add-form" ng-click="vm.addLine()">
+                                    <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                                    <span class="add-tex">添加信号流</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div ng-show="vm.dataDetail.channel_type == 'outlink'">
+                    <div class="form-group">
+                        <label class="label-name required">外链</label>
+                        <input type="text" ng-model="vm.dataDetail.live_outlink" placeholder="请输入直播外链地址" ng-focus="vm.liveOutLinkFocus = true"
+                               ng-class="{'focus-color':vm.liveOutLinkFocus}" ng-blur="vm.liveOutLinkFocus = false"
+                        >
+                        <!-- <div class="channel-count">
+                            <div num-count="vm.dataDetail.name"  count-top="-22" count-max="15" count-position="right"></div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- 直播来源--end -->
+                <!-- <div class="form-group">
+                    <label class="label-name required">直播流类型</label>
+                    <div class="btn-contain btn-group">
+                        <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_push == 0}" ng-click="vm.setPull()">拉取</button>
+                        <button class="btn common-btn btn-outline btn-blue" ng-class="{'import-active': vm.dataDetail.is_push == 1}" ng-click="vm.setPush()">推送</button>
+                    </div>
+                </div> -->
+                <!-- <div class="form-group flex-item server hoge-flex-center">
+                    <label class="label-name required">服务器
+                        <i class="fa fa-question-circle">
+                            <div class="msg">通过频道配置设置</div>
+                        </i>
+                    </label>
+                    <div class="list-client hoge-dropdown">
+                        <button class="btn white btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="dropdown-label">{{vm.configName}}</span>
+                                <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu text-left text-sm drop-down-list">
+                            <a class="dropdown-item"
+                            ng-repeat="vv in vm.configList" ng-click="vm.configSelect(vv)">{{vv.name}}</a>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="form-group" ng-show="vm.dataDetail.is_push == 1">
+                    <div class="AuthenticationKey">
+                        <span class="label-name switch-span">推流鉴权</span>
+                        <label class="ui-switch switch-r switch-position">
+                            <span class="switch-open">开</span>
+                            <span class="switch-close">关</span>
+                            <input type="checkbox" ng-checked="vm.dataDetail.is_auth == 1" ng-click="vm.toggleAuthentication()">
+                            <i></i>
+                        </label>
+                    </div>    
+                </div> -->
+                <!-- <div class="form-group" ng-show="vm.dataDetail.is_push == 1">
+                    <div class="AuthenticationKey">
+                        <span class="label-name switch-span  required">推流鉴权码</span>
+                        <span class="mask" ng-click="vm.CopyAuthenticationKey()"></span>
+                        <input type="text"  class="input-list"   id="AuthenticationKey" ng-class="{'focus-color':nor.focusDefaults,'disabled-item':vm.dataDetail.is_push == 1}" disabled="disabled" ng-model="vm.dataDetail.auth">
+                        <button class="btn common-btn btn-outline btn-blue"  ng-click="vm.CreateAuthenticationKey()">重新生成</button>
+                    </div>
+                </div> -->
+                <!-- <div class="dataConditions">
+                    <div class="list_contain hoge-table-contain white" my-loading="vm.parameterListLoading">
+                        <div class="hoge-error hoge-error-hight" ng-if="!vm.parameterList.length" >
+                            <div>
+                                <div class="error-img" ng-if="!vm.parameterListLoading"></div>
+                                <p>暂无内容</p>
+                            </div>
+                        </div>
+                        <div class="table_header hoge-table-header" ng-show="vm.parameterList.length">
+                            <div class="b-l b-white flex-item">
+                                <div class="list-title">信号流名称</div>
+                                <div class="list-input">输出标识</div>
+                                <div class="list-source  flex-one">来源地址</div>
+                                <div class="list-stream">码流</div>
+                                <div class="list-default">设为默认</div> 
+                                <div class="list-i"></div>
+                            </div>
+                        </div>
+
+                        <div class="list white" ng-show="vm.parameterList.length">
+                            <div class="list-item hoge-item-border flex-item"
+                                 ng-repeat=" (idx,nor) in vm.parameterList track by $index"
+                            >
+                                <div class="list-title">
+                                    <input type="text"  class="input-list" ng-model="nor.name" ng-focus="nor.focusTitle = true"
+                                           ng-class="{'focus-color':nor.focusTitle}" ng-blur="nor.focusTitle = false"
+                                    >
+                                </div>
+
+                                <div class="list-input">
+                                    <input  type="text"  class="input-list" ng-change="vm.keyUpStreamName(nor)" ng-model="nor.stream_name" ng-focus="nor.focusInput = true"
+                                           ng-class="{'focus-color':nor.focusInput}" ng-blur="nor.focusInput =false"
+                                    >
+                                </div>
+                                <div class="list-source flex-one">
+                                    <input type="text"  class="input-list" ng-model="nor.stream_url" ng-focus="nor.focusDefaults = true"
+                                           ng-class="{'focus-color':nor.focusDefaults,'disabled-item':vm.dataDetail.is_push == 1}" ng-readonly="vm.dataDetail.is_push == 1"
+                                           ng-blur="nor.focusDefaults = false"
+                                    >
+                                </div>
+                                <div class="list-stream">
+                                    <input type="text"  class="input-list" ng-change="vm.keyUpBitrate(nor)"  ng-model="nor.bitrate" ng-focus="nor.focusStream = true"
+                                           ng-class="{'focus-color':nor.focusStream}" ng-blur="nor.focusStream = false"
+                                    >
+                                </div>
+                                <div class="list-default">
+                                    <span>
+                                        <input type="radio"  class="input-list"  value="idx" ng-checked="vm.is_main==idx" ng-click="vm.setMain(idx)" name="mainDefault"
+                                        >
+                                    </span>
+                                </div>
+
+                                <div class="list-i">
+                                    <span ng-click="vm.delParamList(nor)">删除</span>
+                                </div>
+
+                            </div>
+                
+                        </div>
+                        <div class="list-bottom">
+                            <div class="add-form" ng-click="vm.addLine()">
+                                <span class="add-icon"><i class="fa typeface-form_zengjia"></i></span>
+                                <span class="add-tex">添加信号流</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> -->
+                <div class="form-group" ng-if="!vm.systemSet">
+                    <div class="virtual-live">
+                        <span class="label-name switch-span">虚拟直播</span>
+                        <label class="ui-switch switch-r switch-position">
+                            <span class="switch-open">开</span>
+                            <span class="switch-close">关</span>
+                            <input type="checkbox" ng-checked="vm.dataDetail.is_control == 1" ng-click="vm.toggleVer()">
+                            <i></i>
+                        </label>
+                    </div>    
+                </div>
+            </div>
+        </div>
+   </div>
+   <div class="md-form-group save-body">
+        <button class="btn primary-btn ng-binding" my-loading="vm.saveDataLoading" ng-click="vm.saveDate()">保存</button>
+        <button class="btn cancel-btn ng-binding" ng-click="vm.cancelChannel()">取消</button>
+    </div>
+</div>

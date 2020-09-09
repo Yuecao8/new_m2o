@@ -1,0 +1,55 @@
+<div class="mxu_system_wrap new-wrapper">
+  <div>
+    <div class="system_item">
+      <a ui-sref="app.setting.menu.text">
+        <i class="icon-sz-duanxin"></i>
+        <div class="sys_info">
+          <em translate="setting_system.message"></em>
+          <span translate="setting_system.mesDescribe"></span>
+        </div>
+      </a>
+    </div>
+    <!--邮件服务器-->
+    <!--<div class="system_item">-->
+      <!--<a ui-sref="app.setting.menu.email">-->
+        <!--<i class="icon-pinglunshu"></i>-->
+        <!--<div class="sys_info">-->
+          <!--<em translate="setting_system.emailServer"></em>-->
+          <!--<span translate="setting_system.emailDescribe"></span>-->
+        <!--</div>-->
+      <!--</a>-->
+    <!--</div>-->
+
+    <!--全文检索-->
+    <% if (edition !== 'basic') { %>
+    <div class="system_item">
+      <a ui-sref="app.setting.menu.search">
+        <i class="icon-quanwenjiansuo"></i>
+        <div class="sys_info">
+          <em translate="setting_system.fullText"></em>
+          <span translate="setting_system.textDescribe"></span>
+        </div>
+      </a>
+    </div>
+    <% } %>
+
+    <!--<div class="system_item">-->
+    <!--<a ui-sref="app.setting.menu.cloud">-->
+    <!--<i class="icon-sz-yun"></i>-->
+    <!--<div class="sys_info">-->
+    <!--<em>M2O云账号</em>-->
+    <!--<span>用于创建和查看M2O云账号</span>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</div>-->
+    <!--<div class="system_item">-->
+    <!--<a ui-sref="app.setting.menu.confer">-->
+    <!--<i class="icon-sz-yun"></i>-->
+    <!--<div class="sys_info">-->
+    <!--<em>M2O云授权</em>-->
+    <!--<span>用于查看当前MXU系统的授权秘钥信息</span>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</div>-->
+  </div>
+</div>
